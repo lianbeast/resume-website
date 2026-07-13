@@ -1,0 +1,2973 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Syed Rahid Ahmed | Senior Switch Consultant</title>
+  <meta name="description" content="Senior Switch Consultant with 15+ years in Nokia/Alcatel-Lucent SROS routers, Ericsson/Nokia OSS, and Python-driven network security & AIOps automation across T-Mobile/Sprint.">
+  <meta name="keywords" content="Senior Switch Consultant, Network Security, AIOps, Python Automation, Router Hardening, ACLs, Nokia SROS, Ericsson OSS, CCNA, CISSP, CEH, Syed Rahid Ahmed">
+  <meta name="author" content="Syed Rahid Ahmed">
+  <meta name="robots" content="index, follow">
+  <meta property="og:title" content="Syed Rahid Ahmed | Senior Network & Telecom Consultant">
+  <meta property="og:description" content="15+ years of telecom and network infrastructure expertise — Cisco, Nokia, Ericsson, LTE, and enterprise IT.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://syedrahidahmed.com">
+  <meta property="og:image" content="https://syedrahidahmed.com/og-image.png">
+  <meta name="theme-color" content="#f7f5f0" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#161412" media="(prefers-color-scheme: dark)">
+  <link rel="canonical" href="https://syedrahidahmed.com">
+
+  <!-- Twitter / X card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Syed Rahid Ahmed | Senior Network & Telecom Consultant">
+  <meta name="twitter:description" content="15+ years of telecom and network infrastructure expertise — Cisco, Nokia, Ericsson, LTE, and enterprise IT.">
+  <meta name="twitter:image" content="https://syedrahidahmed.com/og-image.png">
+
+  <!-- JSON-LD structured data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "Syed Rahid Ahmed",
+    "jobTitle": "Senior Network & Telecom Consultant",
+    "description": "15+ years of telecom and network infrastructure expertise — Cisco, Nokia, Ericsson, LTE, and enterprise IT.",
+    "url": "https://syedrahidahmed.com",
+    "image": "https://syedrahidahmed.com/og-image.png",
+    "knowsAbout": ["Network Engineering", "Telecom", "Cisco", "Nokia", "Ericsson", "GSM", "UMTS", "LTE", "5G", "VoLTE", "SIP", "Diameter", "SS7", "SIGTRAN"],
+    "alumniOf": [
+      { "@type": "CollegeOrProgram", "name": "BS Computer Science" },
+      { "@type": "CollegeOrProgram", "name": "AA Computer Science" }
+    ],
+    "worksFor": { "@type": "Organization", "name": "T-Mobile" },
+    "hasCredential": [
+      { "@type": "EducationalOccupationalCredential", "name": "A+ Certified" },
+      { "@type": "EducationalOccupationalCredential", "name": "MCP Certified" },
+      { "@type": "EducationalOccupationalCredential", "name": "CCNA Certified" }
+    ]
+  }
+  </script>
+
+  <!-- ponytail: inline SVG favicon — no extra file needed, works in all modern browsers -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%23c2410c'/><text x='50' y='68' font-size='60' font-family='system-ui' font-weight='700' fill='%23ffffff' text-anchor='middle'>SR</text></svg>">
+
+  <!-- Preconnect for fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <!-- Fonts: Outfit + JetBrains Mono -->
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+  <!-- Three.js via CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"
+          integrity="sha384-CI3ELBVUz9XQO+97x6nwMDPosPR5XvsxW2ua7N1Xeygeh1IxtgqtCkGfQY9WWdHu"
+          crossorigin="anonymous"></script>
+
+  <!-- GSAP + ScrollTrigger -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"
+          integrity="sha384-g4NTh/Iv5PPU4xPyhEWqPcwtNXOvdaDI8LLnyYfyNZOjKJeYQyjzQ9X5275eBjpt"
+          crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"
+          integrity="sha384-Z3REaz79l2IaAZqJsSABtTbhjgOUYyV3p90XNnAPCSHg3EMTz1fouunq9WZRtj3d"
+          crossorigin="anonymous"></script>
+
+  <style>
+    /* ================================================================
+       RESET & BASE
+       ================================================================ */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --input-bg: rgba(255, 255, 255, 0.92);
+      /* Solar Graphite Evolution — Direction 1 palette */
+      --bg: #f7f5f0;
+      --bg-glass: rgba(255, 255, 255, 0.55);
+      --bg-card: #ffffff;
+      --border-glass: rgba(28, 25, 23, 0.08);
+      --text: #1c1917;
+      --text-dim: #78716c;
+      --text-on-accent: #ffffff;
+      --gold: #c2410c;
+      --gold-light: #e06a3a;
+      --gold-dark: #a4380a;
+      --gold-muted: rgba(194, 65, 12, 0.6);
+      --gold-subtle: rgba(194, 65, 12, 0.4);
+      --teal: #0e7490;
+      --teal-dark: #0b5a7c;
+      --teal-light: #22d3ee;
+      --olive: #4d7c0f;
+      --font-body: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+    }
+
+    [data-theme="dark"] {
+      --input-bg: rgba(30, 28, 26, 0.85);
+      --bg: #161412;
+      --bg-glass: rgba(22, 20, 18, 0.75);
+      --bg-card: #1e1c1a;
+      --border-glass: rgba(224, 106, 58, 0.08);
+      --text: #f0ede8;
+      --text-dim: #9a938d;
+      --text-on-accent: #161412;
+      --gold: #e06a3a;
+      --gold-light: #f59e0b;
+      --gold-dark: #c2410c;
+      --gold-muted: rgba(224, 106, 58, 0.6);
+      --gold-subtle: rgba(224, 106, 58, 0.4);
+      --teal: #22d3ee;
+      --teal-dark: #0b5a7c;
+      --teal-light: #67e8f9;
+      --olive: #84cc16;
+    }
+
+    /* Style overrides — toggle via #style-toggle button */
+    [data-style="solar-graphite"] {
+      --gold: #c2410c;
+      --gold-light: #e06a3a;
+      --gold-dark: #a4380a;
+      --gold-muted: rgba(194, 65, 12, 0.6);
+      --gold-subtle: rgba(194, 65, 12, 0.4);
+      --teal: #0e7490;
+      --teal-dark: #0b5a7c;
+      --teal-light: #22d3ee;
+      --olive: #4d7c0f;
+    }
+    [data-style="solar-graphite"][data-theme="dark"] {
+      --input-bg: rgba(30, 28, 26, 0.85);
+      --gold: #e06a3a;
+      --gold-light: #f59e0b;
+      --gold-dark: #c2410c;
+      --gold-muted: rgba(224, 106, 58, 0.6);
+      --gold-subtle: rgba(224, 106, 58, 0.4);
+      --teal: #22d3ee;
+      --teal-dark: #0b5a7c;
+      --teal-light: #67e8f9;
+      --olive: #84cc16;
+    }
+    [data-style="industrial-ochre"] {
+      --gold: #b87333;
+      --gold-light: #d4a574;
+      --gold-dark: #9d5f2a;
+      --gold-muted: rgba(184, 115, 51, 0.6);
+      --gold-subtle: rgba(184, 115, 51, 0.4);
+      --teal: #6b8e23;
+      --teal-dark: #5a7820;
+      --teal-light: #a3d977;
+      --olive: #6b8e23;
+    }
+    [data-style="industrial-ochre"][data-theme="dark"] {
+      --input-bg: rgba(30, 28, 26, 0.85);
+      --gold: #d4a574;
+      --gold-light: #e8c49a;
+      --gold-dark: #b87333;
+      --gold-muted: rgba(212, 165, 116, 0.6);
+      --gold-subtle: rgba(212, 165, 116, 0.4);
+      --teal: #a3d977;
+      --teal-dark: #84c451;
+      --teal-light: #c8eaaa;
+      --olive: #a3d977;
+    }
+    /* oxblood-editorial (default) stays in :root above */
+
+    html { transition: background 0.3s ease, color 0.3s ease; }
+
+    html {
+      scroll-behavior: smooth;
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font-body);
+      line-height: 1.6;
+    }
+
+    body {
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* Skip link for keyboard navigation */
+    .skip-link {
+      position: absolute;
+      top: -100px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--gold);
+      color: #000;
+      padding: 12px 24px;
+      border-radius: 8px;
+      font-weight: 600;
+      z-index: 10000;
+      transition: top 0.3s;
+    }
+    .skip-link:focus {
+      top: 16px;
+    }
+
+    /* ================================================================
+       THREE.JS SCENE CONTAINER
+       ================================================================ */
+    #scene-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    /* Overlay for constellation raycaster interaction */
+    #constellation-interact {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: 1;
+      pointer-events: none;
+      cursor: crosshair;
+    }
+    #constellation-interact.active {
+      pointer-events: auto;
+    }
+
+    /* Skill tooltip for hover */
+    #skill-tooltip {
+      position: fixed;
+      z-index: 100;
+      background: var(--bg-glass);
+      border: 1px solid var(--border-glass);
+      backdrop-filter: blur(12px);
+      padding: 8px 14px;
+      border-radius: 8px;
+      font-size: 13px;
+      color: var(--text);
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.2s;
+      white-space: nowrap;
+    }
+    #skill-tooltip.visible {
+      opacity: 1;
+    }
+    #skill-tooltip .category {
+      display: block;
+      font-size: 10px;
+      color: var(--text-dim);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-top: 2px;
+    }
+
+    /* ================================================================
+       CONTENT WRAPPER
+       ================================================================ */
+    .content {
+      position: relative;
+      z-index: 2;
+    }
+
+    /* ================================================================
+       SECTIONS — shared layout
+       ================================================================ */
+    section {
+      padding: 100px 5%;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .section-label {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: var(--gold);
+      margin-bottom: 12px;
+    }
+
+    .section-title {
+      font-size: clamp(28px, 4vw, 40px);
+      font-weight: 700;
+      line-height: 1.15;
+      margin-bottom: 40px;
+      position: relative;
+      display: inline-block;
+    }
+    .section-title::after {
+      content: '';
+      position: absolute;
+      bottom: -6px;
+      left: 0;
+      width: 48px;
+      height: 3px;
+      background: linear-gradient(90deg, var(--gold), var(--gold-dark));
+      border-radius: 2px;
+    }
+
+    /* ================================================================
+       HERO
+       ================================================================ */
+    #hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding-top: 0;
+      padding-bottom: 0;
+    }
+
+    .hero-label {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      color: var(--gold);
+      margin-bottom: 16px;
+    }
+
+    .hero-name {
+      font-size: clamp(36px, 7vw, 72px);
+      font-weight: 700;
+      line-height: 1.05;
+      letter-spacing: -0.02em;
+      margin-bottom: 8px;
+    }
+
+    .hero-title {
+      font-size: clamp(18px, 2.5vw, 24px);
+      font-weight: 400;
+      color: var(--text-dim);
+      margin-bottom: 28px;
+    }
+
+    .hero-tagline {
+      max-width: 640px;
+      font-size: 15px;
+      color: var(--text-dim);
+      line-height: 1.7;
+    }
+
+    .hero-cta {
+      margin-top: 36px;
+      display: flex;
+      gap: 12px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 14px 28px;
+      border-radius: 10px;
+      font-size: 14px;
+      font-weight: 600;
+      text-decoration: none;
+      cursor: pointer;
+      border: none;
+      transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+                  box-shadow 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+                  background 0.3s ease;
+      min-height: 44px;
+      min-width: 44px;
+    }
+    .btn:hover {
+      transform: translateY(-2px);
+    }
+    .btn:focus-visible {
+      outline: 2px solid var(--gold);
+      outline-offset: 2px;
+    }
+    .btn-primary {
+      background: linear-gradient(135deg, var(--gold) 0%, var(--gold-dark) 100%);
+      color: #fff;
+      box-shadow: 0 2px 8px rgba(201, 149, 12, 0.2),
+                  inset 0 1px 0 rgba(255,255,255,0.15);
+    }
+    .btn-primary:hover {
+      box-shadow: 0 4px 16px rgba(201, 149, 12, 0.3),
+                  0 0 24px rgba(201, 149, 12, 0.12),
+                  inset 0 1px 0 rgba(255,255,255,0.15);
+    }
+    .btn-secondary {
+      background: transparent;
+      color: var(--text);
+      border: 1px solid rgba(0,0,0,0.1);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.5);
+    }
+    .btn-secondary:hover {
+      background: rgba(201, 149, 12, 0.04);
+      border-color: rgba(201, 149, 12, 0.25);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.5), 0 2px 8px rgba(0,0,0,0.04);
+    }
+
+    /* ================================================================
+       STATS
+       ================================================================ */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+    }
+    .stat-card {
+      padding: 24px;
+      text-align: center;
+    }
+    .stat-num {
+      font-size: 36px;
+      font-weight: 700;
+      color: var(--gold);
+      line-height: 1;
+    }
+    .stat-label {
+      font-size: 12px;
+      color: var(--text-dim);
+      margin-top: 6px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    /* ================================================================
+       ABOUT
+       ================================================================ */
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+    }
+    .about-text {
+      padding: 32px;
+      font-size: 15px;
+      color: var(--text-dim);
+      line-height: 1.8;
+    }
+    .about-highlights {
+      padding: 32px;
+    }
+    .highlight-item {
+      padding: 12px 0;
+      border-bottom: 1px solid var(--border-glass);
+      display: flex;
+      justify-content: space-between;
+    }
+    .highlight-item:last-child { border: none; }
+    .highlight-key {
+      font-size: 13px;
+      color: var(--text-dim);
+    }
+    .highlight-val {
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    /* ================================================================
+       EXPERIENCE TIMELINE
+       ================================================================ */
+    .timeline {
+      position: relative;
+      padding-left: 32px;
+    }
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 6px;
+      top: 0;
+      bottom: 0;
+      width: 2px;
+      background: var(--border-glass);
+    }
+    .timeline-item {
+      position: relative;
+      margin-bottom: 40px;
+      padding: 24px;
+    }
+    .timeline-item::before {
+      content: '';
+      position: absolute;
+      left: -32px;
+      top: 28px;
+      width: 14px;
+      height: 14px;
+      background: var(--gold);
+      border-radius: 50%;
+      border: 3px solid var(--bg);
+    }
+    .timeline-date {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: var(--gold);
+      margin-bottom: 6px;
+    }
+    .timeline-role {
+      font-size: 18px;
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+    .timeline-company {
+      font-size: 14px;
+      color: var(--text-dim);
+      margin-bottom: 8px;
+    }
+    .timeline-loc {
+      font-size: 12px;
+      color: var(--text-dim);
+      margin-bottom: 10px;
+    }
+    .timeline-desc {
+      font-size: 13px;
+      color: var(--text-dim);
+      line-height: 1.7;
+    }
+
+    /* ================================================================
+       SKILLS CONSTELLATION
+       ================================================================ */
+    .constellation-anchor {
+      position: relative;
+    }
+    .skills-canvas-wrap {
+      width: 100%;
+      height: 400px;
+      position: relative;
+    }
+    #skill-canvas {
+      width: 100%;
+      height: 100%;
+      border-radius: 16px;
+      background: var(--bg-card);
+      border: 1px solid var(--border-glass);
+    }
+    .skills-list {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-top: 24px;
+    }
+    .skill-category {
+      padding: 20px;
+    }
+    .skill-category h3 {
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 12px;
+    }
+    .skill-tag {
+      display: inline-block;
+      padding: 6px 12px;
+      margin: 4px;
+      font-size: 12px;
+      border-radius: 6px;
+      background: rgba(0,0,0,0.04);
+      border: 1px solid var(--border-glass);
+    }
+
+    /* ================================================================
+       EDUCATION & CERTS
+       ================================================================ */
+    .edu-cert-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+    }
+    .edu-card, .cert-card {
+      padding: 24px;
+    }
+    .edu-card h3 {
+      font-size: 16px;
+      margin-bottom: 4px;
+    }
+    .edu-card p {
+      font-size: 13px;
+      color: var(--text-dim);
+    }
+    .cert-list {
+      list-style: none;
+    }
+    .cert-list li {
+      padding: 10px 0;
+      border-bottom: 1px solid var(--border-glass);
+      font-size: 14px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .cert-list li:last-child { border: none; }
+    .cert-icon {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--gold);
+      flex-shrink: 0;
+    }
+    .cert-pursuit .cert-icon {
+      background: var(--gold-dark);
+    }
+
+    /* Cert badges — inline SVG vendor brand marks */
+    .cert-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 10px 4px 6px;
+      border-radius: 6px;
+      flex-shrink: 0;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.12), inset 0 1px 0 rgba(255,255,255,0.15);
+    }
+    .cert-badge svg {
+      width: 16px;
+      height: 16px;
+      flex-shrink: 0;
+    }
+    .cert-badge .badge-text {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      font-weight: 700;
+      color: #fff;
+      letter-spacing: 0.04em;
+      line-height: 1;
+    }
+    .cert-text {
+      font-size: 13px;
+      color: var(--text);
+      line-height: 1.4;
+    }
+    .cert-text strong {
+      color: var(--text);
+      font-weight: 600;
+    }
+
+    /* ================================================================
+       CONTACT FORM
+       ================================================================ */
+    #contact form {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      max-width: 600px;
+    }
+    #contact .full-width {
+      grid-column: 1 / -1;
+    }
+    .form-group {
+      position: relative;
+    }
+    .form-group label {
+      display: block;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-dim);
+      margin-bottom: 6px;
+    }
+    .form-group input,
+    .form-group textarea {
+      width: 100%;
+      padding: 12px 14px;
+      background: var(--input-bg);
+      border: 1px solid rgba(0,0,0,0.06);
+      border-radius: 10px;
+      color: var(--text);
+      font-family: var(--font-body);
+      font-size: 14px;
+      box-shadow: inset 0 1px 2px rgba(0,0,0,0.04);
+      transition: border-color 0.3s ease, box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1), background 0.3s ease;
+    }
+    .form-group input:focus,
+    .form-group textarea:focus {
+      outline: none;
+      background: rgba(254,253,251,0.92);
+      border-color: var(--gold);
+      box-shadow: inset 0 1px 2px rgba(0,0,0,0.02),
+                  0 0 0 3px rgba(201, 149, 12, 0.12),
+                  0 0 16px rgba(201, 149, 12, 0.06);
+    }
+    .form-group textarea {
+      min-height: 120px;
+      resize: vertical;
+    }
+    .form-error {
+      font-size: 11px;
+      color: var(--gold-dark);
+      margin-top: 4px;
+      display: none;
+    }
+    .form-group.error .form-error {
+      display: block;
+    }
+    .form-group.error input,
+    .form-group.error textarea {
+      border-color: var(--gold-dark);
+    }
+
+    /* ================================================================
+       FOOTER
+       ================================================================ */
+    footer {
+      text-align: center;
+      padding: 60px 5% 40px;
+      font-size: 12px;
+      color: var(--text-dim);
+      border-top: none;
+      position: relative;
+      z-index: 2;
+    }
+    .footer-social {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      margin-bottom: 20px;
+    }
+    .footer-social a {
+      color: var(--text-dim);
+      transition: color 0.2s ease, transform 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      text-decoration: none;
+      font-size: 13px;
+    }
+    .footer-social a:hover {
+      color: var(--gold);
+      transform: translateY(-2px);
+    }
+    .footer-social svg {
+      width: 20px;
+      height: 20px;
+    }
+    .footer-resume svg {
+      width: 16px;
+      height: 16px;
+    }
+    footer::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 10%;
+      right: 10%;
+      height: 1px;
+      background: linear-gradient(90deg,
+        transparent 0%,
+        rgba(201, 149, 12, 0.15) 25%,
+        rgba(201, 149, 12, 0.35) 50%,
+        rgba(14, 116, 144, 0.15) 75%,
+        transparent 100%
+      );
+    }
+
+    /* ================================================================
+       ENHANCED GRAPHICS — Grain, Gradients, Mesh Blobs, Hover
+       ================================================================ */
+
+    /* Gradient accent divider between sections */
+    section + section::before {
+      content: '';
+      display: block;
+      width: 60%;
+      max-width: 480px;
+      height: 1px;
+      margin: 0 auto 60px;
+      background: linear-gradient(90deg,
+        transparent 0%,
+        rgba(201, 149, 12, 0.06) 15%,
+        rgba(201, 149, 12, 0.22) 35%,
+        rgba(201, 149, 12, 0.30) 50%,
+        rgba(14, 116, 144, 0.22) 65%,
+        rgba(14, 116, 144, 0.06) 85%,
+        transparent 100%
+      );
+    }
+
+    /* Hero mesh gradient blob — ambient glow */
+    #hero::before {
+      content: '';
+      position: absolute;
+      top: -10%;
+      right: -15%;
+      width: 600px;
+      height: 600px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 40% 40%,
+        rgba(201, 149, 12, 0.10) 0%,
+        rgba(201, 149, 12, 0.04) 40%,
+        transparent 70%
+      );
+      filter: blur(60px);
+      pointer-events: none;
+      z-index: -1;
+    }
+    #hero::after {
+      content: '';
+      position: absolute;
+      bottom: 5%;
+      left: -10%;
+      width: 400px;
+      height: 400px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 60% 60%,
+        rgba(14, 116, 144, 0.07) 0%,
+        rgba(77, 124, 15, 0.04) 40%,
+        transparent 70%
+      );
+      filter: blur(50px);
+      pointer-events: none;
+      z-index: -1;
+    }
+    #hero { position: relative; }
+
+    /* Enhanced glassmorphism — inner refraction border */
+    .glass {
+      background: var(--bg-card);
+      border: 1px solid var(--border-glass);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border-radius: 16px;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.7),
+                  inset 0 -1px 0 rgba(0,0,0,0.02),
+                  0 4px 16px rgba(0,0,0,0.04),
+                  0 8px 32px rgba(0,0,0,0.06);
+      transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+                  box-shadow 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+                  border-color 0.3s ease;
+    }
+    .glass:hover {
+      border-color: rgba(201, 149, 12, 0.25);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.06),
+                  0 4px 16px rgba(0,0,0,0.04),
+                  0 12px 40px rgba(0,0,0,0.08),
+                  0 0 0 1px rgba(201, 149, 12, 0.06);
+    }
+
+    @keyframes dotPulse {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(201, 149, 12, 0.3); }
+      50%      { box-shadow: 0 0 0 6px rgba(201, 149, 12, 0); }
+    }
+
+    /* Hero accent bar — decorative gradient stripe */
+    .hero-label::after {
+      content: '';
+      display: block;
+      width: 48px;
+      height: 2px;
+      margin-top: 10px;
+      background: linear-gradient(90deg, var(--gold), var(--gold-dark));
+      border-radius: 1px;
+    }
+
+    /* Button press tactile feedback */
+    .btn:active {
+      transform: translateY(0) scale(0.98);
+    }
+
+    /* ================================================================
+       THEME TOGGLE BUTTON
+       ================================================================ */
+    .nav-theme-toggle {
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      border: none;
+      background: transparent;
+      color: var(--text-dim);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: color 0.2s ease, background 0.2s ease, transform 0.2s ease;
+      position: relative;
+    }
+    .nav-theme-toggle:hover {
+      color: var(--text);
+      background: rgba(201, 149, 12, 0.06);
+    }
+    .nav-theme-toggle:focus-visible {
+      outline: 2px solid var(--gold);
+      outline-offset: 2px;
+    }
+    .nav-theme-toggle svg {
+      width: 18px;
+      height: 18px;
+      transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.25s ease;
+      position: absolute;
+    }
+    .nav-theme-toggle .sun-icon { opacity: 0; transform: scale(0.5) rotate(-90deg); }
+    .nav-theme-toggle .moon-icon { opacity: 1; transform: scale(1) rotate(0); }
+    [data-theme="dark"] .nav-theme-toggle .sun-icon { opacity: 1; transform: scale(1) rotate(0); }
+    [data-theme="dark"] .nav-theme-toggle .moon-icon { opacity: 0; transform: scale(0.5) rotate(90deg); }
+
+    /* ================================================================
+       STYLE TOGGLE BUTTON
+       ================================================================ */
+    .nav-style-toggle {
+      width: 54px;
+      height: 36px;
+      border-radius: 8px;
+      border: 1px solid var(--border-glass);
+      background: var(--bg-glass);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      color: var(--text-dim);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      transition: color 0.2s ease, background 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 500;
+      padding: 0 8px;
+    }
+    .nav-style-toggle:hover {
+      color: var(--text);
+      border-color: var(--gold);
+      background: var(--surface);
+    }
+    .nav-style-toggle:focus-visible {
+      outline: 2px solid var(--gold);
+      outline-offset: 2px;
+    }
+    .nav-style-toggle svg {
+      width: 14px;
+      height: 14px;
+      transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .nav-style-toggle:hover svg {
+      transform: rotate(45deg);
+    }
+    .nav-style-toggle .style-label {
+      line-height: 1;
+    }
+
+    .nav-style-dropdown {
+      position: relative;
+    }
+    .style-menu {
+      position: absolute;
+      top: calc(100% + 4px);
+      right: 0;
+      background: var(--bg-card);
+      border: 1px solid var(--border-glass);
+      border-radius: 8px;
+      padding: 6px;
+      min-width: 180px;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+      list-style: none;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(-8px);
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+      z-index: 10000;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+    .nav-style-dropdown:hover .style-menu,
+    .nav-style-dropdown:focus-within .style-menu {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+    .style-menu li {
+      padding: 8px 12px;
+      border-radius: 6px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-dim);
+      transition: background 0.2s ease, color 0.2s ease;
+    }
+    .style-menu li:hover {
+      background: rgba(201, 149, 12, 0.06);
+      color: var(--text);
+    }
+    .style-menu li.active {
+      color: var(--gold);
+      background: rgba(201, 149, 12, 0.08);
+    }
+    .style-swatch {
+      display: inline-block;
+      width: 14px;
+      height: 14px;
+      border-radius: 4px;
+    }
+
+    /* Transition on elements using theme/style vars */
+    .glass, .btn, .skill-tag, .form-group input, .form-group textarea,
+    .timeline-item::before, section + section::before, html, body {
+      transition: background 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+                  color 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+                  border-color 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+                  box-shadow 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+                  transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    /* ================================================================
+       MAIN NAVIGATION
+       ================================================================ */
+    #main-nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 9999;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 24px;
+      height: 60px;
+      background: var(--bg-glass);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border-glass);
+      transition: background 0.3s ease, border-color 0.3s ease;
+    }
+    .nav-logo {
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--gold);
+      text-decoration: none;
+      letter-spacing: -0.02em;
+      transition: color 0.3s ease;
+    }
+    .nav-logo:hover { color: var(--text); }
+    .nav-links {
+      list-style: none;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      margin: 0;
+      padding: 0;
+      flex-wrap: nowrap;
+    }
+    .nav-links a {
+      padding: 8px 14px;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-dim);
+      text-decoration: none;
+      border-radius: 8px;
+      transition: color 0.2s ease, background 0.2s ease;
+    }
+    .nav-links a:hover,
+    .nav-links a:focus-visible {
+      color: var(--text);
+      background: rgba(201, 149, 12, 0.06);
+    }
+    .nav-links a.active {
+      color: var(--gold);
+      background: rgba(201, 149, 12, 0.08);
+    }
+    .nav-resume {
+      background: linear-gradient(135deg, var(--gold) 0%, var(--gold-dark) 100%) !important;
+      color: #fff !important;
+      margin-left: 8px;
+    }
+    .nav-resume:hover {
+      box-shadow: 0 2px 8px rgba(201, 149, 12, 0.3) !important;
+    }
+    #nav-toggle {
+      display: none;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 8px;
+      width: 36px;
+      height: 36px;
+      flex-direction: column;
+      justify-content: center;
+      gap: 5px;
+    }
+    #nav-toggle span {
+      display: block;
+      width: 22px;
+      height: 2px;
+      background: var(--text);
+      border-radius: 2px;
+      transition: transform 0.3s ease, opacity 0.3s ease;
+    }
+    #nav-toggle[aria-expanded="true"] span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    #nav-toggle[aria-expanded="true"] span:nth-child(2) { opacity: 0; }
+    #nav-toggle[aria-expanded="true"] span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    @media (max-width: 768px) {
+      #nav-toggle { display: flex; }
+      .nav-links {
+        position: fixed;
+        top: 60px;
+        right: 0;
+        width: 260px;
+        height: calc(100vh - 60px);
+        flex-direction: column;
+        align-items: stretch;
+        padding: 16px;
+        gap: 2px;
+        background: var(--bg-glass);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        border-left: 1px solid var(--border-glass);
+        transform: translateX(100%);
+        transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+      .nav-links.open { transform: translateX(0); }
+      .nav-links a { padding: 12px 16px; font-size: 15px; }
+      .nav-resume { margin-left: 0; margin-top: 8px; text-align: center; }
+      #main-nav { padding: 0 16px; }
+    }
+
+    /* ================================================================
+       BACK TO TOP
+       ================================================================ */
+    #back-to-top {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      z-index: 9998;
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      border: 1px solid var(--border-glass);
+      background: var(--bg-glass);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      color: var(--text);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(12px);
+      transition: opacity 0.3s ease, transform 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+                  background 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06), inset 0 1px 0 rgba(255,255,255,0.5);
+    }
+    #back-to-top.visible {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateY(0);
+    }
+    #back-to-top:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 4px 16px rgba(0,0,0,0.08), 0 0 0 1px rgba(184,134,11,0.15);
+      border-color: rgba(184,134,11,0.25);
+    }
+    #back-to-top:focus-visible {
+      outline: 2px solid var(--gold);
+      outline-offset: 2px;
+    }
+    #back-to-top svg { width: 20px; height: 20px; }
+
+    /* Push content below fixed nav */
+    .content { padding-top: 60px; }
+
+    /* ================================================================
+       ENHANCED ANIMATIONS — KEYFRAMES
+       ================================================================ */
+    @keyframes orb-float {
+      0%, 100% { transform: translate(0, 0) scale(1); }
+      25%      { transform: translate(18px, -22px) scale(1.03); }
+      50%      { transform: translate(-12px, -38px) scale(0.97); }
+      75%      { transform: translate(22px, -14px) scale(1.02); }
+    }
+    @keyframes orb-float-alt {
+      0%, 100% { transform: translate(0, 0) scale(1); }
+      33%      { transform: translate(-20px, 18px) scale(1.04); }
+      66%      { transform: translate(14px, -24px) scale(0.96); }
+    }
+    @keyframes float-drift {
+      0%, 100% { transform: translate(0, 0) rotate(0deg); }
+      50%      { transform: translate(12px, -18px) rotate(8deg); }
+    }
+    @keyframes float-drift-alt {
+      0%, 100% { transform: translate(0, 0) rotate(0deg); }
+      50%      { transform: translate(-16px, 14px) rotate(-6deg); }
+    }
+    @keyframes float-rotate {
+      0%, 100% { transform: rotate(0deg) scale(1); opacity: 0.12; }
+      50%      { transform: rotate(180deg) scale(1.15); opacity: 0.18; }
+    }
+    @keyframes shimmer-slide {
+      from { left: -100%; }
+      to   { left: 200%; }
+    }
+    @keyframes pulse-glow {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(201, 149, 12, 0.3); }
+      50%      { box-shadow: 0 0 0 8px rgba(201, 149, 12, 0); }
+    }
+    @keyframes gradient-shift {
+      0%, 100% { background-position: 0% 50%; }
+      50%      { background-position: 100% 50%; }
+    }
+    @keyframes border-glow {
+      0%, 100% { border-color: rgba(201, 149, 12, 0.15); }
+      50%      { border-color: rgba(201, 149, 12, 0.35); }
+    }
+    /* ================================================================
+       REVEAL — GSAP controls these via from() tweens
+       ================================================================ */
+
+    /* ================================================================
+       DECORATIVE ORBS
+       ================================================================ */
+    .orb {
+      position: absolute;
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 0;
+      filter: blur(80px);
+    }
+    .orb-gold {
+      background: radial-gradient(circle, rgba(201, 149, 12, 0.18), transparent 70%);
+      animation: orb-float 20s ease-in-out infinite;
+    }
+    .orb-gold-light {
+      background: radial-gradient(circle, rgba(232, 197, 90, 0.14), transparent 70%);
+      animation: orb-float-alt 24s ease-in-out infinite;
+    }
+    .orb-gold-dark {
+      background: radial-gradient(circle, rgba(166, 124, 0, 0.13), transparent 70%);
+      animation: orb-float 22s ease-in-out infinite;
+    }
+    .orb-ink {
+      background: radial-gradient(circle, rgba(28, 25, 23, 0.10), transparent 70%);
+      animation: orb-float-alt 26s ease-in-out infinite;
+    }
+
+    /* ================================================================
+       FLOATING GEOMETRIC DECORATIONS
+       ================================================================ */
+    .float-shape {
+      position: absolute;
+      pointer-events: none;
+      z-index: 0;
+    }
+    .float-shape.circle {
+      border-radius: 50%;
+      border: 1.5px solid;
+    }
+    .float-shape.diamond {
+      transform: rotate(45deg);
+      border: 1.5px solid;
+    }
+    .float-shape.triangle {
+      width: 0 !important;
+      height: 0 !important;
+      background: transparent !important;
+      border-left: 10px solid transparent;
+      border-right: 10px solid transparent;
+      border-bottom: 16px solid;
+    }
+    .float-shape.line {
+      height: 1.5px !important;
+      border-radius: 1px;
+    }
+    .float-shape.f1 { animation: float-drift 12s ease-in-out infinite; opacity: 0.10; }
+    .float-shape.f2 { animation: float-drift-alt 16s ease-in-out infinite; opacity: 0.08; }
+    .float-shape.f3 { animation: float-rotate 20s ease-in-out infinite; opacity: 0.12; }
+    .float-shape.f4 { animation: float-drift 14s ease-in-out infinite 2s; opacity: 0.09; }
+    .float-shape.f5 { animation: float-drift-alt 18s ease-in-out infinite 1s; opacity: 0.11; }
+    .float-shape.f6 { animation: float-rotate 22s ease-in-out infinite 3s; opacity: 0.07; }
+
+    /* ================================================================
+       SECTION HEADER ICONS & UNDERLINES
+       ================================================================ */
+    .section-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .section-icon {
+      width: 20px;
+      height: 20px;
+      flex-shrink: 0;
+      color: var(--gold);
+      opacity: 0.7;
+    }
+    .section-label::after {
+      content: '';
+      display: block;
+      height: 1px;
+      width: var(--underline-w, 0px);
+      background: linear-gradient(90deg, var(--gold), transparent);
+    }
+
+    /* ================================================================
+       HERO GRADIENT TEXT & PULSING CTA
+       ================================================================ */
+    .hero-name {
+      background: linear-gradient(135deg, var(--text) 0%, var(--gold) 50%, var(--gold-dark) 100%);
+      background-size: 200% 200%;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      animation: gradient-shift 6s ease-in-out infinite;
+    }
+    .hero-cta .btn-primary {
+      animation: pulse-glow 3s ease-in-out infinite;
+    }
+
+    /* ================================================================
+       STAT CARD ENHANCEMENTS
+       ================================================================ */
+    .stat-card {
+      position: relative;
+      overflow: hidden;
+    }
+    .stat-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--gold), var(--gold-dark));
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+    .stat-card:hover::before {
+      opacity: 1;
+    }
+    .stat-card:hover {
+      transform: translateY(-4px) scale(1.01);
+      box-shadow: 0 8px 24px rgba(201, 149, 12, 0.1),
+                  0 16px 48px rgba(0,0,0,0.06),
+                  0 0 0 1px rgba(201, 149, 12, 0.08),
+                  inset 0 1px 0 rgba(255,255,255,0.06);
+    }
+
+    /* ================================================================
+       TIMELINE ENHANCEMENTS
+       ================================================================ */
+    .timeline::before {
+      background: linear-gradient(to bottom, var(--gold), var(--gold-dark), var(--border-glass));
+      opacity: 0.5;
+    }
+    .timeline-item::before {
+      animation: dotPulse 3s ease-in-out infinite;
+    }
+    .timeline-item {
+      transition: box-shadow 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+                  transform 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+                  border-color 0.3s ease;
+    }
+    .timeline-item:hover {
+      box-shadow: 0 4px 16px rgba(201, 149, 12, 0.08),
+                  0 12px 40px rgba(0,0,0,0.06),
+                  0 0 0 1px rgba(201, 149, 12, 0.10);
+      transform: translateX(6px) translateY(-2px);
+      border-color: rgba(201, 149, 12, 0.20);
+    }
+
+    /* ================================================================
+       SKILL TAG SHIMMER
+       ================================================================ */
+    .skill-tag {
+      position: relative;
+      overflow: hidden;
+      transition: border-color 0.3s ease, background 0.3s ease;
+    }
+    .skill-tag::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 50%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(201, 149, 12, 0.12), transparent);
+      transition: none;
+    }
+    .skill-tag:hover {
+      border-color: rgba(201, 149, 12, 0.3);
+      background: rgba(201, 149, 12, 0.05);
+    }
+    .skill-tag:hover::before {
+      animation: shimmer-slide 0.6s ease forwards;
+    }
+
+    /* ================================================================
+       CONTACT FORM ENHANCEMENTS
+       ================================================================ */
+    form {
+      position: relative;
+    }
+    form::before {
+      content: '';
+      position: absolute;
+      top: -1px;
+      left: 0;
+      right: 0;
+      height: 3px;
+      border-radius: 2px;
+      background: linear-gradient(90deg, var(--gold), var(--gold-dark), var(--gold-light));
+    }
+    .form-group input:focus,
+    .form-group textarea:focus {
+      animation: border-glow 2s ease-in-out infinite;
+    }
+    .btn-primary {
+      position: relative;
+      overflow: hidden;
+    }
+    .btn-primary::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+      transition: none;
+    }
+    .btn-primary:hover::before {
+      animation: shimmer-slide 0.5s ease forwards;
+    }
+
+    /* ================================================================
+       SCROLL REVEAL — GSAP controls via from() tweens
+       ================================================================ */
+
+    /* ================================================================
+       REDUCED MOTION
+       ================================================================ */
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+      html { scroll-behavior: auto; }
+      .reveal, .reveal-left, .reveal-right, .reveal-scale, .section-label {
+        opacity: 1;
+        transform: none;
+      }
+      .orb, .float-shape { animation: none !important; }
+      #scene-container { display: none; }
+      #constellation-interact { display: none; }
+    }
+
+    /* ================================================================
+       NOSCRIPT / NO-JS FALLBACK
+       ================================================================ */
+    .no-js .reveal { opacity: 1; transform: none; }
+    .no-js #scene-container { display: none; }
+
+    /* ================================================================
+       RESPONSIVE
+       ================================================================ */
+    @media (max-width: 768px) {
+      section { padding: 60px 5%; }
+      .stats-grid { grid-template-columns: repeat(2, 1fr); }
+      .about-grid,
+      .edu-cert-grid,
+      .skills-list,
+      #contact form {
+        grid-template-columns: 1fr;
+      }
+      .hero-name { letter-spacing: -0.01em; }
+      .timeline { padding-left: 24px; }
+    }
+
+    /* ================================================================
+       PRINT STYLESHEET — recruiter-friendly PDF output
+       ================================================================ */
+    @media print {
+      *, *::before, *::after {
+        background: transparent !important;
+        color: #000 !important;
+        box-shadow: none !important;
+        text-shadow: none !important;
+      }
+
+      body {
+        font-size: 11pt;
+        line-height: 1.5;
+      }
+
+      /* Hide 3D scene, constellation, tooltip, and decorative elements */
+      #scene-container,
+      #constellation-interact,
+      #skill-tooltip,
+      .hero-label,
+      .skip-link,
+      .constellation-anchor,
+      .stats-grid,
+      .btn,
+      .orb,
+      .float-shape,
+      .section-icon,
+      #main-nav,
+      #back-to-top,
+      #theme-toggle,
+      .footer-social,
+      footer { display: none !important; }
+
+      /* Layout */
+      section {
+        padding: 20px 0;
+        max-width: none;
+        page-break-inside: avoid;
+      }
+
+      section + section {
+        border-top: 1px solid #ccc;
+        margin-top: 16px;
+        padding-top: 16px;
+      }
+
+      .content { max-width: 100%; }
+
+      /* Hero — name and title only */
+      #hero { text-align: center; padding: 30px 0; }
+      .hero-name { font-size: 28pt; opacity: 1 !important; transform: none !important; }
+      .hero-title { font-size: 14pt; opacity: 1 !important; transform: none !important; }
+      .hero-tagline { opacity: 1 !important; transform: none !important; max-width: 100%; }
+
+      /* Section labels and titles */
+      .section-label { font-size: 9pt; color: #555 !important; }
+      .section-title { font-size: 18pt; margin-bottom: 16px; }
+
+      /* Cards — flat borders instead of glass */
+      .glass {
+        border: 1px solid #ccc !important;
+        backdrop-filter: none !important;
+        -webkit-backdrop-filter: none !important;
+        padding: 12px;
+      }
+
+      /* Timeline */
+      .timeline { padding-left: 20px; }
+      .timeline::before { background: #ccc !important; }
+      .timeline-item::before { background: #555 !important; border-color: #fff !important; }
+      .timeline-item { page-break-inside: avoid; margin-bottom: 20px; }
+
+      /* Skills — simple list layout */
+      .skills-list { grid-template-columns: repeat(3, 1fr) !important; gap: 8px; }
+      .skill-tag {
+        border: 1px solid #ccc !important;
+        background: transparent !important;
+        padding: 4px 8px;
+        font-size: 9pt;
+      }
+
+      /* Education & certs */
+      .edu-cert-grid { grid-template-columns: repeat(2, 1fr) !important; }
+      .cert-list { font-size: 10pt; }
+      .cert-pursuit { font-style: italic; }
+
+      /* Links — show URL for print */
+      a[href]::after {
+        content: " (" attr(href) ")";
+        font-size: 9pt;
+        color: #555 !important;
+      }
+      #hero a[href]::after,
+      .skill-tag::after,
+      .cert-icon::after { content: none; }
+
+      /* Reveal — force visible */
+      .reveal {
+        opacity: 1 !important;
+        transform: none !important;
+      }
+
+      /* Page title */
+      @page { margin: 1.5cm; }
+    }
+  </style>
+  <!-- Apply saved theme before paint (prevents flash) -->
+  <script>
+    (function() {
+      var theme;
+      try { theme = localStorage.getItem('theme'); } catch(e) {}
+      if (theme === 'dark' || (!theme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+        document.documentElement.setAttribute('data-theme', 'dark');
+      }
+    })();
+  </script>
+</head>
+
+<body>
+  <!-- Skip link for keyboard users -->
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+
+  <!-- Main navigation -->
+  <nav id="main-nav" aria-label="Main navigation">
+    <a href="#" class="nav-logo">SR</a>
+    <button id="nav-toggle" aria-label="Toggle menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#experience">Experience</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#education">Education</a></li>
+      <li><a href="#contact">Contact</a></li>
+      <li><a href="SRA_Resume_2026.docx" class="nav-resume" download>Resume</a></li>
+      <li class="nav-style-dropdown">
+        <button id="style-toggle" class="nav-style-toggle" aria-label="Select color style" title="Select style" aria-haspopup="true" aria-expanded="false">
+          <svg class="style-icon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="4" fill="currentColor" stroke="none"/><path d="M12 2v4M12 18v4M2 12h4M18 12h4"/>
+          </svg>
+          <span class="style-label">SG</span>
+        </button>
+        <ul class="style-menu" role="menu">
+          <li role="menuitem" data-style="oxblood-editorial"><span class="style-swatch" style="background: #8b1a2e"></span> Oxblood Editorial</li>
+          <li role="menuitem" data-style="solar-graphite"><span class="style-swatch" style="background: #c2410c"></span> Solar Graphite</li>
+          <li role="menuitem" data-style="industrial-ochre"><span class="style-swatch" style="background: #b87333"></span> Industrial Ochre</li>
+        </ul>
+      </li>
+      <li><button id="theme-toggle" class="nav-theme-toggle" aria-label="Toggle dark/light mode" title="Toggle theme">
+        <svg class="sun-icon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="5"/>
+          <path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>
+        </svg>
+        <svg class="moon-icon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/>
+        </svg>
+      </button></li>
+    </ul>
+  </nav>
+
+  <!-- Back-to-top button -->
+  <button id="back-to-top" aria-label="Scroll to top" title="Back to top">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M18 15l-6-6-6 6"/>
+    </svg>
+  </button>
+
+  <!-- Three.js canvas container -->
+  <div id="scene-container" aria-hidden="true"></div>
+
+  <!-- Raycaster overlay (activates when skills section is in view) -->
+  <div id="constellation-interact" aria-hidden="true"></div>
+
+  <!-- Tooltip for skill constellation hover -->
+  <div id="skill-tooltip" role="tooltip" aria-hidden="true">
+    <span class="tooltip-name"></span>
+    <span class="category"></span>
+  </div>
+
+  <!-- Main content — progressive enhancement: readable without JS -->
+  <main id="main-content" class="content">
+
+    <!-- ========== HERO ========== -->
+    <section id="hero" aria-label="Introduction">
+      <!-- Decorative floating geometric shapes -->
+      <span class="float-shape circle f1" aria-hidden="true" style="width:18px;height:18px;top:15%;left:8%;border-color:var(--gold);"></span>
+      <span class="float-shape diamond f2" aria-hidden="true" style="width:14px;height:14px;top:22%;right:12%;border-color:var(--gold-dark);"></span>
+      <span class="float-shape circle f3" aria-hidden="true" style="width:10px;height:10px;top:70%;left:18%;border-color:var(--gold-dark);"></span>
+      <span class="float-shape line f4" aria-hidden="true" style="width:40px;top:35%;right:20%;background:var(--gold-dark);"></span>
+      <span class="float-shape triangle f5" aria-hidden="true" style="top:60%;right:25%;border-bottom-color:var(--gold);"></span>
+      <span class="float-shape diamond f6" aria-hidden="true" style="width:10px;height:10px;top:82%;left:30%;border-color:var(--gold-dark);"></span>
+      <!-- Decorative orbs -->
+      <div class="orb orb-gold" aria-hidden="true" style="width:320px;height:320px;top:-5%;right:-8%;"></div>
+      <div class="orb orb-gold-light" aria-hidden="true" style="width:260px;height:260px;bottom:10%;left:-6%;"></div>
+      <div class="orb orb-gold-dark" aria-hidden="true" style="width:200px;height:200px;top:40%;right:20%;"></div>
+
+      <span class="hero-label">NETWORK & TELECOM INFRASTRUCTURE</span>
+      <h1 class="hero-name">Syed Rahid Ahmed</h1>
+      <p class="hero-title">Senior Network & Telecom Consultant</p>
+      <p class="hero-tagline">
+        Over 15 years architecting reliable connectivity across Cisco, Nokia, and Ericsson infrastructure — serving major US carriers with GSM, UMTS, and LTE expertise.
+      </p>
+      <nav class="hero-cta" aria-label="Primary actions">
+        <a href="#contact" class="btn btn-primary">Get in Touch</a>
+        <a href="#experience" class="btn btn-secondary">View Experience</a>
+      </nav>
+    </section>
+
+    <!-- ========== STATS ========== -->
+    <section aria-label="Career statistics">
+      <div class="stats-grid">
+        <div class="stat-card glass">
+          <div class="stat-num" data-target="15">0</div>
+          <div class="stat-label">Years Experience</div>
+        </div>
+        <div class="stat-card glass">
+          <div class="stat-num" data-target="4">0</div>
+          <div class="stat-label">Major Carriers</div>
+        </div>
+        <div class="stat-card glass">
+          <div class="stat-num" data-target="7">0</div>
+          <div class="stat-label">Distinct Roles</div>
+        </div>
+        <div class="stat-card glass">
+          <div class="stat-num" data-target="8">0</div>
+          <div class="stat-label">Certifications</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== ABOUT ========== -->
+    <section id="about" aria-label="About me" style="position:relative;">
+      <div class="orb orb-gold-light" aria-hidden="true" style="width:220px;height:220px;top:10%;right:-5%;"></div>
+      <span class="section-label reveal"><svg class="section-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="8" r="4"/><path d="M5 20c0-3.87 3.13-7 7-7s7 3.13 7 7"/></svg> ABOUT</span>
+      <h2 class="section-title reveal">Building the Networks<br>That Connect Everything</h2>
+      <div class="about-grid">
+        <div class="about-text glass reveal">
+          <p>
+            From desktop support at Jorge Scientific to designing VoLTE/5G core signaling for T-Mobile, my career has been a steady climb through the layers of network infrastructure. I specialize in the intersection of telecom core networks and enterprise IT — a space where SS7/SIGTRAN meets Active Directory, and where SIP trunks coexist with SharePoint farms.
+          </p>
+          <p style="margin-top: 16px;">
+            My approach is hands-on and methodical: map the call flow, trace the signaling, isolate the fault, apply the fix. Whether it's provisioning an eNodeB, configuring Nokia NetAct thresholds, or scripting AMOS batch operations, I bring both depth and breadth to every engagement.
+          </p>
+        </div>
+        <div class="about-highlights glass reveal">
+          <div class="highlight-item">
+            <span class="highlight-key">Core Platforms</span>
+            <span class="highlight-val">Cisco / Nokia / Ericsson</span>
+          </div>
+          <div class="highlight-item">
+            <span class="highlight-key">Primary Carriers</span>
+            <span class="highlight-val">T-Mobile / Sprint</span>
+          </div>
+          <div class="highlight-item">
+            <span class="highlight-key">RAN Technologies</span>
+            <span class="highlight-val">GSM / UMTS / LTE / 5G</span>
+          </div>
+          <div class="highlight-item">
+            <span class="highlight-key">Location</span>
+            <span class="highlight-val">United States</span>
+          </div>
+          <div class="highlight-item">
+            <span class="highlight-key">Education</span>
+            <span class="highlight-val">BS Computer Science</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== EXPERIENCE ========== -->
+    <section id="experience" aria-label="Professional experience" style="position:relative;">
+      <div class="orb orb-gold" aria-hidden="true" style="width:200px;height:200px;top:5%;left:-4%;"></div>
+      <span class="section-label reveal"><svg class="section-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M3 11h18"/><path d="M8 7V5a2 2 0 012-2h4a2 2 0 012 2v2"/></svg> EXPERIENCE</span>
+      <h2 class="section-title reveal">Career Timeline</h2>
+      <div class="timeline">
+        <article class="timeline-item glass">
+          <div class="timeline-date">Apr 2022 – Present <span style="display:inline-block;background:var(--gold);color:#000;font-size:9px;font-weight:700;padding:2px 6px;border-radius:4px;margin-left:6px;vertical-align:middle;letter-spacing:0.04em;">CURRENT</span></div>
+          <h3 class="timeline-role">Senior Switch Engineer</h3>
+          <div class="timeline-company">T-Mobile</div>
+          <div class="timeline-loc">📍 Bellevue, WA</div>
+          <p class="timeline-desc">
+            VoLTE/5G core network engineering. SIP and Diameter signaling protocols. IMS core infrastructure management. Advanced call flow troubleshooting and optimization for next-generation voice services.
+          </p>
+        </article>
+
+        <article class="timeline-item glass">
+          <div class="timeline-date">Apr 2019 – Apr 2022</div>
+          <h3 class="timeline-role">Senior Switch Engineer</h3>
+          <div class="timeline-company">T-Mobile</div>
+          <div class="timeline-loc">📍 Plano, TX</div>
+          <p class="timeline-desc">
+            GSM/UMTS/LTE call flow analysis and optimization. Core network switch configuration. Inter-RAT handover troubleshooting. Network element provisioning and integration.
+          </p>
+        </article>
+
+        <article class="timeline-item glass">
+          <div class="timeline-date">Aug 2016 – Apr 2019</div>
+          <h3 class="timeline-role">Senior Switch Engineer</h3>
+          <div class="timeline-company">T-Mobile</div>
+          <div class="timeline-loc">📍 Atlanta, GA</div>
+          <p class="timeline-desc">
+            SS7/SIGTRAN protocol management. SIP trunk configuration and optimization. Core network element management. Signaling gateway operations and maintenance.
+          </p>
+        </article>
+
+        <article class="timeline-item glass">
+          <div class="timeline-date">Jul 2015 – Aug 2016</div>
+          <h3 class="timeline-role">Senior Switch Engineer</h3>
+          <div class="timeline-company">T-Mobile</div>
+          <div class="timeline-loc">📍 Chicago, IL</div>
+          <p class="timeline-desc">
+            Core network operations. Switch translation configuration. Call routing optimization. Network element maintenance and troubleshooting.
+          </p>
+        </article>
+
+        <article class="timeline-item glass">
+          <div class="timeline-date">Mar 2012 – Jul 2015</div>
+          <h3 class="timeline-role">Switch Engineer</h3>
+          <div class="timeline-company">Sprint</div>
+          <div class="timeline-loc">📍 Reston, VA</div>
+          <p class="timeline-desc">
+            CDMA/LTE core network engineering. Mobile switching center operations. Core network element provisioning. Protocol analysis and troubleshooting.
+          </p>
+        </article>
+
+        <article class="timeline-item glass">
+          <div class="timeline-date">May 2011 – Mar 2013</div>
+          <h3 class="timeline-role">Network Engineer</h3>
+          <div class="timeline-company">WVUH Jefferson Memorial</div>
+          <div class="timeline-loc">📍 Martinsburg, WV</div>
+          <p class="timeline-desc">
+            Enterprise LAN/WAN infrastructure. Network security and monitoring. Hardware/software deployment. Help desk team supervision.
+          </p>
+        </article>
+
+        <article class="timeline-item glass">
+          <div class="timeline-date">Mar 2009 – Feb 2010</div>
+          <h3 class="timeline-role">Help Desk Associate</h3>
+          <div class="timeline-company">Jorge Scientific</div>
+          <div class="timeline-loc">📍 Bethesda, MD</div>
+          <p class="timeline-desc">
+            Desktop support and system administration. Hardware/software troubleshooting. Active Directory user management. Email system administration.
+          </p>
+        </article>
+      </div>
+    </section>
+
+    <!-- ========== SKILLS ========== -->
+    <section id="skills" aria-label="Technical skills" style="position:relative;">
+      <div class="orb orb-gold-dark" aria-hidden="true" style="width:220px;height:220px;top:8%;right:-5%;"></div>
+      <span class="section-label reveal"><svg class="section-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="3"/><circle cx="5" cy="6" r="2"/><circle cx="19" cy="6" r="2"/><circle cx="5" cy="18" r="2"/><circle cx="19" cy="18" r="2"/><line x1="9.5" y1="10.5" x2="6.5" y2="7.5"/><line x1="14.5" y1="10.5" x2="17.5" y2="7.5"/><line x1="9.5" y1="13.5" x2="6.5" y2="16.5"/><line x1="14.5" y1="13.5" x2="17.5" y2="16.5"/></svg> SKILLS</span>
+      <h2 class="section-title reveal">Technical Skills</h2>
+
+      <div class="constellation-anchor">
+        <div class="skills-canvas-wrap glass reveal">
+          <canvas id="skill-canvas" aria-label="Interactive ring visualization of technical skills grouped by category"></canvas>
+        </div>
+      </div>
+
+      <div class="skills-list">
+        <div class="skill-category glass">
+          <h3 style="color: var(--gold);">Routing & Switching</h3>
+          <span class="skill-tag">Cisco Catalyst</span>
+          <span class="skill-tag">CSR/MAD Routers</span>
+          <span class="skill-tag">L3/L2 Switches</span>
+          <span class="skill-tag">Nokia Routers</span>
+        </div>
+        <div class="skill-category glass">
+          <h3 style="color: var(--gold-dark);">OSS Platforms</h3>
+          <span class="skill-tag">Nokia NetAct</span>
+          <span class="skill-tag">Ericsson ENM</span>
+          <span class="skill-tag">Config Mgmt</span>
+          <span class="skill-tag">Fault Mgmt</span>
+          <span class="skill-tag">Performance</span>
+        </div>
+        <div class="skill-category glass">
+          <h3 style="color: var(--gold-muted);">RAN & Cellular</h3>
+          <span class="skill-tag">GSM</span>
+          <span class="skill-tag">UMTS</span>
+          <span class="skill-tag">LTE</span>
+          <span class="skill-tag">Media Gateway</span>
+          <span class="skill-tag">BSC/RNC</span>
+        </div>
+        <div class="skill-category glass">
+          <h3 style="color: var(--gold-muted);">Enterprise IT</h3>
+          <span class="skill-tag">Active Directory</span>
+          <span class="skill-tag">Exchange Server</span>
+          <span class="skill-tag">Windows/Linux</span>
+          <span class="skill-tag">SharePoint</span>
+        </div>
+        <div class="skill-category glass">
+          <h3 style="color: var(--gold-subtle);">Scripting & Automation</h3>
+          <span class="skill-tag">Visual Basic</span>
+          <span class="skill-tag">JavaScript</span>
+          <span class="skill-tag">Batch/Shell</span>
+          <span class="skill-tag">AMOS</span>
+          <span class="skill-tag">HTML/XML</span>
+          <span class="skill-tag">Python</span>
+        </div>
+        <div class="skill-category glass">
+          <h3 style="color: var(--gold-subtle);">Tools & Productivity</h3>
+          <span class="skill-tag">Microsoft Suite</span>
+          <span class="skill-tag">Excel Reports</span>
+          <span class="skill-tag">PowerBI</span>
+          <span class="skill-tag">Teams/Skype</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== EDUCATION & CERTS ========== -->
+    <section id="education" aria-label="Education and certifications" style="position:relative;">
+      <div class="orb orb-ink" aria-hidden="true" style="width:200px;height:200px;top:5%;left:-4%;"></div>
+      <span class="section-label reveal"><svg class="section-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 3L1 9l11 6 9-4.91V17h2V9L12 3z"/><path d="M5 13.18v4L12 21l7-3.82v-4L12 17l-7-3.82z"/></svg> EDUCATION & CERTIFICATIONS</span>
+      <h2 class="section-title reveal">Foundation</h2>
+      <div class="edu-cert-grid">
+        <div class="edu-card glass reveal">
+          <h3>BS Computer Science</h3>
+          <p>Information Systems Security</p>
+          <p style="margin-top: 4px; font-size: 12px; color: var(--text-dim);">Higher Education</p>
+        </div>
+        <div class="edu-card glass reveal">
+          <h3>AA Computer Science</h3>
+          <p>Computer Networking Systems</p>
+          <p style="margin-top: 4px; font-size: 12px; color: var(--text-dim);">Higher Education</p>
+        </div>
+        <div class="cert-card glass reveal" style="grid-column: 1 / -1;">
+          <h3 style="font-size: 14px; margin-bottom: 12px; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.08em;">Certifications</h3>
+          <ul class="cert-list">
+            <li>
+              <span class="cert-badge" style="background:#C8102E;" aria-hidden="true">
+                <span class="badge-text">A+</span>
+              </span>
+              <span class="cert-text"><strong>CompTIA A+</strong> — IT fundamentals, hardware &amp; OS troubleshooting</span>
+            </li>
+            <li>
+              <span class="cert-badge" style="background:#0078D4;" aria-hidden="true">
+                <span class="badge-text">MCP</span>
+              </span>
+              <span class="cert-text"><strong>Microsoft Certified Professional</strong> — Windows server &amp; enterprise administration</span>
+            </li>
+            <li>
+              <span class="cert-badge" style="background:#1B365D;" aria-hidden="true">
+                <span class="badge-text">CCNA</span>
+              </span>
+              <span class="cert-text"><strong>Cisco Certified Network Associate</strong> — Routing, switching &amp; network fundamentals</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== CONTACT ========== -->
+    <section id="contact" aria-label="Contact form" style="position:relative;">
+      <div class="orb orb-gold-light" aria-hidden="true" style="width:200px;height:200px;top:5%;right:-5%;"></div>
+      <span class="section-label reveal"><svg class="section-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M22 4L12 13 2 4"/></svg> CONTACT</span>
+      <h2 class="section-title reveal">Get in Touch</h2>
+      <form novalidate name="contact" method="POST" data-netlify="true" netlify-honeypot="bot-field" data-netlify-recaptcha="true">
+        <input type="hidden" name="form-name" value="contact">
+        <p aria-hidden="true" style="position:absolute;left:-9999px;top:-9999px;"><label>Don't fill this out: <input name="bot-field" tabindex="-1" autocomplete="off"></label></p>
+        <div class="form-group full-width reveal">
+          <label for="contact-name">Name</label>
+          <input type="text" id="contact-name" name="name" required autocomplete="name" aria-describedby="err-name" aria-invalid="false">
+          <div class="form-error" id="err-name" role="alert">Please enter your name.</div>
+        </div>
+        <div class="form-group full-width reveal">
+          <label for="contact-email">Email</label>
+          <input type="email" id="contact-email" name="email" required autocomplete="email" aria-describedby="err-email" aria-invalid="false">
+          <div class="form-error" id="err-email" role="alert">Please enter a valid email address.</div>
+        </div>
+        <div class="form-group full-width reveal">
+          <label for="contact-subject">Subject</label>
+          <input type="text" id="contact-subject" name="subject" required aria-describedby="err-subject" aria-invalid="false">
+          <div class="form-error" id="err-subject" role="alert">Please enter a subject.</div>
+        </div>
+        <div class="form-group full-width reveal">
+          <label for="contact-message">Message</label>
+          <textarea id="contact-message" name="message" required aria-describedby="err-message" aria-invalid="false"></textarea>
+          <div class="form-error" id="err-message" role="alert">Please enter a message.</div>
+        </div>
+        <div class="full-width reveal">
+          <!-- ponytail: client-side only, add Formspree/Netlify endpoint when deploying -->
+          <button type="submit" class="btn btn-primary">Send Message</button>
+        </div>
+      </form>
+      <div id="form-success" style="display: none; margin-top: 20px; color: var(--gold); font-size: 14px;" role="status" aria-live="polite">
+        ✓ Message Sent (demo — connect a form backend for production)
+      </div>
+    </section>
+  </main>
+
+  <!-- ========== FOOTER ========== -->
+  <footer>
+    <div class="footer-social">
+      <a href="https://linkedin.com/in/syedrahidahmed" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn profile">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+      </a>
+      <a href="SRA_Resume_2026.docx" download class="footer-resume" aria-label="Download resume">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+        Resume
+      </a>
+    </div>
+    <p>© 2026 Syed Rahid Ahmed. Crafted with precision.</p>
+  </footer>
+
+  <!-- ================================================================
+       JAVASCRIPT — Three.js scene + interactions
+       ================================================================ -->
+  <script>
+    // ================================================================
+    // THREE.JS PARTICLE SCENE
+    // ================================================================
+    (function() {
+      'use strict';
+
+      // Don't run if Three.js failed to load or reduced motion preferred
+      if (typeof THREE === 'undefined') return;
+      const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (prefersReducedMotion) return;
+
+      const container = document.getElementById('scene-container');
+      const interactLayer = document.getElementById('constellation-interact');
+      const tooltip = document.getElementById('skill-tooltip');
+      const tooltipName = tooltip.querySelector('.tooltip-name');
+      const tooltipCat = tooltip.querySelector('.category');
+
+      // ---- Scene setup ----
+      const scene = new THREE.Scene();
+      const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+      window.camera = camera; // ponytail: expose to GSAP IIFE for scroll parallax
+      camera.position.z = 50;
+
+      const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+      renderer.setSize(window.innerWidth, window.innerHeight);
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+      renderer.setClearColor(0x000000, 0); // transparent so CSS bg shows
+      container.appendChild(renderer.domElement);
+
+      // ---- Helper: soft circle texture ----
+      function makeGlowTexture(color) {
+        const size = 64;
+        const canvas = document.createElement('canvas');
+        canvas.width = size;
+        canvas.height = size;
+        const ctx = canvas.getContext('2d');
+        const half = size / 2;
+        const grad = ctx.createRadialGradient(half, half, 0, half, half, half);
+        grad.addColorStop(0, color);
+        grad.addColorStop(1, 'rgba(0,0,0,0)');
+        ctx.fillStyle = grad;
+        ctx.fillRect(0, 0, size, size);
+        return new THREE.CanvasTexture(canvas);
+      }
+
+      const nodeTex = makeGlowTexture('rgba(184,134,11,0.95)');
+      const packetTex = makeGlowTexture('rgba(140,129,119,0.95)');
+
+      // ---- Network nodes (structured grid layout) ----
+      const COLS = 12, ROWS = 8;
+      const NODE_COUNT = COLS * ROWS;
+      const SPACING_X = 7, SPACING_Y = 7;
+
+      const nodePositions = new Float32Array(NODE_COUNT * 3);
+      const nodeColors = new Float32Array(NODE_COUNT * 3);
+      const nodeSizes = new Float32Array(NODE_COUNT);
+      const nodeTargetPos = new Float32Array(NODE_COUNT * 3);
+
+      const primaryC = new THREE.Color(0xc9950c);
+      const secondaryC = new THREE.Color(0xa67c00);
+
+      // Build adjacency (grid neighbors)
+      const adjacency = [];
+      for (let i = 0; i < NODE_COUNT; i++) adjacency[i] = [];
+
+      for (let r = 0; r < ROWS; r++) {
+        for (let c = 0; c < COLS; c++) {
+          const i = r * COLS + c;
+          const tx = (c - (COLS - 1) / 2) * SPACING_X + (Math.random() - 0.5) * 1.5;
+          const ty = (r - (ROWS - 1) / 2) * SPACING_Y + (Math.random() - 0.5) * 1.5;
+          const tz = (Math.random() - 0.5) * 3;
+          nodeTargetPos[i * 3] = tx;
+          nodeTargetPos[i * 3 + 1] = ty;
+          nodeTargetPos[i * 3 + 2] = tz;
+          // Start scattered for entrance
+          const angle = Math.random() * Math.PI * 2;
+          const dist = 40 + Math.random() * 60;
+          nodePositions[i * 3] = Math.cos(angle) * dist;
+          nodePositions[i * 3 + 1] = Math.sin(angle) * dist;
+          nodePositions[i * 3 + 2] = tz + (Math.random() - 0.5) * 40;
+          // Hub nodes (every 3rd row/col) get green, rest cyan
+          const isHub = (r % 3 === 0 && c % 3 === 0);
+          const col = isHub ? primaryC : secondaryC;
+          nodeColors[i * 3] = col.r;
+          nodeColors[i * 3 + 1] = col.g;
+          nodeColors[i * 3 + 2] = col.b;
+          nodeSizes[i] = isHub ? 3.5 + Math.random() * 1.5 : 1.5 + Math.random() * 1;
+          // Grid adjacency
+          if (c < COLS - 1) { adjacency[i].push(i + 1); adjacency[i + 1].push(i); }
+          if (r < ROWS - 1) { adjacency[i].push(i + COLS); adjacency[i + COLS].push(i); }
+        }
+      }
+
+      const nodeGeometry = new THREE.BufferGeometry();
+      nodeGeometry.setAttribute('position', new THREE.BufferAttribute(nodePositions, 3));
+      nodeGeometry.setAttribute('color', new THREE.BufferAttribute(nodeColors, 3));
+      nodeGeometry.setAttribute('size', new THREE.BufferAttribute(nodeSizes, 1));
+
+      const nodeMaterial = new THREE.ShaderMaterial({
+        uniforms: { uTexture: { value: nodeTex } },
+        vertexShader: `
+          attribute float size;
+          attribute vec3 color;
+          varying vec3 vColor;
+          void main() {
+            vColor = color;
+            vec4 mvPos = modelViewMatrix * vec4(position, 1.0);
+            gl_PointSize = size * (80.0 / -mvPos.z);
+            gl_Position = projectionMatrix * mvPos;
+          }
+        `,
+        fragmentShader: `
+          uniform sampler2D uTexture;
+          varying vec3 vColor;
+          void main() {
+            gl_FragColor = vec4(vColor, 1.0) * texture2D(uTexture, gl_PointCoord);
+          }
+        `,
+        transparent: true,
+        blending: THREE.AdditiveBlending,
+        depthWrite: false,
+      });
+
+      const nodePoints = new THREE.Points(nodeGeometry, nodeMaterial);
+      scene.add(nodePoints);
+
+      // ---- Connection lines (grid edges) ----
+      const edges = [];
+      const seen = new Set();
+      for (let i = 0; i < NODE_COUNT; i++) {
+        for (const j of adjacency[i]) {
+          const key = Math.min(i, j) + ',' + Math.max(i, j);
+          if (!seen.has(key)) { seen.add(key); edges.push([i, j]); }
+        }
+      }
+
+      const linePositions = new Float32Array(edges.length * 6);
+      const lineColors = new Float32Array(edges.length * 6);
+      const lineGeometry = new THREE.BufferGeometry();
+      lineGeometry.setAttribute('position', new THREE.BufferAttribute(linePositions, 3));
+      lineGeometry.setAttribute('color', new THREE.BufferAttribute(lineColors, 3));
+      lineGeometry.setDrawRange(0, edges.length * 2);
+
+      const lineMaterial = new THREE.LineBasicMaterial({
+        vertexColors: true,
+        transparent: true,
+        opacity: 0.15,
+        blending: THREE.AdditiveBlending,
+        depthWrite: false,
+      });
+
+      const lineSegments = new THREE.LineSegments(lineGeometry, lineMaterial);
+      scene.add(lineSegments);
+
+      function updateLines() {
+        for (let e = 0; e < edges.length; e++) {
+          const [a, b] = edges[e];
+          linePositions[e * 6]     = nodePositions[a * 3];
+          linePositions[e * 6 + 1] = nodePositions[a * 3 + 1];
+          linePositions[e * 6 + 2] = nodePositions[a * 3 + 2];
+          linePositions[e * 6 + 3] = nodePositions[b * 3];
+          linePositions[e * 6 + 4] = nodePositions[b * 3 + 1];
+          linePositions[e * 6 + 5] = nodePositions[b * 3 + 2];
+          const cr = (nodeColors[a*3] + nodeColors[b*3]) / 2;
+          const cg = (nodeColors[a*3+1] + nodeColors[b*3+1]) / 2;
+          const cb = (nodeColors[a*3+2] + nodeColors[b*3+2]) / 2;
+          lineColors[e * 6] = cr; lineColors[e * 6 + 1] = cg; lineColors[e * 6 + 2] = cb;
+          lineColors[e * 6 + 3] = cr; lineColors[e * 6 + 4] = cg; lineColors[e * 6 + 5] = cb;
+        }
+        lineGeometry.attributes.position.needsUpdate = true;
+        lineGeometry.attributes.color.needsUpdate = true;
+      }
+
+      // ---- Data packets (travel along connections) ----
+      const PACKET_COUNT = 40;
+      const packetPositions = new Float32Array(PACKET_COUNT * 3);
+      const packetSizes = new Float32Array(PACKET_COUNT);
+      const packetData = [];
+
+      const packetGeometry = new THREE.BufferGeometry();
+      packetGeometry.setAttribute('position', new THREE.BufferAttribute(packetPositions, 3));
+      packetGeometry.setAttribute('size', new THREE.BufferAttribute(packetSizes, 1));
+
+      const packetMaterial = new THREE.ShaderMaterial({
+        uniforms: { uTexture: { value: packetTex } },
+        vertexShader: `
+          attribute float size;
+          void main() {
+            vec4 mvPos = modelViewMatrix * vec4(position, 1.0);
+            gl_PointSize = size * (80.0 / -mvPos.z);
+            gl_Position = projectionMatrix * mvPos;
+          }
+        `,
+        fragmentShader: `
+          uniform sampler2D uTexture;
+          void main() {
+            gl_FragColor = vec4(0.788, 0.584, 0.047, 0.9) * texture2D(uTexture, gl_PointCoord);
+          }
+        `,
+        transparent: true,
+        blending: THREE.AdditiveBlending,
+        depthWrite: false,
+      });
+
+      const packetPoints = new THREE.Points(packetGeometry, packetMaterial);
+      scene.add(packetPoints);
+
+      function initPackets() {
+        for (let i = 0; i < PACKET_COUNT; i++) {
+          packetData[i] = {
+            edge: Math.floor(Math.random() * edges.length),
+            progress: Math.random(),
+            speed: 0.3 + Math.random() * 0.7,
+          };
+          packetSizes[i] = 1.5 + Math.random() * 1;
+        }
+        packetGeometry.attributes.size.needsUpdate = true;
+      }
+
+      function animatePackets(dt) {
+        for (let i = 0; i < PACKET_COUNT; i++) {
+          const p = packetData[i];
+          if (!p) continue;
+          p.progress += p.speed * dt;
+          if (p.progress >= 1) {
+            const [, b] = edges[p.edge];
+            const nextEdges = [];
+            for (let e = 0; e < edges.length; e++) {
+              if (edges[e][0] === b || edges[e][1] === b) nextEdges.push(e);
+            }
+            p.edge = nextEdges.length
+              ? nextEdges[Math.floor(Math.random() * nextEdges.length)]
+              : Math.floor(Math.random() * edges.length);
+            p.progress = 0;
+          }
+          const [a, b] = edges[p.edge];
+          const t = p.progress;
+          packetPositions[i * 3]     = nodePositions[a*3]   + (nodePositions[b*3]   - nodePositions[a*3]) * t;
+          packetPositions[i * 3 + 1] = nodePositions[a*3+1] + (nodePositions[b*3+1] - nodePositions[a*3+1]) * t;
+          packetPositions[i * 3 + 2] = nodePositions[a*3+2] + (nodePositions[b*3+2] - nodePositions[a*3+2]) * t;
+        }
+        packetGeometry.attributes.position.needsUpdate = true;
+      }
+
+      // ---- Mouse ping effect ----
+      const raycaster = new THREE.Raycaster();
+      raycaster.params.Points.threshold = 5;
+      const mouseNDC = new THREE.Vector2();
+      let pingNode = -1;
+      let pingTime = 0;
+      let pingActive = false;
+
+      container.addEventListener('mousemove', (e) => {
+        mouseNDC.x = (e.clientX / window.innerWidth) * 2 - 1;
+        mouseNDC.y = -(e.clientY / window.innerHeight) * 2 + 1;
+      });
+
+      function updatePing(time) {
+        raycaster.setFromCamera(mouseNDC, camera);
+        const intersects = raycaster.intersectObject(nodePoints);
+        if (intersects.length > 0) {
+          const idx = intersects[0].index;
+          if (idx !== pingNode) {
+            pingNode = idx;
+            pingTime = 0;
+            pingActive = true;
+          }
+        }
+        if (pingActive) {
+          pingTime += 0.02;
+          if (pingTime > 1) pingActive = false;
+        }
+      }
+
+      // ---- Entrance animation ----
+      const ENTRANCE_DURATION = 2.5;
+      let entranceTime = 0;
+      let entranceDone = false;
+
+      function easeOutCubic(t) { return 1 - Math.pow(1 - t, 3); }
+
+      function animateEntrance(dt) {
+        if (entranceDone) return;
+        entranceTime += dt;
+        const t = Math.min(entranceTime / ENTRANCE_DURATION, 1);
+        const e = easeOutCubic(t);
+
+        for (let i = 0; i < NODE_COUNT; i++) {
+          const sx = nodePositions[i*3], sy = nodePositions[i*3+1], sz = nodePositions[i*3+2];
+          const tx = nodeTargetPos[i*3], ty = nodeTargetPos[i*3+1], tz = nodeTargetPos[i*3+2];
+          // Stagger: center nodes appear first
+          const distFromCenter = Math.sqrt(tx*tx + ty*ty);
+          const stagger = distFromCenter / 50 * 0.4;
+          const localT = Math.max(0, Math.min(1, (t - stagger) / (1 - stagger)));
+          const le = easeOutCubic(localT);
+          nodePositions[i*3]     = sx + (tx - sx) * le;
+          nodePositions[i*3 + 1] = sy + (ty - sy) * le;
+          nodePositions[i*3 + 2] = sz + (tz - sz) * le;
+        }
+
+        nodeGeometry.attributes.position.needsUpdate = true;
+        updateLines();
+
+        if (t >= 1) {
+          entranceDone = true;
+          initPackets();
+        }
+      }
+
+      // ---- Ambient network animation ----
+      function animateNetwork(time, dt) {
+        if (!entranceDone) return;
+
+        // Gentle node breathing
+        for (let i = 0; i < NODE_COUNT; i++) {
+          nodePositions[i*3]     = nodeTargetPos[i*3]     + Math.sin(time * 0.3 + i * 0.7) * 0.3;
+          nodePositions[i*3 + 1] = nodeTargetPos[i*3 + 1] + Math.cos(time * 0.2 + i * 0.5) * 0.3;
+          nodePositions[i*3 + 2] = nodeTargetPos[i*3 + 2] + Math.sin(time * 0.15 + i * 1.1) * 0.2;
+        }
+        nodeGeometry.attributes.position.needsUpdate = true;
+
+        // Ping glow: brighten nearest nodes
+        if (pingActive && pingNode >= 0) {
+          const pulse = Math.sin(pingTime * Math.PI) * 0.5 + 0.5;
+          nodeSizes[pingNode] = 3.5 + pulse * 3;
+          for (const j of adjacency[pingNode]) {
+            nodeSizes[j] = 2 + pulse * 2;
+          }
+          nodeGeometry.attributes.size.needsUpdate = true;
+        } else {
+          // Reset sizes (only hub distinction)
+          for (let i = 0; i < NODE_COUNT; i++) {
+            const r = Math.floor(i / COLS), c = i % COLS;
+            const isHub = (r % 3 === 0 && c % 3 === 0);
+            nodeSizes[i] = isHub ? 3.5 : 1.5;
+          }
+          nodeGeometry.attributes.size.needsUpdate = true;
+        }
+
+        updateLines();
+        animatePackets(dt);
+        updatePing(time);
+      }
+
+      // ---- Mouse parallax ----
+      let mouseX = 0, mouseY = 0, targetMouseX = 0, targetMouseY = 0;
+      document.addEventListener('mousemove', (e) => {
+        targetMouseX = (e.clientX / window.innerWidth - 0.5) * 2;
+        targetMouseY = (e.clientY / window.innerHeight - 0.5) * 2;
+      });
+
+      // ================================================================
+      // SKILL CONSTELLATION (Three.js 2D on separate canvas)
+      // ================================================================
+      const skillCanvas = document.getElementById('skill-canvas');
+      const skillCtx = skillCanvas.getContext('2d');
+
+      const SKILLS = [
+        { name: 'Cisco Catalyst', cat: 'Routing & Switching', color: '#c2410c', desc: 'Enterprise switching platforms' },
+        { name: 'CSR/MAD Routers', cat: 'Routing & Switching', color: '#c2410c', desc: 'Carrier-grade routing' },
+        { name: 'L3/L2 Switches', cat: 'Routing & Switching', color: '#c2410c', desc: 'Layer 2/3 network switching' },
+        { name: 'Nokia Routers', cat: 'Routing & Switching', color: '#c2410c', desc: 'Nokia IP/MPLS routing' },
+        { name: 'Nokia NetAct', cat: 'OSS Platforms', color: '#0e7490', desc: 'Nokia network management' },
+        { name: 'Ericsson ENM', cat: 'OSS Platforms', color: '#0e7490', desc: 'Ericsson element management' },
+        { name: 'Config Mgmt', cat: 'OSS Platforms', color: '#0e7490', desc: 'Network configuration control' },
+        { name: 'Fault Mgmt', cat: 'OSS Platforms', color: '#0e7490', desc: 'Alarm correlation & resolution' },
+        { name: 'Performance', cat: 'OSS Platforms', color: '#0e7490', desc: 'KPI monitoring & reporting' },
+        { name: 'GSM', cat: 'RAN & Cellular', color: '#4d7c0f', desc: '2G radio access network' },
+        { name: 'UMTS', cat: 'RAN & Cellular', color: '#4d7c0f', desc: '3G WCDMA technology' },
+        { name: 'LTE', cat: 'RAN & Cellular', color: '#4d7c0f', desc: '4G E-UTRAN & EPC' },
+        { name: 'Media Gateway', cat: 'RAN & Cellular', color: '#4d7c0f', desc: 'Circuit/packet interworking' },
+        { name: 'BSC/RNC', cat: 'RAN & Cellular', color: '#4d7c0f', desc: '2G/3G base station controllers' },
+        { name: 'Active Directory', cat: 'Enterprise IT', color: '#44403c', desc: 'Identity & access management' },
+        { name: 'Exchange Server', cat: 'Enterprise IT', color: '#44403c', desc: 'Enterprise email infrastructure' },
+        { name: 'Windows/Linux', cat: 'Enterprise IT', color: '#44403c', desc: 'Multi-platform administration' },
+        { name: 'SharePoint', cat: 'Enterprise IT', color: '#44403c', desc: 'Collaboration & document mgmt' },
+        { name: 'Visual Basic', cat: 'Scripting & Automation', color: '#be123c', desc: 'Legacy automation scripting' },
+        { name: 'JavaScript', cat: 'Scripting & Automation', color: '#be123c', desc: 'Web & task automation' },
+        { name: 'Batch/Shell', cat: 'Scripting & Automation', color: '#be123c', desc: 'OS-level process automation' },
+        { name: 'AMOS', cat: 'Scripting & Automation', color: '#be123c', desc: 'Nokia batch operations language' },
+        { name: 'HTML/XML', cat: 'Scripting & Automation', color: '#be123c', desc: 'Markup & config data formats' },
+        { name: 'Microsoft Suite', cat: 'Tools & Productivity', color: '#65a30d', desc: 'Office 365 & desktop tools' },
+        { name: 'Excel Reports', cat: 'Tools & Productivity', color: '#65a30d', desc: 'Data analysis & reporting' },
+        { name: 'Teams/Skype', cat: 'Tools & Productivity', color: '#65a30d', desc: 'Enterprise communication' },
+      ];
+
+      // ---- Skill Ring layout ----
+      const CATS = [...new Set(SKILLS.map(s => s.cat))];
+      // Category color map (Solar Graphite v3.0)
+      const CAT_COLORS = {
+        'Routing & Switching':    '#c2410c',
+        'OSS Platforms':          '#0e7490',
+        'RAN & Cellular':         '#4d7c0f',
+        'Enterprise IT':          '#44403c',
+        'Scripting & Automation': '#be123c',
+        'Tools & Productivity':   '#65a30d',
+      };
+      let ringNodes = [];
+      let hoveredRing = null;
+      let ringOpacity = 0;
+      let ringActive = false;
+
+      // Cross-category keyword links
+      const LINK_KEYWORDS = ['nokia', 'cisco', 'microsoft', 'sctp', 'ip'];
+      function findCrossLinks() {
+        const links = [];
+        for (let i = 0; i < ringNodes.length; i++) {
+          for (let j = i + 1; j < ringNodes.length; j++) {
+            if (ringNodes[i].cat === ringNodes[j].cat) continue;
+            const a = ringNodes[i].name.toLowerCase(), b = ringNodes[j].name.toLowerCase();
+            const shared = LINK_KEYWORDS.some(k => a.includes(k) && b.includes(k));
+            if (shared) links.push([i, j]);
+          }
+        }
+        return links;
+      }
+
+      function initRingNodes(w, h) {
+        const cx = w / 2, cy = h / 2;
+        const outerR = Math.min(w, h) * 0.44;
+        const gap = 0.04; // gap between arcs in radians
+        const totalArc = Math.PI * 2 - gap * CATS.length;
+        let angle = -Math.PI / 2; // start top
+
+        ringNodes = [];
+        CATS.forEach(cat => {
+          const skills = SKILLS.filter(s => s.cat === cat);
+          const arcLen = totalArc / CATS.length;
+          skills.forEach((s, si) => {
+            const a = angle + (si + 0.5) / skills.length * arcLen;
+            const r = outerR * (0.72 + 0.12 * (si % 2)); // stagger radius
+            ringNodes.push({
+              ...s,
+              cx, cy, outerR,
+              angle: a,
+              baseAngle: a,
+              radius: r,
+              r: 5,
+            });
+          });
+          // Category label position — use CAT_COLORS map
+          const midAngle = angle + totalArc / CATS.length / 2;
+          ringNodes.push({
+            name: cat, cat: cat, color: CAT_COLORS[cat], desc: '',
+            cx, cy, outerR,
+            angle: midAngle, baseAngle: midAngle,
+            radius: outerR + 28,
+            r: 0, isLabel: true,
+          });
+          angle += arcLen + gap;
+        });
+      }
+
+      function drawSkillRing(time) {
+        if (!ringActive && ringOpacity <= 0) return;
+        const w = skillCanvas.width, h = skillCanvas.height;
+        if (ringNodes.length === 0) initRingNodes(w, h);
+
+        skillCtx.clearRect(0, 0, w, h);
+        ringOpacity += (ringActive ? 1 : -1) * 0.03;
+        ringOpacity = Math.max(0, Math.min(1, ringOpacity));
+        const op = ringOpacity;
+        const cx = w / 2, cy = h / 2;
+
+        // Slow rotation
+        const rot = time * 0.06;
+
+        // Compute current positions
+        const curPos = ringNodes.map(n => {
+          const a = n.baseAngle + rot;
+          return {
+            x: cx + Math.cos(a) * n.radius,
+            y: cy + Math.sin(a) * n.radius,
+            a,
+          };
+        });
+
+        // Draw arc tracks per category
+        const gap = 0.04;
+        const totalArc = Math.PI * 2 - gap * CATS.length;
+        let arcAngle = -Math.PI / 2;
+        CATS.forEach(cat => {
+          const arcLen = totalArc / CATS.length;
+          const startA = arcAngle + rot - Math.PI / 2;
+          const endA = arcAngle + arcLen + rot - Math.PI / 2;
+          const catSkills = SKILLS.filter(s => s.cat === cat);
+          const catColor = catSkills[0]?.color || '#a67c00';
+
+          skillCtx.beginPath();
+          skillCtx.arc(cx, cy, ringNodes.find(n => n.cat === cat && !n.isLabel)?.outerR || ringNodes[0]?.outerR || 100, startA, endA);
+          skillCtx.strokeStyle = catColor + Math.round(op * 30).toString(16).padStart(2, '0');
+          skillCtx.lineWidth = 1;
+          skillCtx.stroke();
+          arcAngle += arcLen + gap;
+        });
+
+        // Cross-category links
+        const crossLinks = findCrossLinks();
+        crossLinks.forEach(([i, j]) => {
+          const pi = curPos[i], pj = curPos[j];
+          if (!pi || !pj) return;
+          skillCtx.beginPath();
+          skillCtx.moveTo(pi.x, pi.y);
+          skillCtx.lineTo(pj.x, pj.y);
+          skillCtx.strokeStyle = 'rgba(201,149,12,' + (op * 0.25) + ')';
+          skillCtx.lineWidth = 1;
+          skillCtx.setLineDash([4, 4]);
+          skillCtx.stroke();
+          skillCtx.setLineDash([]);
+        });
+
+        // Draw skill nodes
+        ringNodes.forEach((n, i) => {
+          if (n.isLabel) {
+            // Category label
+            const p = curPos[i];
+            skillCtx.fillStyle = n.color + Math.round(op * 200).toString(16).padStart(2, '0');
+            skillCtx.font = '600 10px "Outfit", sans-serif';
+            skillCtx.textAlign = 'center';
+            skillCtx.textBaseline = 'middle';
+            // Rotate label text to be readable
+            const ta = n.baseAngle + rot;
+            const flip = Math.abs(ta % (Math.PI * 2)) > Math.PI;
+            skillCtx.save();
+            skillCtx.translate(p.x, p.y);
+            skillCtx.rotate(ta + (flip ? Math.PI : 0));
+            skillCtx.fillText(n.name, 0, 0);
+            skillCtx.restore();
+            return;
+          }
+
+          const isHovered = hoveredRing === i;
+          const p = curPos[i];
+          const r = isHovered ? n.r + 3 : n.r;
+          const glow = isHovered ? 0.7 : 0.3;
+
+          // Glow
+          const grad = skillCtx.createRadialGradient(p.x, p.y, 0, p.x, p.y, r * 3);
+          grad.addColorStop(0, n.color + Math.round(op * glow * 255).toString(16).padStart(2, '0'));
+          grad.addColorStop(1, n.color + '00');
+          skillCtx.fillStyle = grad;
+          skillCtx.beginPath();
+          skillCtx.arc(p.x, p.y, r * 3, 0, Math.PI * 2);
+          skillCtx.fill();
+
+          // Core
+          skillCtx.fillStyle = n.color + Math.round(op * 220).toString(16).padStart(2, '0');
+          skillCtx.beginPath();
+          skillCtx.arc(p.x, p.y, r, 0, Math.PI * 2);
+          skillCtx.fill();
+
+          // Name label on hover
+          if (isHovered) {
+            skillCtx.fillStyle = n.color + Math.round(op * 255).toString(16).padStart(2, '0');
+            skillCtx.font = '500 11px "Outfit", sans-serif';
+            skillCtx.textAlign = 'center';
+            skillCtx.fillText(n.name, p.x, p.y - r - 10);
+          }
+        });
+
+        // Center label
+        skillCtx.fillStyle = 'rgba(201,149,12,' + (op * 0.5) + ')';
+        skillCtx.font = '600 11px "Outfit", sans-serif';
+        skillCtx.textAlign = 'center';
+        skillCtx.textBaseline = 'middle';
+        skillCtx.fillText('TECHNICAL SKILLS', cx, cy - 6);
+        skillCtx.font = '400 9px "Outfit", sans-serif';
+        skillCtx.fillText('hover to explore', cx, cy + 8);
+      }
+
+      // ---- Canvas-local hover for skill ring ----
+      skillCanvas.addEventListener('mousemove', (e) => {
+        const rect = skillCanvas.getBoundingClientRect();
+        const mx = (e.clientX - rect.left) * (skillCanvas.width / rect.width);
+        const my = (e.clientY - rect.top) * (skillCanvas.height / rect.height);
+        let found = -1;
+        for (let i = 0; i < ringNodes.length; i++) {
+          if (ringNodes[i].isLabel) continue;
+          const n = ringNodes[i];
+          const a = n.baseAngle + (performance.now() * 0.001) * 0.06;
+          const nx = n.cx + Math.cos(a) * n.radius;
+          const ny = n.cy + Math.sin(a) * n.radius;
+          if (Math.hypot(mx - nx, my - ny) < n.r * 3 + 8) {
+            found = i;
+            break;
+          }
+        }
+        hoveredRing = found >= 0 ? found : null;
+        if (hoveredRing !== null) {
+          const n = ringNodes[hoveredRing];
+          tooltipName.textContent = n.name;
+          tooltipCat.textContent = n.desc || n.cat;
+          tooltip.style.left = (e.clientX + 14) + 'px';
+          tooltip.style.top = (e.clientY - 10) + 'px';
+          tooltip.classList.add('visible');
+          tooltip.setAttribute('aria-hidden', 'false');
+        } else {
+          tooltip.classList.remove('visible');
+          tooltip.setAttribute('aria-hidden', 'true');
+        }
+      });
+
+      skillCanvas.addEventListener('mouseleave', () => {
+        hoveredRing = null;
+        tooltip.classList.remove('visible');
+        tooltip.setAttribute('aria-hidden', 'true');
+      });
+
+      // ================================================================
+      // INTERSECTION OBSERVER
+      // ================================================================
+
+      // Constellation activation
+      const constellationAnchor = document.querySelector('.constellation-anchor');
+      if (constellationAnchor) {
+        const constObs = new IntersectionObserver((entries) => {
+          entries.forEach(e => {
+            ringActive = e.isIntersecting;
+          });
+        }, { threshold: 0.3 });
+        constObs.observe(constellationAnchor);
+      }
+
+      // ================================================================
+      // CONTACT FORM VALIDATION
+      // ================================================================
+      const form = document.querySelector('#contact form');
+      const successMsg = document.getElementById('form-success');
+      if (form) {
+        form.addEventListener('submit', (e) => {
+          e.preventDefault();
+          let valid = true;
+
+          const nameField = document.getElementById('contact-name');
+          const emailField = document.getElementById('contact-email');
+          const subjectField = document.getElementById('contact-subject');
+          const messageField = document.getElementById('contact-message');
+
+          // Reset errors
+          form.querySelectorAll('.form-group').forEach(g => g.classList.remove('error'));
+          [nameField, emailField, subjectField, messageField].forEach(f => f.setAttribute('aria-invalid', 'false'));
+
+          if (!nameField.value.trim()) {
+            nameField.closest('.form-group').classList.add('error');
+            nameField.setAttribute('aria-invalid', 'true');
+            valid = false;
+          }
+          const emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+          if (!emailRe.test(emailField.value.trim())) {
+            emailField.closest('.form-group').classList.add('error');
+            emailField.setAttribute('aria-invalid', 'true');
+            valid = false;
+          }
+          if (!subjectField.value.trim()) {
+            subjectField.closest('.form-group').classList.add('error');
+            subjectField.setAttribute('aria-invalid', 'true');
+            valid = false;
+          }
+          if (!messageField.value.trim()) {
+            messageField.closest('.form-group').classList.add('error');
+            messageField.setAttribute('aria-invalid', 'true');
+            valid = false;
+          }
+
+          if (valid) {
+            const btn = form.querySelector('button[type="submit"]');
+            if (btn) { btn.disabled = true; btn.textContent = 'Sending…'; }
+            const data = new FormData(form);
+            data.append('form-name', 'contact');
+            fetch('/', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+              body: new URLSearchParams(data).toString()
+            })
+              .then((res) => {
+                if (!res.ok) throw new Error('submit-failed');
+                form.style.display = 'none';
+                successMsg.style.display = 'block';
+                successMsg.textContent = "Thanks — your message is on its way. I'll reply within two business days.";
+              })
+              .catch(() => {
+                if (btn) { btn.disabled = false; btn.textContent = 'Send Message'; }
+                successMsg.style.display = 'block';
+                successMsg.style.color = 'var(--gold)';
+                successMsg.textContent = "Something went wrong sending the form. Please try again or email me directly.";
+              });
+          }
+        });
+
+        // Clear errors on input
+        form.querySelectorAll('input, textarea').forEach(function(field) {
+          field.addEventListener('input', function() {
+            var group = this.closest('.form-group');
+            if (group) {
+              group.classList.remove('error');
+              this.setAttribute('aria-invalid', 'false');
+            }
+          });
+        });
+      }
+
+      // ================================================================
+      // RESIZE (debounced for skill canvas)
+      // ================================================================
+      let resizeTimeout;
+      window.addEventListener('resize', () => {
+        camera.aspect = window.innerWidth / window.innerHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+
+        // Debounce skill canvas resize — avoids reinit on every pixel during drag/rotate
+        clearTimeout(resizeTimeout);
+        resizeTimeout = setTimeout(() => {
+          const rect = skillCanvas.parentElement.getBoundingClientRect();
+          skillCanvas.width = rect.width;
+          skillCanvas.height = rect.height;
+          ringNodes = [];
+          initRingNodes(skillCanvas.width, skillCanvas.height);
+        }, 150);
+      });
+
+      // Initial skill canvas size
+      setTimeout(() => {
+        const rect = skillCanvas.parentElement.getBoundingClientRect();
+        skillCanvas.width = rect.width;
+        skillCanvas.height = rect.height;
+        initRingNodes(skillCanvas.width, skillCanvas.height);
+      }, 100);
+
+      // ================================================================
+      // RENDER LOOP
+      // ================================================================
+      let prevTime = performance.now();
+
+      // Pause when tab is hidden
+      var pageVisible = true;
+      document.addEventListener('visibilitychange', function() {
+        pageVisible = !document.hidden;
+      });
+
+      function animate() {
+        requestAnimationFrame(animate);
+        if (!pageVisible) { prevTime = performance.now(); return; }
+        const now = performance.now();
+        const dt = (now - prevTime) / 1000;
+        prevTime = now;
+
+        // Network topology
+        animateEntrance(dt);
+        animateNetwork(now * 0.001, dt);
+
+        // Mouse parallax (smooth lerp)
+        mouseX += (targetMouseX - mouseX) * 0.05;
+        mouseY += (targetMouseY - mouseY) * 0.05;
+        scene.rotation.y = mouseX * 0.08;
+        scene.rotation.x = mouseY * 0.05;
+
+        // Constellation
+        drawSkillRing(now * 0.001);
+
+        renderer.render(scene, camera);
+      }
+
+      // Start after Three.js loads
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', animate);
+      } else {
+        animate();
+      }
+    })();
+
+    // ================================================================
+    // GSAP ANIMATIONS
+    // ================================================================
+    (function() {
+      'use strict';
+
+      if (typeof gsap === 'undefined') return;
+
+      // Respect reduced motion
+      const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (prefersReducedMotion) {
+        document.querySelectorAll('.reveal, .hero-label, .hero-name, .hero-title, .hero-tagline, .hero-cta, .stat-card, .timeline-item, .skill-category, .section-label').forEach(el => {
+          el.style.opacity = '1';
+          el.style.transform = 'none';
+        });
+        return;
+      }
+
+      gsap.registerPlugin(ScrollTrigger);
+
+      // ---- Hero entrance ----
+      const heroTl = gsap.timeline({ delay: 0.3 });
+
+      heroTl
+        .from('.hero-label', { opacity: 0, y: 30, duration: 0.7, ease: 'power3.out' })
+        .from('.hero-name', { opacity: 0, y: 30, duration: 0.7, ease: 'power3.out' }, '-=0.4')
+        .from('.hero-title', { opacity: 0, y: 20, duration: 0.6, ease: 'power3.out' }, '-=0.4')
+        .from('.hero-tagline', { opacity: 0, y: 20, duration: 0.6, ease: 'power3.out' }, '-=0.3')
+        .from('.hero-cta', { opacity: 0, y: 20, duration: 0.6, ease: 'power3.out' }, '-=0.3');
+
+      // ---- Scroll reveals ----
+      gsap.utils.toArray('.reveal').forEach(el => {
+        gsap.from(el, {
+          scrollTrigger: { trigger: el, start: 'top 85%', toggleActions: 'play none none none' },
+          opacity: 0, y: 30, duration: 0.6, ease: 'power2.out'
+        });
+      });
+
+      // ---- Section labels underline ----
+      gsap.utils.toArray('.section-label').forEach(el => {
+        gsap.fromTo(el,
+          { '--underline-w': '0px' },
+          {
+            '--underline-w': '60px',
+            duration: 0.8,
+            delay: 0.3,
+            ease: 'power2.out',
+            scrollTrigger: { trigger: el, start: 'top 85%' }
+          }
+        );
+      });
+
+      // ---- Stats counter ----
+      gsap.utils.toArray('.stat-num').forEach(el => {
+        const target = parseInt(el.dataset.target);
+        const obj = { val: 0 };
+        gsap.to(obj, {
+          val: target,
+          duration: 1.5,
+          ease: 'power2.out',
+          scrollTrigger: { trigger: el, start: 'top 80%' },
+          onUpdate: () => {
+            el.textContent = Math.round(obj.val) + (target > 1 ? '+' : '');
+          }
+        });
+      });
+
+      // ---- Timeline items stagger ----
+      gsap.from('.timeline-item', {
+        scrollTrigger: { trigger: '.timeline', start: 'top 80%' },
+        opacity: 0, x: -30, stagger: 0.1, duration: 0.5, ease: 'power2.out'
+      });
+
+      // ---- Skill categories stagger ----
+      gsap.from('.skill-category', {
+        scrollTrigger: { trigger: '.skills-list', start: 'top 80%' },
+        opacity: 0, y: 20, stagger: 0.06, duration: 0.4, ease: 'power2.out'
+      });
+
+      // ---- Scroll parallax for Three.js camera ----
+      ScrollTrigger.create({
+        trigger: 'body',
+        start: 'top top',
+        end: 'bottom bottom',
+        onUpdate: (self) => {
+          if (window.camera) {
+            window.camera.position.y = self.progress * -5;
+          }
+        }
+      });
+
+      // ---- Refresh on load ----
+      ScrollTrigger.refresh();
+    })();
+  </script>
+
+  <!-- ================================================================
+       NAV / BACK-TO-TOP / THEME HANDLERS
+       ================================================================ -->
+  <script>
+    (function() {
+      // --- Hamburger toggle ---
+      var navToggle = document.getElementById('nav-toggle');
+      var navLinks = document.querySelector('.nav-links');
+      if (navToggle && navLinks) {
+        navToggle.addEventListener('click', function() {
+          var open = navToggle.getAttribute('aria-expanded') === 'true' ? false : true;
+          navToggle.setAttribute('aria-expanded', open);
+          navLinks.classList.toggle('open');
+        });
+        // Close menu on link click
+        navLinks.querySelectorAll('a').forEach(function(a) {
+          a.addEventListener('click', function() {
+            navToggle.setAttribute('aria-expanded', 'false');
+            navLinks.classList.remove('open');
+          });
+        });
+      }
+
+      // --- Scrollspy ---
+      var sections = document.querySelectorAll('section[id]');
+      var navAnchors = document.querySelectorAll('.nav-links a:not(.nav-resume)');
+      function updateActiveLink() {
+        var scrollY = window.scrollY + 120;
+        var current = '';
+        sections.forEach(function(s) {
+          if (s.offsetTop <= scrollY) current = s.id;
+        });
+        navAnchors.forEach(function(a) {
+          a.classList.toggle('active', a.getAttribute('href') === '#' + current);
+        });
+      }
+      window.addEventListener('scroll', updateActiveLink, { passive: true });
+      updateActiveLink();
+
+      // --- Back to top ---
+      var backBtn = document.getElementById('back-to-top');
+      if (backBtn) {
+        window.addEventListener('scroll', function() {
+          backBtn.classList.toggle('visible', window.scrollY > 500);
+        }, { passive: true });
+        backBtn.addEventListener('click', function() {
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+      }
+
+      // --- Theme toggle + Style switcher ---
+      var toggle = document.getElementById('theme-toggle');
+      var styleToggle = document.getElementById('style-toggle');
+      var html = document.documentElement;
+      var themeMeta = document.querySelector('meta[name="theme-color"]');
+
+      // Load persisted state before paint (early)
+      const savedStyle = localStorage.getItem('themeStyle') || 'oxblood-editorial';
+      html.setAttribute('data-style', savedStyle);
+      if (styleToggle) {
+        styleToggle.querySelector('.style-label').textContent = savedStyle === 'oxblood-editorial' ? 'OE' :
+            savedStyle === 'solar-graphite' ? 'SG' : 'IO';
+      }
+
+      function switchStyle(name) {
+        html.setAttribute('data-style', name);
+        try { localStorage.setItem('themeStyle', name); } catch(e) {}
+        if (styleToggle) {
+          styleToggle.querySelector('.style-label').textContent = name === 'oxblood-editorial' ? 'OE' :
+              name === 'solar-graphite' ? 'SG' : 'IO';
+        }
+      }
+
+      if (styleToggle) {
+        styleToggle.addEventListener('click', function() {
+          var current = html.getAttribute('data-style');
+          var next = current === 'oxblood-editorial' ? 'solar-graphite' :
+                     current === 'solar-graphite' ? 'industrial-ochre' : 'oxblood-editorial';
+          switchStyle(next);
+        });
+
+        // Handle style menu item clicks (hoverable dropdown)
+        var styleMenuItems = document.querySelectorAll('.style-menu li');
+        styleMenuItems.forEach(function(item) {
+          item.addEventListener('click', function(e) {
+            e.stopPropagation();
+            var styleName = this.getAttribute('data-style');
+            if (styleName) {
+              switchStyle(styleName);
+              // Update active state
+              styleMenuItems.forEach(function(i) { i.classList.remove('active'); });
+              this.classList.add('active');
+            }
+          });
+        });
+      }
+
+      if (toggle) {
+        toggle.addEventListener('click', function() {
+          var isDark = html.getAttribute('data-theme') === 'dark';
+          if (isDark) {
+            html.removeAttribute('data-theme');
+            try { localStorage.setItem('theme', 'light'); } catch(e) {}
+            if (themeMeta) themeMeta.content = '#f7f5f0';
+          } else {
+            html.setAttribute('data-theme', 'dark');
+            try { localStorage.setItem('theme', 'dark'); } catch(e) {}
+            if (themeMeta) themeMeta.content = '#161412';
+          }
+        });
+      }
+    })();
+  </script>
+
+  <!-- No-JS fallback -->
+  <noscript>
+    <style>
+      #scene-container, #constellation-interact, #skill-tooltip { display: none !important; }
+      .reveal, .hero-label, .hero-name, .hero-title, .hero-tagline, .hero-cta,
+      .stat-card, .timeline-item, .skill-category, .section-label {
+        opacity: 1 !important; transform: none !important;
+      }
+    </style>
+  </noscript>
+</body>
+</html>

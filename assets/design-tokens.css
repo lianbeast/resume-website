@@ -1,0 +1,51 @@
+/* Design Tokens — Solar Graphite Evolution (Direction 1) */
+/* Migrated from Ivory & Ink 2026-07-10 */
+
+:root {
+  /* Primary — Burnt Terracotta */
+  --color-primary: #c2410c;
+  --color-primary-hover: #a4380a;
+  --color-primary-light: #e06a3a;
+
+  /* Secondary — Deep Teal */
+  --color-secondary: #0e7490;
+  --color-secondary-hover: #0b5a7c;
+
+  /* Tertiary — Olive */
+  --color-tertiary: #4d7c0f;
+
+  /* Neutral — Ink & Stone */
+  --color-ink: #1c1917;
+  --color-stone: #78716c;
+  --color-bg: #f7f5f0;
+  --color-surface: #ffffff;
+
+  /* Dark theme */
+  --color-bg-dark: #161412;
+  --color-surface-dark: #1e1c1a;
+  --color-ink-dark: #f0ede8;
+  --color-stone-dark: #9a938d;
+
+  /* Glass */
+  --color-glass: rgba(255, 255, 255, 0.55);
+  --color-glass-border: rgba(28, 25, 23, 0.08);
+
+  /* Accent */
+  --color-accent: var(--color-primary);
+  --color-accent-hover: var(--color-primary-hover);
+}
+
+[data-theme="dark"] {
+  --color-primary: #e06a3a;
+  --color-primary-hover: #c2410c;
+  --color-primary-light: #f59e0b;
+  --color-secondary: #22d3ee;
+  --color-secondary-hover: #67e8f9;
+  --color-tertiary: #84cc16;
+  --color-bg: var(--color-bg-dark);
+  --color-surface: var(--color-surface-dark);
+  --color-ink: var(--color-ink-dark);
+  --color-stone: var(--color-stone-dark);
+  --color-glass: rgba(22, 20, 18, 0.75);
+  --color-glass-border: rgba(224, 106, 58, 0.12);
+}

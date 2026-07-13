@@ -1,0 +1,29 @@
+{
+  "colors": {
+    "primary": {
+      "gold": { "value": "#c9950c", "rgb": "201,149,12", "usage": "CTAs, accents, timeline, hub nodes" },
+      "goldDark": { "value": "#a67c00", "rgb": "166,124,0", "usage": "Gradient endpoint, hover, secondary" },
+      "goldLight": { "value": "#e8c55a", "rgb": "232,197,90", "usage": "Gradient accent, tertiary" }
+    },
+    "neutral": {
+      "ivory": { "value": "#f7f5f0", "rgb": "247,245,240", "usage": "Page background" },
+      "surface": { "value": "#ffffff", "rgb": "255,255,255", "usage": "Card surfaces" },
+      "ink": { "value": "#1c1917", "rgb": "28,25,23", "usage": "Primary text" },
+      "muted": { "value": "#8c8985", "rgb": "140,137,133", "usage": "Muted text, labels" },
+      "darkBg": { "value": "#161412", "rgb": "22,20,18", "usage": "Dark mode background" },
+      "darkSurface": { "value": "#1e1c1a", "rgb": "30,28,26", "usage": "Dark mode card surface" }
+    }
+  },
+  "typography": {
+    "body": { "font": "Outfit", "fallback": "-apple-system, BlinkMacSystemFont, sans-serif" },
+    "mono": { "font": "JetBrains Mono", "fallback": "monospace" }
+  },
+  "spacing": { "section": "100px 5%", "card": "20-32px", "gridGap": "16-24px", "maxWidth": "1100px" },
+  "radius": { "button": "10px", "card": "16px", "input": "10px", "tag": "6px" },
+  "effects": {
+    "bgGlass": "rgba(255,255,255,0.55)",
+    "borderGlass": "rgba(28,25,23,0.08)",
+    "hoverBorder": "rgba(201,149,12,0.25)",
+    "glassBlur": "24px"
+  }
+}

@@ -1,0 +1,30 @@
+# Secrets
+.env
+.env.local
+*.env
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editor files
+*.swp
+*.swo
+*~
+.vscode/
+.idea/
+*.sublime-*
+
+# Dependencies (if any)
+node_modules/
+
+# Logs
+*.log
+npm-debug.log*
+
+# Archive
+*.zip
+*.gz
+*.tgz
+.tokensave
