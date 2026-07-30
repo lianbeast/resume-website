@@ -1,0 +1,18 @@
+[build]
+  command   = "echo 'Static site — no build step.'"
+  functions = "netlify/functions"
+
+[build.environment]
+  NETLIFY_NEXT_PLUGIN_SKIP = "true"
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "DENY"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+
+# Netlify Forms email notification — configure in UI:
+# Site Settings > Forms > Form notifications > Add notification > Email
+# Send to: your@email.com
+# Trigger: on successful form submission

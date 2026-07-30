@@ -1,0 +1,137 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-07-10T00:00:00Z",
+  "title": "Design System: Syed Rahid Ahmed — Career Site",
+  "extensions": {
+    "colorMeta": {
+      "ink": { "role": "neutral", "displayName": "Ink", "canonical": "oklch(0.10 0.005 60)", "tonalRamp": ["#2a2725", "#201d1b", "#1c1917", "#181512", "#14110e", "#100d0a", "#0c0906", "#080503"] },
+      "text-dim": { "role": "neutral", "displayName": "Stone", "canonical": "oklch(0.45 0.02 60)", "tonalRamp": ["#c4bfba", "#b5b0ab", "#a6a199", "#97928b", "#88837c", "#7a756e", "#6b6660", "#5c5752"] },
+      "bg-ivory": { "role": "neutral", "displayName": "Carbon Ivory", "canonical": "oklch(0.96 0.008 80)", "tonalRamp": ["#f7f5f0", "#edeae3", "#e3dfd6", "#d9d4c9", "#cfc9bc", "#c5beaf", "#bbb3a2", "#b1a895"] },
+      "bg-surface": { "role": "neutral", "displayName": "Warm White", "canonical": "oklch(1 0 0)", "tonalRamp": ["#ffffff", "#f7f7f6", "#efefed", "#e7e7e4", "#dfdfdb", "#d7d7d2", "#cfcfc9", "#c7c7c0"] },
+      "primary": { "role": "primary", "displayName": "Burnt Terracotta", "canonical": "oklch(0.58 0.18 30)", "tonalRamp": ["#f5c9b3", "#e8a98f", "#dc8969", "#c2410c", "#a4380a", "#802d09", "#5d1f06", "#391303"] },
+      "primary-light": { "role": "primary", "displayName": "Terracotta Light", "canonical": "oklch(0.70 0.14 32)", "tonalRamp": ["#fce2d7", "#f9c7b1", "#f6ab8a", "#e06a3a", "#d0582f", "#c04625", "#b0351c", "#a02412"] },
+      "primary-dark": { "role": "primary", "displayName": "Terracotta Dark", "canonical": "oklch(0.50 0.16 28)", "tonalRamp": ["#e88e5f", "#db7a45", "#ce662b", "#a4380a", "#8c2f08", "#742606", "#5c1d04", "#441403"] },
+      "secondary": { "role": "secondary", "displayName": "Deep Teal", "canonical": "oklch(0.48 0.14 200)", "tonalRamp": ["#b3e0eb", "#7ab9c8", "#3a8da3", "#0e7490", "#0b5a7c", "#08435b", "#062c3b", "#03161e"] },
+      "secondary-dark": { "role": "secondary", "displayName": "Teal Dark", "canonical": "oklch(0.40 0.11 200)", "tonalRamp": ["#97d1dd", "#5db4c0", "#21879a", "#0b5a7c", "#094863", "#07364a", "#052431", "#031218"] },
+      "tertiary": { "role": "tertiary", "displayName": "Olive", "canonical": "oklch(0.52 0.12 115)", "tonalRamp": ["#c4dc91", "#9bba5c", "#6f9924", "#4d7c0f", "#3d630c", "#2d4a09", "#1d3206", "#0e1a03"] },
+      "dark-bg": { "role": "neutral", "displayName": "Graphite Dark", "canonical": "oklch(0.16 0.008 60)", "tonalRamp": ["#3a3735", "#302d2b", "#262422", "#1d1a18", "#161412", "#100e0c", "#0a0806", "#040302"] },
+      "dark-surface": { "role": "neutral", "displayName": "Dark Surface", "canonical": "oklch(0.20 0.01 60)", "tonalRamp": ["#383634", "#2e2c2a", "#242321", "#1e1c1a", "#181614", "#12100e", "#0c0a08", "#060402"] },
+      "dark-text": { "role": "neutral", "displayName": "Dark Ink", "canonical": "oklch(0.94 0.005 60)", "tonalRamp": ["#f0ede8", "#e2dfda", "#d4d1cc", "#c6c3be", "#b8b5b0", "#aaa7a2", "#9c9994", "#8e8b86"] },
+      "44403c": { "role": "neutral", "displayName": "Warm Charcoal (Enterprise IT)", "canonical": "oklch(0.38 0.02 60)", "tonalRamp": ["#5e5a55", "#504c48", "#44403c", "#3a3633", "#2e2a27", "#22201d", "#161412", "#0a0807"] },
+      "be123c": { "role": "tertiary", "displayName": "Terracotta Rose (Scripting)", "canonical": "oklch(0.52 0.20 18)", "tonalRamp": ["#ecafc0", "#dc7c95", "#c54a6b", "#be123c", "#9d0e2c", "#7c0b22", "#5b0818", "#3a040f"] },
+      "65a30d": { "role": "tertiary", "displayName": "Lime (Tools)", "canonical": "oklch(0.61 0.16 130)", "tonalRamp": ["#cce791", "#a6d056", "#83b018", "#65a30d", "#4d7c0a", "#385806", "#223304", "#0d1502"] }
+    },
+    "typographyMeta": {
+      "display": { "displayName": "Display", "purpose": "Hero name only (p1, the one raise-voice moment)." },
+      "headline": { "displayName": "Headline", "purpose": "Section titles. text-wrap: balance." },
+      "title": { "displayName": "Title", "purpose": "Card titles, role names." },
+      "body": { "displayName": "Body", "purpose": "Running text. 15px, 1.7 leading, 65-75ch max." },
+      "label": { "displayName": "Label (Mono)", "purpose": "Section kickers, skill tags, meta. Mono for config-like vocabulary." }
+    },
+    "shadows": [
+      { "name": "glass-card-rest", "value": "inset 0 1px 0 rgba(255,255,255,0.5), 0 2px 8px rgba(0,0,0,0.04)", "purpose": "Default glass card depth: specular top highlight + hair ambient." },
+      { "name": "terracotta-state-rest", "value": "0 2px 8px rgba(194,65,12,0.2)", "purpose": "Terracotta-tinted hover shadow at rest." },
+      { "name": "terracotta-state-hover", "value": "0 4px 16px rgba(194,65,12,0.3)", "purpose": "Terracotta-tinted hover shadow elevated." },
+      { "name": "input-inset", "value": "inset 0 1px 2px rgba(0,0,0,0.04)", "purpose": "Subtle inner shadow on text inputs." }
+    ],
+    "motion": [
+      { "name": "ease-expo-out", "value": "cubic-bezier(0.16, 1, 0.3, 1)", "purpose": "Primary easing for transforms and hover transitions." },
+      { "name": "ease-smooth", "value": "cubic-bezier(0.4, 0, 0.2, 1)", "purpose": "Secondary easing for background/color transitions." },
+      { "name": "duration-fade", "value": "0.2s", "purpose": "Fade transitions (opacity, background)" },
+      { "name": "duration-shimmer", "value": "0.5s", "purpose": "Button shimmer slide." },
+      { "name": "border-glow", "value": "2s ease-in-out infinite", "purpose": "Breathing glow on focused form fields." }
+    ],
+    "breakpoints": [
+      { "name": "sm", "value": "640px" },
+      { "name": "md", "value": "768px" },
+      { "name": "lg", "value": "1024px" },
+      { "name": "xl", "value": "1280px" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Terracotta-filled CTA with terracotta-gradient body and shimmer slide on hover.",
+      "html": "<button class=\"ds-btn-primary\">GET IN TOUCH</button>",
+      "css": ".ds-btn-primary { position: relative; overflow: hidden; display: inline-flex; align-items: center; gap: 8px; font-family: 'Outfit',-apple-system,BlinkMacSystemFont,sans-serif; font-size: 0.9375rem; font-weight: 600; padding: 16px 48px; border: none; border-radius: 10px; background: linear-gradient(135deg, #c2410c 0%, #a4380a 100%); color: #ffffff; cursor: pointer; transition: transform 0.25s cubic-bezier(0.16,1,0.3,1), box-shadow 0.3s cubic-bezier(0.16,1,0.3,1); box-shadow: 0 2px 8px rgba(194,65,12,0.2); }.ds-btn-primary::before { content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%; background: linear-gradient(90deg,transparent,rgba(255,255,255,0.2),transparent); transition: none; }.ds-btn-primary:hover::before { animation: ds-shimmer 0.5s ease forwards; } @keyframes ds-shimmer { to { left: 100%; } } .ds-btn-primary:hover { box-shadow: 0 4px 16px rgba(194,65,12,0.3); }.ds-btn-primary:focus-visible { outline: 2px solid #c2410c; outline-offset: 2px; }"
+    },
+    {
+      "name": "Glass Card",
+      "kind": "card",
+      "refersTo": "glass-card",
+      "description": "Glassmorphism container with terracotta-tinted glass and backdrop blur. Used over topology background.",
+      "html": "<div class=\"ds-card-glass\"><h3 style=\"font-size:1.125rem;font-weight:600;margin-bottom:8px\">Card Title</h3><p style=\"font-size:0.9375rem;color:#78716c\">Credential or experience detail.</p></div>",
+      "css": ".ds-card-glass { background: rgba(255,255,255,0.55); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border: 1px solid rgba(28,25,23,0.08); border-radius: 16px; padding: 24px; box-shadow: inset 0 1px 0 rgba(255,255,255,0.5), 0 2px 8px rgba(0,0,0,0.04); transition: box-shadow 0.3s, border-color 0.3s; }.ds-card-glass:hover { border-color: rgba(194,65,12,0.25); box-shadow: 0 4px 16px rgba(194,65,12,0.3); }"
+    },
+    {
+      "name": "Small Glass Card",
+      "kind": "card",
+      "refersTo": "glass-card",
+      "description": "Smaller glass card variant with 12px radius.",
+      "html": "<div class=\"ds-card-glass-sm\">Small card</div>",
+      "css": ".ds-card-glass-sm { background: rgba(255,255,255,0.55); backdrop-filter: blur(12px); border: 1px solid rgba(28,25,23,0.08); border-radius: 12px; padding: 16px; }"
+    },
+    {
+      "name": "Skill Tag",
+      "kind": "chip",
+      "refersTo": "skill-tag",
+      "description": "Mono-label chip for protocol/technology tokens. Reads like config output.",
+      "html": "<span class=\"ds-tag\">SS7/SIGTRAN</span>",
+      "css": ".ds-tag { display: inline-block; font-family: 'JetBrains Mono',monospace; font-size: 0.6875rem; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; padding: 6px 14px; border-radius: 6px; background: #ffffff; color: #c2410c; border: 1px solid rgba(194,65,12,0.15); }"
+    },
+    {
+      "name": "Form Input",
+      "kind": "input",
+      "refersTo": null,
+      "description": "Warm White field with terracotta focus glow that breathes.",
+      "html": "<input class=\"ds-input\" placeholder=\"Your email\" type=\"email\">",
+      "css": ".ds-input { font-family: 'Outfit',-apple-system,BlinkMacSystemFont,sans-serif; font-size: 0.9375rem; padding: 14px; border-radius: 8px; border: 1px solid rgba(28,25,23,0.08); background: #ffffff; color: #1c1917; width: 100%; box-shadow: inset 0 1px 2px rgba(0,0,0,0.04); transition: border-color 0.3s; }.ds-input:focus { outline: 2px solid #c2410c; animation: ds-border-glow 2s ease-in-out infinite; } @keyframes ds-border-glow { 0%,100% { outline-color: #c2410c; } 50% { outline-color: #e06a3a; } }"
+    },
+    {
+      "name": "Navigation Link",
+      "kind": "nav",
+      "refersTo": null,
+      "description": "Glass nav bar item with terracotta active accent.",
+      "html": "<nav style=\"display:flex;gap:24px\"><a class=\"ds-nav\" href=\"#\">Experience</a><a class=\"ds-nav ds-nav-active\" href=\"#\">Skills</a><a class=\"ds-nav\" href=\"#\">Contact</a></nav>",
+      "css": ".ds-nav { font-family: 'Outfit',-apple-system,BlinkMacSystemFont,sans-serif; font-size: 0.9375rem; color: #1c1917; text-decoration: none; padding-bottom: 4px; border-bottom: 1px solid transparent; transition: border-color 0.2s, color 0.2s; }.ds-nav:hover { color: #c2410c; border-color: #c2410c; }.ds-nav-active { color: #c2410c; border-bottom: 1px solid #c2410c; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "Solar Graphite (topology)",
+    "overview": "This is a single-page personal career site for a Senior Network & Telecom Consultant, and the design is meant to read like the work: a carrier network marked onto the page — hub nodes, signal trails, cross-connections, ambient rotation. The North Star is topology as material: the Three.js background and 2D skill ring are not decoration, they are the argument that this person thinks in networks. Graphite nodes, terracotta signal, ink clarity. The system should feel engineered, grounded, and methodically precise — the composure of carrier-grade uptime, not the flash of a product launch.",
+    "keyCharacteristics": [
+      "Carrier-grade composure — restraint over performance; motion enhances, never shouts.",
+      "Topology is the argument — Three.js hub-and-packet background + 2D skill ring are domain metaphors, not garnish.",
+      "Terracotta is the main voice — a single orange accent carries every emphasis; rarity is its strength.",
+      "Ink-on-ivory / graphite-on-graphite — two true themes, light paper and dark metal, both warm-neutral.",
+      "One self-contained file — portable, forwardable, no build step."
+    ],
+    "rules": [
+      { "name": "The One Accent Rule", "body": "Terracotta is the primary saturated color on any light-mode screen. It accents ≲10% of the surface.", "section": "colors" },
+      { "name": "The No-Cream Rule", "body": "The ivory field stays at near-zero chroma toward warm gray, not toward yellow-beige.", "section": "colors" },
+      { "name": "The Stone-Not-Body Rule", "body": "Stone (#78716c) is for labels, captions, and mono metadata only. Body copy is Ink.", "section": "colors" },
+      { "name": "The One Display Rule", "body": "Display weight appears once per page — the hero name. Section titles drop to headline scale.", "section": "typography" },
+      { "name": "The Mono Earns Its Place Rule", "body": "JetBrains Mono is for technical tokens and structural labels only.", "section": "typography" },
+      { "name": "The Flat-Content Rule", "body": "Content cards are flat-glass at rest. Ambient shadow appears as a response to state.", "section": "elevation" },
+      { "name": "The Terracotta-Tinted Shadow Rule", "body": "Hover/active shadows are tinted with the terracotta primary, never pure neutral black.", "section": "elevation" }
+    ],
+    "dos": [
+      "Do capture the live terracotta/teal system. The Ivory & Ink gold system has been deprecated.",
+      "Do keep terracotta as the single primary accent (≲10% surface), on CTAs, focus rings, topology hubs, timeline dots, and gradient fills.",
+      "Do dampen motion fully on prefers-reduced-motion: kill Three.js, neutralize reveals halt orbs.",
+      "Do tint hover shadows with terracotta (rgba(194,65,12,a)) so state changes feel like brand."
+    ],
+    "donts": [
+      "Don't use gold #c9950c anymore. The palette has evolved to Burnt Terracotta #c2410c.",
+      "Don't use Stone (#78716c) for body copy.",
+      "Don't print a hero-metric template (big number, small label, gradient accent, supporting stats).",
+      "Don't put a mono uppercase tracked eyebrow above every section.",
+      "Don't use border-left/right >1px as a colored side-stripe on cards or list items.",
+      "Don't set gradient text (background-clip:text + gradient).",
+      "Don't apply glassmorphism decoratively.",
+      "Don't use the words synergy, seamless, leverage (as verb), revolutionary, rockstar/ninja, or passionate."
+    ]
+  }
+}

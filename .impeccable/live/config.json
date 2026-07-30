@@ -1,0 +1,12 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-07-10T00:00:00Z",
+  "name": "Syed Rahid Ahmed — Career Site",
+  "description": "Live variant mode config — single-page HTML career site",
+  "files": ["index.html"],
+  "framework": "html",
+  "insertBefore": "</head>",
+  "commentSyntax": "html",
+  "cspChecked": true,
+  "cspShape": null
+}

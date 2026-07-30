@@ -3,13 +3,13 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Syed Rahid Ahmed | Senior Switch Consultant</title>
-  <meta name="description" content="Senior Switch Consultant with 15+ years in Nokia/Alcatel-Lucent SROS routers, Ericsson/Nokia OSS, and Python-driven network security & AIOps automation across T-Mobile/Sprint.">
-  <meta name="keywords" content="Senior Switch Consultant, Network Security, AIOps, Python Automation, Router Hardening, ACLs, Nokia SROS, Ericsson OSS, CCNA, CISSP, CEH, Syed Rahid Ahmed">
+  <title>Syed Rahid Ahmed | Sr. Switch Technician — Telecom Operations & RAN/Transport</title>
+  <meta name="description" content="CCNA-certified Senior Switch &amp; Telecom Specialist with 15+ years in switch operations, facility management, and RAN/transport network engineering across T-Mobile and Sprint.">
+  <meta name="keywords" content="Sr. Switch Technician, Telecom Operations, RAN Transport, 5G NR, eNodeB, gNodeB, Nokia NetAct, Ericsson ENM, ATOMS, OneTransport, CCNA, MCP, CompTIA A+, Syed Rahid Ahmed">
   <meta name="author" content="Syed Rahid Ahmed">
   <meta name="robots" content="index, follow">
-  <meta property="og:title" content="Syed Rahid Ahmed | Senior Network & Telecom Consultant">
-  <meta property="og:description" content="15+ years of telecom and network infrastructure expertise — Cisco, Nokia, Ericsson, LTE, and enterprise IT.">
+  <meta property="og:title" content="Syed Rahid Ahmed | Sr. Switch Technician — Telecom Operations & RAN/Transport">
+  <meta property="og:description" content="15+ years switch operations, facility management, and RAN/transport engineering across T-Mobile and Sprint.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://syedrahidahmed.com">
   <meta property="og:image" content="https://syedrahidahmed.com/og-image.png">
@@ -19,8 +19,8 @@
 
   <!-- Twitter / X card -->
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Syed Rahid Ahmed | Senior Network & Telecom Consultant">
-  <meta name="twitter:description" content="15+ years of telecom and network infrastructure expertise — Cisco, Nokia, Ericsson, LTE, and enterprise IT.">
+  <meta name="twitter:title" content="Syed Rahid Ahmed | Sr. Switch Technician — Telecom Operations & RAN/Transport">
+  <meta name="twitter:description" content="15+ years of switch operations, facility management, and RAN/transport network engineering across T-Mobile and Sprint footprints.">
   <meta name="twitter:image" content="https://syedrahidahmed.com/og-image.png">
 
   <!-- JSON-LD structured data -->
@@ -29,20 +29,20 @@
     "@context": "https://schema.org",
     "@type": "Person",
     "name": "Syed Rahid Ahmed",
-    "jobTitle": "Senior Network & Telecom Consultant",
-    "description": "15+ years of telecom and network infrastructure expertise — Cisco, Nokia, Ericsson, LTE, and enterprise IT.",
+    "jobTitle": "Sr. Switch Technician — Telecom Operations & RAN/Transport Specialist",
+    "description": "CCNA-certified Sr. Switch & Telecom Specialist with 15+ years in switch operations, facility management, and RAN/transport network engineering across T-Mobile and Sprint.",
     "url": "https://syedrahidahmed.com",
     "image": "https://syedrahidahmed.com/og-image.png",
-    "knowsAbout": ["Network Engineering", "Telecom", "Cisco", "Nokia", "Ericsson", "GSM", "UMTS", "LTE", "5G", "VoLTE", "SIP", "Diameter", "SS7", "SIGTRAN"],
+    "knowsAbout": ["Switch Operations", "Facility Management", "RAN", "5G NR", "LTE", "eNodeB", "gNodeB", "Cisco", "Nokia NetAct", "Ericsson ENM", "ATOMS", "OneTransport", "Disaster Recovery", "BGP", "OSPF", "MPLS"],
     "alumniOf": [
       { "@type": "CollegeOrProgram", "name": "BS Computer Science" },
       { "@type": "CollegeOrProgram", "name": "AA Computer Science" }
     ],
-    "worksFor": { "@type": "Organization", "name": "T-Mobile" },
+    "worksFor": { "@type": "Organization", "name": "NextGen Telecommunication" },
     "hasCredential": [
-      { "@type": "EducationalOccupationalCredential", "name": "A+ Certified" },
+      { "@type": "EducationalOccupationalCredential", "name": "CCNA Certified" },
       { "@type": "EducationalOccupationalCredential", "name": "MCP Certified" },
-      { "@type": "EducationalOccupationalCredential", "name": "CCNA Certified" }
+      { "@type": "EducationalOccupationalCredential", "name": "CompTIA A+ Certified" }
     ]
   }
   </script>
@@ -76,35 +76,36 @@
        ================================================================ */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-    :root {
-      --input-bg: rgba(255, 255, 255, 0.92);
-      /* Solar Graphite Evolution — Direction 1 palette */
-      --bg: #f7f5f0;
-      --bg-glass: rgba(255, 255, 255, 0.55);
-      --bg-card: #ffffff;
-      --border-glass: rgba(28, 25, 23, 0.08);
-      --text: #1c1917;
-      --text-dim: #78716c;
-      --text-on-accent: #ffffff;
-      --gold: #c2410c;
-      --gold-light: #e06a3a;
-      --gold-dark: #a4380a;
-      --gold-muted: rgba(194, 65, 12, 0.6);
-      --gold-subtle: rgba(194, 65, 12, 0.4);
-      --teal: #0e7490;
-      --teal-dark: #0b5a7c;
-      --teal-light: #22d3ee;
-      --olive: #4d7c0f;
-      --font-body: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif;
-      --font-mono: 'JetBrains Mono', monospace;
-    }
+:root {
+  --input-bg: rgba(255, 255, 255, 0.92);
+  /* Solar Graphite Evolution — Direction 1 palette */
+  /* Migrated cyan → terracotta/teal per DESIGN.md 2026-07-10 */
+  --bg: #f7f5f0;
+  --bg-glass: rgba(255, 255, 255, 0.55);
+  --bg-card: #ffffff;
+  --border-glass: rgba(28, 25, 23, 0.08);
+  --text: #1c1917;
+  --text-dim: #6e635c;
+  --text-on-accent: #ffffff;
+  --gold: #c2410c;
+  --gold-light: #e06a3a;
+  --gold-dark: #a4380a;
+  --gold-muted: rgba(194, 65, 12, 0.6);
+  --gold-subtle: rgba(194, 65, 12, 0.4);
+  --teal: #0e7490;
+  --teal-dark: #0b5a7c;
+  --teal-light: #22d3ee;
+  --olive: #4d7c0f;
+  --font-body: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+}
 
     [data-theme="dark"] {
       --input-bg: rgba(30, 28, 26, 0.85);
       --bg: #161412;
       --bg-glass: rgba(22, 20, 18, 0.75);
       --bg-card: #1e1c1a;
-      --border-glass: rgba(224, 106, 58, 0.08);
+      --border-glass: rgba(224, 106, 58, 0.12);
       --text: #f0ede8;
       --text-dim: #9a938d;
       --text-on-accent: #161412;
@@ -114,41 +115,41 @@
       --gold-muted: rgba(224, 106, 58, 0.6);
       --gold-subtle: rgba(224, 106, 58, 0.4);
       --teal: #22d3ee;
-      --teal-dark: #0b5a7c;
+      --teal-dark: #0891b2;
       --teal-light: #67e8f9;
       --olive: #84cc16;
     }
 
     /* Style overrides — toggle via #style-toggle button */
     [data-style="solar-graphite"] {
-      --gold: #c2410c;
-      --gold-light: #e06a3a;
-      --gold-dark: #a4380a;
-      --gold-muted: rgba(194, 65, 12, 0.6);
-      --gold-subtle: rgba(194, 65, 12, 0.4);
-      --teal: #0e7490;
-      --teal-dark: #0b5a7c;
-      --teal-light: #22d3ee;
-      --olive: #4d7c0f;
+      --gold: #64748b;
+      --gold-light: #94a3b8;
+      --gold-dark: #475569;
+      --gold-muted: rgba(100, 116, 139, 0.6);
+      --gold-subtle: rgba(100, 116, 139, 0.4);
+      --teal: #0f766e;
+      --teal-dark: #0d635c;
+      --teal-light: #14b8a6;
+      --olive: #6b7280;
     }
     [data-style="solar-graphite"][data-theme="dark"] {
       --input-bg: rgba(30, 28, 26, 0.85);
-      --gold: #e06a3a;
-      --gold-light: #f59e0b;
-      --gold-dark: #c2410c;
-      --gold-muted: rgba(224, 106, 58, 0.6);
-      --gold-subtle: rgba(224, 106, 58, 0.4);
-      --teal: #22d3ee;
-      --teal-dark: #0b5a7c;
-      --teal-light: #67e8f9;
-      --olive: #84cc16;
+      --gold: #94a3b8;
+      --gold-light: #cbd5e1;
+      --gold-dark: #64748b;
+      --gold-muted: rgba(148, 163, 184, 0.6);
+      --gold-subtle: rgba(148, 163, 184, 0.4);
+      --teal: #14b8a6;
+      --teal-dark: #0d635c;
+      --teal-light: #5eead4;
+      --olive: #9ca3af;
     }
     [data-style="industrial-ochre"] {
-      --gold: #b87333;
-      --gold-light: #d4a574;
-      --gold-dark: #9d5f2a;
-      --gold-muted: rgba(184, 115, 51, 0.6);
-      --gold-subtle: rgba(184, 115, 51, 0.4);
+      --gold: #d97706;
+      --gold-light: #f59e0b;
+      --gold-dark: #b45309;
+      --gold-muted: rgba(217, 119, 6, 0.6);
+      --gold-subtle: rgba(217, 119, 6, 0.4);
       --teal: #6b8e23;
       --teal-dark: #5a7820;
       --teal-light: #a3d977;
@@ -156,17 +157,17 @@
     }
     [data-style="industrial-ochre"][data-theme="dark"] {
       --input-bg: rgba(30, 28, 26, 0.85);
-      --gold: #d4a574;
-      --gold-light: #e8c49a;
-      --gold-dark: #b87333;
-      --gold-muted: rgba(212, 165, 116, 0.6);
-      --gold-subtle: rgba(212, 165, 116, 0.4);
+      --gold: #f59e0b;
+      --gold-light: #fbbf24;
+      --gold-dark: #d97706;
+      --gold-muted: rgba(245, 158, 11, 0.6);
+      --gold-subtle: rgba(245, 158, 11, 0.4);
       --teal: #a3d977;
       --teal-dark: #84c451;
       --teal-light: #c8eaaa;
       --olive: #a3d977;
     }
-    /* oxblood-editorial (default) stays in :root above */
+    /* terracotta-teal (default) stays in :root above */
 
     html { transition: background 0.3s ease, color 0.3s ease; }
 
@@ -378,12 +379,12 @@
     .btn-primary {
       background: linear-gradient(135deg, var(--gold) 0%, var(--gold-dark) 100%);
       color: #fff;
-      box-shadow: 0 2px 8px rgba(201, 149, 12, 0.2),
+      box-shadow: 0 2px 8px rgba(194, 65, 12, 0.2),
                   inset 0 1px 0 rgba(255,255,255,0.15);
     }
     .btn-primary:hover {
-      box-shadow: 0 4px 16px rgba(201, 149, 12, 0.3),
-                  0 0 24px rgba(201, 149, 12, 0.12),
+      box-shadow: 0 4px 16px rgba(194, 65, 12, 0.3),
+                  0 0 24px rgba(194, 65, 12, 0.12),
                   inset 0 1px 0 rgba(255,255,255,0.15);
     }
     .btn-secondary {
@@ -393,8 +394,8 @@
       box-shadow: inset 0 1px 0 rgba(255,255,255,0.5);
     }
     .btn-secondary:hover {
-      background: rgba(201, 149, 12, 0.04);
-      border-color: rgba(201, 149, 12, 0.25);
+      background: rgba(194, 65, 12, 0.04);
+      border-color: rgba(194, 65, 12, 0.25);
       box-shadow: inset 0 1px 0 rgba(255,255,255,0.5), 0 2px 8px rgba(0,0,0,0.04);
     }
 
@@ -510,10 +511,28 @@
       color: var(--text-dim);
       margin-bottom: 10px;
     }
-    .timeline-desc {
+    .timeline-summary {
       font-size: 13px;
       color: var(--text-dim);
-      line-height: 1.7;
+      line-height: 1.6;
+      margin-bottom: 8px;
+    }
+    .timeline-metrics {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      font-size: 12px;
+    }
+    .timeline-metrics li {
+      color: var(--text);
+      white-space: nowrap;
+    }
+    .timeline-metrics strong {
+      color: var(--gold);
+      font-weight: 600;
     }
 
     /* ================================================================
@@ -676,8 +695,8 @@
       background: rgba(254,253,251,0.92);
       border-color: var(--gold);
       box-shadow: inset 0 1px 2px rgba(0,0,0,0.02),
-                  0 0 0 3px rgba(201, 149, 12, 0.12),
-                  0 0 16px rgba(201, 149, 12, 0.06);
+                  0 0 0 3px rgba(194, 65, 12, 0.12),
+                  0 0 16px rgba(194, 65, 12, 0.06);
     }
     .form-group textarea {
       min-height: 120px;
@@ -746,8 +765,8 @@
       height: 1px;
       background: linear-gradient(90deg,
         transparent 0%,
-        rgba(201, 149, 12, 0.15) 25%,
-        rgba(201, 149, 12, 0.35) 50%,
+        rgba(194, 65, 12, 0.15) 25%,
+        rgba(14, 116, 144, 0.35) 50%,
         rgba(14, 116, 144, 0.15) 75%,
         transparent 100%
       );
@@ -757,60 +776,9 @@
        ENHANCED GRAPHICS — Grain, Gradients, Mesh Blobs, Hover
        ================================================================ */
 
-    /* Gradient accent divider between sections */
-    section + section::before {
-      content: '';
-      display: block;
-      width: 60%;
-      max-width: 480px;
-      height: 1px;
-      margin: 0 auto 60px;
-      background: linear-gradient(90deg,
-        transparent 0%,
-        rgba(201, 149, 12, 0.06) 15%,
-        rgba(201, 149, 12, 0.22) 35%,
-        rgba(201, 149, 12, 0.30) 50%,
-        rgba(14, 116, 144, 0.22) 65%,
-        rgba(14, 116, 144, 0.06) 85%,
-        transparent 100%
-      );
-    }
+    /* No section divider gradients — Three.js topology is the only flourish */
 
-    /* Hero mesh gradient blob — ambient glow */
-    #hero::before {
-      content: '';
-      position: absolute;
-      top: -10%;
-      right: -15%;
-      width: 600px;
-      height: 600px;
-      border-radius: 50%;
-      background: radial-gradient(circle at 40% 40%,
-        rgba(201, 149, 12, 0.10) 0%,
-        rgba(201, 149, 12, 0.04) 40%,
-        transparent 70%
-      );
-      filter: blur(60px);
-      pointer-events: none;
-      z-index: -1;
-    }
-    #hero::after {
-      content: '';
-      position: absolute;
-      bottom: 5%;
-      left: -10%;
-      width: 400px;
-      height: 400px;
-      border-radius: 50%;
-      background: radial-gradient(circle at 60% 60%,
-        rgba(14, 116, 144, 0.07) 0%,
-        rgba(77, 124, 15, 0.04) 40%,
-        transparent 70%
-      );
-      filter: blur(50px);
-      pointer-events: none;
-      z-index: -1;
-    }
+    /* Three.js topology provides the ambient glow — no hero blobs needed */
     #hero { position: relative; }
 
     /* Enhanced glassmorphism — inner refraction border */
@@ -829,16 +797,16 @@
                   border-color 0.3s ease;
     }
     .glass:hover {
-      border-color: rgba(201, 149, 12, 0.25);
+      border-color: rgba(194, 65, 12, 0.35);
       box-shadow: inset 0 1px 0 rgba(255,255,255,0.06),
                   0 4px 16px rgba(0,0,0,0.04),
                   0 12px 40px rgba(0,0,0,0.08),
-                  0 0 0 1px rgba(201, 149, 12, 0.06);
+                  0 0 0 1px rgba(194, 65, 12, 0.10);
     }
 
     @keyframes dotPulse {
-      0%, 100% { box-shadow: 0 0 0 0 rgba(201, 149, 12, 0.3); }
-      50%      { box-shadow: 0 0 0 6px rgba(201, 149, 12, 0); }
+      0%, 100% { box-shadow: 0 0 0 0 rgba(194, 65, 12, 0.3); }
+      50%      { box-shadow: 0 0 0 6px rgba(194, 65, 12, 0); }
     }
 
     /* Hero accent bar — decorative gradient stripe */
@@ -876,7 +844,7 @@
     }
     .nav-theme-toggle:hover {
       color: var(--text);
-      background: rgba(201, 149, 12, 0.06);
+      background: rgba(194, 65, 12, 0.06);
     }
     .nav-theme-toggle:focus-visible {
       outline: 2px solid var(--gold);
@@ -960,8 +928,7 @@
       flex-direction: column;
       gap: 2px;
     }
-    .nav-style-dropdown:hover .style-menu,
-    .nav-style-dropdown:focus-within .style-menu {
+    .nav-style-dropdown.open .style-menu {
       opacity: 1;
       visibility: visible;
       transform: translateY(0);
@@ -979,12 +946,12 @@
       transition: background 0.2s ease, color 0.2s ease;
     }
     .style-menu li:hover {
-      background: rgba(201, 149, 12, 0.06);
+      background: rgba(194, 65, 12, 0.06);
       color: var(--text);
     }
     .style-menu li.active {
       color: var(--gold);
-      background: rgba(201, 149, 12, 0.08);
+      background: rgba(194, 65, 12, 0.08);
     }
     .style-swatch {
       display: inline-block;
@@ -1053,11 +1020,11 @@
     .nav-links a:hover,
     .nav-links a:focus-visible {
       color: var(--text);
-      background: rgba(201, 149, 12, 0.06);
+      background: rgba(194, 65, 12, 0.06);
     }
     .nav-links a.active {
       color: var(--gold);
-      background: rgba(201, 149, 12, 0.08);
+      background: rgba(194, 65, 12, 0.08);
     }
     .nav-resume {
       background: linear-gradient(135deg, var(--gold) 0%, var(--gold-dark) 100%) !important;
@@ -1065,7 +1032,7 @@
       margin-left: 8px;
     }
     .nav-resume:hover {
-      box-shadow: 0 2px 8px rgba(201, 149, 12, 0.3) !important;
+      box-shadow: 0 2px 8px rgba(194, 65, 12, 0.3) !important;
     }
     #nav-toggle {
       display: none;
@@ -1150,8 +1117,8 @@
     }
     #back-to-top:hover {
       transform: translateY(-3px);
-      box-shadow: 0 4px 16px rgba(0,0,0,0.08), 0 0 0 1px rgba(184,134,11,0.15);
-      border-color: rgba(184,134,11,0.25);
+      box-shadow: 0 4px 16px rgba(0,0,0,0.08), 0 0 0 1px rgba(8,145,178,0.15);
+      border-color: rgba(8,145,178,0.25);
     }
     #back-to-top:focus-visible {
       outline: 2px solid var(--gold);
@@ -1193,16 +1160,16 @@
       to   { left: 200%; }
     }
     @keyframes pulse-glow {
-      0%, 100% { box-shadow: 0 0 0 0 rgba(201, 149, 12, 0.3); }
-      50%      { box-shadow: 0 0 0 8px rgba(201, 149, 12, 0); }
+      0%, 100% { box-shadow: 0 0 0 0 rgba(194, 65, 12, 0.3); }
+      50%      { box-shadow: 0 0 0 8px rgba(194, 65, 12, 0); }
     }
     @keyframes gradient-shift {
       0%, 100% { background-position: 0% 50%; }
       50%      { background-position: 100% 50%; }
     }
     @keyframes border-glow {
-      0%, 100% { border-color: rgba(201, 149, 12, 0.15); }
-      50%      { border-color: rgba(201, 149, 12, 0.35); }
+      0%, 100% { border-color: rgba(194, 65, 12, 0.15); }
+      50%      { border-color: rgba(194, 65, 12, 0.35); }
     }
     /* ================================================================
        REVEAL — GSAP controls these via from() tweens
@@ -1219,15 +1186,15 @@
       filter: blur(80px);
     }
     .orb-gold {
-      background: radial-gradient(circle, rgba(201, 149, 12, 0.18), transparent 70%);
+      background: radial-gradient(circle, rgba(194, 65, 12, 0.18), transparent 70%);
       animation: orb-float 20s ease-in-out infinite;
     }
     .orb-gold-light {
-      background: radial-gradient(circle, rgba(232, 197, 90, 0.14), transparent 70%);
+      background: radial-gradient(circle, rgba(224, 106, 58, 0.14), transparent 70%);
       animation: orb-float-alt 24s ease-in-out infinite;
     }
     .orb-gold-dark {
-      background: radial-gradient(circle, rgba(166, 124, 0, 0.13), transparent 70%);
+      background: radial-gradient(circle, rgba(14, 116, 144, 0.13), transparent 70%);
       animation: orb-float 22s ease-in-out infinite;
     }
     .orb-ink {
@@ -1297,12 +1264,17 @@
        HERO GRADIENT TEXT & PULSING CTA
        ================================================================ */
     .hero-name {
-      background: linear-gradient(135deg, var(--text) 0%, var(--gold) 50%, var(--gold-dark) 100%);
-      background-size: 200% 200%;
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      animation: gradient-shift 6s ease-in-out infinite;
+      color: var(--text); /* fallback */
+    }
+    @supports (background-clip: text) or (-webkit-background-clip: text) {
+      .hero-name {
+        background: linear-gradient(135deg, var(--text) 0%, var(--gold) 50%, var(--gold-dark) 100%);
+        background-size: 200% 200%;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        animation: gradient-shift 6s ease-in-out infinite;
+      }
     }
     .hero-cta .btn-primary {
       animation: pulse-glow 3s ease-in-out infinite;
@@ -1331,10 +1303,10 @@
     }
     .stat-card:hover {
       transform: translateY(-4px) scale(1.01);
-      box-shadow: 0 8px 24px rgba(201, 149, 12, 0.1),
-                  0 16px 48px rgba(0,0,0,0.06),
-                  0 0 0 1px rgba(201, 149, 12, 0.08),
-                  inset 0 1px 0 rgba(255,255,255,0.06);
+      box-shadow: 0 8px 24px rgba(194, 65, 12, 0.15),
+                   0 16px 48px rgba(0,0,0,0.06),
+                   0 0 0 1px rgba(194, 65, 12, 0.12),
+                   inset 0 1px 0 rgba(255,255,255,0.06);
     }
 
     /* ================================================================
@@ -1353,11 +1325,11 @@
                   border-color 0.3s ease;
     }
     .timeline-item:hover {
-      box-shadow: 0 4px 16px rgba(201, 149, 12, 0.08),
+      box-shadow: 0 4px 16px rgba(194, 65, 12, 0.15),
                   0 12px 40px rgba(0,0,0,0.06),
-                  0 0 0 1px rgba(201, 149, 12, 0.10);
+                  0 0 0 1px rgba(194, 65, 12, 0.20);
       transform: translateX(6px) translateY(-2px);
-      border-color: rgba(201, 149, 12, 0.20);
+      border-color: rgba(194, 65, 12, 0.35);
     }
 
     /* ================================================================
@@ -1375,12 +1347,12 @@
       left: -100%;
       width: 50%;
       height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(201, 149, 12, 0.12), transparent);
+      background: linear-gradient(90deg, transparent, rgba(194, 65, 12, 0.12), transparent);
       transition: none;
     }
     .skill-tag:hover {
-      border-color: rgba(201, 149, 12, 0.3);
-      background: rgba(201, 149, 12, 0.05);
+      border-color: rgba(194, 65, 12, 0.3);
+      background: rgba(194, 65, 12, 0.05);
     }
     .skill-tag:hover::before {
       animation: shimmer-slide 0.6s ease forwards;
@@ -1604,18 +1576,18 @@
       <li><a href="#skills">Skills</a></li>
       <li><a href="#education">Education</a></li>
       <li><a href="#contact">Contact</a></li>
-      <li><a href="SRA_Resume_2026.docx" class="nav-resume" download>Resume</a></li>
+      <li><a href="SRA-Resume-072926.pdf" class="nav-resume" download>Resume</a></li>
       <li class="nav-style-dropdown">
         <button id="style-toggle" class="nav-style-toggle" aria-label="Select color style" title="Select style" aria-haspopup="true" aria-expanded="false">
           <svg class="style-icon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="4" fill="currentColor" stroke="none"/><path d="M12 2v4M12 18v4M2 12h4M18 12h4"/>
           </svg>
-          <span class="style-label">SG</span>
+          <span class="style-label">CD</span>
         </button>
         <ul class="style-menu" role="menu">
-          <li role="menuitem" data-style="oxblood-editorial"><span class="style-swatch" style="background: #8b1a2e"></span> Oxblood Editorial</li>
-          <li role="menuitem" data-style="solar-graphite"><span class="style-swatch" style="background: #c2410c"></span> Solar Graphite</li>
-          <li role="menuitem" data-style="industrial-ochre"><span class="style-swatch" style="background: #b87333"></span> Industrial Ochre</li>
+          <li role="menuitem" data-style="oxblood-editorial"><span class="style-swatch" style="background: #c2410c"></span> Terracotta</li>
+          <li role="menuitem" data-style="solar-graphite"><span class="style-swatch" style="background: #64748b"></span> Graphite Steel</li>
+          <li role="menuitem" data-style="industrial-ochre"><span class="style-swatch" style="background: #d97706"></span> Industrial Ochre</li>
         </ul>
       </li>
       <li><button id="theme-toggle" class="nav-theme-toggle" aria-label="Toggle dark/light mode" title="Toggle theme">
@@ -1668,9 +1640,9 @@
 
       <span class="hero-label">NETWORK & TELECOM INFRASTRUCTURE</span>
       <h1 class="hero-name">Syed Rahid Ahmed</h1>
-      <p class="hero-title">Senior Network & Telecom Consultant</p>
+      <p class="hero-title">Sr. Switch Technician | Telecom Operations &amp; RAN/Transport Specialist</p>
       <p class="hero-tagline">
-        Over 15 years architecting reliable connectivity across Cisco, Nokia, and Ericsson infrastructure — serving major US carriers with GSM, UMTS, and LTE expertise.
+        15+ years of switch operations, facility management, and RAN/transport network engineering across T-Mobile and Sprint — 5G NR/LTE, Cisco, Nokia NetAct, and Ericsson ENM.
       </p>
       <nav class="hero-cta" aria-label="Primary actions">
         <a href="#contact" class="btn btn-primary">Get in Touch</a>
@@ -1686,15 +1658,15 @@
           <div class="stat-label">Years Experience</div>
         </div>
         <div class="stat-card glass">
-          <div class="stat-num" data-target="4">0</div>
-          <div class="stat-label">Major Carriers</div>
+          <div class="stat-num" data-target="6">0</div>
+          <div class="stat-label">Client Engagements</div>
         </div>
         <div class="stat-card glass">
-          <div class="stat-num" data-target="7">0</div>
-          <div class="stat-label">Distinct Roles</div>
+          <div class="stat-num" data-target="500">0</div>
+          <div class="stat-label">Cell Sites Managed</div>
         </div>
         <div class="stat-card glass">
-          <div class="stat-num" data-target="8">0</div>
+          <div class="stat-num" data-target="3">0</div>
           <div class="stat-label">Certifications</div>
         </div>
       </div>
@@ -1703,33 +1675,33 @@
     <!-- ========== ABOUT ========== -->
     <section id="about" aria-label="About me" style="position:relative;">
       <div class="orb orb-gold-light" aria-hidden="true" style="width:220px;height:220px;top:10%;right:-5%;"></div>
-      <span class="section-label reveal"><svg class="section-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="8" r="4"/><path d="M5 20c0-3.87 3.13-7 7-7s7 3.13 7 7"/></svg> ABOUT</span>
+      <span class="section-label reveal">ABOUT</span>
       <h2 class="section-title reveal">Building the Networks<br>That Connect Everything</h2>
       <div class="about-grid">
         <div class="about-text glass reveal">
           <p>
-            From desktop support at Jorge Scientific to designing VoLTE/5G core signaling for T-Mobile, my career has been a steady climb through the layers of network infrastructure. I specialize in the intersection of telecom core networks and enterprise IT — a space where SS7/SIGTRAN meets Active Directory, and where SIP trunks coexist with SharePoint farms.
+            CCNA&hyphen;certified Senior Switch &amp; Telecom Specialist with over 15 years of hands&hyphen;on experience in switch operations, facility management, and RAN/transport network engineering across T&hyphen;Mobile and Sprint footprints.
           </p>
           <p style="margin-top: 16px;">
-            My approach is hands-on and methodical: map the call flow, trace the signaling, isolate the fault, apply the fix. Whether it's provisioning an eNodeB, configuring Nokia NetAct thresholds, or scripting AMOS batch operations, I bring both depth and breadth to every engagement.
+            Proven domain expert in 5G NR/LTE architecture (eNodeB/gNodeB), Cisco routing/switching, Nokia NetAct, and Ericsson ENM. Skilled in disaster recovery activations&mdash;including Hurricane Helene restoration&mdash;special deployments (NSD, DAS, emergency COWs), and leading War&hyphen;Room outage response with ITIL&hyphen;compliant change management. Demonstrated leader in formally mentoring junior technicians in technical theory and operational discipline.
           </p>
         </div>
         <div class="about-highlights glass reveal">
           <div class="highlight-item">
-            <span class="highlight-key">Core Platforms</span>
-            <span class="highlight-val">Cisco / Nokia / Ericsson</span>
+            <span class="highlight-key">Core Expertise</span>
+            <span class="highlight-val">Switch &amp; Facility Operations</span>
           </div>
           <div class="highlight-item">
-            <span class="highlight-key">Primary Carriers</span>
-            <span class="highlight-val">T-Mobile / Sprint</span>
+            <span class="highlight-key">5G/4G Platforms</span>
+            <span class="highlight-val">eNodeB / gNodeB / NR</span>
           </div>
           <div class="highlight-item">
-            <span class="highlight-key">RAN Technologies</span>
-            <span class="highlight-val">GSM / UMTS / LTE / 5G</span>
+            <span class="highlight-key">OSS Platforms</span>
+            <span class="highlight-val">Nokia NetAct / Ericsson ENM</span>
           </div>
           <div class="highlight-item">
             <span class="highlight-key">Location</span>
-            <span class="highlight-val">United States</span>
+            <span class="highlight-val">Clarksburg, MD</span>
           </div>
           <div class="highlight-item">
             <span class="highlight-key">Education</span>
@@ -1742,77 +1714,100 @@
     <!-- ========== EXPERIENCE ========== -->
     <section id="experience" aria-label="Professional experience" style="position:relative;">
       <div class="orb orb-gold" aria-hidden="true" style="width:200px;height:200px;top:5%;left:-4%;"></div>
-      <span class="section-label reveal"><svg class="section-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M3 11h18"/><path d="M8 7V5a2 2 0 012-2h4a2 2 0 012 2v2"/></svg> EXPERIENCE</span>
+      <span class="section-label reveal">EXPERIENCE</span>
       <h2 class="section-title reveal">Career Timeline</h2>
       <div class="timeline">
         <article class="timeline-item glass">
-          <div class="timeline-date">Apr 2022 – Present <span style="display:inline-block;background:var(--gold);color:#000;font-size:9px;font-weight:700;padding:2px 6px;border-radius:4px;margin-left:6px;vertical-align:middle;letter-spacing:0.04em;">CURRENT</span></div>
-          <h3 class="timeline-role">Senior Switch Engineer</h3>
-          <div class="timeline-company">T-Mobile</div>
-          <div class="timeline-loc">📍 Bellevue, WA</div>
-          <p class="timeline-desc">
-            VoLTE/5G core network engineering. SIP and Diameter signaling protocols. IMS core infrastructure management. Advanced call flow troubleshooting and optimization for next-generation voice services.
-          </p>
+          <div class="timeline-date">May 2022 – Mar 2026</div>
+          <h3 class="timeline-role">Sr. Switch Technician / Engineer</h3>
+          <div class="timeline-company">NextGen Telecommunication (Client: T-Mobile)</div>
+          <div class="timeline-loc">Hammond, LA · On-Site</div>
+          <p class="timeline-summary">Led regional switch operations across 500+ cell sites — Hurricane Helene DR, NSD/DAS/COW deployments, and team-wide process automation.</p>
+          <ul class="timeline-metrics">
+            <li><strong>500+</strong> cell sites integrated</li>
+            <li><strong>40%</strong> faster circuit turn-up</li>
+            <li><strong>200+</strong> E911/CBN discrepancies resolved</li>
+            <li><strong>60%</strong> reporting overhead cut</li>
+          </ul>
         </article>
 
         <article class="timeline-item glass">
-          <div class="timeline-date">Apr 2019 – Apr 2022</div>
-          <h3 class="timeline-role">Senior Switch Engineer</h3>
-          <div class="timeline-company">T-Mobile</div>
-          <div class="timeline-loc">📍 Plano, TX</div>
-          <p class="timeline-desc">
-            GSM/UMTS/LTE call flow analysis and optimization. Core network switch configuration. Inter-RAT handover troubleshooting. Network element provisioning and integration.
-          </p>
+          <div class="timeline-date">May 2019 – Mar 2022</div>
+          <h3 class="timeline-role">Sr. Switch Technician / Engineer</h3>
+          <div class="timeline-company">WAVSYS Telecommunication (Client: T-Mobile)</div>
+          <div class="timeline-loc">Miami, FL · Remote</div>
+          <p class="timeline-summary">Remote BSS/RAN/switch ops across 1,000+ sites — MOP standardization and ITIL-compliant change windows at scale.</p>
+          <ul class="timeline-metrics">
+            <li><strong>1,000+</strong> cell sites managed</li>
+            <li><strong>99.5%</strong> operational uptime</li>
+            <li><strong>35%</strong> fewer provisioning errors</li>
+            <li><strong>15%</strong> YoY regional coverage growth</li>
+          </ul>
         </article>
 
         <article class="timeline-item glass">
-          <div class="timeline-date">Aug 2016 – Apr 2019</div>
-          <h3 class="timeline-role">Senior Switch Engineer</h3>
-          <div class="timeline-company">T-Mobile</div>
-          <div class="timeline-loc">📍 Atlanta, GA</div>
-          <p class="timeline-desc">
-            SS7/SIGTRAN protocol management. SIP trunk configuration and optimization. Core network element management. Signaling gateway operations and maintenance.
-          </p>
+          <div class="timeline-date">Dec 2016 – Apr 2019</div>
+          <h3 class="timeline-role">Sr. Switch Technician / Engineer</h3>
+          <div class="timeline-company">Kineticom Telecommunication (Client: T-Mobile)</div>
+          <div class="timeline-loc">Austin, TX · Hybrid</div>
+          <p class="timeline-summary">Multi-layer transport & RAN fault isolation during OSS consolidation — zero-disruption site rehoming and SharePoint centralization.</p>
+          <ul class="timeline-metrics">
+            <li><strong>150+</strong> sites rehomed, zero downtime</li>
+            <li><strong>500+</strong> configs centralized</li>
+            <li><strong>30%</strong> faster troubleshooting</li>
+            <li><strong>75%</strong> manual tracking reduced</li>
+          </ul>
         </article>
 
         <article class="timeline-item glass">
-          <div class="timeline-date">Jul 2015 – Aug 2016</div>
-          <h3 class="timeline-role">Senior Switch Engineer</h3>
-          <div class="timeline-company">T-Mobile</div>
-          <div class="timeline-loc">📍 Chicago, IL</div>
-          <p class="timeline-desc">
-            Core network operations. Switch translation configuration. Call routing optimization. Network element maintenance and troubleshooting.
-          </p>
+          <div class="timeline-date">May 2015 – Dec 2016</div>
+          <h3 class="timeline-role">Sr. Switch Technician / Engineer</h3>
+          <div class="timeline-company">Apricot Consulting LLC (Client: T-Mobile)</div>
+          <div class="timeline-loc">Austin, TX · On-Site</div>
+          <p class="timeline-summary">BSC/RNC optimization and E911 reconciliation for new RAN activations — regional team training and process discipline.</p>
+          <ul class="timeline-metrics">
+            <li><strong>300+</strong> new RAN activations</li>
+            <li><strong>150+</strong> E911 discrepancies corrected</li>
+            <li><strong>25%</strong> lower MTTR</li>
+            <li><strong>99%</strong> first-time-right circuits</li>
+          </ul>
         </article>
 
         <article class="timeline-item glass">
-          <div class="timeline-date">Mar 2012 – Jul 2015</div>
+          <div class="timeline-date">May 2012 – Mar 2015</div>
           <h3 class="timeline-role">Switch Engineer</h3>
-          <div class="timeline-company">Sprint</div>
-          <div class="timeline-loc">📍 Reston, VA</div>
-          <p class="timeline-desc">
-            CDMA/LTE core network engineering. Mobile switching center operations. Core network element provisioning. Protocol analysis and troubleshooting.
-          </p>
+          <div class="timeline-company">Apricot Consulting LLC (Client: Sprint)</div>
+          <div class="timeline-loc">Spokane, WA · On-Site</div>
+          <p class="timeline-summary">Cell-site backhaul and aggregation for Sprint's LTE rollout — router/switch configuration and pre-cutover data fill.</p>
+          <ul class="timeline-metrics">
+            <li><strong>200+</strong> LTE site turn-ups</li>
+            <li><strong>100%</strong> L2/L3 protocol verification</li>
+            <li><strong>Zero</strong> cutover rollbacks</li>
+          </ul>
         </article>
 
         <article class="timeline-item glass">
-          <div class="timeline-date">May 2011 – Mar 2013</div>
+          <div class="timeline-date">2011 – 2012</div>
           <h3 class="timeline-role">Network Engineer</h3>
-          <div class="timeline-company">WVUH Jefferson Memorial</div>
-          <div class="timeline-loc">📍 Martinsburg, WV</div>
-          <p class="timeline-desc">
-            Enterprise LAN/WAN infrastructure. Network security and monitoring. Hardware/software deployment. Help desk team supervision.
-          </p>
+          <div class="timeline-company">WVUH Jefferson Memorial Hospital</div>
+          <div class="timeline-loc">Martinsburg, WV</div>
+          <p class="timeline-summary">Enterprise LAN/WAN infrastructure and team supervision for a hospital IT environment.</p>
+          <ul class="timeline-metrics">
+            <li><strong>24/7</strong> hospital IT uptime</li>
+            <li><strong>Multi-site</strong> LAN/WAN coverage</li>
+          </ul>
         </article>
 
         <article class="timeline-item glass">
-          <div class="timeline-date">Mar 2009 – Feb 2010</div>
+          <div class="timeline-date">2009 – 2011</div>
           <h3 class="timeline-role">Help Desk Associate</h3>
-          <div class="timeline-company">Jorge Scientific</div>
-          <div class="timeline-loc">📍 Bethesda, MD</div>
-          <p class="timeline-desc">
-            Desktop support and system administration. Hardware/software troubleshooting. Active Directory user management. Email system administration.
-          </p>
+          <div class="timeline-company">Jorge Scientific Corporation</div>
+          <div class="timeline-loc">Bethesda, MD</div>
+          <p class="timeline-summary">Desktop support, system administration, and identity/email management foundation.</p>
+          <ul class="timeline-metrics">
+            <li><strong>Active Directory</strong> user mgmt</li>
+            <li><strong>Email</strong> system administration</li>
+          </ul>
         </article>
       </div>
     </section>
@@ -1820,8 +1815,8 @@
     <!-- ========== SKILLS ========== -->
     <section id="skills" aria-label="Technical skills" style="position:relative;">
       <div class="orb orb-gold-dark" aria-hidden="true" style="width:220px;height:220px;top:8%;right:-5%;"></div>
-      <span class="section-label reveal"><svg class="section-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="3"/><circle cx="5" cy="6" r="2"/><circle cx="19" cy="6" r="2"/><circle cx="5" cy="18" r="2"/><circle cx="19" cy="18" r="2"/><line x1="9.5" y1="10.5" x2="6.5" y2="7.5"/><line x1="14.5" y1="10.5" x2="17.5" y2="7.5"/><line x1="9.5" y1="13.5" x2="6.5" y2="16.5"/><line x1="14.5" y1="13.5" x2="17.5" y2="16.5"/></svg> SKILLS</span>
-      <h2 class="section-title reveal">Technical Skills</h2>
+      <span class="section-label reveal">SKILLS</span>
+      <h2 class="section-title reveal">Core Competencies</h2>
 
       <div class="constellation-anchor">
         <div class="skills-canvas-wrap glass reveal">
@@ -1830,51 +1825,58 @@
       </div>
 
       <div class="skills-list">
-        <div class="skill-category glass">
-          <h3 style="color: var(--gold);">Routing & Switching</h3>
-          <span class="skill-tag">Cisco Catalyst</span>
-          <span class="skill-tag">CSR/MAD Routers</span>
-          <span class="skill-tag">L3/L2 Switches</span>
-          <span class="skill-tag">Nokia Routers</span>
+        <div class="skill-category glass reveal">
+          <h3 style="color: #c2410c;">Switch &amp; Facility Operations</h3>
+          <span class="skill-tag">Switch Maintenance</span>
+          <span class="skill-tag">Facility Checks</span>
+          <span class="skill-tag">Power/BMS (EcoStruxure)</span>
+          <span class="skill-tag">Disaster Recovery</span>
+          <span class="skill-tag">Alarm Management</span>
+          <span class="skill-tag">ITIL Change Mgmt</span>
         </div>
-        <div class="skill-category glass">
-          <h3 style="color: var(--gold-dark);">OSS Platforms</h3>
-          <span class="skill-tag">Nokia NetAct</span>
-          <span class="skill-tag">Ericsson ENM</span>
-          <span class="skill-tag">Config Mgmt</span>
-          <span class="skill-tag">Fault Mgmt</span>
-          <span class="skill-tag">Performance</span>
-        </div>
-        <div class="skill-category glass">
-          <h3 style="color: var(--gold-muted);">RAN & Cellular</h3>
-          <span class="skill-tag">GSM</span>
-          <span class="skill-tag">UMTS</span>
-          <span class="skill-tag">LTE</span>
-          <span class="skill-tag">Media Gateway</span>
+        <div class="skill-category glass reveal">
+          <h3 style="color: #0e7490;">5G/4G RAN &amp; Core</h3>
+          <span class="skill-tag">5G NR</span>
+          <span class="skill-tag">eNodeB/gNodeB</span>
+          <span class="skill-tag">NSD, DAS</span>
+          <span class="skill-tag">Emergency COWs</span>
+          <span class="skill-tag">Call Servers</span>
           <span class="skill-tag">BSC/RNC</span>
         </div>
-        <div class="skill-category glass">
-          <h3 style="color: var(--gold-muted);">Enterprise IT</h3>
-          <span class="skill-tag">Active Directory</span>
-          <span class="skill-tag">Exchange Server</span>
-          <span class="skill-tag">Windows/Linux</span>
-          <span class="skill-tag">SharePoint</span>
+        <div class="skill-category glass reveal">
+          <h3 style="color: #4d7c0f;">Routing &amp; Transport</h3>
+          <span class="skill-tag">Cisco Catalyst</span>
+          <span class="skill-tag">SAS/MAD Routers</span>
+          <span class="skill-tag">BGP/OSPF/MPLS</span>
+          <span class="skill-tag">Fiber/Microwave</span>
+          <span class="skill-tag">1G/10G/100G</span>
+          <span class="skill-tag">L2/L3 Switching</span>
         </div>
-        <div class="skill-category glass">
-          <h3 style="color: var(--gold-subtle);">Scripting & Automation</h3>
-          <span class="skill-tag">Visual Basic</span>
-          <span class="skill-tag">JavaScript</span>
-          <span class="skill-tag">Batch/Shell</span>
+        <div class="skill-category glass reveal">
+          <h3 style="color: #44403c;">T-Mobile Tools</h3>
+          <span class="skill-tag">ATOMS</span>
+          <span class="skill-tag">OneTransport</span>
+          <span class="skill-tag">RIOT</span>
+          <span class="skill-tag">OneConsole</span>
+          <span class="skill-tag">CBN Tools</span>
+          <span class="skill-tag">EAI/Netviewer</span>
+        </div>
+        <div class="skill-category glass reveal">
+          <h3 style="color: #be123c;">OSS &amp; Scripting</h3>
+          <span class="skill-tag">Nokia NetAct</span>
+          <span class="skill-tag">Ericsson ENM</span>
           <span class="skill-tag">AMOS</span>
-          <span class="skill-tag">HTML/XML</span>
-          <span class="skill-tag">Python</span>
+          <span class="skill-tag">Shell/Bash</span>
+          <span class="skill-tag">JavaScript</span>
+          <span class="skill-tag">Batch</span>
         </div>
-        <div class="skill-category glass">
-          <h3 style="color: var(--gold-subtle);">Tools & Productivity</h3>
-          <span class="skill-tag">Microsoft Suite</span>
-          <span class="skill-tag">Excel Reports</span>
-          <span class="skill-tag">PowerBI</span>
-          <span class="skill-tag">Teams/Skype</span>
+        <div class="skill-category glass reveal">
+          <h3 style="color: #65a30d;">Leadership</h3>
+          <span class="skill-tag">Technical Mentorship</span>
+          <span class="skill-tag">Junior Tech Onboarding</span>
+          <span class="skill-tag">MOP Development</span>
+          <span class="skill-tag">War-Room Command</span>
+          <span class="skill-tag">E911 / CBN Audits</span>
         </div>
       </div>
     </section>
@@ -1882,7 +1884,7 @@
     <!-- ========== EDUCATION & CERTS ========== -->
     <section id="education" aria-label="Education and certifications" style="position:relative;">
       <div class="orb orb-ink" aria-hidden="true" style="width:200px;height:200px;top:5%;left:-4%;"></div>
-      <span class="section-label reveal"><svg class="section-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 3L1 9l11 6 9-4.91V17h2V9L12 3z"/><path d="M5 13.18v4L12 21l7-3.82v-4L12 17l-7-3.82z"/></svg> EDUCATION & CERTIFICATIONS</span>
+      <span class="section-label reveal">EDUCATION & CERTIFICATIONS</span>
       <h2 class="section-title reveal">Foundation</h2>
       <div class="edu-cert-grid">
         <div class="edu-card glass reveal">
@@ -1899,10 +1901,10 @@
           <h3 style="font-size: 14px; margin-bottom: 12px; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.08em;">Certifications</h3>
           <ul class="cert-list">
             <li>
-              <span class="cert-badge" style="background:#C8102E;" aria-hidden="true">
-                <span class="badge-text">A+</span>
+              <span class="cert-badge" style="background:#1B365D;" aria-hidden="true">
+                <span class="badge-text">CCNA</span>
               </span>
-              <span class="cert-text"><strong>CompTIA A+</strong> — IT fundamentals, hardware &amp; OS troubleshooting</span>
+              <span class="cert-text"><strong>Cisco Certified Network Associate</strong> — Routing, switching &amp; network fundamentals</span>
             </li>
             <li>
               <span class="cert-badge" style="background:#0078D4;" aria-hidden="true">
@@ -1911,10 +1913,10 @@
               <span class="cert-text"><strong>Microsoft Certified Professional</strong> — Windows server &amp; enterprise administration</span>
             </li>
             <li>
-              <span class="cert-badge" style="background:#1B365D;" aria-hidden="true">
-                <span class="badge-text">CCNA</span>
+              <span class="cert-badge" style="background:#C8102E;" aria-hidden="true">
+                <span class="badge-text">A+</span>
               </span>
-              <span class="cert-text"><strong>Cisco Certified Network Associate</strong> — Routing, switching &amp; network fundamentals</span>
+              <span class="cert-text"><strong>CompTIA A+</strong> — IT fundamentals, hardware &amp; OS troubleshooting</span>
             </li>
           </ul>
         </div>
@@ -1924,7 +1926,7 @@
     <!-- ========== CONTACT ========== -->
     <section id="contact" aria-label="Contact form" style="position:relative;">
       <div class="orb orb-gold-light" aria-hidden="true" style="width:200px;height:200px;top:5%;right:-5%;"></div>
-      <span class="section-label reveal"><svg class="section-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M22 4L12 13 2 4"/></svg> CONTACT</span>
+      <span class="section-label reveal">CONTACT</span>
       <h2 class="section-title reveal">Get in Touch</h2>
       <form novalidate name="contact" method="POST" data-netlify="true" netlify-honeypot="bot-field" data-netlify-recaptcha="true">
         <input type="hidden" name="form-name" value="contact">
@@ -1955,7 +1957,7 @@
         </div>
       </form>
       <div id="form-success" style="display: none; margin-top: 20px; color: var(--gold); font-size: 14px;" role="status" aria-live="polite">
-        ✓ Message Sent (demo — connect a form backend for production)
+        Thanks — your message is on its way.
       </div>
     </section>
   </main>
@@ -1966,7 +1968,7 @@
       <a href="https://linkedin.com/in/syedrahidahmed" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn profile">
         <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
       </a>
-      <a href="SRA_Resume_2026.docx" download class="footer-resume" aria-label="Download resume">
+      <a href="SRA-Resume-072926.pdf" download class="footer-resume" aria-label="Download resume">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
         Resume
       </a>
@@ -1979,35 +1981,136 @@
        ================================================================ -->
   <script>
     // ================================================================
-    // THREE.JS PARTICLE SCENE
+    // THREE.JS US MAP SCENE — career location network
     // ================================================================
     (function() {
       'use strict';
 
-      // Don't run if Three.js failed to load or reduced motion preferred
       if (typeof THREE === 'undefined') return;
       const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
       if (prefersReducedMotion) return;
 
       const container = document.getElementById('scene-container');
-      const interactLayer = document.getElementById('constellation-interact');
-      const tooltip = document.getElementById('skill-tooltip');
-      const tooltipName = tooltip.querySelector('.tooltip-name');
-      const tooltipCat = tooltip.querySelector('.category');
 
       // ---- Scene setup ----
       const scene = new THREE.Scene();
-      const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-      window.camera = camera; // ponytail: expose to GSAP IIFE for scroll parallax
-      camera.position.z = 50;
+      const camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 1000);
+      window.camera = camera;
+
+      // Map lon/lat → 3D coords (Albers-ish projection, simplified)
+      // Center on US center (~ -98, 39.5), scale to fit view
+      const MAP_CX = -98, MAP_CY = 39.5;
+      const SCALE = 1.8; // fits lower-48 nicely in FOV 60 at z=50
+      function project(lon, lat) {
+        const x = (lon - MAP_CX) * SCALE * Math.cos(lat * Math.PI / 180);
+        const y = (lat - MAP_CY) * SCALE;
+        return [x, y];
+      }
+
+      camera.position.set(0, 0, 50);
+      camera.lookAt(0, 0, 0);
 
       const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
       renderer.setSize(window.innerWidth, window.innerHeight);
       renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-      renderer.setClearColor(0x000000, 0); // transparent so CSS bg shows
+      renderer.setClearColor(0x000000, 0);
       container.appendChild(renderer.domElement);
 
-      // ---- Helper: soft circle texture ----
+      // ---- US outline (simplified lower-48 border, ~80 points) ----
+      const US_OUTLINE = [
+        [-125.0,49.0],[-122.8,49.0],[-117.0,49.0],[-114.0,49.0],[-110.0,49.0],
+        [-107.0,49.0],[-104.0,49.0],[-101.0,49.0],[-98.0,49.0],[-95.0,49.0],
+        [-92.0,49.0],[-89.0,49.0],[-86.0,49.0],[-83.0,46.5],[-82.5,44.0],
+        [-80.0,42.0],[-79.0,43.5],[-74.0,45.0],[-71.0,45.0],[-68.0,47.5],
+        [-67.0,47.0],[-67.0,44.5],[-68.0,43.5],[-70.0,42.0],[-70.5,41.5],
+        [-72.0,41.0],[-73.0,40.7],[-74.0,39.5],[-75.0,38.5],[-75.5,37.0],
+        [-76.0,36.5],[-77.0,35.0],[-78.5,33.8],[-80.0,32.5],[-80.5,31.0],
+        [-81.0,29.5],[-80.0,27.0],[-80.5,25.0],[-81.0,24.5],[-82.0,26.0],
+        [-82.5,27.5],[-83.0,29.0],[-84.0,29.5],[-85.0,29.7],[-87.0,30.3],
+        [-88.0,30.5],[-89.0,30.0],[-90.0,29.0],[-92.0,29.5],[-93.5,29.7],
+        [-95.0,29.0],[-97.0,28.0],[-97.5,26.0],[-98.0,26.5],[-99.5,27.5],
+        [-101.0,29.5],[-103.0,29.0],[-104.5,30.5],[-106.5,31.8],[-108.0,31.3],
+        [-109.0,31.5],[-111.0,31.3],[-112.5,31.3],[-113.0,32.0],[-114.5,32.5],
+        [-115.5,32.5],[-116.5,32.5],[-117.0,32.5],[-118.0,33.5],[-119.5,34.5],
+        [-121.0,36.0],[-122.0,37.0],[-122.5,38.0],[-123.0,39.0],[-124.0,40.0],
+        [-124.5,42.0],[-124.5,44.0],[-124.5,46.0],[-124.5,48.0],[-124.5,48.5],
+        [-125.0,49.0]
+      ];
+
+      // Build outline line
+      const outlinePts = US_OUTLINE.map(([lon, lat]) => {
+        const [x, y] = project(lon, lat);
+        return new THREE.Vector3(x, y, 0);
+      });
+      const outlineGeo = new THREE.BufferGeometry().setFromPoints(outlinePts);
+      const outlineMat = new THREE.LineBasicMaterial({
+        color: 0xc2410c,
+        transparent: true,
+        opacity: 0.12,
+      });
+      const outlineLine = new THREE.Line(outlineGeo, outlineMat);
+      scene.add(outlineLine);
+
+      // Duplicate outline with slight offset for depth glow
+      const outlineGeo2 = new THREE.BufferGeometry().setFromPoints(
+        outlinePts.map(p => new THREE.Vector3(p.x, p.y, -0.5))
+      );
+      const outlineMat2 = new THREE.LineBasicMaterial({
+        color: 0x0e7490,
+        transparent: true,
+        opacity: 0.06,
+      });
+      scene.add(new THREE.Line(outlineGeo2, outlineMat2));
+
+      // ---- Career location nodes ----
+      // lon/lat for each city
+      const CITIES = {
+        Bethesda:    { lon: -77.09, lat: 39.02, label: 'Bethesda, MD' },
+        Martinsburg: { lon: -77.97, lat: 39.55, label: 'Martinsburg, WV' },
+        Austin:      { lon: -97.74, lat: 30.27, label: 'Austin, TX' },
+        Spokane:     { lon: -117.43, lat: 47.66, label: 'Spokane, WA' },
+        Miami:       { lon: -80.19, lat: 25.76, label: 'Miami, FL' },
+        Hammond:     { lon: -90.46, lat: 30.50, label: 'Hammond, LA' },
+      };
+
+      // Career path (chronological) — references city keys
+      const CAREER_PATH = [
+        { city: 'Bethesda',    role: 'Help Desk Associate',  era: '2009-2011' },
+        { city: 'Martinsburg', role: 'Network Engineer',     era: '2011-2012' },
+        { city: 'Spokane',     role: 'Switch Engineer',       era: '2012-2015' },
+        { city: 'Austin',      role: 'Sr. Switch Technician', era: '2015-2016' },
+        { city: 'Austin',      role: 'Sr. Switch Technician', era: '2016-2019' },
+        { city: 'Miami',       role: 'Sr. Switch Technician', era: '2019-2022' },
+        { city: 'Hammond',     role: 'Sr. Switch Technician', era: '2022-2026' },
+      ];
+
+      // City nodes — unique cities get a persistent node
+      const cityNodeData = {}; // key → {pos, pulse}
+      const cityPositions = [];
+      const cityColors = [];
+      const citySizes = [];
+
+      const primaryC = new THREE.Color(0xc2410c);
+      const secondaryC = new THREE.Color(0x0e7490);
+      const hubC = new THREE.Color(0xe06a3a);
+
+      // Determine which cities appear in career path
+      const careerCities = new Set(CAREER_PATH.map(s => s.city));
+      let nodeIdx = 0;
+      Object.keys(CITIES).forEach(key => {
+        const c = CITIES[key];
+        const [x, y] = project(c.lon, c.lat);
+        const inPath = careerCities.has(key);
+        const col = inPath ? primaryC : secondaryC;
+        cityColors.push(col.r, col.g, col.b);
+        const sz = inPath ? 4.0 : 2.5;
+        citySizes.push(sz);
+        cityNodeData[key] = { idx: nodeIdx, x, y, baseSize: sz, pulse: 0 };
+        cityPositions.push(x, y, 0);
+        nodeIdx++;
+      });
+
+      // ---- Glow texture for nodes ----
       function makeGlowTexture(color) {
         const size = 64;
         const canvas = document.createElement('canvas');
@@ -2022,61 +2125,14 @@
         ctx.fillRect(0, 0, size, size);
         return new THREE.CanvasTexture(canvas);
       }
+      const nodeTex = makeGlowTexture('rgba(255,255,255,0.95)');
 
-      const nodeTex = makeGlowTexture('rgba(184,134,11,0.95)');
-      const packetTex = makeGlowTexture('rgba(140,129,119,0.95)');
+      const cityGeo = new THREE.BufferGeometry();
+      cityGeo.setAttribute('position', new THREE.BufferAttribute(new Float32Array(cityPositions), 3));
+      cityGeo.setAttribute('color', new THREE.BufferAttribute(new Float32Array(cityColors), 3));
+      cityGeo.setAttribute('size', new THREE.BufferAttribute(new Float32Array(citySizes), 1));
 
-      // ---- Network nodes (structured grid layout) ----
-      const COLS = 12, ROWS = 8;
-      const NODE_COUNT = COLS * ROWS;
-      const SPACING_X = 7, SPACING_Y = 7;
-
-      const nodePositions = new Float32Array(NODE_COUNT * 3);
-      const nodeColors = new Float32Array(NODE_COUNT * 3);
-      const nodeSizes = new Float32Array(NODE_COUNT);
-      const nodeTargetPos = new Float32Array(NODE_COUNT * 3);
-
-      const primaryC = new THREE.Color(0xc9950c);
-      const secondaryC = new THREE.Color(0xa67c00);
-
-      // Build adjacency (grid neighbors)
-      const adjacency = [];
-      for (let i = 0; i < NODE_COUNT; i++) adjacency[i] = [];
-
-      for (let r = 0; r < ROWS; r++) {
-        for (let c = 0; c < COLS; c++) {
-          const i = r * COLS + c;
-          const tx = (c - (COLS - 1) / 2) * SPACING_X + (Math.random() - 0.5) * 1.5;
-          const ty = (r - (ROWS - 1) / 2) * SPACING_Y + (Math.random() - 0.5) * 1.5;
-          const tz = (Math.random() - 0.5) * 3;
-          nodeTargetPos[i * 3] = tx;
-          nodeTargetPos[i * 3 + 1] = ty;
-          nodeTargetPos[i * 3 + 2] = tz;
-          // Start scattered for entrance
-          const angle = Math.random() * Math.PI * 2;
-          const dist = 40 + Math.random() * 60;
-          nodePositions[i * 3] = Math.cos(angle) * dist;
-          nodePositions[i * 3 + 1] = Math.sin(angle) * dist;
-          nodePositions[i * 3 + 2] = tz + (Math.random() - 0.5) * 40;
-          // Hub nodes (every 3rd row/col) get green, rest cyan
-          const isHub = (r % 3 === 0 && c % 3 === 0);
-          const col = isHub ? primaryC : secondaryC;
-          nodeColors[i * 3] = col.r;
-          nodeColors[i * 3 + 1] = col.g;
-          nodeColors[i * 3 + 2] = col.b;
-          nodeSizes[i] = isHub ? 3.5 + Math.random() * 1.5 : 1.5 + Math.random() * 1;
-          // Grid adjacency
-          if (c < COLS - 1) { adjacency[i].push(i + 1); adjacency[i + 1].push(i); }
-          if (r < ROWS - 1) { adjacency[i].push(i + COLS); adjacency[i + COLS].push(i); }
-        }
-      }
-
-      const nodeGeometry = new THREE.BufferGeometry();
-      nodeGeometry.setAttribute('position', new THREE.BufferAttribute(nodePositions, 3));
-      nodeGeometry.setAttribute('color', new THREE.BufferAttribute(nodeColors, 3));
-      nodeGeometry.setAttribute('size', new THREE.BufferAttribute(nodeSizes, 1));
-
-      const nodeMaterial = new THREE.ShaderMaterial({
+      const cityMat = new THREE.ShaderMaterial({
         uniforms: { uTexture: { value: nodeTex } },
         vertexShader: `
           attribute float size;
@@ -2101,68 +2157,64 @@
         depthWrite: false,
       });
 
-      const nodePoints = new THREE.Points(nodeGeometry, nodeMaterial);
-      scene.add(nodePoints);
+      const cityPoints = new THREE.Points(cityGeo, cityMat);
+      scene.add(cityPoints);
 
-      // ---- Connection lines (grid edges) ----
-      const edges = [];
-      const seen = new Set();
-      for (let i = 0; i < NODE_COUNT; i++) {
-        for (const j of adjacency[i]) {
-          const key = Math.min(i, j) + ',' + Math.max(i, j);
-          if (!seen.has(key)) { seen.add(key); edges.push([i, j]); }
-        }
-      }
+      // ---- Career path connection lines ----
+      const pathPositions = [];
+      const pathColors = [];
+      CAREER_PATH.forEach((stop, i) => {
+        if (i === 0) return;
+        const prev = CAREER_PATH[i - 1];
+        const a = cityNodeData[prev.city];
+        const b = cityNodeData[stop.city];
+        if (!a || !b) return;
+        const [ax, ay] = project(CITIES[prev.city].lon, CITIES[prev.city].lat);
+        const [bx, by] = project(CITIES[stop.city].lon, CITIES[stop.city].lat);
+        pathPositions.push(ax, ay, 0.1);
+        pathPositions.push(bx, by, 0.1);
+        // Gradient color: terracotta → teal along path
+        const t = i / (CAREER_PATH.length - 1);
+        const col = new THREE.Color().lerpColors(primaryC, secondaryC, t);
+        pathColors.push(col.r, col.g, col.b);
+        pathColors.push(col.r, col.g, col.b);
+      });
 
-      const linePositions = new Float32Array(edges.length * 6);
-      const lineColors = new Float32Array(edges.length * 6);
-      const lineGeometry = new THREE.BufferGeometry();
-      lineGeometry.setAttribute('position', new THREE.BufferAttribute(linePositions, 3));
-      lineGeometry.setAttribute('color', new THREE.BufferAttribute(lineColors, 3));
-      lineGeometry.setDrawRange(0, edges.length * 2);
+      const pathGeo = new THREE.BufferGeometry();
+      pathGeo.setAttribute('position', new THREE.BufferAttribute(new Float32Array(pathPositions), 3));
+      pathGeo.setAttribute('color', new THREE.BufferAttribute(new Float32Array(pathColors), 3));
 
-      const lineMaterial = new THREE.LineBasicMaterial({
+      const pathMat = new THREE.LineBasicMaterial({
         vertexColors: true,
         transparent: true,
-        opacity: 0.15,
+        opacity: 0.25,
         blending: THREE.AdditiveBlending,
         depthWrite: false,
       });
+      scene.add(new THREE.LineSegments(pathGeo, pathMat));
 
-      const lineSegments = new THREE.LineSegments(lineGeometry, lineMaterial);
-      scene.add(lineSegments);
-
-      function updateLines() {
-        for (let e = 0; e < edges.length; e++) {
-          const [a, b] = edges[e];
-          linePositions[e * 6]     = nodePositions[a * 3];
-          linePositions[e * 6 + 1] = nodePositions[a * 3 + 1];
-          linePositions[e * 6 + 2] = nodePositions[a * 3 + 2];
-          linePositions[e * 6 + 3] = nodePositions[b * 3];
-          linePositions[e * 6 + 4] = nodePositions[b * 3 + 1];
-          linePositions[e * 6 + 5] = nodePositions[b * 3 + 2];
-          const cr = (nodeColors[a*3] + nodeColors[b*3]) / 2;
-          const cg = (nodeColors[a*3+1] + nodeColors[b*3+1]) / 2;
-          const cb = (nodeColors[a*3+2] + nodeColors[b*3+2]) / 2;
-          lineColors[e * 6] = cr; lineColors[e * 6 + 1] = cg; lineColors[e * 6 + 2] = cb;
-          lineColors[e * 6 + 3] = cr; lineColors[e * 6 + 4] = cg; lineColors[e * 6 + 5] = cb;
-        }
-        lineGeometry.attributes.position.needsUpdate = true;
-        lineGeometry.attributes.color.needsUpdate = true;
-      }
-
-      // ---- Data packets (travel along connections) ----
-      const PACKET_COUNT = 40;
+      // ---- Data packets traveling along career path ----
+      const PACKET_COUNT = 25;
       const packetPositions = new Float32Array(PACKET_COUNT * 3);
       const packetSizes = new Float32Array(PACKET_COUNT);
       const packetData = [];
 
-      const packetGeometry = new THREE.BufferGeometry();
-      packetGeometry.setAttribute('position', new THREE.BufferAttribute(packetPositions, 3));
-      packetGeometry.setAttribute('size', new THREE.BufferAttribute(packetSizes, 1));
+      for (let i = 0; i < PACKET_COUNT; i++) {
+        packetData.push({
+          segment: i % (CAREER_PATH.length - 1),
+          progress: Math.random(),
+          speed: 0.15 + Math.random() * 0.25,
+          forward: Math.random() > 0.3,
+        });
+        packetSizes[i] = 1.5 + Math.random() * 0.8;
+      }
 
-      const packetMaterial = new THREE.ShaderMaterial({
-        uniforms: { uTexture: { value: packetTex } },
+      const packetGeo = new THREE.BufferGeometry();
+      packetGeo.setAttribute('position', new THREE.BufferAttribute(packetPositions, 3));
+      packetGeo.setAttribute('size', new THREE.BufferAttribute(packetSizes, 1));
+
+      const packetMat = new THREE.ShaderMaterial({
+        uniforms: { uTexture: { value: nodeTex } },
         vertexShader: `
           attribute float size;
           void main() {
@@ -2174,152 +2226,47 @@
         fragmentShader: `
           uniform sampler2D uTexture;
           void main() {
-            gl_FragColor = vec4(0.788, 0.584, 0.047, 0.9) * texture2D(uTexture, gl_PointCoord);
+            gl_FragColor = vec4(0.761, 0.255, 0.047, 0.9) * texture2D(uTexture, gl_PointCoord);
           }
         `,
         transparent: true,
         blending: THREE.AdditiveBlending,
         depthWrite: false,
       });
+      scene.add(new THREE.Points(packetGeo, packetMat));
 
-      const packetPoints = new THREE.Points(packetGeometry, packetMaterial);
-      scene.add(packetPoints);
-
-      function initPackets() {
-        for (let i = 0; i < PACKET_COUNT; i++) {
-          packetData[i] = {
-            edge: Math.floor(Math.random() * edges.length),
-            progress: Math.random(),
-            speed: 0.3 + Math.random() * 0.7,
-          };
-          packetSizes[i] = 1.5 + Math.random() * 1;
-        }
-        packetGeometry.attributes.size.needsUpdate = true;
-      }
-
-      function animatePackets(dt) {
+      function animatePackets(time) {
         for (let i = 0; i < PACKET_COUNT; i++) {
           const p = packetData[i];
-          if (!p) continue;
-          p.progress += p.speed * dt;
+          const segIdx = p.segment;
+          const a = CAREER_PATH[segIdx];
+          const b = CAREER_PATH[segIdx + 1];
+          if (!a || !b) continue;
+          const [ax, ay] = project(CITIES[a.city].lon, CITIES[a.city].lat);
+          const [bx, by] = project(CITIES[b.city].lon, CITIES[b.city].lat);
+
+          p.progress += p.speed * 0.005;
           if (p.progress >= 1) {
-            const [, b] = edges[p.edge];
-            const nextEdges = [];
-            for (let e = 0; e < edges.length; e++) {
-              if (edges[e][0] === b || edges[e][1] === b) nextEdges.push(e);
-            }
-            p.edge = nextEdges.length
-              ? nextEdges[Math.floor(Math.random() * nextEdges.length)]
-              : Math.floor(Math.random() * edges.length);
             p.progress = 0;
+            p.segment = (p.segment + 1) % (CAREER_PATH.length - 1);
           }
-          const [a, b] = edges[p.edge];
-          const t = p.progress;
-          packetPositions[i * 3]     = nodePositions[a*3]   + (nodePositions[b*3]   - nodePositions[a*3]) * t;
-          packetPositions[i * 3 + 1] = nodePositions[a*3+1] + (nodePositions[b*3+1] - nodePositions[a*3+1]) * t;
-          packetPositions[i * 3 + 2] = nodePositions[a*3+2] + (nodePositions[b*3+2] - nodePositions[a*3+2]) * t;
+
+          const t = p.forward ? p.progress : (1 - p.progress);
+          packetPositions[i * 3]     = ax + (bx - ax) * t;
+          packetPositions[i * 3 + 1] = ay + (by - ay) * t;
+          packetPositions[i * 3 + 2] = 0.2;
         }
-        packetGeometry.attributes.position.needsUpdate = true;
+        packetGeo.attributes.position.needsUpdate = true;
       }
 
-      // ---- Mouse ping effect ----
-      const raycaster = new THREE.Raycaster();
-      raycaster.params.Points.threshold = 5;
-      const mouseNDC = new THREE.Vector2();
-      let pingNode = -1;
-      let pingTime = 0;
-      let pingActive = false;
-
-      container.addEventListener('mousemove', (e) => {
-        mouseNDC.x = (e.clientX / window.innerWidth) * 2 - 1;
-        mouseNDC.y = -(e.clientY / window.innerHeight) * 2 + 1;
-      });
-
-      function updatePing(time) {
-        raycaster.setFromCamera(mouseNDC, camera);
-        const intersects = raycaster.intersectObject(nodePoints);
-        if (intersects.length > 0) {
-          const idx = intersects[0].index;
-          if (idx !== pingNode) {
-            pingNode = idx;
-            pingTime = 0;
-            pingActive = true;
-          }
-        }
-        if (pingActive) {
-          pingTime += 0.02;
-          if (pingTime > 1) pingActive = false;
-        }
-      }
-
-      // ---- Entrance animation ----
-      const ENTRANCE_DURATION = 2.5;
-      let entranceTime = 0;
-      let entranceDone = false;
-
-      function easeOutCubic(t) { return 1 - Math.pow(1 - t, 3); }
-
-      function animateEntrance(dt) {
-        if (entranceDone) return;
-        entranceTime += dt;
-        const t = Math.min(entranceTime / ENTRANCE_DURATION, 1);
-        const e = easeOutCubic(t);
-
-        for (let i = 0; i < NODE_COUNT; i++) {
-          const sx = nodePositions[i*3], sy = nodePositions[i*3+1], sz = nodePositions[i*3+2];
-          const tx = nodeTargetPos[i*3], ty = nodeTargetPos[i*3+1], tz = nodeTargetPos[i*3+2];
-          // Stagger: center nodes appear first
-          const distFromCenter = Math.sqrt(tx*tx + ty*ty);
-          const stagger = distFromCenter / 50 * 0.4;
-          const localT = Math.max(0, Math.min(1, (t - stagger) / (1 - stagger)));
-          const le = easeOutCubic(localT);
-          nodePositions[i*3]     = sx + (tx - sx) * le;
-          nodePositions[i*3 + 1] = sy + (ty - sy) * le;
-          nodePositions[i*3 + 2] = sz + (tz - sz) * le;
-        }
-
-        nodeGeometry.attributes.position.needsUpdate = true;
-        updateLines();
-
-        if (t >= 1) {
-          entranceDone = true;
-          initPackets();
-        }
-      }
-
-      // ---- Ambient network animation ----
-      function animateNetwork(time, dt) {
-        if (!entranceDone) return;
-
-        // Gentle node breathing
-        for (let i = 0; i < NODE_COUNT; i++) {
-          nodePositions[i*3]     = nodeTargetPos[i*3]     + Math.sin(time * 0.3 + i * 0.7) * 0.3;
-          nodePositions[i*3 + 1] = nodeTargetPos[i*3 + 1] + Math.cos(time * 0.2 + i * 0.5) * 0.3;
-          nodePositions[i*3 + 2] = nodeTargetPos[i*3 + 2] + Math.sin(time * 0.15 + i * 1.1) * 0.2;
-        }
-        nodeGeometry.attributes.position.needsUpdate = true;
-
-        // Ping glow: brighten nearest nodes
-        if (pingActive && pingNode >= 0) {
-          const pulse = Math.sin(pingTime * Math.PI) * 0.5 + 0.5;
-          nodeSizes[pingNode] = 3.5 + pulse * 3;
-          for (const j of adjacency[pingNode]) {
-            nodeSizes[j] = 2 + pulse * 2;
-          }
-          nodeGeometry.attributes.size.needsUpdate = true;
-        } else {
-          // Reset sizes (only hub distinction)
-          for (let i = 0; i < NODE_COUNT; i++) {
-            const r = Math.floor(i / COLS), c = i % COLS;
-            const isHub = (r % 3 === 0 && c % 3 === 0);
-            nodeSizes[i] = isHub ? 3.5 : 1.5;
-          }
-          nodeGeometry.attributes.size.needsUpdate = true;
-        }
-
-        updateLines();
-        animatePackets(dt);
-        updatePing(time);
+      // ---- City node pulse animation ----
+      function animateNodes(time) {
+        Object.keys(cityNodeData).forEach((key, i) => {
+          const nd = cityNodeData[key];
+          const pulse = Math.sin(time * 0.8 + i * 0.7) * 0.3 + 0.7;
+          citySizes[nd.idx] = nd.baseSize * pulse;
+        });
+        cityGeo.attributes.size.needsUpdate = true;
       }
 
       // ---- Mouse parallax ----
@@ -2329,51 +2276,105 @@
         targetMouseY = (e.clientY / window.innerHeight - 0.5) * 2;
       });
 
+      // ---- Resize ----
+      window.addEventListener('resize', () => {
+        camera.aspect = window.innerWidth / window.innerHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+      });
+
+      // ---- Render loop ----
+      let pageVisible = true;
+      document.addEventListener('visibilitychange', () => {
+        pageVisible = !document.hidden;
+      });
+
+      let prevTime = performance.now();
+      function animate() {
+        requestAnimationFrame(animate);
+        if (!pageVisible) { prevTime = performance.now(); return; }
+        const now = performance.now();
+        const dt = (now - prevTime) / 1000;
+        prevTime = now;
+        const time = now * 0.001;
+
+        animateNodes(time);
+        animatePackets(time);
+
+        // Smooth mouse parallax
+        mouseX += (targetMouseX - mouseX) * 0.05;
+        mouseY += (targetMouseY - mouseY) * 0.05;
+        scene.rotation.y = mouseX * 0.06;
+        scene.rotation.x = mouseY * 0.04;
+
+        // Gentle drift
+        scene.position.x = Math.sin(time * 0.1) * 0.3;
+        scene.position.y = Math.cos(time * 0.08) * 0.2;
+
+        renderer.render(scene, camera);
+      }
+      animate();
+    })();
+
+
       // ================================================================
+      // Skill tooltip vars (used by skill ring hover)
+      const tooltip = document.getElementById('skill-tooltip');
+      const tooltipName = tooltip.querySelector('.tooltip-name');
+      const tooltipCat = tooltip.querySelector('.category');
+
       // SKILL CONSTELLATION (Three.js 2D on separate canvas)
       // ================================================================
       const skillCanvas = document.getElementById('skill-canvas');
       const skillCtx = skillCanvas.getContext('2d');
 
       const SKILLS = [
-        { name: 'Cisco Catalyst', cat: 'Routing & Switching', color: '#c2410c', desc: 'Enterprise switching platforms' },
-        { name: 'CSR/MAD Routers', cat: 'Routing & Switching', color: '#c2410c', desc: 'Carrier-grade routing' },
-        { name: 'L3/L2 Switches', cat: 'Routing & Switching', color: '#c2410c', desc: 'Layer 2/3 network switching' },
-        { name: 'Nokia Routers', cat: 'Routing & Switching', color: '#c2410c', desc: 'Nokia IP/MPLS routing' },
-        { name: 'Nokia NetAct', cat: 'OSS Platforms', color: '#0e7490', desc: 'Nokia network management' },
-        { name: 'Ericsson ENM', cat: 'OSS Platforms', color: '#0e7490', desc: 'Ericsson element management' },
-        { name: 'Config Mgmt', cat: 'OSS Platforms', color: '#0e7490', desc: 'Network configuration control' },
-        { name: 'Fault Mgmt', cat: 'OSS Platforms', color: '#0e7490', desc: 'Alarm correlation & resolution' },
-        { name: 'Performance', cat: 'OSS Platforms', color: '#0e7490', desc: 'KPI monitoring & reporting' },
-        { name: 'GSM', cat: 'RAN & Cellular', color: '#4d7c0f', desc: '2G radio access network' },
-        { name: 'UMTS', cat: 'RAN & Cellular', color: '#4d7c0f', desc: '3G WCDMA technology' },
-        { name: 'LTE', cat: 'RAN & Cellular', color: '#4d7c0f', desc: '4G E-UTRAN & EPC' },
-        { name: 'Media Gateway', cat: 'RAN & Cellular', color: '#4d7c0f', desc: 'Circuit/packet interworking' },
-        { name: 'BSC/RNC', cat: 'RAN & Cellular', color: '#4d7c0f', desc: '2G/3G base station controllers' },
-        { name: 'Active Directory', cat: 'Enterprise IT', color: '#44403c', desc: 'Identity & access management' },
-        { name: 'Exchange Server', cat: 'Enterprise IT', color: '#44403c', desc: 'Enterprise email infrastructure' },
-        { name: 'Windows/Linux', cat: 'Enterprise IT', color: '#44403c', desc: 'Multi-platform administration' },
-        { name: 'SharePoint', cat: 'Enterprise IT', color: '#44403c', desc: 'Collaboration & document mgmt' },
-        { name: 'Visual Basic', cat: 'Scripting & Automation', color: '#be123c', desc: 'Legacy automation scripting' },
-        { name: 'JavaScript', cat: 'Scripting & Automation', color: '#be123c', desc: 'Web & task automation' },
-        { name: 'Batch/Shell', cat: 'Scripting & Automation', color: '#be123c', desc: 'OS-level process automation' },
-        { name: 'AMOS', cat: 'Scripting & Automation', color: '#be123c', desc: 'Nokia batch operations language' },
-        { name: 'HTML/XML', cat: 'Scripting & Automation', color: '#be123c', desc: 'Markup & config data formats' },
-        { name: 'Microsoft Suite', cat: 'Tools & Productivity', color: '#65a30d', desc: 'Office 365 & desktop tools' },
-        { name: 'Excel Reports', cat: 'Tools & Productivity', color: '#65a30d', desc: 'Data analysis & reporting' },
-        { name: 'Teams/Skype', cat: 'Tools & Productivity', color: '#65a30d', desc: 'Enterprise communication' },
+        { name: 'Switch Maintenance',    cat: 'Switch & Facility Ops',    color: '#c2410c', desc: 'Core network switch maintenance' },
+        { name: 'Facility Checks',       cat: 'Switch & Facility Ops',    color: '#c2410c', desc: 'Physical site monitoring' },
+        { name: 'BMS (EcoStruxure)',      cat: 'Switch & Facility Ops',    color: '#c2410c', desc: 'Schneider Electric building mgmt' },
+        { name: 'Disaster Recovery',     cat: 'Switch & Facility Ops',    color: '#c2410c', desc: 'Emergency network restoration' },
+        { name: 'Alarm Management',      cat: 'Switch & Facility Ops',    color: '#c2410c', desc: 'Fault detection & containment' },
+        { name: 'ITIL Change Mgmt',      cat: 'Switch & Facility Ops',    color: '#c2410c', desc: 'Compliant change windows' },
+        { name: '5G NR',                 cat: '5G/4G RAN & Core',         color: '#0e7490', desc: '5G New Radio architecture' },
+        { name: 'eNodeB/gNodeB',         cat: '5G/4G RAN & Core',         color: '#0e7490', desc: 'LTE/5G base stations' },
+        { name: 'NSD, DAS',              cat: '5G/4G RAN & Core',         color: '#0e7490', desc: 'Special network deployments' },
+        { name: 'Emergency COWs',        cat: '5G/4G RAN & Core',         color: '#0e7490', desc: 'Temporary site activation' },
+        { name: 'Call Servers',          cat: '5G/4G RAN & Core',         color: '#0e7490', desc: 'Media gateway call processing' },
+        { name: 'BSC/RNC',              cat: '5G/4G RAN & Core',         color: '#0e7490', desc: '2G/3G base station controllers' },
+        { name: 'Cisco Catalyst',        cat: 'Routing & Transport',      color: '#4d7c0f', desc: 'Enterprise switching platforms' },
+        { name: 'SAS/MAD Routers',       cat: 'Routing & Transport',      color: '#4d7c0f', desc: 'Cell site router configuration' },
+        { name: 'BGP/OSPF/MPLS',         cat: 'Routing & Transport',      color: '#4d7c0f', desc: 'IP routing protocols' },
+        { name: 'Fiber/Microwave',       cat: 'Routing & Transport',      color: '#4d7c0f', desc: 'Backhaul transport media' },
+        { name: '1G/10G/100G',           cat: 'Routing & Transport',      color: '#4d7c0f', desc: 'Provisioning bandwidth tiers' },
+        { name: 'L2/L3 Switching',       cat: 'Routing & Transport',      color: '#4d7c0f', desc: 'Layer 2/3 network switching' },
+        { name: 'ATOMS',                 cat: 'T-Mobile Tools',           color: '#44403c', desc: 'Cell site asset tracking' },
+        { name: 'OneTransport',          cat: 'T-Mobile Tools',           color: '#44403c', desc: 'Transport network management' },
+        { name: 'RIOT',                  cat: 'T-Mobile Tools',           color: '#44403c', desc: 'Network operations interface' },
+        { name: 'OneConsole',            cat: 'T-Mobile Tools',           color: '#44403c', desc: 'Centralized network console' },
+        { name: 'CBN Tools',             cat: 'T-Mobile Tools',           color: '#44403c', desc: 'Core backbone network tools' },
+        { name: 'EAI/Netviewer',         cat: 'T-Mobile Tools',           color: '#44403c', desc: 'Enterprise application integration' },
+        { name: 'Nokia NetAct',          cat: 'OSS & Scripting',          color: '#be123c', desc: 'Nokia network management' },
+        { name: 'Ericsson ENM',          cat: 'OSS & Scripting',          color: '#be123c', desc: 'Ericsson element management' },
+        { name: 'AMOS',                  cat: 'OSS & Scripting',          color: '#be123c', desc: 'Nokia automation scripting' },
+        { name: 'Shell/Bash',            cat: 'OSS & Scripting',          color: '#be123c', desc: 'Unix automation scripts' },
+        { name: 'JavaScript',            cat: 'OSS & Scripting',          color: '#be123c', desc: 'Web & task automation' },
+        { name: 'Batch',                 cat: 'OSS & Scripting',          color: '#be123c', desc: 'Windows automation scripts' },
+        { name: 'Technical Mentorship',  cat: 'Leadership',               color: '#65a30d', desc: 'Junior technician training' },
+        { name: 'MOP Development',       cat: 'Leadership',               color: '#65a30d', desc: 'Standard operating procedures' },
+        { name: 'War-Room Command',      cat: 'Leadership',               color: '#65a30d', desc: 'Critical outage leadership' },
+        { name: 'E911 / CBN Audits',     cat: 'Leadership',               color: '#65a30d', desc: 'Emergency & compliance audits' },
       ];
 
       // ---- Skill Ring layout ----
       const CATS = [...new Set(SKILLS.map(s => s.cat))];
       // Category color map (Solar Graphite v3.0)
       const CAT_COLORS = {
-        'Routing & Switching':    '#c2410c',
-        'OSS Platforms':          '#0e7490',
-        'RAN & Cellular':         '#4d7c0f',
-        'Enterprise IT':          '#44403c',
-        'Scripting & Automation': '#be123c',
-        'Tools & Productivity':   '#65a30d',
+        'Switch & Facility Ops':   '#c2410c',
+        '5G/4G RAN & Core':        '#0e7490',
+        'Routing & Transport':     '#4d7c0f',
+        'T-Mobile Tools':          '#44403c',
+        'OSS & Scripting':         '#be123c',
+        'Leadership':              '#65a30d',
       };
       let ringNodes = [];
       let hoveredRing = null;
@@ -2464,7 +2465,7 @@
           const startA = arcAngle + rot - Math.PI / 2;
           const endA = arcAngle + arcLen + rot - Math.PI / 2;
           const catSkills = SKILLS.filter(s => s.cat === cat);
-          const catColor = catSkills[0]?.color || '#a67c00';
+          const catColor = catSkills[0]?.color || '#c2410c';
 
           skillCtx.beginPath();
           skillCtx.arc(cx, cy, ringNodes.find(n => n.cat === cat && !n.isLabel)?.outerR || ringNodes[0]?.outerR || 100, startA, endA);
@@ -2482,7 +2483,7 @@
           skillCtx.beginPath();
           skillCtx.moveTo(pi.x, pi.y);
           skillCtx.lineTo(pj.x, pj.y);
-          skillCtx.strokeStyle = 'rgba(201,149,12,' + (op * 0.25) + ')';
+          skillCtx.strokeStyle = 'rgba(194,65,12,' + (op * 0.25) + ')';
           skillCtx.lineWidth = 1;
           skillCtx.setLineDash([4, 4]);
           skillCtx.stroke();
@@ -2539,7 +2540,7 @@
         });
 
         // Center label
-        skillCtx.fillStyle = 'rgba(201,149,12,' + (op * 0.5) + ')';
+        skillCtx.fillStyle = 'rgba(6,182,212,' + (op * 0.5) + ')';
         skillCtx.font = '600 11px "Outfit", sans-serif';
         skillCtx.textAlign = 'center';
         skillCtx.textBaseline = 'middle';
@@ -2706,13 +2707,10 @@
         skillCanvas.height = rect.height;
         initRingNodes(skillCanvas.width, skillCanvas.height);
       }, 100);
-
       // ================================================================
-      // RENDER LOOP
+      // SKILL RING RENDER LOOP
       // ================================================================
       let prevTime = performance.now();
-
-      // Pause when tab is hidden
       var pageVisible = true;
       document.addEventListener('visibilitychange', function() {
         pageVisible = !document.hidden;
@@ -2722,32 +2720,16 @@
         requestAnimationFrame(animate);
         if (!pageVisible) { prevTime = performance.now(); return; }
         const now = performance.now();
-        const dt = (now - prevTime) / 1000;
         prevTime = now;
-
-        // Network topology
-        animateEntrance(dt);
-        animateNetwork(now * 0.001, dt);
-
-        // Mouse parallax (smooth lerp)
-        mouseX += (targetMouseX - mouseX) * 0.05;
-        mouseY += (targetMouseY - mouseY) * 0.05;
-        scene.rotation.y = mouseX * 0.08;
-        scene.rotation.x = mouseY * 0.05;
-
-        // Constellation
         drawSkillRing(now * 0.001);
-
-        renderer.render(scene, camera);
       }
 
-      // Start after Three.js loads
       if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', animate);
       } else {
         animate();
       }
-    })();
+
 
     // ================================================================
     // GSAP ANIMATIONS
@@ -2898,47 +2880,61 @@
       // --- Theme toggle + Style switcher ---
       var toggle = document.getElementById('theme-toggle');
       var styleToggle = document.getElementById('style-toggle');
+      var styleDropdown = document.querySelector('.nav-style-dropdown');
+      var styleMenuItems = document.querySelectorAll('.style-menu li');
       var html = document.documentElement;
       var themeMeta = document.querySelector('meta[name="theme-color"]');
 
-      // Load persisted state before paint (early)
-      const savedStyle = localStorage.getItem('themeStyle') || 'oxblood-editorial';
-      html.setAttribute('data-style', savedStyle);
-      if (styleToggle) {
-        styleToggle.querySelector('.style-label').textContent = savedStyle === 'oxblood-editorial' ? 'OE' :
-            savedStyle === 'solar-graphite' ? 'SG' : 'IO';
+      // --- Style label helpers ---
+      function styleAbbr(name) {
+        return name === 'oxblood-editorial' ? 'CD' :
+               name === 'solar-graphite' ? 'GR' : 'IO';
+      }
+
+      function setActiveMenuItem(name) {
+        styleMenuItems.forEach(function(i) {
+          i.classList.toggle('active', i.getAttribute('data-style') === name);
+        });
       }
 
       function switchStyle(name) {
         html.setAttribute('data-style', name);
         try { localStorage.setItem('themeStyle', name); } catch(e) {}
-        if (styleToggle) {
-          styleToggle.querySelector('.style-label').textContent = name === 'oxblood-editorial' ? 'OE' :
-              name === 'solar-graphite' ? 'SG' : 'IO';
-        }
+        if (styleToggle) styleToggle.querySelector('.style-label').textContent = styleAbbr(name);
+        setActiveMenuItem(name);
       }
 
-      if (styleToggle) {
-        styleToggle.addEventListener('click', function() {
-          var current = html.getAttribute('data-style');
-          var next = current === 'oxblood-editorial' ? 'solar-graphite' :
-                     current === 'solar-graphite' ? 'industrial-ochre' : 'oxblood-editorial';
-          switchStyle(next);
+      // Load persisted state
+      const savedStyle = localStorage.getItem('themeStyle') || 'oxblood-editorial';
+      html.setAttribute('data-style', savedStyle);
+      if (styleToggle) styleToggle.querySelector('.style-label').textContent = styleAbbr(savedStyle);
+      setActiveMenuItem(savedStyle);
+
+      // --- Dropdown toggle (click, not hover) ---
+      if (styleToggle && styleDropdown) {
+        styleToggle.addEventListener('click', function(e) {
+          e.stopPropagation();
+          var isOpen = styleDropdown.classList.toggle('open');
+          styleToggle.setAttribute('aria-expanded', isOpen);
         });
 
-        // Handle style menu item clicks (hoverable dropdown)
-        var styleMenuItems = document.querySelectorAll('.style-menu li');
+        // Close dropdown when a style is picked
         styleMenuItems.forEach(function(item) {
           item.addEventListener('click', function(e) {
             e.stopPropagation();
             var styleName = this.getAttribute('data-style');
             if (styleName) {
               switchStyle(styleName);
-              // Update active state
-              styleMenuItems.forEach(function(i) { i.classList.remove('active'); });
-              this.classList.add('active');
+              styleDropdown.classList.remove('open');
+              styleToggle.setAttribute('aria-expanded', 'false');
             }
           });
+        });
+
+        // Close dropdown on outside click
+        document.addEventListener('click', function() {
+          styleDropdown.classList.remove('open');
+          styleToggle.setAttribute('aria-expanded', 'false');
         });
       }
 
