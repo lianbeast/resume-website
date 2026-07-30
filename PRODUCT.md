@@ -6,7 +6,7 @@ brand
 
 ## Users
 
-Recruiters and hiring managers sourcing a Senior Network & Telecom Consultant. They scan fast — seconds to decide "worth a call?" — looking for proof of seniority, scope, and credentials. Context: opened from a job board, LinkedIn, or a forwarded link, often between meetings on a laptop. What they need to confirm in one pass: 15+ years in carrier/enterprise telecom, hands on Cisco/Nokia/Ericsson, RAN (GSM/UMTS/LTE) + VoLTE core protocols, currently at T-Mobile. The job to be done: shorten their screening effort to a confident yes.
+Recruiters and hiring managers sourcing a Sr. Switch Technician (Telecom Operations & RAN/Transport Specialist). They scan fast — seconds to decide "worth a call?" — looking for proof of seniority, scope, and credentials. Context: opened from a job board, LinkedIn, or a forwarded link, often between meetings on a laptop. What they need to confirm in one pass: 15+ years across T-Mobile/Sprint, switch facility operations, 5G NR/LTE RAN/transport, Cisco/Nokia/Ericsson, CCNA-certified. The job to be done: shorten their screening effort to a confident yes.
 
 Secondary: a recruiter who forwards the link to a hiring manager, so the page must travel well (clean metadata, one self-contained file).
 

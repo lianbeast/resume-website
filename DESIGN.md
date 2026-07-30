@@ -88,7 +88,7 @@ components:
 
 **Creative North Star: "Solar Graphite (topology)"**
 
-This is a single-page personal career site for a Senior Network & Telecom Consultant, and the design is meant to read like the work: a carrier network marked onto the page — hub nodes, signal trails, cross-connections, ambient rotation. The North Star is **topology as material**: the Three.js background and 2D skill ring are not decoration, they are the argument that this person thinks in networks. Graphite nodes, terracotta signal, ink clarity. The system should feel engineered, grounded, and methodically precise — the composure of carrier-grade uptime, not the flash of a product launch.
+This is a single-page personal career site for a Sr. Switch Technician (Telecom Operations & RAN/Transport Specialist), and the design is meant to read like the work: a carrier network marked onto the page — hub nodes, signal trails, cross-connections, ambient rotation. The North Star is **topology as material**: the Three.js background and 2D skill ring are not decoration, they are the argument that this person thinks in networks. Graphite nodes, terracotta signal, ink clarity. The system should feel engineered, grounded, and methodically precise — the composure of carrier-grade uptime, not the flash of a product launch.
 
 Density is medium-restrained: cards exist but are confined to credentials, experience, and skills; the hero and topology run full-bleed. The surface is warm-ivory ink-on-paper in light mode and graphite in dark mode, with a terracotta primary accent doing all the accenting. Glassmorphism is permitted but earned — only on cards that sit over moving topology, never as a default. Typography is a single sans (Outfit) across all voice roles, with JetBrains Mono reserved for the technical vocabulary the consultant actually uses daily: protocol names, section labels, code-flavored tags. Everything composes inside one self-contained HTML file.
 
@@ -208,6 +208,6 @@ The system is **hybrid** — flat by default for content surfaces, with two dist
 - **Don't** print a hero-metric template (big number, small label, gradient accent, supporting stats).
 - **Don't** put a mono uppercase tracked eyebrow above every section.
 - **Don't** use `border-left`/`border-right` >1px as a colored side-stripe on cards or list items.
-- **Don't** set gradient text (`background-clip:text` + gradient).
+- **Don't** set gradient text (`background-clip:text` + gradient) — **except** `.hero-name`, which uses an animated gradient with a solid `color` fallback inside `@supports`.
 - **Don't** apply glassmorphism decoratively.
 - **Don't** use the words synergy, seamless, leverage (as verb), revolutionary, rockstar/ninja, or passionate.

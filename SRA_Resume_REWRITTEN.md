@@ -1,108 +1,89 @@
 # SYED RAHID AHMED
-**Senior Switch Consultant**
-United States | [LinkedIn: linkedin.com/in/syedrahidahmed](https://linkedin.com/in/syedrahidahmed)
+**Sr. Switch Technician | Telecom Operations & RAN/Transport Specialist**
+Clarksburg, MD, 20871 | 571.305.1133 | Rahid905@gmail.com
 
 ---
 
-## Professional Summary
+## SUMMARY
 
-Network Security & AIOps Engineer with 15+ years in telecom infrastructure. I harden carrier‑grade networks (ACL enforcement, secured OSS access, audit compliance) and build Python automation pipelines that wipe out manual provisioning cycles. CCNA‑certified, working toward Azure Solutions Architect. My work sits where deep protocol expertise (SIP, Diameter, SS7/SIGTRAN, IMS) meets AIOps: anomaly detection and prompt‑engineered runbooks that cut incident response time.
-
----
-
-## Core Competencies
-
-| Area | Skills |
-|------|--------|
-| **Network Security** | Router Hardening (SROS/CSR/MAD), ACL Management, RBAC, AAA, E911 Compliance Auditing, Secured OSS Access, Zero‑Trust Segmentation |
-| **AI & Automation** | Python Data Pipelines, AI Prompt Engineering, AIOps (Anomaly Detection, Incident Correlation), Automated Reporting, NLP‑Driven Runbooks |
-| **RAN & Core Protocols** | 5G NR, VoLTE/IMS, SIP, Diameter, SS7/SIGTRAN, LTE, UMTS, GSM, CDMA, BSC/RNC, eNodeB, Media Gateway |
-| **Platforms & Tools** | Nokia NetAct, Ericsson ENM, Cisco Catalyst, CSR/MAD Routers, L2/L3 Switching, Nokia SROS |
-| **Scripting & Infrastructure** | Python, Shell/Bash, AMOS, JavaScript, XML/HTML, Active Directory, Exchange, SharePoint, Linux/Windows |
+CCNA-certified Senior Switch & Telecom Specialist with over 15 years of hands-on experience in switch operations, facility management, and RAN/transport network engineering across T-Mobile and Sprint footprints. Proven domain expert in 5G NR/LTE architecture (eNodeB/gNodeB), Cisco routing/switching, Nokia NetAct, and Ericsson ENM. Highly skilled in switch facility operations, disaster recovery activations—including Hurricane Helene restoration in the Deep South—and special deployments (NSD, DAS, emergency COWs for major stadium and public events). Proficient in T-Mobile operational systems (ATOMS, RIOT, OneConsole, OneTransport, CBN tools) and building management platforms. Demonstrated leader in War-Room outage response, ITIL-compliant change management, and formally mentoring junior technicians in technical theory and operational discipline.
 
 ---
 
-## Certifications
+## CORE COMPETENCIES
 
-<span style="display:inline-flex;align-items:center;padding:4px 12px;border-radius:6px;background:#1B365D;box-shadow:0 1px 3px rgba(0,0,0,0.12),inset 0 1px 0 rgba(255,255,255,0.15);margin-right:8px"><span style="font-family:monospace;font-size:11px;font-weight:700;color:#fff;letter-spacing:0.05em">CCNA</span></span> **Cisco Certified Network Associate** — Routing, switching & network fundamentals
-
-<span style="display:inline-flex;align-items:center;padding:4px 12px;border-radius:6px;background:#C8102E;box-shadow:0 1px 3px rgba(0,0,0,0.12),inset 0 1px 0 rgba(255,255,255,0.15);margin-right:8px"><span style="font-family:monospace;font-size:11px;font-weight:700;color:#fff;letter-spacing:0.05em">A+</span></span> **CompTIA A+** — IT fundamentals, hardware & OS troubleshooting
-
-<span style="display:inline-flex;align-items:center;padding:4px 12px;border-radius:6px;background:#0078D4;box-shadow:0 1px 3px rgba(0,0,0,0.12),inset 0 1px 0 rgba(255,255,255,0.15);margin-right:8px"><span style="font-family:monospace;font-size:11px;font-weight:700;color:#fff;letter-spacing:0.05em">MCP</span></span> **Microsoft Certified Professional** — Windows server & enterprise administration
-
----
-
-## Professional Experience
-
-### T‑Mobile — Senior Switch Engineer | May 2015 – Present
-*Bellevue, WA | Plano, TX | Atlanta, GA | Chicago, IL*
-
-**Network Security & Hardening**
-- **Unauthorized access incidents dropped 92 %** over 18 months across 4 US markets. I rolled out role‑based ACL schemas on Nokia SROS and Cisco CSR/MAD routers, locking management‑plane access to authorized bastion hosts only.
-- **100 % audit pass rate** on E911 compliance for 600 + PSAP routes, weekly. Built a Python reconciliation engine that cross‑references Media Gateway E911 records against GMLC databases and flags discrepancies within 15 minutes.
-- **Credential sprawl eliminated** across 400 + network elements. Deployed centralized AAA (TACACS+) for OSS platforms (Nokia NetAct, Ericsson ENM) with per‑user RBAC and session logging on every provisioning command.
-- **1 200 + router port configs hardened** against unauthorized access. Automated ACL template application via MAD/CSR scripts, cutting manual port‑security errors by 78 %.
-
-**AI & Automation**
-- **Circuit provisioning cycle: 4 h → 84 min** (65 % faster). Built a Python data pipeline that parses inventory spreadsheets, auto‑generates MAD/CSR router scripts, and validates 1G/10G/100G turn‑ups against live NetAct alarms.
-- **Incident response time cut 40 %** with an AIOps‑style anomaly detection framework in Python. It ingests real‑time NetAct/ENM performance counters, applies moving‑window thresholding, and auto‑tickets deviations before customer impact.
-- **Eliminated 20 + hours/week of manual reporting** for engineering leadership. Automated Excel reporting pipeline (Python + openpyxl) pulls cell‑site integration tracker data from SharePoint, applies business rules, and distributes formatted dashboards weekly.
-- **New‑site integration troubleshooting 55 % faster.** Wrote prompt‑engineered diagnostic runbooks that ingest CLI outputs from Nokia SROS and CSR routers and return ranked remediation steps, so junior engineers resolve switch‑level faults without escalation.
-
-**Network Engineering & Operations**
-- **Network coverage grew 15 % YoY** across 4 markets through end‑to‑end cell‑site data‑fill in Media Gateway Call Servers, BSC, and RNC. I led a 6‑member war‑room team through cutover weekends with zero P1 incidents.
-- **99.99 % carrier‑grade uptime** maintained across 1 500 + network elements. Daily site‑configuration backups, OSS alarm‑stream monitoring, root‑cause analysis on RAN/transport anomalies.
-- **200 + router/circuit turn‑ups delivered** annually with 100 % accuracy via peer‑reviewed MAD/CSR configuration templates.
-- **Cell‑site parameter misconfiguration down 35 %** by centralizing CIQ (Change Implementation Questionnaire) management in SharePoint, implementing a structured review workflow that catches errors before OSS deployment.
+- **Switch & Facility Operations:** Switch Maintenance, Facility Checks, Power/BMS Monitoring (Schneider Electric EcoStruxure), Disaster Recovery (DR) Activation, Alarm Management, ITIL Change Management
+- **5G/4G RAN & Core Infrastructure:** 5G New Radio (NR), eNodeB/gNodeB, Core Network Elements, NSD, DAS & Emergency COW Deployments, Call Servers, BSC, RNC
+- **Routing, Transport & Hardware:** SAS/MAD Routers, Cisco Catalyst, IP Routing (BGP, OSPF), MPLS, Backhaul (Fiber/Microwave), L2/L3 Switching, 1G/10G/100G Provisioning
+- **T-Mobile Tools & Software:** ATOMS, OneTransport, RIOT, OneConsole, CBN Tools, EAI/Netviewer, Nokia NetAct, Ericsson ENM, AMOS, Scripting (Shell/Bash, JavaScript, Batch)
+- **Leadership & Compliance:** Technical Mentorship, Junior Tech Onboarding & Training, MOP Development, War-Room Command, E911 / CBN Audits & Reconciliation
 
 ---
 
-### WVUH Jefferson Memorial Hospital — Network Engineer | Aug 2011 – Mar 2013
-*Martinsburg, WV*
-- **Network‑related ticket resolution time down 30 %** by implementing segmented VLAN ACLs and port‑security policies on Cisco Catalyst switches, isolating hospital‑department traffic and containing lateral movement of potential threats.
-- **98 % first‑call resolution rate** on escalated enterprise IT incidents. Developed a tiered troubleshooting playbook and mentored 5 help‑desk staff on network diagnostic workflows.
-- **99.9 % WAN/LAN availability** across a multi‑building medical campus via SNMP‑based health monitoring and standardized hardware/software imaging policies.
-
----
-
-### Jorge Scientific Corporation — Help Desk Associate | Mar 2009 – Feb 2010
-*Bethesda, MD*
-- **Desktop security incidents down 45 %** over 12 months. Engineered a standardized PC‑image deployment pipeline that enforced OS patching, antivirus baselines, and local firewall rules before endpoint provisioning.
-- **100 % Active Directory user‑access audit compliance**. Automated account provisioning/disabling workflows and ran quarterly entitlement reviews for 500 + users.
-- **Hardware troubleshooting cycle cut 25 %** by developing a centralized knowledge base with structured troubleshooting trees, enabling faster diagnosis of recurring desktop and email system issues.
-
----
-
-## Education
+## EDUCATION
 
 - **Bachelor of Science in Computer Science** — Information Systems Security
 - **Associate of Arts in Computer Science** — Computer Networking Systems
 
 ---
 
-## Key Technical Proficiency
+## CERTIFICATIONS
 
-| Category | Technologies |
-|----------|-------------|
-| **Security** | ACLs, RBAC, AAA/TACACS+, Router Hardening (SROS/CSR/MAD), E911 Compliance, Zero‑Trust Segmentation, Port Security |
-| **AI/Automation** | Python (pandas, openpyxl, requests), AI Prompt Engineering, AIOps / Anomaly Detection, Automated Data Pipelines, NLP Runbooks |
-| **RAN & Core** | 5G NR, VoLTE/IMS, SIP, Diameter, SS7/SIGTRAN, LTE, UMTS, GSM, CDMA, BSC/RNC, Media Gateway, eNodeB |
-| **OSS Platforms** | Nokia NetAct (Config/Fault/Performance/Monitoring), Ericsson ENM (Performance, Optimization, Provisioning) |
-| **Routing & Switching** | Nokia SROS, Cisco Catalyst, CSR/MAD Routers, L2/L3 Switching |
-| **Scripting** | Python, Shell/Bash, AMOS, JavaScript, Visual Basic, HTML, XML |
-| **Infrastructure** | Active Directory, Exchange Server, SharePoint, Windows Server, Linux, Microsoft Suite |
+- **CCNA – Routing & Switching** (Cisco Certified Network Associate)
+- **MCP – Microsoft Certified Professional**
+- **CompTIA A+**
 
 ---
 
-## Education & Certifications Timeline
+## PROFESSIONAL EXPERIENCE
 
-| Year | Credential |
-|------|-----------|
-| 2016 | **CCNA** — Cisco Certified Network Associate |
-| 2010 | **A+** — CompTIA |
-| 2009 | **MCP** — Microsoft Certified Professional |
-| 2026 (IP) | **Azure Solutions Architect** |
+### NextGen Telecommunication (Client: T-Mobile) | Hammond, LA (On-Site)
+**Sr. Switch Technician / Engineer | May 2022 – March 2026**
+
+- Led switch operations and technical direction across regional sites, managing full integration and cutover for 500+ cell sites, including specialized NSD, DAS (stadium/venue setups), and emergency COW deployments.
+- Executed disaster recovery activations and emergency restorations, including direct network response for Hurricane Helene restoration across the Deep South region.
+- Monitored switch facilities and environmental controls using Schneider Electric EcoStruxure (BMS), ensuring operational stability and rapid fault containment.
+- Developed and executed automated scripts for SAS/MAD routers and backhaul circuits (1G/10G/100G), cutting turn-up times by 40% across 300+ quarterly circuits.
+- Directed War-Room operations during critical outages and cutovers, leading a 6-member cross-functional team to isolate multi-layer RF and transport issues under tight SLAs.
+- Formally trained and onboarded 6 junior technicians on switch operations, router configuration, and MOP execution, instilling strong operational discipline.
+- Utilized ATOMS, RIOT, and OneConsole to audit and automate E911 call records and CBN data workflows, resolving 200+ discrepancies between PSAP and GMLC databases.
+- Designed a market-wide Cell Site Integration Tracker in SharePoint, reducing management reporting overhead by 60%.
+
+### WAVSYS Telecommunication (Client: T-Mobile) | Miami, FL (Remote)
+**Sr. Switch Technician / Engineer | May 2019 – March 2022**
+
+- Managed BSS, RAN, and switch operations remotely across 1,000+ cell sites using Nokia NetAct, Ericsson ENM, and OneTransport.
+- Executed data fills for Media Gateway Call Servers, BSC, and RNC platforms, expanding regional T-Mobile coverage by 15% YoY.
+- Authored MOPs and technical documentation for cell site lifecycle workflows, standardizing procedures for 12 engineers and reducing provisioning errors by 35%.
+- Performed daily switch facility equipment checks and maintenance scheduling, maintaining 99.5% operational uptime.
+- Executed Change Implementation Requests (CIQs) and ITIL-compliant change windows to optimize cell parameters across 200+ sites, improving call drop and handover KPIs.
+
+### Kineticom Telecommunication (Client: T-Mobile) | Austin, TX (Hybrid)
+**Sr. Switch Technician / Engineer | December 2016 – April 2019**
+
+- Isolated and resolved multi-layer transport and RAN faults spanning backhaul networks, cell site routers, and Radio Access infrastructure.
+- Executed disaster recovery protocols to rehome and back up 150+ cell sites during OSS platform consolidations with zero service disruption.
+- Centralized 500+ cell site configurations into a unified SharePoint repository, cutting troubleshooting resolution time by 30%.
+- Automated daily integration and alarm reporting, reducing manual tracking overhead by 75%.
+
+### Apricot Consulting LLC (Client: T-Mobile) | Austin, TX (On-Site)
+**Sr. Switch Technician / Engineer | May 2015 – December 2016**
+
+- Configured and optimized BSC/RNC parameters supporting 300+ new RAN activations.
+- Reconciled E911 data in Media Gateway Call Servers, correcting 150+ routing discrepancies against PSAP databases.
+- Developed structured troubleshooting methodologies, training regional team members and cutting mean time to resolution (MTTR) by 25%.
+- Validated router interfaces and backhaul connections for 50+ monthly circuit turn-ups with a 99% first-time-right rate.
+
+### Apricot Consulting LLC (Client: Sprint) | Spokane, WA (On-Site)
+**Switch Engineer | May 2012 – March 2015**
+
+- Configured Cisco and Nokia routers/switches for cell site backhaul and aggregation during Sprint's LTE deployment.
+- Executed router scripts for 200+ LTE site circuit turn-ups and verified L2/L3 traffic routing protocols.
+- Performed data fill operations on call servers and RNC platforms in coordination with field teams prior to cutover.
 
 ---
 
-*References available upon request.*
+## EARLY CAREER EXPERIENCE
+
+- **Network Engineer** | WVUH Jefferson Memorial Hospital (2011 – 2012)
+- **Help Desk Associate** | Jorge Scientific Corporation (2009 – 2011)
