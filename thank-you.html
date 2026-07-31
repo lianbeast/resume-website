@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Message Sent — Syed Rahid Ahmed</title>
+  <meta name="description" content="Thank you for contacting Syed Rahid Ahmed. Your message has been received.">
+  <meta name="robots" content="noindex, follow">
+  <link rel="canonical" href="https://syedrahidahmed.com/thank-you">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Message Sent — Syed Rahid Ahmed">
+  <meta property="og:description" content="Thank you for reaching out. I'll get back to you soon.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://syedrahidahmed.com/thank-you">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Message Sent — Syed Rahid Ahmed">
+  <meta name="twitter:description" content="Thank you for reaching out. I'll get back to you soon.">
+
+  <!-- Favicon -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%23c2410c'/><text x='50' y='68' font-size='60' font-family='system-ui' font-weight='700' fill='%23ffffff' text-anchor='middle'>SR</text></svg>">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #f7f5f0;
+      --bg-card: #ffffff;
+      --text: #1c1917;
+      --text-dim: #78716c;
+      --gold: #c2410c;
+      --gold-dark: #a4380a;
+      --gold-light: #e06a3a;
+      --gold-muted: rgba(194, 65, 12, 0.6);
+      --gold-subtle: rgba(194, 65, 12, 0.4);
+      --border-glass: rgba(28, 25, 23, 0.08);
+      --font-body: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+    }
+
+    [data-theme="dark"] {
+      --bg: #161412;
+      --bg-card: #1e1c1a;
+      --text: #f0ede8;
+      --text-dim: #9a938d;
+      --gold: #e06a3a;
+      --gold-dark: #c2410c;
+      --gold-light: #f59e0b;
+      --gold-muted: rgba(224, 106, 58, 0.6);
+      --gold-subtle: rgba(224, 106, 58, 0.4);
+      --border-glass: rgba(224, 106, 58, 0.08);
+    }
+
+    html { scroll-behavior: smooth; background: var(--bg); color: var(--text); font-family: var(--font-body); line-height: 1.6; }
+    body { min-height: 100vh; display: flex; flex-direction: column; }
+
+    /* Skip link */
+    .skip-link {
+      position: absolute; top: -100px; left: 50%; transform: translateX(-50%);
+      background: var(--gold); color: #000; padding: 12px 24px; border-radius: 8px;
+      font-weight: 600; z-index: 10000; transition: top 0.3s;
+    }
+    .skip-link:focus { top: 16px; }
+
+    /* Main nav */
+    #main-nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 9999;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 24px; height: 60px;
+      background: rgba(255, 255, 255, 0.55); backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border-glass);
+    }
+    [data-theme="dark"] #main-nav {
+      background: rgba(22, 20, 18, 0.75);
+    }
+    .nav-logo { font-size: 22px; font-weight: 700; color: var(--gold); text-decoration: none; }
+    .nav-links { list-style: none; display: flex; align-items: center; gap: 4px; margin: 0; padding: 0; }
+    .nav-links a { padding: 8px 14px; font-size: 13px; font-weight: 500; color: var(--text-dim); text-decoration: none; border-radius: 8px; }
+    .nav-links a:hover { color: var(--text); background: rgba(194, 65, 12, 0.06); }
+
+    /* Content wrapper */
+    .content { position: relative; z-index: 2; padding-top: 60px; flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 120px 5% 80px; text-align: center; max-width: 600px; margin: 0 auto; }
+
+    /* Thank you message */
+    .success-icon {
+      width: 80px; height: 80px; border-radius: 50%;
+      background: linear-gradient(135deg, var(--gold) 0%, var(--gold-dark) 100%);
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 32px; box-shadow: 0 4px 24px rgba(194, 65, 12, 0.3);
+    }
+    .success-icon svg { width: 40px; height: 40px; color: #fff; }
+
+    h1 { font-size: clamp(28px, 5vw, 40px); font-weight: 700; line-height: 1.2; margin-bottom: 16px; }
+    .lead { font-size: 18px; color: var(--text-dim); margin-bottom: 32px; max-width: 480px; }
+
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center;
+      padding: 14px 28px; border-radius: 10px; font-size: 14px; font-weight: 600;
+      text-decoration: none; cursor: pointer; border: none;
+      transition: transform 0.25s, box-shadow 0.3s, background 0.3s;
+      min-height: 44px; min-width: 44px;
+    }
+    .btn:hover { transform: translateY(-2px); }
+    .btn:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+    .btn-primary { background: linear-gradient(135deg, var(--gold) 0%, var(--gold-dark) 100%); color: #fff; box-shadow: 0 2px 8px rgba(194, 65, 12, 0.2); }
+    .btn-primary:hover { box-shadow: 0 4px 16px rgba(194, 65, 12, 0.3); }
+
+    /* Footer */
+    footer { text-align: center; padding: 40px 5%; font-size: 12px; color: var(--text-dim); border-top: none; }
+    footer::before {
+      content: ''; position: absolute; top: 0; left: 10%; right: 10%; height: 1px;
+      background: linear-gradient(90deg, transparent 0%, rgba(194, 65, 12, 0.15) 25%, rgba(194, 65, 12, 0.35) 50%, rgba(14, 116, 144, 0.15) 75%, transparent 100%);
+    }
+
+    @media (max-width: 768px) { .content { padding: 100px 5% 60px; } }
+  </style>
+
+  <!-- Theme init -->
+  <script>
+    (function() {
+      var theme;
+      try { theme = localStorage.getItem('theme'); } catch(e) {}
+      if (theme === 'dark' || (!theme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+        document.documentElement.setAttribute('data-theme', 'dark');
+      }
+    })();
+  </script>
+</head>
+<body>
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+
+  <nav id="main-nav" aria-label="Main navigation">
+    <a href="index.html" class="nav-logo">SR</a>
+    <ul class="nav-links">
+      <li><a href="index.html#about">About</a></li>
+      <li><a href="index.html#experience">Experience</a></li>
+      <li><a href="index.html#skills">Skills</a></li>
+      <li><a href="index.html#education">Education</a></li>
+      <li><a href="index.html#contact">Contact</a></li>
+      <li><a href="SRA-Resume-072926.pdf" class="nav-resume" download>Resume</a></li>
+    </ul>
+  </nav>
+
+  <main id="main-content" class="content">
+    <div class="success-icon" aria-hidden="true">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/>
+      </svg>
+    </div>
+    <h1>Message Sent</h1>
+    <p class="lead">Thanks for reaching out. I'll get back to you as soon as I can.</p>
+    <a href="index.html" class="btn btn-primary">Back to Home</a>
+  </main>
+
+  <footer>
+    <p>© 2026 Syed Rahid Ahmed. Crafted with precision.</p>
+  </footer>
+</body>
+</html>
