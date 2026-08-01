@@ -63,6 +63,9 @@
           integrity="sha384-CI3ELBVUz9XQO+97x6nwMDPosPR5XvsxW2ua7N1Xeygeh1IxtgqtCkGfQY9WWdHu"
           crossorigin="anonymous"></script>
 
+  <!-- Lower-48 US state polygons (lon/lat, RDP-simplified). Rendered by Three.js map. -->
+  <script defer src="states.js"></script>
+
   <!-- GSAP + ScrollTrigger (deferred) -->
   <script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"
           integrity="sha384-g4NTh/Iv5PPU4xPyhEWqPcwtNXOvdaDI8LLnyYfyNZOjKJeYQyjzQ9X5275eBjpt"
@@ -341,43 +344,6 @@
       font-size: 14px;
       color: var(--text-dim);
     }
-    /* Floating labels rendered above the Three.js map. JS sets left/top. */
-    .map-labels {
-      position: fixed;
-      inset: 0;
-      z-index: 1;
-      pointer-events: none;
-    }
-    .map-labels .map-label {
-      position: absolute;
-      transform: translate(-50%, -100%);
-      padding: 4px 9px;
-      margin-top: -10px;
-      font-family: var(--font-mono);
-      font-size: 10px;
-      letter-spacing: 0.04em;
-      text-transform: uppercase;
-      white-space: nowrap;
-      color: var(--text);
-      background: var(--bg-glass);
-      border: 1px solid var(--border-glass);
-      backdrop-filter: blur(8px);
-      border-radius: 6px;
-      box-shadow: 0 1px 4px rgba(0,0,0,0.08);
-      opacity: 0;
-      transition: opacity 0.25s ease-out;
-    }
-    .map-labels .map-label.is-hub {
-      color: var(--text-on-accent);
-      background: var(--gold);
-      border-color: var(--gold-dark);
-      font-weight: 500;
-    }
-    .map-labels .map-label.visible { opacity: 1; }
-    @media (prefers-reduced-motion: reduce) {
-      #map-labels, .map-labels { display: none; }
-    }
-
     /* ================================================================
        CONTENT WRAPPER
        ================================================================ */
@@ -1753,8 +1719,7 @@
   <!-- Raycaster overlay (activates when skills section is in view) -->
   <div id="constellation-interact" aria-hidden="true"></div>
 
-  <!-- Floating city labels over the Three.js map (positioned per-frame by JS) -->
-  <div id="map-labels" class="map-labels" aria-hidden="true"></div>
+  <!-- City markers on the Three.js map (positioned by JS, no text labels) -->
 
   <!-- Tooltip for skill constellation hover -->
   <div id="skill-tooltip" role="tooltip" aria-hidden="true">
@@ -2186,66 +2151,63 @@
       renderer.setClearColor(0x000000, 0);
       container.appendChild(renderer.domElement);
 
-      // ---- US outline (simplified lower-48 border, ~80 points) ----
-      const US_OUTLINE = [
-        [-125.0,49.0],[-122.8,49.0],[-117.0,49.0],[-114.0,49.0],[-110.0,49.0],
-        [-107.0,49.0],[-104.0,49.0],[-101.0,49.0],[-98.0,49.0],[-95.0,49.0],
-        [-92.0,49.0],[-89.0,49.0],[-86.0,49.0],[-83.0,46.5],[-82.5,44.0],
-        [-80.0,42.0],[-79.0,43.5],[-74.0,45.0],[-71.0,45.0],[-68.0,47.5],
-        [-67.0,47.0],[-67.0,44.5],[-68.0,43.5],[-70.0,42.0],[-70.5,41.5],
-        [-72.0,41.0],[-73.0,40.7],[-74.0,39.5],[-75.0,38.5],[-75.5,37.0],
-        [-76.0,36.5],[-77.0,35.0],[-78.5,33.8],[-80.0,32.5],[-80.5,31.0],
-        [-81.0,29.5],[-80.0,27.0],[-80.5,25.0],[-81.0,24.5],[-82.0,26.0],
-        [-82.5,27.5],[-83.0,29.0],[-84.0,29.5],[-85.0,29.7],[-87.0,30.3],
-        [-88.0,30.5],[-89.0,30.0],[-90.0,29.0],[-92.0,29.5],[-93.5,29.7],
-        [-95.0,29.0],[-97.0,28.0],[-97.5,26.0],[-98.0,26.5],[-99.5,27.5],
-        [-101.0,29.5],[-103.0,29.0],[-104.5,30.5],[-106.5,31.8],[-108.0,31.3],
-        [-109.0,31.5],[-111.0,31.3],[-112.5,31.3],[-113.0,32.0],[-114.5,32.5],
-        [-115.5,32.5],[-116.5,32.5],[-117.0,32.5],[-118.0,33.5],[-119.5,34.5],
-        [-121.0,36.0],[-122.0,37.0],[-122.5,38.0],[-123.0,39.0],[-124.0,40.0],
-        [-124.5,42.0],[-124.5,44.0],[-124.5,46.0],[-124.5,48.0],[-124.5,48.5],
-        [-125.0,49.0]
-      ];
-
-      // Build outline line
-      const outlinePts = US_OUTLINE.map(([lon, lat]) => {
-        const [x, y] = project(lon, lat);
-        return new THREE.Vector3(x, y, 0);
+      // ---------------------------------------------------------------
+      // GOOGLE-MAPS-STYLE STATE OUTLINES + LIGHTEST LAND SURFACE
+      // US_STATES (from states.js) = { StateName: [ [ring], [ring]... ] }
+      // each ring = array of [lon, lat]. Rendered with project().
+      // ---------------------------------------------------------------
+      const stateShapeGroup = [];
+      const stateLinePts = [];
+      (typeof US_STATES === 'object' ? Object.keys(US_STATES) : []).forEach(name => {
+        const rings = US_STATES[name];
+        rings.forEach(ring => {
+          if (ring.length < 3) return;
+          const pts = ring.map(([lon, lat]) => {
+            const [x, y] = project(lon, lat);
+            return new THREE.Vector3(x, y, 0);
+          });
+          // -- Surface fill: Shape per ring (earcut-free; ShapeGeometry handles convex trim OK at low opacity) --
+          const shape = new THREE.Shape();
+          shape.moveTo(pts[0].x, pts[0].y);
+          for (let i = 1; i < pts.length; i++) shape.lineTo(pts[i].x, pts[i].y);
+          shape.closePath();
+          stateShapeGroup.push(shape);
+          // -- Outline line (segmented, folded into one geometry) --
+          for (let i = 0; i < pts.length; i++) {
+            stateLinePts.push(pts[i], pts[(i + 1) % pts.length]);
+          }
+        });
       });
-      const outlineGeo = new THREE.BufferGeometry().setFromPoints(outlinePts);
-      const outlineMat = new THREE.LineBasicMaterial({
+
+      // Single filled surface mesh — all state shapes merged, warm brand tint
+      const surfaceGeo = new THREE.BufferGeometry();
+      {
+        const tris = [];
+        stateShapeGroup.forEach(shape => {
+          const g = new THREE.ShapeGeometry(shape);
+          const pos = g.attributes.position;
+          for (let i = 0; i < pos.count; i++) tris.push(pos.getX(i), pos.getY(i), 0);
+        });
+        surfaceGeo.setAttribute('position', new THREE.BufferAttribute(new Float32Array(tris), 3));
+      }
+      const surfaceMat = new THREE.MeshBasicMaterial({
         color: BRAND.primary,
         transparent: true,
-        opacity: 0.40,
-      });
-      const outlineLine = new THREE.Line(outlineGeo, outlineMat);
-      mapGroup.add(outlineLine);
-
-      // Faint inner fill so the country reads as a surface, not just a stroke.
-      // Closed shape → Shape/ShapeGeometry carries the silhouette as a solid.
-      const outlineShape = new THREE.Shape();
-      outlineShape.moveTo(outlinePts[0].x, outlinePts[0].y);
-      outlinePts.forEach(p => outlineShape.lineTo(p.x, p.y));
-      const fillGeo = new THREE.ShapeGeometry(outlineShape);
-      const fillMat = new THREE.MeshBasicMaterial({
-        color: BRAND.primary,
-        transparent: true,
-        opacity: 0.05,
+        opacity: 0.04,
         side: THREE.DoubleSide,
         depthWrite: false,
       });
-      mapGroup.add(new THREE.Mesh(fillGeo, fillMat));
+      mapGroup.add(new THREE.Mesh(surfaceGeo, surfaceMat));
 
-      // Duplicate outline with slight offset for depth glow
-      const outlineGeo2 = new THREE.BufferGeometry().setFromPoints(
-        outlinePts.map(p => new THREE.Vector3(p.x, p.y, -0.5))
-      );
-      const outlineMat2 = new THREE.LineBasicMaterial({
-        color: BRAND.secondary,
+      // State boundary lines — thin, terracotta, Google-Maps subtle
+      const stateLineGeo = new THREE.BufferGeometry().setFromPoints(stateLinePts);
+      const stateLineMat = new THREE.LineBasicMaterial({
+        color: BRAND.primary,
         transparent: true,
-        opacity: 0.14,
+        opacity: 0.22,
+        depthWrite: false,
       });
-      mapGroup.add(new THREE.Line(outlineGeo2, outlineMat2));
+      mapGroup.add(new THREE.LineSegments(stateLineGeo, stateLineMat));
 
       // ---- Career location nodes ----
       // lon/lat for each city
@@ -2287,71 +2249,79 @@
         { city: 'Mobile', label: 'Mobile, AL' },
       ];
 
-      // City nodes — unique cities get a persistent node
-      const cityNodeData = {}; // key → {pos, pulse}
-      const cityPositions = [];
-      const cityColors = [];
-      const citySizes = [];
+      // ---- City nodes: three groups (hub / career / decorative) ----
+      // Each group = separate Points, each with pinMat clone + its own uInnerColor.
+      // Baseline sizes bumped so pins read as Google-Maps markers, not glow specks.
+      const hubPositions = [], hubColors = [], hubSizes = [];
+      const careerPositions = [], careerColors = [], careerSizes = [];
+      const decoPositions = [], decoColors = [], decoSizes = [];
 
+      const cityNodeData = {}; // key → {pos, pulse, group, idxInGroup}
       const primaryC = new THREE.Color(BRAND.primary);
       const secondaryC = new THREE.Color(BRAND.secondary);
       const hubC = new THREE.Color(BRAND.primaryLight);
 
-      // Determine which cities appear in career path, and which is the current role.
       const careerCities = new Set(CAREER_PATH.map(s => s.city));
       const currentCity = CAREER_PATH[CAREER_PATH.length - 1].city;
-      let nodeIdx = 0;
+
       Object.keys(CITIES).forEach(key => {
         const c = CITIES[key];
         const [x, y] = project(c.lon, c.lat);
         const inPath = careerCities.has(key);
         const isHub = key === currentCity;
-        const col = isHub ? hubC : (inPath ? primaryC : secondaryC);
-        cityColors.push(col.r, col.g, col.b);
-        const sz = isHub ? 5.2 : (inPath ? 3.4 : 2.5);
-        citySizes.push(sz);
-        cityNodeData[key] = { idx: nodeIdx, x, y, baseSize: sz, pulse: 0, isHub };
-        cityPositions.push(x, y, 0);
-        nodeIdx++;
+
+        let group, col, sz, innerColor;
+        if (isHub) {
+          group = 'hub';
+          col = hubC;
+          sz = 6.0;
+          innerColor = new THREE.Color(0xffffff); // white inner dot
+        } else if (inPath) {
+          group = 'career';
+          col = primaryC;
+          sz = 4.0;
+          innerColor = new THREE.Color(BRAND.primaryLight); // gold inner
+        } else {
+          group = 'decorative';
+          col = secondaryC;
+          sz = 3.0;
+          innerColor = new THREE.Color(0xffffff);
+        }
+
+        let idxInGroup, positions, colors, sizes;
+        if (group === 'hub') {
+          idxInGroup = hubPositions.length / 3;
+          positions = hubPositions; colors = hubColors; sizes = hubSizes;
+        } else if (group === 'career') {
+          idxInGroup = careerPositions.length / 3;
+          positions = careerPositions; colors = careerColors; sizes = careerSizes;
+        } else {
+          idxInGroup = decoPositions.length / 3;
+          positions = decoPositions; colors = decoColors; sizes = decoSizes;
+        }
+
+        positions.push(x, y, 0);
+        colors.push(col.r, col.g, col.b);
+        sizes.push(sz);
+        cityNodeData[key] = { x, y, baseSize: sz, isHub, group, idxInGroup, innerColor };
       });
 
-      // Add extra pins (non-career-path pins)
+      // Add extra pins (non-career-path pins) — decorative group
       EXTRA_PINS.forEach(pin => {
         const c = CITIES[pin.city];
         const [x, y] = project(c.lon, c.lat);
-        const col = secondaryC;
-        cityColors.push(col.r, col.g, col.b);
-        const sz = 2.5;
-        citySizes.push(sz);
-        cityNodeData[pin.city] = { idx: nodeIdx, x, y, baseSize: sz, pulse: 0, isHub: false };
-        cityPositions.push(x, y, 0);
-        nodeIdx++;
+        const idxInGroup = decoPositions.length / 3;
+        decoPositions.push(x, y, 0);
+        decoColors.push(secondaryC.r, secondaryC.g, secondaryC.b);
+        decoSizes.push(3.0);
+        cityNodeData[pin.city] = { x, y, baseSize: 3.0, isHub: false, group: 'decorative', idxInGroup, innerColor: new THREE.Color(0xffffff) };
       });
 
-      // ---- Glow texture for nodes ----
-      function makeGlowTexture(color) {
-        const size = 64;
-        const canvas = document.createElement('canvas');
-        canvas.width = size;
-        canvas.height = size;
-        const ctx = canvas.getContext('2d');
-        const half = size / 2;
-        const grad = ctx.createRadialGradient(half, half, 0, half, half, half);
-        grad.addColorStop(0, color);
-        grad.addColorStop(1, 'rgba(0,0,0,0)');
-        ctx.fillStyle = grad;
-        ctx.fillRect(0, 0, size, size);
-        return new THREE.CanvasTexture(canvas);
-      }
-      const nodeTex = makeGlowTexture('rgba(255,255,255,0.95)');
-
-      const cityGeo = new THREE.BufferGeometry();
-      cityGeo.setAttribute('position', new THREE.BufferAttribute(new Float32Array(cityPositions), 3));
-      cityGeo.setAttribute('color', new THREE.BufferAttribute(new Float32Array(cityColors), 3));
-      cityGeo.setAttribute('size', new THREE.BufferAttribute(new Float32Array(citySizes), 1));
-
-      const cityMat = new THREE.ShaderMaterial({
-        uniforms: { uTexture: { value: nodeTex } },
+      // ---- Pin marker shader (Google-Maps-style: solid disc + inner dot) ----
+      // No glow texture — pins are solid, drawn directly in the fragment shader.
+      // NormalBlending gives a crisp opaque marker, not the old additive haze.
+      const pinMat = new THREE.ShaderMaterial({
+        uniforms: { uInnerColor: { value: new THREE.Color(0xffffff) } },
         vertexShader: `
           attribute float size;
           attribute vec3 color;
@@ -2364,19 +2334,41 @@
           }
         `,
         fragmentShader: `
-          uniform sampler2D uTexture;
+          uniform vec3 uInnerColor;
           varying vec3 vColor;
           void main() {
-            gl_FragColor = vec4(vColor, 1.0) * texture2D(uTexture, gl_PointCoord);
+            vec2 uv = gl_PointCoord - vec2(0.5);
+            float d = length(uv);
+            // outer disc (color), inner dot (uInnerColor), transparent outside
+            if (d > 0.5) discard;
+            vec3 c = (d < 0.18) ? uInnerColor : vColor;
+            // crisp edge AA by 1px of the outer ring
+            float alpha = smoothstep(0.5, 0.46, d);
+            gl_FragColor = vec4(c, alpha);
           }
         `,
         transparent: true,
-        blending: THREE.AdditiveBlending,
+        blending: THREE.NormalBlending,
         depthWrite: false,
       });
 
-      const cityPoints = new THREE.Points(cityGeo, cityMat);
-      mapGroup.add(cityPoints);
+      // Build three Points objects with pinMat clones, each with its own uInnerColor
+      function makePinPoints(positions, colors, sizes, innerColorHex) {
+        const geo = new THREE.BufferGeometry();
+        geo.setAttribute('position', new THREE.BufferAttribute(new Float32Array(positions), 3));
+        geo.setAttribute('color', new THREE.BufferAttribute(new Float32Array(colors), 3));
+        geo.setAttribute('size', new THREE.BufferAttribute(new Float32Array(sizes), 1));
+        const mat = pinMat.clone();
+        mat.uniforms.uInnerColor.value.set(innerColorHex);
+        return new THREE.Points(geo, mat);
+      }
+
+      const hubPoints = makePinPoints(hubPositions, hubColors, hubSizes, 0xffffff);
+      const careerPoints = makePinPoints(careerPositions, careerColors, careerSizes, BRAND.primaryLight);
+      const decoPoints = makePinPoints(decoPositions, decoColors, decoSizes, 0xffffff);
+      mapGroup.add(hubPoints);
+      mapGroup.add(careerPoints);
+      mapGroup.add(decoPoints);
 
       // ---- Career path connection lines ----
       const pathPositions = [];
@@ -2436,6 +2428,21 @@
       packetGeo.setAttribute('position', new THREE.BufferAttribute(packetPositions, 3));
       packetGeo.setAttribute('size', new THREE.BufferAttribute(packetSizes, 1));
 
+      // Tiny radial glow texture — used only by data packets (pins are solid)
+      function makeGlowTexture() {
+        const size = 64;
+        const canvas = document.createElement('canvas');
+        canvas.width = canvas.height = size;
+        const ctx = canvas.getContext('2d');
+        const grad = ctx.createRadialGradient(size/2, size/2, 0, size/2, size/2, size/2);
+        grad.addColorStop(0, 'rgba(255,255,255,0.95)');
+        grad.addColorStop(1, 'rgba(0,0,0,0)');
+        ctx.fillStyle = grad;
+        ctx.fillRect(0, 0, size, size);
+        return new THREE.CanvasTexture(canvas);
+      }
+      const nodeTex = makeGlowTexture();
+
       const packetMat = new THREE.ShaderMaterial({
         uniforms: {
           uTexture: { value: nodeTex },
@@ -2461,39 +2468,6 @@
         depthWrite: false,
       });
       mapGroup.add(new THREE.Points(packetGeo, packetMat));
-
-      // ---- Floating DOM labels over the map ----
-      // One <span> per city, positioned each frame by projecting its 3D point
-      // to screen space. Visible on mobile as well — they carry the city names
-      // the recruiter scans for. aria-hidden: the text fallback list is the
-      // accessible version (labels are a visual convenience only).
-      const labelsHost = document.getElementById('map-labels');
-      const labelEls = {};
-      Object.keys(CITIES).forEach(key => {
-        const el = document.createElement('span');
-        el.className = 'map-label' + (cityNodeData[key].isHub ? ' is-hub' : '');
-        el.textContent = CITIES[key].label;
-        labelsHost.appendChild(el);
-        labelEls[key] = el;
-      });
-
-      function positionLabels() {
-        Object.keys(CITIES).forEach(key => {
-          const nd = cityNodeData[key];
-          const v = new THREE.Vector3(nd.x, nd.y, 0).applyMatrix4(mapGroup.matrixWorld);
-          v.project(camera);
-          const sx = (v.x * 0.5 + 0.5) * window.innerWidth;
-          const sy = (-v.y * 0.5 + 0.5) * window.innerHeight;
-          const el = labelEls[key];
-          el.style.left = sx + 'px';
-          el.style.top = sy + 'px';
-          // Show only while hero is in view so labels never overlap page content
-          classListToggle(el, 'visible', v.z < 1 && heroVisible);
-        });
-      }
-      function classListToggle(el, cls, on) {
-        el.classList.toggle(cls, on);
-      }
 
       function animatePackets(time) {
         for (let i = 0; i < PACKET_COUNT; i++) {
@@ -2522,14 +2496,16 @@
       // ---- City node pulse animation ----
       // Hub (current role) holds a higher baseline + slow outer ring; the five
       // prior stops breathe. Keeps a visual hierarchy: present > past.
+      // Size arrays live on each group's Points geometry (hub/career/decorative).
       function animateNodes(time) {
         Object.keys(cityNodeData).forEach((key, i) => {
           const nd = cityNodeData[key];
           const amp = nd.isHub ? 0.08 : 0.30;
           const pulse = Math.sin(time * 0.8 + i * 0.7) * amp + (nd.isHub ? 0.92 : 0.70);
-          citySizes[nd.idx] = nd.baseSize * pulse;
+          const pts = nd.group === 'hub' ? hubPoints : (nd.group === 'career' ? careerPoints : decoPoints);
+          pts.geometry.attributes.size.array[nd.idxInGroup] = nd.baseSize * pulse;
+          pts.geometry.attributes.size.needsUpdate = true;
         });
-        cityGeo.attributes.size.needsUpdate = true;
       }
 
       // ---- Mouse parallax (scoped to the map group only) ----
@@ -2546,28 +2522,15 @@
         camera.aspect = window.innerWidth / window.innerHeight;
         camera.updateProjectionMatrix();
         renderer.setSize(window.innerWidth, window.innerHeight);
-        positionLabels();
       });
 
       // ---- Render loop (IO-gated — pauses when #scene-container is off-screen) ----
       let pageVisible = true;
       let mapVisible = false;
-      let heroVisible = true;
       let threeRAF = null;
       document.addEventListener('visibilitychange', () => {
         pageVisible = !document.hidden;
       });
-
-      // Hero visibility observer — hide map labels when hero is scrolled out of view
-      const heroSection = document.getElementById('hero');
-      if (heroSection) {
-        const heroObs = new IntersectionObserver((entries) => {
-          entries.forEach(e => {
-            heroVisible = e.isIntersecting || e.intersectionRatio > 0;
-          });
-        }, { threshold: 0.1 });
-        heroObs.observe(heroSection);
-      }
 
       // IntersectionObserver to start/stop the Three.js render loop
       const sceneContainer = document.getElementById('scene-container');
@@ -2601,7 +2564,6 @@
         mapGroup.rotation.x = mouseY * 0.04;
         mapGroup.updateMatrixWorld();
 
-        positionLabels();
         renderer.render(scene, camera);
       }
 
