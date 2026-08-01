@@ -12,7 +12,7 @@
   <meta property="og:description" content="15+ years switch operations, facility management, and RAN/transport engineering across T-Mobile and Sprint.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://syedrahidahmed.com">
-  <meta property="og:image" content="https://syedrahidahmed.com/og-image.png">
+  <meta property="og:image" content="https://syedrahidahmed.com/assets/og-image.png">
   <meta name="theme-color" content="#f7f5f0" media="(prefers-color-scheme: light)">
   <meta name="theme-color" content="#161412" media="(prefers-color-scheme: dark)">
   <link rel="canonical" href="https://syedrahidahmed.com">
@@ -21,7 +21,7 @@
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Syed Rahid Ahmed | Sr. Switch Technician — Telecom Operations & RAN/Transport">
   <meta name="twitter:description" content="15+ years of switch operations, facility management, and RAN/transport network engineering across T-Mobile and Sprint footprints.">
-  <meta name="twitter:image" content="https://syedrahidahmed.com/og-image.png">
+  <meta name="twitter:image" content="https://syedrahidahmed.com/assets/og-image.png">
 
   <!-- JSON-LD structured data -->
   <script type="application/ld+json">
@@ -32,7 +32,7 @@
     "jobTitle": "Sr. Switch Technician — Telecom Operations & RAN/Transport Specialist",
     "description": "CCNA-certified Sr. Switch & Telecom Specialist with 15+ years in switch operations, facility management, and RAN/transport network engineering across T-Mobile and Sprint.",
     "url": "https://syedrahidahmed.com",
-    "image": "https://syedrahidahmed.com/og-image.png",
+    "image": "https://syedrahidahmed.com/assets/og-image.png",
     "knowsAbout": ["Switch Operations", "Facility Management", "RAN", "5G NR", "LTE", "eNodeB", "gNodeB", "Cisco", "Nokia NetAct", "Ericsson ENM", "ATOMS", "OneTransport", "Disaster Recovery", "BGP", "OSPF", "MPLS"],
     "alumniOf": [
       { "@type": "CollegeOrProgram", "name": "BS Computer Science" },
@@ -54,19 +54,20 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-  <!-- Fonts: Outfit + JetBrains Mono -->
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <!-- Fonts: Outfit + JetBrains Mono (async — won't block first paint) -->
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"></noscript>
 
-  <!-- Three.js via CDN -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"
+  <!-- Three.js via CDN (deferred — only powers background map) -->
+  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"
           integrity="sha384-CI3ELBVUz9XQO+97x6nwMDPosPR5XvsxW2ua7N1Xeygeh1IxtgqtCkGfQY9WWdHu"
           crossorigin="anonymous"></script>
 
-  <!-- GSAP + ScrollTrigger -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"
+  <!-- GSAP + ScrollTrigger (deferred) -->
+  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"
           integrity="sha384-g4NTh/Iv5PPU4xPyhEWqPcwtNXOvdaDI8LLnyYfyNZOjKJeYQyjzQ9X5275eBjpt"
           crossorigin="anonymous"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"
+  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"
           integrity="sha384-Z3REaz79l2IaAZqJsSABtTbhjgOUYyV3p90XNnAPCSHg3EMTz1fouunq9WZRtj3d"
           crossorigin="anonymous"></script>
 
@@ -256,6 +257,125 @@
       text-transform: uppercase;
       letter-spacing: 0.08em;
       margin-top: 2px;
+    }
+
+    /* ================================================================
+       CAREER LOCATIONS — accessible map fallback + canvas labels
+       ================================================================ */
+    /* The text fallback. Visually off-screen once Three.js mounts the map;
+       remains in the a11y tree so screen readers always get the career path. */
+    #career-locations {
+      position: absolute;
+      width: 1px; height: 1px;
+      padding: 0; margin: -1px;
+      overflow: hidden;
+      clip: rect(0,0,0,0);
+      white-space: nowrap;
+      border: 0;
+    }
+    /* When JS can't enhance (no-js / no-Three / reduced-motion), surface it as
+       a real, readable block instead of a clippy afterthought. */
+    .no-js #career-locations,
+    #scene-container:not(.is-enhanced) ~ #career-locations {
+      position: static;
+      width: auto; height: auto;
+      margin: 0 auto 48px;
+      padding: 24px 28px;
+      max-width: 520px;
+      clip: auto;
+      overflow: visible;
+      white-space: normal;
+      background: var(--bg-glass);
+      border: 1px solid var(--border-glass);
+      backdrop-filter: blur(12px);
+      border-radius: 12px;
+    }
+    .no-js #career-locations__heading,
+    #career-locations .career-locations__heading {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: var(--gold);
+      margin-bottom: 12px;
+    }
+    .career-locations__list {
+      list-style: none;
+      counter-reset: stop;
+      display: grid;
+      gap: 10px;
+    }
+    .career-locations__list li {
+      counter-increment: stop;
+      display: grid;
+      grid-template-columns: auto 1fr;
+      column-gap: 14px;
+      row-gap: 2px;
+      align-items: baseline;
+    }
+    .career-locations__list li::before {
+      content: counter(stop, decimal-leading-zero);
+      grid-row: span 2;
+      align-self: center;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: var(--text-dim);
+      letter-spacing: 0.05em;
+    }
+    .career-locations__list .cl-city {
+      font-weight: 600;
+      color: var(--text);
+    }
+    .career-locations__list .cl-era {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: var(--text-dim);
+      font-weight: 400;
+    }
+    .career-locations__list .cl-city::after {
+      content: ' \00b7 ';
+      color: var(--text-dim);
+    }
+    .career-locations__list .cl-role {
+      grid-column: 2;
+      font-size: 14px;
+      color: var(--text-dim);
+    }
+    /* Floating labels rendered above the Three.js map. JS sets left/top. */
+    .map-labels {
+      position: fixed;
+      inset: 0;
+      z-index: 1;
+      pointer-events: none;
+    }
+    .map-labels .map-label {
+      position: absolute;
+      transform: translate(-50%, -100%);
+      padding: 4px 9px;
+      margin-top: -10px;
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      white-space: nowrap;
+      color: var(--text);
+      background: var(--bg-glass);
+      border: 1px solid var(--border-glass);
+      backdrop-filter: blur(8px);
+      border-radius: 6px;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+      opacity: 0;
+      transition: opacity 0.25s ease-out;
+    }
+    .map-labels .map-label.is-hub {
+      color: var(--text-on-accent);
+      background: var(--gold);
+      border-color: var(--gold-dark);
+      font-weight: 500;
+    }
+    .map-labels .map-label.visible { opacity: 1; }
+    @media (prefers-reduced-motion: reduce) {
+      #map-labels, .map-labels { display: none; }
     }
 
     /* ================================================================
@@ -887,7 +1007,7 @@
     .nav-style-toggle:hover {
       color: var(--text);
       border-color: var(--gold);
-      background: var(--surface);
+      background: var(--bg-glass);
     }
     .nav-style-toggle:focus-visible {
       outline: 2px solid var(--gold);
@@ -1555,6 +1675,8 @@
       try { theme = localStorage.getItem('theme'); } catch(e) {}
       if (theme === 'dark' || (!theme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
         document.documentElement.setAttribute('data-theme', 'dark');
+        var tm = document.querySelector('meta[name="theme-color"][media*="dark"]');
+        if (tm) tm.content = '#161412';
       }
     })();
   </script>
@@ -1609,11 +1731,30 @@
     </svg>
   </button>
 
-  <!-- Three.js canvas container -->
+  <!-- Three.js canvas container — career location network map -->
   <div id="scene-container" aria-hidden="true"></div>
+
+  <!-- Career locations: accessible text alternative to the Three.js map.
+       Visible until JS enhances the canvas (then hidden visually, kept for SR).
+       No-JS / no-Three / reduced-motion users still get the career path as text. -->
+  <div id="career-locations" class="career-locations" role="region"
+       aria-label="Career location map — chronological path across the United States">
+    <p class="career-locations__heading">Career path</p>
+    <ol class="career-locations__list">
+      <li><span class="cl-city">Bethesda, MD</span> <span class="cl-era">2009–2011</span><span class="cl-role">Help Desk Associate</span></li>
+      <li><span class="cl-city">Martinsburg, WV</span> <span class="cl-era">2011–2012</span><span class="cl-role">Network Engineer</span></li>
+      <li><span class="cl-city">Spokane, WA</span> <span class="cl-era">2012–2015</span><span class="cl-role">Switch Engineer</span></li>
+      <li><span class="cl-city">Austin, TX</span> <span class="cl-era">2015–2019</span><span class="cl-role">Sr. Switch Technician</span></li>
+      <li><span class="cl-city">Miami, FL</span> <span class="cl-era">2019–2022</span><span class="cl-role">Sr. Switch Technician</span></li>
+      <li><span class="cl-city">Hammond, LA</span> <span class="cl-era">2022–2026</span><span class="cl-role">Sr. Switch Technician</span></li>
+    </ol>
+  </div>
 
   <!-- Raycaster overlay (activates when skills section is in view) -->
   <div id="constellation-interact" aria-hidden="true"></div>
+
+  <!-- Floating city labels over the Three.js map (positioned per-frame by JS) -->
+  <div id="map-labels" class="map-labels" aria-hidden="true"></div>
 
   <!-- Tooltip for skill constellation hover -->
   <div id="skill-tooltip" role="tooltip" aria-hidden="true">
@@ -1717,7 +1858,7 @@
       <span class="section-label reveal">EXPERIENCE</span>
       <h2 class="section-title reveal">Career Timeline</h2>
       <div class="timeline">
-        <article class="timeline-item glass">
+        <article class="timeline-item glass reveal">
           <div class="timeline-date">May 2022 – Mar 2026</div>
           <h3 class="timeline-role">Sr. Switch Technician / Engineer</h3>
           <div class="timeline-company">NextGen Telecommunication (Client: T-Mobile)</div>
@@ -1731,7 +1872,7 @@
           </ul>
         </article>
 
-        <article class="timeline-item glass">
+        <article class="timeline-item glass reveal">
           <div class="timeline-date">May 2019 – Mar 2022</div>
           <h3 class="timeline-role">Sr. Switch Technician / Engineer</h3>
           <div class="timeline-company">WAVSYS Telecommunication (Client: T-Mobile)</div>
@@ -1745,7 +1886,7 @@
           </ul>
         </article>
 
-        <article class="timeline-item glass">
+        <article class="timeline-item glass reveal">
           <div class="timeline-date">Dec 2016 – Apr 2019</div>
           <h3 class="timeline-role">Sr. Switch Technician / Engineer</h3>
           <div class="timeline-company">Kineticom Telecommunication (Client: T-Mobile)</div>
@@ -1759,7 +1900,7 @@
           </ul>
         </article>
 
-        <article class="timeline-item glass">
+        <article class="timeline-item glass reveal">
           <div class="timeline-date">May 2015 – Dec 2016</div>
           <h3 class="timeline-role">Sr. Switch Technician / Engineer</h3>
           <div class="timeline-company">Apricot Consulting LLC (Client: T-Mobile)</div>
@@ -1773,7 +1914,7 @@
           </ul>
         </article>
 
-        <article class="timeline-item glass">
+        <article class="timeline-item glass reveal">
           <div class="timeline-date">May 2012 – Mar 2015</div>
           <h3 class="timeline-role">Switch Engineer</h3>
           <div class="timeline-company">Apricot Consulting LLC (Client: Sprint)</div>
@@ -1786,7 +1927,7 @@
           </ul>
         </article>
 
-        <article class="timeline-item glass">
+        <article class="timeline-item glass reveal">
           <div class="timeline-date">2011 – 2012</div>
           <h3 class="timeline-role">Network Engineer</h3>
           <div class="timeline-company">WVUH Jefferson Memorial Hospital</div>
@@ -1798,7 +1939,7 @@
           </ul>
         </article>
 
-        <article class="timeline-item glass">
+        <article class="timeline-item glass reveal">
           <div class="timeline-date">2009 – 2011</div>
           <h3 class="timeline-role">Help Desk Associate</h3>
           <div class="timeline-company">Jorge Scientific Corporation</div>
@@ -1959,6 +2100,7 @@
       <div id="form-success" style="display: none; margin-top: 20px; color: var(--gold); font-size: 14px;" role="status" aria-live="polite">
         Thanks — your message is on its way.
       </div>
+      <div id="form-error" style="display: none; margin-top: 20px; color: var(--gold-dark); font-size: 14px;" role="alert" aria-live="assertive"></div>
     </section>
   </main>
 
@@ -1983,17 +2125,44 @@
     // ================================================================
     // THREE.JS US MAP SCENE — career location network
     // ================================================================
-    (function() {
-      'use strict';
+    function initThreeJSMap() {
+      // ================================================================
+      // THREE.JS US MAP SCENE — career location network
+      // ================================================================
+      (function() {
+        'use strict';
 
-      if (typeof THREE === 'undefined') return;
-      const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      if (prefersReducedMotion) return;
+        if (typeof THREE === 'undefined') return;
+        const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        if (prefersReducedMotion) return;
 
-      const container = document.getElementById('scene-container');
+        const container = document.getElementById('scene-container');
+
+      // ---- Brand colors sourced from CSS tokens ----
+      // Reads the live palette so dark mode + style toggles flow into the map
+      // without re-hardcoding hex in JS. DESIGN.md "capture the live terracotta
+      // system" rule. Re-resolve on theme/style change.
+      function cssVar(name, fallback) {
+        const v = getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+        return v || fallback;
+      }
+      function hexToInt(hex) {
+        return parseInt(hex.replace('#', ''), 16);
+      }
+      const BRAND = {
+        primary: hexToInt(cssVar('--gold', '#c2410c')),
+        primaryLight: hexToInt(cssVar('--gold-light', '#e06a3a')),
+        secondary: hexToInt(cssVar('--teal', '#0e7490')),
+        ink: hexToInt(cssVar('--text', '#1c1917')),
+      };
 
       // ---- Scene setup ----
+      // Wrap the map geometry in its own group so parallax/rotation tilt the
+      // map only, not any sibling scene content.
+      const mapGroup = new THREE.Group();
       const scene = new THREE.Scene();
+      scene.add(mapGroup);
+      const isMobile = window.innerWidth < 768;
       const camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 1000);
       window.camera = camera;
 
@@ -2007,7 +2176,8 @@
         return [x, y];
       }
 
-      camera.position.set(0, 0, 50);
+      // Pull camera back on small screens so the map reads ambient, not dominant
+      camera.position.set(0, 0, isMobile ? 66 : 50);
       camera.lookAt(0, 0, 0);
 
       const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
@@ -2044,23 +2214,38 @@
       });
       const outlineGeo = new THREE.BufferGeometry().setFromPoints(outlinePts);
       const outlineMat = new THREE.LineBasicMaterial({
-        color: 0xc2410c,
+        color: BRAND.primary,
         transparent: true,
-        opacity: 0.12,
+        opacity: 0.40,
       });
       const outlineLine = new THREE.Line(outlineGeo, outlineMat);
-      scene.add(outlineLine);
+      mapGroup.add(outlineLine);
+
+      // Faint inner fill so the country reads as a surface, not just a stroke.
+      // Closed shape → Shape/ShapeGeometry carries the silhouette as a solid.
+      const outlineShape = new THREE.Shape();
+      outlineShape.moveTo(outlinePts[0].x, outlinePts[0].y);
+      outlinePts.forEach(p => outlineShape.lineTo(p.x, p.y));
+      const fillGeo = new THREE.ShapeGeometry(outlineShape);
+      const fillMat = new THREE.MeshBasicMaterial({
+        color: BRAND.primary,
+        transparent: true,
+        opacity: 0.05,
+        side: THREE.DoubleSide,
+        depthWrite: false,
+      });
+      mapGroup.add(new THREE.Mesh(fillGeo, fillMat));
 
       // Duplicate outline with slight offset for depth glow
       const outlineGeo2 = new THREE.BufferGeometry().setFromPoints(
         outlinePts.map(p => new THREE.Vector3(p.x, p.y, -0.5))
       );
       const outlineMat2 = new THREE.LineBasicMaterial({
-        color: 0x0e7490,
+        color: BRAND.secondary,
         transparent: true,
-        opacity: 0.06,
+        opacity: 0.14,
       });
-      scene.add(new THREE.Line(outlineGeo2, outlineMat2));
+      mapGroup.add(new THREE.Line(outlineGeo2, outlineMat2));
 
       // ---- Career location nodes ----
       // lon/lat for each city
@@ -2071,17 +2256,35 @@
         Spokane:     { lon: -117.43, lat: 47.66, label: 'Spokane, WA' },
         Miami:       { lon: -80.19, lat: 25.76, label: 'Miami, FL' },
         Hammond:     { lon: -90.46, lat: 30.50, label: 'Hammond, LA' },
+        Memphis:     { lon: -90.05, lat: 35.15, label: 'Memphis, TN' },
+        Birmingham:  { lon: -86.80, lat: 33.52, label: 'Birmingham, AL' },
+        Atlanta:     { lon: -84.39, lat: 33.75, label: 'Atlanta, GA' },
+        Montgomery:  { lon: -86.30, lat: 32.37, label: 'Montgomery, AL' },
+        Mobile:      { lon: -88.04, lat: 30.70, label: 'Mobile, AL' },
       };
 
-      // Career path (chronological) — references city keys
-      const CAREER_PATH = [
-        { city: 'Bethesda',    role: 'Help Desk Associate',  era: '2009-2011' },
-        { city: 'Martinsburg', role: 'Network Engineer',     era: '2011-2012' },
-        { city: 'Spokane',     role: 'Switch Engineer',       era: '2012-2015' },
-        { city: 'Austin',      role: 'Sr. Switch Technician', era: '2015-2016' },
-        { city: 'Austin',      role: 'Sr. Switch Technician', era: '2016-2019' },
-        { city: 'Miami',       role: 'Sr. Switch Technician', era: '2019-2022' },
-        { city: 'Hammond',     role: 'Sr. Switch Technician', era: '2022-2026' },
+      // Career path (chronological) — parsed from the a11y fallback list (#career-locations)
+      // Single source of truth: the HTML list is the authoritative data.
+      const careerList = document.querySelectorAll('#career-locations .career-locations__list li');
+      const CAREER_PATH = Array.from(careerList).map(li => {
+        const city = li.querySelector('.cl-city')?.textContent?.split(',')[0]?.trim() || '';
+        const era = li.querySelector('.cl-era')?.textContent?.trim() || '';
+        const role = li.querySelector('.cl-role')?.textContent?.trim() || '';
+        // Map display city name to CITIES key
+        const cityKeyMap = {
+          'Bethesda': 'Bethesda',
+          'Martinsburg': 'Martinsburg',
+          'Spokane': 'Spokane',
+          'Austin': 'Austin',
+          'Miami': 'Miami',
+          'Hammond': 'Hammond'
+        };
+        return { city: cityKeyMap[city] || city, role, era };
+      });
+
+      // Additional pin locations (not in career path timeline, but shown as pins)
+      const EXTRA_PINS = [
+        { city: 'Mobile', label: 'Mobile, AL' },
       ];
 
       // City nodes — unique cities get a persistent node
@@ -2090,22 +2293,37 @@
       const cityColors = [];
       const citySizes = [];
 
-      const primaryC = new THREE.Color(0xc2410c);
-      const secondaryC = new THREE.Color(0x0e7490);
-      const hubC = new THREE.Color(0xe06a3a);
+      const primaryC = new THREE.Color(BRAND.primary);
+      const secondaryC = new THREE.Color(BRAND.secondary);
+      const hubC = new THREE.Color(BRAND.primaryLight);
 
-      // Determine which cities appear in career path
+      // Determine which cities appear in career path, and which is the current role.
       const careerCities = new Set(CAREER_PATH.map(s => s.city));
+      const currentCity = CAREER_PATH[CAREER_PATH.length - 1].city;
       let nodeIdx = 0;
       Object.keys(CITIES).forEach(key => {
         const c = CITIES[key];
         const [x, y] = project(c.lon, c.lat);
         const inPath = careerCities.has(key);
-        const col = inPath ? primaryC : secondaryC;
+        const isHub = key === currentCity;
+        const col = isHub ? hubC : (inPath ? primaryC : secondaryC);
         cityColors.push(col.r, col.g, col.b);
-        const sz = inPath ? 4.0 : 2.5;
+        const sz = isHub ? 5.2 : (inPath ? 3.4 : 2.5);
         citySizes.push(sz);
-        cityNodeData[key] = { idx: nodeIdx, x, y, baseSize: sz, pulse: 0 };
+        cityNodeData[key] = { idx: nodeIdx, x, y, baseSize: sz, pulse: 0, isHub };
+        cityPositions.push(x, y, 0);
+        nodeIdx++;
+      });
+
+      // Add extra pins (non-career-path pins)
+      EXTRA_PINS.forEach(pin => {
+        const c = CITIES[pin.city];
+        const [x, y] = project(c.lon, c.lat);
+        const col = secondaryC;
+        cityColors.push(col.r, col.g, col.b);
+        const sz = 2.5;
+        citySizes.push(sz);
+        cityNodeData[pin.city] = { idx: nodeIdx, x, y, baseSize: sz, pulse: 0, isHub: false };
         cityPositions.push(x, y, 0);
         nodeIdx++;
       });
@@ -2158,7 +2376,7 @@
       });
 
       const cityPoints = new THREE.Points(cityGeo, cityMat);
-      scene.add(cityPoints);
+      mapGroup.add(cityPoints);
 
       // ---- Career path connection lines ----
       const pathPositions = [];
@@ -2184,14 +2402,19 @@
       pathGeo.setAttribute('position', new THREE.BufferAttribute(new Float32Array(pathPositions), 3));
       pathGeo.setAttribute('color', new THREE.BufferAttribute(new Float32Array(pathColors), 3));
 
-      const pathMat = new THREE.LineBasicMaterial({
+      const pathMat = new THREE.LineDashedMaterial({
         vertexColors: true,
         transparent: true,
-        opacity: 0.25,
+        opacity: 0.45,
+        dashSize: 1.5,
+        gapSize: 1.0,
         blending: THREE.AdditiveBlending,
         depthWrite: false,
       });
-      scene.add(new THREE.LineSegments(pathGeo, pathMat));
+      mapGroup.add(new THREE.LineSegments(pathGeo, pathMat));
+      // Compute line distances for dashed lines
+      const lineSegments = mapGroup.getObjectByProperty('type', 'LineSegments');
+      if (lineSegments) lineSegments.computeLineDistances();
 
       // ---- Data packets traveling along career path ----
       const PACKET_COUNT = 25;
@@ -2214,7 +2437,10 @@
       packetGeo.setAttribute('size', new THREE.BufferAttribute(packetSizes, 1));
 
       const packetMat = new THREE.ShaderMaterial({
-        uniforms: { uTexture: { value: nodeTex } },
+        uniforms: {
+          uTexture: { value: nodeTex },
+          uColor: { value: new THREE.Color(BRAND.primary) },
+        },
         vertexShader: `
           attribute float size;
           void main() {
@@ -2225,15 +2451,49 @@
         `,
         fragmentShader: `
           uniform sampler2D uTexture;
+          uniform vec3 uColor;
           void main() {
-            gl_FragColor = vec4(0.761, 0.255, 0.047, 0.9) * texture2D(uTexture, gl_PointCoord);
+            gl_FragColor = vec4(uColor, 0.9) * texture2D(uTexture, gl_PointCoord);
           }
         `,
         transparent: true,
         blending: THREE.AdditiveBlending,
         depthWrite: false,
       });
-      scene.add(new THREE.Points(packetGeo, packetMat));
+      mapGroup.add(new THREE.Points(packetGeo, packetMat));
+
+      // ---- Floating DOM labels over the map ----
+      // One <span> per city, positioned each frame by projecting its 3D point
+      // to screen space. Visible on mobile as well — they carry the city names
+      // the recruiter scans for. aria-hidden: the text fallback list is the
+      // accessible version (labels are a visual convenience only).
+      const labelsHost = document.getElementById('map-labels');
+      const labelEls = {};
+      Object.keys(CITIES).forEach(key => {
+        const el = document.createElement('span');
+        el.className = 'map-label' + (cityNodeData[key].isHub ? ' is-hub' : '');
+        el.textContent = CITIES[key].label;
+        labelsHost.appendChild(el);
+        labelEls[key] = el;
+      });
+
+      function positionLabels() {
+        Object.keys(CITIES).forEach(key => {
+          const nd = cityNodeData[key];
+          const v = new THREE.Vector3(nd.x, nd.y, 0).applyMatrix4(mapGroup.matrixWorld);
+          v.project(camera);
+          const sx = (v.x * 0.5 + 0.5) * window.innerWidth;
+          const sy = (-v.y * 0.5 + 0.5) * window.innerHeight;
+          const el = labelEls[key];
+          el.style.left = sx + 'px';
+          el.style.top = sy + 'px';
+          // Show only while hero is in view so labels never overlap page content
+          classListToggle(el, 'visible', v.z < 1 && heroVisible);
+        });
+      }
+      function classListToggle(el, cls, on) {
+        el.classList.toggle(cls, on);
+      }
 
       function animatePackets(time) {
         for (let i = 0; i < PACKET_COUNT; i++) {
@@ -2260,16 +2520,19 @@
       }
 
       // ---- City node pulse animation ----
+      // Hub (current role) holds a higher baseline + slow outer ring; the five
+      // prior stops breathe. Keeps a visual hierarchy: present > past.
       function animateNodes(time) {
         Object.keys(cityNodeData).forEach((key, i) => {
           const nd = cityNodeData[key];
-          const pulse = Math.sin(time * 0.8 + i * 0.7) * 0.3 + 0.7;
+          const amp = nd.isHub ? 0.08 : 0.30;
+          const pulse = Math.sin(time * 0.8 + i * 0.7) * amp + (nd.isHub ? 0.92 : 0.70);
           citySizes[nd.idx] = nd.baseSize * pulse;
         });
         cityGeo.attributes.size.needsUpdate = true;
       }
 
-      // ---- Mouse parallax ----
+      // ---- Mouse parallax (scoped to the map group only) ----
       let mouseX = 0, mouseY = 0, targetMouseX = 0, targetMouseY = 0;
       document.addEventListener('mousemove', (e) => {
         targetMouseX = (e.clientX / window.innerWidth - 0.5) * 2;
@@ -2278,20 +2541,50 @@
 
       // ---- Resize ----
       window.addEventListener('resize', () => {
+        const mobile = window.innerWidth < 768;
+        camera.position.z = mobile ? 66 : 50;
         camera.aspect = window.innerWidth / window.innerHeight;
         camera.updateProjectionMatrix();
         renderer.setSize(window.innerWidth, window.innerHeight);
+        positionLabels();
       });
 
-      // ---- Render loop ----
+      // ---- Render loop (IO-gated — pauses when #scene-container is off-screen) ----
       let pageVisible = true;
+      let mapVisible = false;
+      let heroVisible = true;
+      let threeRAF = null;
       document.addEventListener('visibilitychange', () => {
         pageVisible = !document.hidden;
       });
 
+      // Hero visibility observer — hide map labels when hero is scrolled out of view
+      const heroSection = document.getElementById('hero');
+      if (heroSection) {
+        const heroObs = new IntersectionObserver((entries) => {
+          entries.forEach(e => {
+            heroVisible = e.isIntersecting || e.intersectionRatio > 0;
+          });
+        }, { threshold: 0.1 });
+        heroObs.observe(heroSection);
+      }
+
+      // IntersectionObserver to start/stop the Three.js render loop
+      const sceneContainer = document.getElementById('scene-container');
+      if (sceneContainer) {
+        const mapObs = new IntersectionObserver((entries) => {
+          entries.forEach(e => {
+            mapVisible = e.isIntersecting || e.intersectionRatio > 0;
+            if (mapVisible && !threeRAF) threeRAF = requestAnimationFrame(animate);
+          });
+        }, { rootMargin: '200px', threshold: 0.01 });
+        mapObs.observe(sceneContainer);
+      }
+
       let prevTime = performance.now();
       function animate() {
-        requestAnimationFrame(animate);
+        if (!mapVisible) { threeRAF = null; return; }
+        threeRAF = requestAnimationFrame(animate);
         if (!pageVisible) { prevTime = performance.now(); return; }
         const now = performance.now();
         const dt = (now - prevTime) / 1000;
@@ -2301,20 +2594,29 @@
         animateNodes(time);
         animatePackets(time);
 
-        // Smooth mouse parallax
+        // Smooth mouse parallax — map group only, never the whole scene
         mouseX += (targetMouseX - mouseX) * 0.05;
         mouseY += (targetMouseY - mouseY) * 0.05;
-        scene.rotation.y = mouseX * 0.06;
-        scene.rotation.x = mouseY * 0.04;
+        mapGroup.rotation.y = mouseX * 0.06;
+        mapGroup.rotation.x = mouseY * 0.04;
+        mapGroup.updateMatrixWorld();
 
-        // Gentle drift
-        scene.position.x = Math.sin(time * 0.1) * 0.3;
-        scene.position.y = Math.cos(time * 0.08) * 0.2;
-
+        positionLabels();
         renderer.render(scene, camera);
       }
+
+      // Mark enhanced so the CSS text fallback collapses to the a11y-only strip
+      container.classList.add('is-enhanced');
       animate();
     })();
+  }
+
+  // Execute when DOM is ready
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initThreeJSMap);
+  } else {
+    initThreeJSMap();
+  }
 
 
       // ================================================================
@@ -2323,46 +2625,53 @@
       const tooltipName = tooltip.querySelector('.tooltip-name');
       const tooltipCat = tooltip.querySelector('.category');
 
-      // SKILL CONSTELLATION (Three.js 2D on separate canvas)
-      // ================================================================
+      // Skill canvas + context for the interactive ring
       const skillCanvas = document.getElementById('skill-canvas');
       const skillCtx = skillCanvas.getContext('2d');
 
+      // Skills data — mirrors the HTML skill categories for the interactive ring
       const SKILLS = [
-        { name: 'Switch Maintenance',    cat: 'Switch & Facility Ops',    color: '#c2410c', desc: 'Core network switch maintenance' },
-        { name: 'Facility Checks',       cat: 'Switch & Facility Ops',    color: '#c2410c', desc: 'Physical site monitoring' },
-        { name: 'BMS (EcoStruxure)',      cat: 'Switch & Facility Ops',    color: '#c2410c', desc: 'Schneider Electric building mgmt' },
-        { name: 'Disaster Recovery',     cat: 'Switch & Facility Ops',    color: '#c2410c', desc: 'Emergency network restoration' },
-        { name: 'Alarm Management',      cat: 'Switch & Facility Ops',    color: '#c2410c', desc: 'Fault detection & containment' },
-        { name: 'ITIL Change Mgmt',      cat: 'Switch & Facility Ops',    color: '#c2410c', desc: 'Compliant change windows' },
-        { name: '5G NR',                 cat: '5G/4G RAN & Core',         color: '#0e7490', desc: '5G New Radio architecture' },
-        { name: 'eNodeB/gNodeB',         cat: '5G/4G RAN & Core',         color: '#0e7490', desc: 'LTE/5G base stations' },
-        { name: 'NSD, DAS',              cat: '5G/4G RAN & Core',         color: '#0e7490', desc: 'Special network deployments' },
-        { name: 'Emergency COWs',        cat: '5G/4G RAN & Core',         color: '#0e7490', desc: 'Temporary site activation' },
-        { name: 'Call Servers',          cat: '5G/4G RAN & Core',         color: '#0e7490', desc: 'Media gateway call processing' },
-        { name: 'BSC/RNC',              cat: '5G/4G RAN & Core',         color: '#0e7490', desc: '2G/3G base station controllers' },
-        { name: 'Cisco Catalyst',        cat: 'Routing & Transport',      color: '#4d7c0f', desc: 'Enterprise switching platforms' },
-        { name: 'SAS/MAD Routers',       cat: 'Routing & Transport',      color: '#4d7c0f', desc: 'Cell site router configuration' },
-        { name: 'BGP/OSPF/MPLS',         cat: 'Routing & Transport',      color: '#4d7c0f', desc: 'IP routing protocols' },
-        { name: 'Fiber/Microwave',       cat: 'Routing & Transport',      color: '#4d7c0f', desc: 'Backhaul transport media' },
-        { name: '1G/10G/100G',           cat: 'Routing & Transport',      color: '#4d7c0f', desc: 'Provisioning bandwidth tiers' },
-        { name: 'L2/L3 Switching',       cat: 'Routing & Transport',      color: '#4d7c0f', desc: 'Layer 2/3 network switching' },
-        { name: 'ATOMS',                 cat: 'T-Mobile Tools',           color: '#44403c', desc: 'Cell site asset tracking' },
-        { name: 'OneTransport',          cat: 'T-Mobile Tools',           color: '#44403c', desc: 'Transport network management' },
-        { name: 'RIOT',                  cat: 'T-Mobile Tools',           color: '#44403c', desc: 'Network operations interface' },
-        { name: 'OneConsole',            cat: 'T-Mobile Tools',           color: '#44403c', desc: 'Centralized network console' },
-        { name: 'CBN Tools',             cat: 'T-Mobile Tools',           color: '#44403c', desc: 'Core backbone network tools' },
-        { name: 'EAI/Netviewer',         cat: 'T-Mobile Tools',           color: '#44403c', desc: 'Enterprise application integration' },
-        { name: 'Nokia NetAct',          cat: 'OSS & Scripting',          color: '#be123c', desc: 'Nokia network management' },
-        { name: 'Ericsson ENM',          cat: 'OSS & Scripting',          color: '#be123c', desc: 'Ericsson element management' },
-        { name: 'AMOS',                  cat: 'OSS & Scripting',          color: '#be123c', desc: 'Nokia automation scripting' },
-        { name: 'Shell/Bash',            cat: 'OSS & Scripting',          color: '#be123c', desc: 'Unix automation scripts' },
-        { name: 'JavaScript',            cat: 'OSS & Scripting',          color: '#be123c', desc: 'Web & task automation' },
-        { name: 'Batch',                 cat: 'OSS & Scripting',          color: '#be123c', desc: 'Windows automation scripts' },
-        { name: 'Technical Mentorship',  cat: 'Leadership',               color: '#65a30d', desc: 'Junior technician training' },
-        { name: 'MOP Development',       cat: 'Leadership',               color: '#65a30d', desc: 'Standard operating procedures' },
-        { name: 'War-Room Command',      cat: 'Leadership',               color: '#65a30d', desc: 'Critical outage leadership' },
-        { name: 'E911 / CBN Audits',     cat: 'Leadership',               color: '#65a30d', desc: 'Emergency & compliance audits' },
+        // Switch & Facility Operations
+        { name: 'Switch Maintenance', cat: 'Switch & Facility Ops', color: '#c2410c', desc: 'Switch & Facility Operations' },
+        { name: 'Facility Checks', cat: 'Switch & Facility Ops', color: '#c2410c', desc: 'Switch & Facility Operations' },
+        { name: 'Power/BMS (EcoStruxure)', cat: 'Switch & Facility Ops', color: '#c2410c', desc: 'Switch & Facility Operations' },
+        { name: 'Disaster Recovery', cat: 'Switch & Facility Ops', color: '#c2410c', desc: 'Switch & Facility Operations' },
+        { name: 'Alarm Management', cat: 'Switch & Facility Ops', color: '#c2410c', desc: 'Switch & Facility Operations' },
+        { name: 'ITIL Change Mgmt', cat: 'Switch & Facility Ops', color: '#c2410c', desc: 'Switch & Facility Operations' },
+        // 5G/4G RAN & Core
+        { name: '5G NR', cat: '5G/4G RAN & Core', color: '#0e7490', desc: '5G/4G RAN & Core' },
+        { name: 'eNodeB/gNodeB', cat: '5G/4G RAN & Core', color: '#0e7490', desc: '5G/4G RAN & Core' },
+        { name: 'NSD, DAS', cat: '5G/4G RAN & Core', color: '#0e7490', desc: '5G/4G RAN & Core' },
+        { name: 'Emergency COWs', cat: '5G/4G RAN & Core', color: '#0e7490', desc: '5G/4G RAN & Core' },
+        { name: 'Call Servers', cat: '5G/4G RAN & Core', color: '#0e7490', desc: '5G/4G RAN & Core' },
+        { name: 'BSC/RNC', cat: '5G/4G RAN & Core', color: '#0e7490', desc: '5G/4G RAN & Core' },
+        // Routing & Transport
+        { name: 'Cisco Catalyst', cat: 'Routing & Transport', color: '#4d7c0f', desc: 'Routing & Transport' },
+        { name: 'SAS/MAD Routers', cat: 'Routing & Transport', color: '#4d7c0f', desc: 'Routing & Transport' },
+        { name: 'BGP/OSPF/MPLS', cat: 'Routing & Transport', color: '#4d7c0f', desc: 'Routing & Transport' },
+        { name: 'Fiber/Microwave', cat: 'Routing & Transport', color: '#4d7c0f', desc: 'Routing & Transport' },
+        { name: '1G/10G/100G', cat: 'Routing & Transport', color: '#4d7c0f', desc: 'Routing & Transport' },
+        { name: 'L2/L3 Switching', cat: 'Routing & Transport', color: '#4d7c0f', desc: 'Routing & Transport' },
+        // T-Mobile Tools
+        { name: 'ATOMS', cat: 'T-Mobile Tools', color: '#44403c', desc: 'T-Mobile Tools' },
+        { name: 'OneTransport', cat: 'T-Mobile Tools', color: '#44403c', desc: 'T-Mobile Tools' },
+        { name: 'RIOT', cat: 'T-Mobile Tools', color: '#44403c', desc: 'T-Mobile Tools' },
+        { name: 'OneConsole', cat: 'T-Mobile Tools', color: '#44403c', desc: 'T-Mobile Tools' },
+        { name: 'CBN Tools', cat: 'T-Mobile Tools', color: '#44403c', desc: 'T-Mobile Tools' },
+        { name: 'EAI/Netviewer', cat: 'T-Mobile Tools', color: '#44403c', desc: 'T-Mobile Tools' },
+        // OSS & Scripting
+        { name: 'Nokia NetAct', cat: 'OSS & Scripting', color: '#be123c', desc: 'OSS & Scripting' },
+        { name: 'Ericsson ENM', cat: 'OSS & Scripting', color: '#be123c', desc: 'OSS & Scripting' },
+        { name: 'AMOS', cat: 'OSS & Scripting', color: '#be123c', desc: 'OSS & Scripting' },
+        { name: 'Shell/Bash', cat: 'OSS & Scripting', color: '#be123c', desc: 'OSS & Scripting' },
+        { name: 'JavaScript', cat: 'OSS & Scripting', color: '#be123c', desc: 'OSS & Scripting' },
+        { name: 'Batch', cat: 'OSS & Scripting', color: '#be123c', desc: 'OSS & Scripting' },
+        // Leadership
+        { name: 'Technical Mentorship', cat: 'Leadership', color: '#65a30d', desc: 'Leadership' },
+        { name: 'Junior Tech Onboarding', cat: 'Leadership', color: '#65a30d', desc: 'Leadership' },
+        { name: 'MOP Development', cat: 'Leadership', color: '#65a30d', desc: 'Leadership' },
+        { name: 'War-Room Command', cat: 'Leadership', color: '#65a30d', desc: 'Leadership' },
+        { name: 'E911 / CBN Audits', cat: 'Leadership', color: '#65a30d', desc: 'Leadership' },
       ];
 
       // ---- Skill Ring layout ----
@@ -2377,6 +2686,7 @@
         'Leadership':              '#65a30d',
       };
       let ringNodes = [];
+      let crossLinks = [];
       let hoveredRing = null;
       let ringOpacity = 0;
       let ringActive = false;
@@ -2430,6 +2740,9 @@
           });
           angle += arcLen + gap;
         });
+
+        // Precompute cross-category links (constant after init — never recompute per frame)
+        crossLinks = findCrossLinks();
       }
 
       function drawSkillRing(time) {
@@ -2475,8 +2788,7 @@
           arcAngle += arcLen + gap;
         });
 
-        // Cross-category links
-        const crossLinks = findCrossLinks();
+        // Cross-category links (precomputed)
         crossLinks.forEach(([i, j]) => {
           const pi = curPos[i], pj = curPos[j];
           if (!pi || !pj) return;
@@ -2591,15 +2903,26 @@
       // INTERSECTION OBSERVER
       // ================================================================
 
-      // Constellation activation
+      // Constellation activation — gates ringActive AND the rAF loop
       const constellationAnchor = document.querySelector('.constellation-anchor');
+      let ringRAF = null;
       if (constellationAnchor) {
         const constObs = new IntersectionObserver((entries) => {
           entries.forEach(e => {
             ringActive = e.isIntersecting;
+            if (ringActive && !ringRAF) ringRAF = requestAnimationFrame(skillRingLoop);
           });
         }, { threshold: 0.3 });
         constObs.observe(constellationAnchor);
+      }
+
+      function skillRingLoop() {
+        if (!ringActive && ringOpacity <= 0) { ringRAF = null; return; }
+        ringRAF = requestAnimationFrame(skillRingLoop);
+        if (!pageVisible) { prevTime = performance.now(); return; }
+        const now = performance.now();
+        prevTime = now;
+        drawSkillRing(now * 0.001);
       }
 
       // ================================================================
@@ -2607,6 +2930,7 @@
       // ================================================================
       const form = document.querySelector('#contact form');
       const successMsg = document.getElementById('form-success');
+      const errorMsg = document.getElementById('form-error');
       if (form) {
         form.addEventListener('submit', (e) => {
           e.preventDefault();
@@ -2661,9 +2985,8 @@
               })
               .catch(() => {
                 if (btn) { btn.disabled = false; btn.textContent = 'Send Message'; }
-                successMsg.style.display = 'block';
-                successMsg.style.color = 'var(--gold)';
-                successMsg.textContent = "Something went wrong sending the form. Please try again or email me directly.";
+                errorMsg.style.display = 'block';
+                errorMsg.textContent = "Something went wrong sending the form. Please try again or email me directly.";
               });
           }
         });
@@ -2682,13 +3005,11 @@
 
       // ================================================================
       // RESIZE (debounced for skill canvas)
+      // The Three.js map owns its own camera/renderer resize in its IIFE;
+      // this handler only re-sizes the 2D skill-canvas rings.
       // ================================================================
       let resizeTimeout;
       window.addEventListener('resize', () => {
-        camera.aspect = window.innerWidth / window.innerHeight;
-        camera.updateProjectionMatrix();
-        renderer.setSize(window.innerWidth, window.innerHeight);
-
         // Debounce skill canvas resize — avoids reinit on every pixel during drag/rotate
         clearTimeout(resizeTimeout);
         resizeTimeout = setTimeout(() => {
@@ -2708,27 +3029,13 @@
         initRingNodes(skillCanvas.width, skillCanvas.height);
       }, 100);
       // ================================================================
-      // SKILL RING RENDER LOOP
+      // SKILL RING RENDER LOOP (IO-gated — starts when skills section nears viewport)
       // ================================================================
       let prevTime = performance.now();
       var pageVisible = true;
       document.addEventListener('visibilitychange', function() {
         pageVisible = !document.hidden;
       });
-
-      function animate() {
-        requestAnimationFrame(animate);
-        if (!pageVisible) { prevTime = performance.now(); return; }
-        const now = performance.now();
-        prevTime = now;
-        drawSkillRing(now * 0.001);
-      }
-
-      if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', animate);
-      } else {
-        animate();
-      }
 
 
     // ================================================================
