@@ -59,7 +59,16 @@
       const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
       renderer.setSize(window.innerWidth, window.innerHeight);
       renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-      renderer.setClearColor(0x000000, 0);
+      // Solid page-background clear color (not transparent) — keeps the faint
+      // surface tint uniform instead of compositing over varying page content,
+      // which caused per-triangle shading seams on concave shapes.
+      function updateClearColor() {
+        renderer.setClearColor(hexToInt(cssVar('--bg', '#f7f5f0')));
+      }
+      updateClearColor();
+      // Re-sync on theme/style change
+      const themeObserver = new MutationObserver(() => updateClearColor());
+      themeObserver.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme', 'data-style'] });
       container.appendChild(renderer.domElement);
 
       // ---------------------------------------------------------------
@@ -67,7 +76,6 @@
       // US_STATES (from states.js) = { StateName: [ [ring], [ring]... ] }
       // each ring = array of [lon, lat]. Rendered with project().
       // ---------------------------------------------------------------
-      const stateShapeGroup = [];
       const stateLinePts = [];
       (typeof US_STATES === 'object' ? Object.keys(US_STATES) : []).forEach(name => {
         const rings = US_STATES[name];
@@ -77,12 +85,6 @@
             const [x, y] = project(lon, lat);
             return new THREE.Vector3(x, y, 0);
           });
-          // -- Surface fill: Shape per ring (earcut-free; ShapeGeometry handles convex trim OK at low opacity) --
-          const shape = new THREE.Shape();
-          shape.moveTo(pts[0].x, pts[0].y);
-          for (let i = 1; i < pts.length; i++) shape.lineTo(pts[i].x, pts[i].y);
-          shape.closePath();
-          stateShapeGroup.push(shape);
           // -- Outline line (segmented, folded into one geometry) --
           for (let i = 0; i < pts.length; i++) {
             stateLinePts.push(pts[i], pts[(i + 1) % pts.length]);
@@ -90,25 +92,21 @@
         });
       });
 
-      // Single filled surface mesh — all state shapes merged, warm brand tint
-      const surfaceGeo = new THREE.BufferGeometry();
-      {
-        const tris = [];
-        stateShapeGroup.forEach(shape => {
-          const g = new THREE.ShapeGeometry(shape);
-          const pos = g.attributes.position;
-          for (let i = 0; i < pos.count; i++) tris.push(pos.getX(i), pos.getY(i), 0);
-        });
-        surfaceGeo.setAttribute('position', new THREE.BufferAttribute(new Float32Array(tris), 3));
-      }
+      // Single land-tint plane behind the state outlines.
+      // (A single PlaneGeometry renders one uniform color — avoids the
+      // per-triangle shading/seam artifacts that ShapeGeometry's earcut
+      // triangulation produces on concave state polygons.)
+      const surfaceGeo = new THREE.PlaneGeometry(120, 120);
       const surfaceMat = new THREE.MeshBasicMaterial({
         color: BRAND.primary,
         transparent: true,
-        opacity: 0.04,
-        side: THREE.DoubleSide,
+        opacity: 0.05,
+        side: THREE.FrontSide,
         depthWrite: false,
       });
-      mapGroup.add(new THREE.Mesh(surfaceGeo, surfaceMat));
+      const surfaceMesh = new THREE.Mesh(surfaceGeo, surfaceMat);
+      surfaceMesh.rotation.x = -Math.PI / 2; // face the camera (plane normal = +Z by default)
+      mapGroup.add(surfaceMesh);
 
       // State boundary lines — thin, terracotta, Google-Maps subtle
       const stateLineGeo = new THREE.BufferGeometry().setFromPoints(stateLinePts);
@@ -923,6 +921,12 @@
         document.querySelectorAll('.reveal, .hero-label, .hero-name, .hero-title, .hero-tagline, .hero-cta, .stat-card, .timeline-item, .skill-category, .section-label').forEach(el => {
           el.style.opacity = '1';
           el.style.transform = 'none';
+        });
+        // Show stat counters immediately (no animation) so reduced-motion users
+        // don't see a stuck "0".
+        document.querySelectorAll('.stat-num').forEach(el => {
+          const target = parseInt(el.dataset.target);
+          if (!isNaN(target)) el.textContent = target + (target > 1 ? '+' : '');
         });
         return;
       }
