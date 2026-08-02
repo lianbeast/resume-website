@@ -6,13 +6,13 @@
   <title>Message Sent — Syed Rahid Ahmed</title>
   <meta name="description" content="Thank you for contacting Syed Rahid Ahmed. Your message has been received.">
   <meta name="robots" content="noindex, follow">
-  <link rel="canonical" href="https://syedrahidahmed.com/thank-you">
+  <link rel="canonical" href="https://syedrahidahmed.com/thank-you.html">
 
   <!-- Open Graph -->
   <meta property="og:title" content="Message Sent — Syed Rahid Ahmed">
   <meta property="og:description" content="Thank you for reaching out. I'll get back to you soon.">
   <meta property="og:type" content="website">
-  <meta property="og:url" content="https://syedrahidahmed.com/thank-you">
+  <meta property="og:url" content="https://syedrahidahmed.com/thank-you.html">
 
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary">
@@ -25,8 +25,7 @@
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <!-- Fonts: async load (won't block first paint on this minimal page) -->
-  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+  <!-- Fonts: async-injected by theme.js (won't block first paint) -->
   <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"></link></noscript>
 
   <style>
@@ -124,18 +123,8 @@
     @media (max-width: 768px) { .content { padding: 100px 5% 60px; } }
   </style>
 
-  <!-- Theme init -->
-  <script>
-    (function() {
-      var theme;
-      try { theme = localStorage.getItem('theme'); } catch(e) {}
-      if (theme === 'dark' || (!theme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-        document.documentElement.setAttribute('data-theme', 'dark');
-        var tm = document.querySelector('meta[name="theme-color"][media*="dark"]');
-        if (tm) tm.content = '#161412';
-      }
-    })();
-  </script>
+  <!-- theme.js applies saved theme before paint (prevents flash) + async-loads fonts -->
+  <script src="theme.js"></script>
 </head>
 <body>
   <a href="#main-content" class="skip-link">Skip to main content</a>
@@ -159,7 +148,7 @@
       </svg>
     </div>
     <h1>Message Sent</h1>
-    <p class="lead">Thanks for reaching out. I'll get back to you as soon as I can.</p>
+    <p class="lead">Thanks for reaching out. I'll reply within two business days.</p>
     <a href="index.html" class="btn btn-primary">Back to Home</a>
   </main>
 

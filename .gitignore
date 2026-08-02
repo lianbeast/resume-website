@@ -28,3 +28,15 @@ npm-debug.log*
 *.gz
 *.tgz
 .tokensave
+
+# Agent tooling (local only)
+.claude/
+.opencode/
+.serena/
+.od-skills/
+.playwright-mcp/
+.ui-design/
+
+# Local artifacts
+index.html.artifact.json
+map-render-check.png
