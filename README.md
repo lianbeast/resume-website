@@ -4,18 +4,18 @@ Static personal website hosted directly from this repository.
 
 ## Autostart with systemd (user)
 
-A systemd user service can serve the site on port **8080** automatically after login.
+A systemd user service can serve the site on port **2080** automatically after login.
 
 ### Service file
 ```
 [Unit]
-Description=Career Site HTTP Server (port 8080)
+Description=Career Site HTTP Server (port 2080)
 After=network.target
 
 [Service]
 Type=simple
-WorkingDirectory=/home/arch/Applications/Play-Site/Career-Site
-ExecStart=/usr/bin/python3 -m http.server 8080
+WorkingDirectory=~/Applications/Play-Site/Career-Site
+ExecStart=/usr/bin/python3 -m http.server 2080
 Restart=on-failure
 RestartSec=5
 StandardOutput=journal
