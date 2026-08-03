@@ -955,11 +955,32 @@
         .from('.hero-cta', { opacity: 0, y: 20, duration: 0.6, ease: 'power3.out' }, '-=0.3');
 
       // ---- Scroll reveals ----
-      gsap.utils.toArray('.reveal').forEach(el => {
-        gsap.from(el, {
-          scrollTrigger: { trigger: el, start: 'top 85%', toggleActions: 'play none none none' },
-          opacity: 0, y: 30, duration: 0.6, ease: 'power2.out'
-        });
+      // One tween per element only — earlier duplicate from() tweens on the
+      // same elements (`.timeline-item`/`.skill-category` aggregates) fought
+      // over opacity via immediateRender and left cards stuck invisible.
+      // immediateRender:false keeps content fully visible until its trigger
+      // actually fires, so a misfiring trigger can never hide content.
+      const revealEls = gsap.utils.toArray('.reveal');
+      const staggeredSelectors = ['.timeline-item', '.skill-category'];
+      revealEls.forEach(el => {
+        let delay = 0;
+        for (const sel of staggeredSelectors) {
+          if (el.matches(sel)) {
+            delay = Array.from(document.querySelectorAll(sel)).indexOf(el) * 0.05;
+            break;
+          }
+        }
+        gsap.fromTo(el,
+          { opacity: 0, y: 30 },
+          {
+            opacity: 1, y: 0,
+            duration: 0.6,
+            ease: 'power2.out',
+            delay,
+            immediateRender: false,
+            scrollTrigger: { trigger: el, start: 'top 88%', toggleActions: 'play none none none' }
+          }
+        );
       });
 
       // ---- Section labels underline ----
@@ -991,18 +1012,6 @@
         });
       });
 
-      // ---- Timeline items stagger ----
-      gsap.from('.timeline-item', {
-        scrollTrigger: { trigger: '.timeline', start: 'top 80%' },
-        opacity: 0, x: -30, stagger: 0.1, duration: 0.5, ease: 'power2.out'
-      });
-
-      // ---- Skill categories stagger ----
-      gsap.from('.skill-category', {
-        scrollTrigger: { trigger: '.skills-list', start: 'top 80%' },
-        opacity: 0, y: 20, stagger: 0.06, duration: 0.4, ease: 'power2.out'
-      });
-
       // ---- Scroll parallax for Three.js camera ----
       ScrollTrigger.create({
         trigger: 'body',
@@ -1017,4 +1026,9 @@
 
       // ---- Refresh on load ----
       ScrollTrigger.refresh();
+      // Re-measure trigger positions once webfonts finish loading — the
+      // async font swap shifts section positions and can desync the reveals.
+      if (document.fonts && document.fonts.ready) {
+        document.fonts.ready.then(() => ScrollTrigger.refresh());
+      }
     })();
