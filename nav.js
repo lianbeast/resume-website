@@ -17,6 +17,12 @@
             setMenu(false);
           });
         });
+        // Close menu when the theme/style buttons are tapped too (mobile)
+        navLinks.querySelectorAll('button').forEach(function(b) {
+          b.addEventListener('click', function() {
+            setMenu(false);
+          });
+        });
         // Close on Escape and return focus to the toggle
         document.addEventListener('keydown', function(e) {
           if (e.key === 'Escape' && navToggle.getAttribute('aria-expanded') === 'true') {
@@ -59,7 +65,8 @@
       var styleDropdown = document.querySelector('.nav-style-dropdown');
       var styleMenuItems = document.querySelectorAll('.style-menu li');
       var html = document.documentElement;
-      var themeMeta = document.querySelector('meta[name="theme-color"]');
+      // All theme-color metas follow the page's actual background (light or dark)
+      var themeMetas = document.querySelectorAll('meta[name="theme-color"]');
 
       // --- Style label helpers ---
       function styleAbbr(name) {
@@ -109,6 +116,32 @@
           });
         });
 
+        // --- Keyboard support: menu items are focusable and arrow-navigable ---
+        styleMenuItems.forEach(function(item) {
+          item.tabIndex = 0;
+          item.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter' || e.key === ' ') {
+              e.preventDefault();
+              this.click();
+            } else if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
+              e.preventDefault();
+              var items = Array.prototype.slice.call(styleMenuItems);
+              var idx = items.indexOf(this);
+              var nextIdx = (idx + (e.key === 'ArrowDown' ? 1 : -1) + items.length) % items.length;
+              items[nextIdx].focus();
+            }
+          });
+        });
+
+        // Escape closes the dropdown and returns focus to the toggle
+        document.addEventListener('keydown', function(e) {
+          if (e.key === 'Escape' && styleDropdown.classList.contains('open')) {
+            styleDropdown.classList.remove('open');
+            styleToggle.setAttribute('aria-expanded', 'false');
+            styleToggle.focus();
+          }
+        });
+
         // Close dropdown on outside click
         document.addEventListener('click', function() {
           styleDropdown.classList.remove('open');
@@ -122,11 +155,11 @@
           if (isDark) {
             html.removeAttribute('data-theme');
             try { localStorage.setItem('theme', 'light'); } catch(e) {}
-            if (themeMeta) themeMeta.content = '#f7f5f0';
+            themeMetas.forEach(function(m) { m.content = '#f7f5f0'; });
           } else {
             html.setAttribute('data-theme', 'dark');
             try { localStorage.setItem('theme', 'dark'); } catch(e) {}
-            if (themeMeta) themeMeta.content = '#161412';
+            themeMetas.forEach(function(m) { m.content = '#161412'; });
           }
         });
       }

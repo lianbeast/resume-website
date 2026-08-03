@@ -417,12 +417,14 @@
         });
       }
 
-      // ---- Mouse parallax (scoped to the map group only) ----
+      // ---- Mouse parallax (scoped to the map group only; hover devices only) ----
       let mouseX = 0, mouseY = 0, targetMouseX = 0, targetMouseY = 0;
-      document.addEventListener('mousemove', (e) => {
-        targetMouseX = (e.clientX / window.innerWidth - 0.5) * 2;
-        targetMouseY = (e.clientY / window.innerHeight - 0.5) * 2;
-      });
+      if (window.matchMedia('(hover: hover)').matches) {
+        document.addEventListener('mousemove', (e) => {
+          targetMouseX = (e.clientX / window.innerWidth - 0.5) * 2;
+          targetMouseY = (e.clientY / window.innerHeight - 0.5) * 2;
+        });
+      }
 
       // ---- Resize ----
       window.addEventListener('resize', () => {
@@ -561,6 +563,10 @@
       let hoveredRing = null;
       let ringOpacity = 0;
       let ringActive = false;
+      // Logical canvas size (CSS px) + DPR so drawing stays crisp on retina.
+      let skillW = 0, skillH = 0, skillDPR = Math.min(window.devicePixelRatio || 1, 2);
+      // Skill ring rotation respects prefers-reduced-motion (static when set).
+      const ringReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
       // Cross-category keyword links
       const LINK_KEYWORDS = ['nokia', 'cisco', 'microsoft', 'sctp', 'ip'];
@@ -618,7 +624,7 @@
 
       function drawSkillRing(time) {
         if (!ringActive && ringOpacity <= 0) return;
-        const w = skillCanvas.width, h = skillCanvas.height;
+        const w = skillW, h = skillH;
         if (ringNodes.length === 0) initRingNodes(w, h);
 
         skillCtx.clearRect(0, 0, w, h);
@@ -627,8 +633,8 @@
         const op = ringOpacity;
         const cx = w / 2, cy = h / 2;
 
-        // Slow rotation
-        const rot = time * 0.06;
+        // Slow rotation (static when the user prefers reduced motion)
+        const rot = ringReducedMotion ? 0 : time * 0.06;
 
         // Compute current positions
         const curPos = ringNodes.map(n => {
@@ -735,13 +741,13 @@
       // ---- Canvas-local hover for skill ring ----
       skillCanvas.addEventListener('mousemove', (e) => {
         const rect = skillCanvas.getBoundingClientRect();
-        const mx = (e.clientX - rect.left) * (skillCanvas.width / rect.width);
-        const my = (e.clientY - rect.top) * (skillCanvas.height / rect.height);
+        const mx = e.clientX - rect.left;
+        const my = e.clientY - rect.top;
         let found = -1;
         for (let i = 0; i < ringNodes.length; i++) {
           if (ringNodes[i].isLabel) continue;
           const n = ringNodes[i];
-          const a = n.baseAngle + (performance.now() * 0.001) * 0.06;
+          const a = n.baseAngle + (ringReducedMotion ? 0 : performance.now() * 0.001 * 0.06);
           const nx = n.cx + Math.cos(a) * n.radius;
           const ny = n.cy + Math.sin(a) * n.radius;
           if (Math.hypot(mx - nx, my - ny) < n.r * 3 + 8) {
@@ -875,26 +881,27 @@
       // The Three.js map owns its own camera/renderer resize in its IIFE;
       // this handler only re-sizes the 2D skill-canvas rings.
       // ================================================================
+      function sizeSkillCanvas() {
+        const rect = skillCanvas.parentElement.getBoundingClientRect();
+        skillDPR = Math.min(window.devicePixelRatio || 1, 2);
+        skillW = rect.width;
+        skillH = rect.height;
+        skillCanvas.width = Math.round(skillW * skillDPR);
+        skillCanvas.height = Math.round(skillH * skillDPR);
+        skillCtx.setTransform(skillDPR, 0, 0, skillDPR, 0, 0);
+        ringNodes = [];
+        initRingNodes(skillW, skillH);
+      }
+
       let resizeTimeout;
       window.addEventListener('resize', () => {
         // Debounce skill canvas resize — avoids reinit on every pixel during drag/rotate
         clearTimeout(resizeTimeout);
-        resizeTimeout = setTimeout(() => {
-          const rect = skillCanvas.parentElement.getBoundingClientRect();
-          skillCanvas.width = rect.width;
-          skillCanvas.height = rect.height;
-          ringNodes = [];
-          initRingNodes(skillCanvas.width, skillCanvas.height);
-        }, 150);
+        resizeTimeout = setTimeout(sizeSkillCanvas, 150);
       });
 
       // Initial skill canvas size
-      setTimeout(() => {
-        const rect = skillCanvas.parentElement.getBoundingClientRect();
-        skillCanvas.width = rect.width;
-        skillCanvas.height = rect.height;
-        initRingNodes(skillCanvas.width, skillCanvas.height);
-      }, 100);
+      setTimeout(sizeSkillCanvas, 100);
       // ================================================================
       // SKILL RING RENDER LOOP (IO-gated — starts when skills section nears viewport)
       // ================================================================
@@ -932,6 +939,10 @@
       }
 
       gsap.registerPlugin(ScrollTrigger);
+
+      // Zero counter text so the count-up tween starts from 0 for JS users.
+      // (The HTML ships the real values, so no-JS visitors never see 0.)
+      document.querySelectorAll('.stat-num').forEach(el => { el.textContent = '0'; });
 
       // ---- Hero entrance ----
       const heroTl = gsap.timeline({ delay: 0.3 });

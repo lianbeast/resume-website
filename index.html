@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="no-js">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -211,21 +211,6 @@
       height: 100vh;
       z-index: 0;
       pointer-events: none;
-    }
-
-    /* Overlay for constellation raycaster interaction */
-    #constellation-interact {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      z-index: 1;
-      pointer-events: none;
-      cursor: crosshair;
-    }
-    #constellation-interact.active {
-      pointer-events: auto;
     }
 
     /* Skill tooltip for hover */
@@ -772,7 +757,7 @@
     .form-group input:focus,
     .form-group textarea:focus {
       outline: none;
-      background: rgba(254,253,251,0.92);
+      background: var(--input-bg);
       border-color: var(--gold);
       box-shadow: inset 0 1px 2px rgba(0,0,0,0.02),
                   0 0 0 3px rgba(194, 65, 12, 0.12),
@@ -1187,14 +1172,17 @@
       justify-content: center;
       opacity: 0;
       pointer-events: none;
+      visibility: hidden;
       transform: translateY(12px);
       transition: opacity 0.3s ease, transform 0.3s cubic-bezier(0.16, 1, 0.3, 1),
-                  background 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+                  background 0.3s ease, color 0.3s ease, border-color 0.3s ease,
+                  visibility 0.3s ease;
       box-shadow: 0 2px 8px rgba(0,0,0,0.06), inset 0 1px 0 rgba(255,255,255,0.5);
     }
     #back-to-top.visible {
       opacity: 1;
       pointer-events: auto;
+      visibility: visible;
       transform: translateY(0);
     }
     #back-to-top:hover {
@@ -1498,7 +1486,6 @@
       }
       .orb, .float-shape { animation: none !important; }
       #scene-container { display: none; }
-      #constellation-interact { display: none; }
     }
 
     /* ================================================================
@@ -1539,9 +1526,8 @@
         line-height: 1.5;
       }
 
-      /* Hide 3D scene, constellation, tooltip, and decorative elements */
+      /* Hide 3D scene, tooltip, and decorative elements */
       #scene-container,
-      #constellation-interact,
       #skill-tooltip,
       .hero-label,
       .skip-link,
@@ -1702,11 +1688,6 @@
     </ol>
   </div>
 
-  <!-- Raycaster overlay (activates when skills section is in view) -->
-  <div id="constellation-interact" aria-hidden="true"></div>
-
-  <!-- City markers on the Three.js map (positioned by JS, no text labels) -->
-
   <!-- Tooltip for skill constellation hover -->
   <div id="skill-tooltip" role="tooltip" aria-hidden="true">
     <span class="tooltip-name"></span>
@@ -1746,19 +1727,19 @@
     <section aria-label="Career statistics">
       <div class="stats-grid">
         <div class="stat-card glass">
-          <div class="stat-num" data-target="15">0</div>
+          <div class="stat-num" data-target="15">15+</div>
           <div class="stat-label">Years Experience</div>
         </div>
         <div class="stat-card glass">
-          <div class="stat-num" data-target="6">0</div>
+          <div class="stat-num" data-target="6">6+</div>
           <div class="stat-label">Client Engagements</div>
         </div>
         <div class="stat-card glass">
-          <div class="stat-num" data-target="500">0</div>
+          <div class="stat-num" data-target="500">500+</div>
           <div class="stat-label">Cell Sites Managed</div>
         </div>
         <div class="stat-card glass">
-          <div class="stat-num" data-target="3">0</div>
+          <div class="stat-num" data-target="3">3+</div>
           <div class="stat-label">Certifications</div>
         </div>
       </div>
@@ -2086,7 +2067,7 @@
   <!-- No-JS fallback -->
   <noscript>
     <style>
-      #scene-container, #constellation-interact, #skill-tooltip { display: none !important; }
+      #scene-container, #skill-tooltip { display: none !important; }
       .reveal, .hero-label, .hero-name, .hero-title, .hero-tagline, .hero-cta,
       .stat-card, .timeline-item, .skill-category, .section-label {
         opacity: 1 !important; transform: none !important;
