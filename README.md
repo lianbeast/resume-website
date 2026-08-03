@@ -14,8 +14,8 @@ After=network.target
 
 [Service]
 Type=simple
-WorkingDirectory=/home/arch/Applications/Play-Site/Career-Site
-ExecStart=/usr/bin/python3 -m http.server 8080
+WorkingDirectory=~/Applications/Play-Site/Career-Site
+ExecStart=/usr/bin/python3 -m http.server 2080
 Restart=on-failure
 RestartSec=5
 StandardOutput=journal
