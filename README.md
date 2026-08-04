@@ -2,6 +2,12 @@
 
 Static personal website hosted directly from this repository.
 
+## Demo
+
+<img src="assets/demo/demo.gif" alt="Demo" width="800" />
+
+Watch in full quality: [`assets/demo/demo.mp4`](assets/demo/demo.mp4) · [`demo.mp4` on GitHub](https://github.com/lianbeast/resume-website/blob/main/assets/demo/demo.mp4?raw=true)
+
 ## Autostart with systemd (user)
 
 A systemd user service can serve the site on port **2080** automatically after login.
