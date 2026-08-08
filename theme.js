@@ -10,14 +10,6 @@
         if (tm) tm.content = '#161412';
       }
 
-      // Restore saved color style pre-paint so the page never flashes the
-      // default terracotta before nav.js runs (same approach as theme above).
-      var style;
-      try { style = localStorage.getItem('themeStyle'); } catch(e) {}
-      if (style && style !== 'oxblood-editorial') {
-        document.documentElement.setAttribute('data-style', style);
-      }
-
   // Async font stylesheet (non-blocking, no inline handlers — CSP forbids them)
   var fonts = document.createElement('link');
   fonts.rel = 'stylesheet';

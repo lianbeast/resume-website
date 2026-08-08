@@ -119,53 +119,22 @@
     }
 
     /* Style overrides — toggle via #style-toggle button */
-    [data-style="solar-graphite"] {
-      --gold: #64748b;
-      --gold-light: #94a3b8;
-      --gold-dark: #475569;
-      --gold-muted: rgba(100, 116, 139, 0.6);
-      --gold-subtle: rgba(100, 116, 139, 0.4);
-      --teal: #0f766e;
-      --teal-dark: #0d635c;
-      --teal-light: #14b8a6;
-      --olive: #6b7280;
-    }
-    [data-style="solar-graphite"][data-theme="dark"] {
-      --input-bg: rgba(30, 28, 26, 0.85);
-      --gold: #94a3b8;
-      --gold-light: #cbd5e1;
-      --gold-dark: #64748b;
-      --gold-muted: rgba(148, 163, 184, 0.6);
-      --gold-subtle: rgba(148, 163, 184, 0.4);
-      --teal: #14b8a6;
-      --teal-dark: #0d635c;
-      --teal-light: #5eead4;
-      --olive: #9ca3af;
-    }
-    [data-style="industrial-ochre"] {
-      --gold: #d97706;
-      --gold-light: #f59e0b;
-      --gold-dark: #b45309;
-      --gold-muted: rgba(217, 119, 6, 0.6);
-      --gold-subtle: rgba(217, 119, 6, 0.4);
-      --teal: #6b8e23;
-      --teal-dark: #5a7820;
-      --teal-light: #a3d977;
-      --olive: #6b8e23;
-    }
-    [data-style="industrial-ochre"][data-theme="dark"] {
-      --input-bg: rgba(30, 28, 26, 0.85);
-      --gold: #f59e0b;
-      --gold-light: #fbbf24;
-      --gold-dark: #d97706;
-      --gold-muted: rgba(245, 158, 11, 0.6);
-      --gold-subtle: rgba(245, 158, 11, 0.4);
-      --teal: #a3d977;
-      --teal-dark: #84c451;
-      --teal-light: #c8eaaa;
-      --olive: #a3d977;
-    }
-    /* terracotta-teal (default) stays in :root above */
+    
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
 
     html { transition: background 0.3s ease, color 0.3s ease; }
 
@@ -222,7 +191,7 @@
       backdrop-filter: blur(12px);
       padding: 8px 14px;
       border-radius: 8px;
-      font-size: 13px;
+      font-size: 12px;
       color: var(--text);
       pointer-events: none;
       opacity: 0;
@@ -389,11 +358,22 @@
       margin-bottom: 16px;
     }
 
+    @supports (background-clip: text) or (-webkit-background-clip: text) {
+      .hero-name {
+        background: linear-gradient(135deg, var(--text) 0%, var(--gold) 50%, var(--gold-dark) 100%);
+        background-size: 200% 200%;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        animation: gradient-shift 6s ease-in-out infinite;
+      }
+    }
     .hero-name {
       font-size: clamp(36px, 7vw, 72px);
       font-weight: 700;
       line-height: 1.05;
       letter-spacing: -0.02em;
+      color: var(--text);
       margin-bottom: 8px;
     }
 
@@ -411,6 +391,15 @@
       line-height: 1.7;
     }
 
+    .hero-label::after {
+      content: '';
+      display: block;
+      width: 48px;
+      height: 2px;
+      margin-top: 10px;
+      background: linear-gradient(90deg, var(--gold), var(--gold-dark));
+      border-radius: 1px;
+    }
     .hero-cta {
       margin-top: 36px;
       display: flex;
@@ -449,8 +438,24 @@
     }
     .btn-primary:hover {
       box-shadow: 0 4px 16px rgba(194, 65, 12, 0.3),
-                  0 0 24px rgba(194, 65, 12, 0.12),
                   inset 0 1px 0 rgba(255,255,255,0.15);
+    }
+    .btn.loading {
+      pointer-events: none;
+      opacity: 0.7;
+    }
+    .btn.loading::after {
+      content: '';
+      width: 16px;
+      height: 16px;
+      border: 2px solid transparent;
+      border-top-color: currentColor;
+      border-radius: 50%;
+      animation: spin 0.6s linear infinite;
+      margin-left: 8px;
+    }
+    @keyframes spin {
+      to { transform: rotate(360deg); }
     }
     .btn-secondary {
       background: transparent;
@@ -517,11 +522,11 @@
     }
     .highlight-item:last-child { border: none; }
     .highlight-key {
-      font-size: 13px;
+      font-size: 14px;
       color: var(--text-dim);
     }
     .highlight-val {
-      font-size: 13px;
+      font-size: 14px;
       font-weight: 600;
     }
 
@@ -687,7 +692,7 @@
       background: var(--gold-dark);
     }
 
-    /* Cert badges — inline SVG vendor brand marks */
+    /* Cert badges — palette-colored abbreviation chips */
     .cert-badge {
       display: inline-flex;
       align-items: center;
@@ -709,6 +714,9 @@
       color: #fff;
       letter-spacing: 0.04em;
       line-height: 1;
+    }
+    [data-theme="dark"] .cert-badge .badge-text {
+      color: var(--text-on-accent);
     }
     .cert-text {
       font-size: 13px;
@@ -876,57 +884,10 @@
       50%      { box-shadow: 0 0 0 6px rgba(194, 65, 12, 0); }
     }
 
-    /* Hero accent bar — decorative gradient stripe */
-    .hero-label::after {
-      content: '';
-      display: block;
-      width: 48px;
-      height: 2px;
-      margin-top: 10px;
-      background: linear-gradient(90deg, var(--gold), var(--gold-dark));
-      border-radius: 1px;
-    }
-
     /* Button press tactile feedback */
     .btn:active {
       transform: translateY(0) scale(0.98);
     }
-
-    /* ================================================================
-       THEME TOGGLE BUTTON
-       ================================================================ */
-    .nav-theme-toggle {
-      width: 36px;
-      height: 36px;
-      border-radius: 8px;
-      border: none;
-      background: transparent;
-      color: var(--text-dim);
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: color 0.2s ease, background 0.2s ease, transform 0.2s ease;
-      position: relative;
-    }
-    .nav-theme-toggle:hover {
-      color: var(--text);
-      background: rgba(194, 65, 12, 0.06);
-    }
-    .nav-theme-toggle:focus-visible {
-      outline: 2px solid var(--gold);
-      outline-offset: 2px;
-    }
-    .nav-theme-toggle svg {
-      width: 18px;
-      height: 18px;
-      transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.25s ease;
-      position: absolute;
-    }
-    .nav-theme-toggle .sun-icon { opacity: 0; transform: scale(0.5) rotate(-90deg); }
-    .nav-theme-toggle .moon-icon { opacity: 1; transform: scale(1) rotate(0); }
-    [data-theme="dark"] .nav-theme-toggle .sun-icon { opacity: 1; transform: scale(1) rotate(0); }
-    [data-theme="dark"] .nav-theme-toggle .moon-icon { opacity: 0; transform: scale(0.5) rotate(90deg); }
 
     /* ================================================================
        STYLE TOGGLE BUTTON
@@ -1027,9 +988,45 @@
       border-radius: 4px;
     }
 
-    /* Transition on elements using theme/style vars */
+    /* ================================================================
+       THEME TOGGLE BUTTON
+       ================================================================ */
+    .nav-theme-toggle {
+      width: 44px;
+      height: 44px;
+      border-radius: 10px;
+      border: none;
+      background: transparent;
+      color: var(--text-dim);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: color 0.2s ease, background 0.2s ease, transform 0.2s ease;
+      position: relative;
+    }
+    .nav-theme-toggle:hover {
+      color: var(--text);
+      background: rgba(194, 65, 12, 0.06);
+    }
+    .nav-theme-toggle:focus-visible {
+      outline: 2px solid var(--gold);
+      outline-offset: 2px;
+    }
+    .nav-theme-toggle svg {
+      width: 18px;
+      height: 18px;
+      transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.25s ease;
+      position: absolute;
+    }
+    .nav-theme-toggle .sun-icon { opacity: 0; transform: scale(0.5) rotate(-90deg); }
+    .nav-theme-toggle .moon-icon { opacity: 1; transform: scale(1) rotate(0); }
+    [data-theme="dark"] .nav-theme-toggle .sun-icon { opacity: 1; transform: scale(1) rotate(0); }
+    [data-theme="dark"] .nav-theme-toggle .moon-icon { opacity: 0; transform: scale(0.5) rotate(90deg); }
+
+    /* Transition on elements using theme vars */
     .glass, .btn, .skill-tag, .form-group input, .form-group textarea,
-    .timeline-item::before, section + section::before, html, body {
+    .timeline-item::before, html, body {
       transition: background 0.5s cubic-bezier(0.16, 1, 0.3, 1),
                   color 0.5s cubic-bezier(0.16, 1, 0.3, 1),
                   border-color 0.5s cubic-bezier(0.16, 1, 0.3, 1),
@@ -1077,7 +1074,7 @@
     }
     .nav-links a {
       padding: 8px 14px;
-      font-size: 13px;
+      font-size: 14px;
       font-weight: 500;
       color: var(--text-dim);
       text-decoration: none;
@@ -1107,8 +1104,8 @@
       border: none;
       cursor: pointer;
       padding: 8px;
-      width: 36px;
-      height: 36px;
+      width: 44px;
+      height: 44px;
       flex-direction: column;
       justify-content: center;
       gap: 5px;
@@ -1189,8 +1186,8 @@
     }
     #back-to-top:hover {
       transform: translateY(-3px);
-      box-shadow: 0 4px 16px rgba(0,0,0,0.08), 0 0 0 1px rgba(8,145,178,0.15);
-      border-color: rgba(8,145,178,0.25);
+      box-shadow: 0 4px 16px rgba(0,0,0,0.08), 0 0 0 1px var(--gold-subtle);
+      border-color: var(--gold-muted);
     }
     #back-to-top:focus-visible {
       outline: 2px solid var(--gold);
@@ -1202,43 +1199,8 @@
     .content { padding-top: 60px; }
 
     /* ================================================================
-       ENHANCED ANIMATIONS — KEYFRAMES
+       KEYFRAMES
        ================================================================ */
-    @keyframes orb-float {
-      0%, 100% { transform: translate(0, 0) scale(1); }
-      25%      { transform: translate(18px, -22px) scale(1.03); }
-      50%      { transform: translate(-12px, -38px) scale(0.97); }
-      75%      { transform: translate(22px, -14px) scale(1.02); }
-    }
-    @keyframes orb-float-alt {
-      0%, 100% { transform: translate(0, 0) scale(1); }
-      33%      { transform: translate(-20px, 18px) scale(1.04); }
-      66%      { transform: translate(14px, -24px) scale(0.96); }
-    }
-    @keyframes float-drift {
-      0%, 100% { transform: translate(0, 0) rotate(0deg); }
-      50%      { transform: translate(12px, -18px) rotate(8deg); }
-    }
-    @keyframes float-drift-alt {
-      0%, 100% { transform: translate(0, 0) rotate(0deg); }
-      50%      { transform: translate(-16px, 14px) rotate(-6deg); }
-    }
-    @keyframes float-rotate {
-      0%, 100% { transform: rotate(0deg) scale(1); opacity: 0.12; }
-      50%      { transform: rotate(180deg) scale(1.15); opacity: 0.18; }
-    }
-    @keyframes shimmer-slide {
-      from { left: -100%; }
-      to   { left: 200%; }
-    }
-    @keyframes pulse-glow {
-      0%, 100% { box-shadow: 0 0 0 0 rgba(194, 65, 12, 0.3); }
-      50%      { box-shadow: 0 0 0 8px rgba(194, 65, 12, 0); }
-    }
-    @keyframes gradient-shift {
-      0%, 100% { background-position: 0% 50%; }
-      50%      { background-position: 100% 50%; }
-    }
     @keyframes border-glow {
       0%, 100% { border-color: rgba(194, 65, 12, 0.15); }
       50%      { border-color: rgba(194, 65, 12, 0.35); }
@@ -1246,68 +1208,6 @@
     /* ================================================================
        REVEAL — GSAP controls these via from() tweens
        ================================================================ */
-
-    /* ================================================================
-       DECORATIVE ORBS
-       ================================================================ */
-    .orb {
-      position: absolute;
-      border-radius: 50%;
-      pointer-events: none;
-      z-index: 0;
-      filter: blur(80px);
-    }
-    .orb-gold {
-      background: radial-gradient(circle, rgba(194, 65, 12, 0.18), transparent 70%);
-      animation: orb-float 20s ease-in-out infinite;
-    }
-    .orb-gold-light {
-      background: radial-gradient(circle, rgba(224, 106, 58, 0.14), transparent 70%);
-      animation: orb-float-alt 24s ease-in-out infinite;
-    }
-    .orb-gold-dark {
-      background: radial-gradient(circle, rgba(14, 116, 144, 0.13), transparent 70%);
-      animation: orb-float 22s ease-in-out infinite;
-    }
-    .orb-ink {
-      background: radial-gradient(circle, rgba(28, 25, 23, 0.10), transparent 70%);
-      animation: orb-float-alt 26s ease-in-out infinite;
-    }
-
-    /* ================================================================
-       FLOATING GEOMETRIC DECORATIONS
-       ================================================================ */
-    .float-shape {
-      position: absolute;
-      pointer-events: none;
-      z-index: 0;
-    }
-    .float-shape.circle {
-      border-radius: 50%;
-      border: 1.5px solid;
-    }
-    .float-shape.diamond {
-      transform: rotate(45deg);
-      border: 1.5px solid;
-    }
-    .float-shape.triangle {
-      width: 0 !important;
-      height: 0 !important;
-      background: transparent !important;
-      border-left: 10px solid transparent;
-      border-right: 10px solid transparent;
-      border-bottom: 16px solid;
-    }
-    .float-shape.line {
-      height: 1.5px !important;
-      border-radius: 1px;
-    }
-    .float-shape.f1 { animation: float-drift 12s ease-in-out infinite; opacity: 0.10; }
-    .float-shape.f2 { animation: float-drift-alt 16s ease-in-out infinite; opacity: 0.08; }
-    .float-shape.f3 { animation: float-rotate 20s ease-in-out infinite; opacity: 0.12; }
-    .float-shape.f4 { animation: float-drift 14s ease-in-out infinite 2s; opacity: 0.09; }
-    .float-shape.f5 { animation: float-drift-alt 18s ease-in-out infinite 1s; opacity: 0.11; }
-    .float-shape.f6 { animation: float-rotate 22s ease-in-out infinite 3s; opacity: 0.07; }
 
     /* ================================================================
        SECTION HEADER ICONS & UNDERLINES
@@ -1333,25 +1233,8 @@
     }
 
     /* ================================================================
-       HERO GRADIENT TEXT & PULSING CTA
+       HERO
        ================================================================ */
-    .hero-name {
-      color: var(--text); /* fallback */
-    }
-    @supports (background-clip: text) or (-webkit-background-clip: text) {
-      .hero-name {
-        background: linear-gradient(135deg, var(--text) 0%, var(--gold) 50%, var(--gold-dark) 100%);
-        background-size: 200% 200%;
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-clip: text;
-        animation: gradient-shift 6s ease-in-out infinite;
-      }
-    }
-    .hero-cta .btn-primary {
-      animation: pulse-glow 3s ease-in-out infinite;
-    }
-
     /* ================================================================
        STAT CARD ENHANCEMENTS
        ================================================================ */
@@ -1404,26 +1287,11 @@
        SKILL TAG SHIMMER
        ================================================================ */
     .skill-tag {
-      position: relative;
-      overflow: hidden;
       transition: border-color 0.3s ease, background 0.3s ease;
-    }
-    .skill-tag::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: -100%;
-      width: 50%;
-      height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(194, 65, 12, 0.12), transparent);
-      transition: none;
     }
     .skill-tag:hover {
       border-color: rgba(194, 65, 12, 0.3);
       background: rgba(194, 65, 12, 0.05);
-    }
-    .skill-tag:hover::before {
-      animation: shimmer-slide 0.6s ease forwards;
     }
 
     /* ================================================================
@@ -1446,27 +1314,132 @@
     .form-group textarea:focus {
       animation: border-glow 2s ease-in-out infinite;
     }
-    .btn-primary {
-      position: relative;
-      overflow: hidden;
+    /* ================================================================
+       DECORATIVE KEYFRAMES
+       ================================================================
+    @keyframes orb-float {
+      0%, 100% { transform: translate(0, 0) scale(1); }
+      25%      { transform: translate(18px, -22px) scale(1.03); }
+      50%      { transform: translate(-12px, -38px) scale(0.97); }
+      75%      { transform: translate(22px, -14px) scale(1.02); }
     }
-    .btn-primary::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: -100%;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-      transition: none;
+    @keyframes orb-float-alt {
+      0%, 100% { transform: translate(0, 0) scale(1); }
+      33%      { transform: translate(-20px, 18px) scale(1.04); }
+      66%      { transform: translate(14px, -24px) scale(0.96); }
     }
-    .btn-primary:hover::before {
-      animation: shimmer-slide 0.5s ease forwards;
+    @keyframes float-drift {
+      0%, 100% { transform: translate(0, 0) rotate(0deg); }
+      50%      { transform: translate(12px, -18px) rotate(8deg); }
+    }
+    @keyframes float-drift-alt {
+      0%, 100% { transform: translate(0, 0) rotate(0deg); }
+      50%      { transform: translate(-16px, 14px) rotate(-6deg); }
+    }
+    @keyframes float-rotate {
+      0%, 100% { transform: rotate(0deg) scale(1); opacity: 0.12; }
+      50%      { transform: rotate(180deg) scale(1.15); opacity: 0.18;
+    }
+    @keyframes shimmer-slide {
+      from { left: -100%; }
+      to   { left: 200%; }
+    }
+    @keyframes pulse-glow {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(194, 65, 12, 0.3); }
+      50%      { box-shadow: 0 0 0 8px rgba(194, 65, 12, 0); }
+    }
+    @keyframes gradient-shift {
+      0%, 100% { background-position: 0% 50%; }
+      50%      { background-position: 100% 50%; }
+    }
+    @keyframes border-glow {
+      0%, 100% { border-color: rgba(194, 65, 12, 0.15); }
+      50%      { border-color: rgba(194, 65, 12, 0.35); }
     }
 
     /* ================================================================
-       SCROLL REVEAL — GSAP controls via from() tweens
+       DECORATIVE ORBS
        ================================================================ */
+    #hero { position: relative; }
+    .orb {
+      position: absolute;
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 0;
+      filter: blur(80px);
+    }
+    .orb-gold {
+      background: radial-gradient(circle, rgba(194, 65, 12, 0.18), transparent 70%);
+      animation: orb-float 20s ease-in-out infinite;
+    }
+    .orb-gold-light {
+      background: radial-gradient(circle, rgba(224, 106, 58, 0.14), transparent 70%);
+      animation: orb-float-alt 24s ease-in-out infinite;
+    }
+    .orb-gold-dark {
+      background: radial-gradient(circle, rgba(14, 116, 144, 0.13), transparent 70%);
+      animation: orb-float 22s ease-in-out infinite;
+    }
+    .orb-ink {
+      background: radial-gradient(circle, rgba(28, 25, 23, 0.10), transparent 70%);
+      animation: orb-float-alt 26s ease-in-out infinite;
+    }
+
+    /* ================================================================
+       FLOATING GEOMETRIC DECORATIONS
+       ================================================================ */
+    .float-shape {
+      position: absolute;
+      pointer-events: none;
+      z-index: 0;
+    }
+    .float-shape.circle { border-radius: 50%; border: 1.5px solid; }
+    .float-shape.diamond { transform: rotate(45deg); border: 1.5px soli
+    .float-shape.triangle {
+      width: 0 !important; height: 0 !important; background: transparen
+      border-left: 10px solid transparent;
+      border-right: 10px solid transparent;
+      border-bottom: 16px solid;
+    }
+    .float-shape.line { height: 1.5px !important; border-radius: 1px; }
+    .float-shape.f1 { animation: float-drift 12s ease-in-out infinite;
+    .float-shape.f2 { animation: float-drift-alt 16s ease-in-out infinite; opacity: 0.08; }
+    .float-shape.f3 { animation: float-rotate 20s ease-in-out infinite;
+    .float-shape.f4 { animation: float-drift 14s ease-in-out infinite 2s; opacity: 0.09; }
+    .float-shape.f5 { animation: float-drift-alt 18s ease-in-out infini
+    .float-shape.f6 { animation: float-rotate 22s ease-in-out infinite 3s; opacity: 0.07; }
+
+    /* ================================================================
+       SHIMMER ON SKILL TAGS + BTN-PRIMARY
+       ================================================================ */
+    .skill-tag {
+      position: relative;
+      overflow: hidden;
+      transition: border-color 0.3s ease, background 0.3s ease;
+    }
+    .skill-tag::before {
+      content: '';
+      position: absolute;
+      top: 0; left: -100%;
+      width: 50%; height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(194, 65, 12,
+      transition: none;
+    }
+    .skill-tag:hover { border-color: rgba(194, 65, 12, 0.3); background: rgba(194, 65, 12, 0.05); }
+    .skill-tag:hover::before { animation: shimmer-slide 0.6s ease forwa
+
+    .btn-primary { position: relative; overflow: hidden; }
+    .btn-primary::before {
+      content: '';
+      position: absolute;
+      top: 0; left: -100%;
+      width: 100%; height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,
+      transition: none;
+    }
+    .btn-primary:hover::before { animation: shimmer-slide 0.5s ease forwards; }
+
+    .hero-cta .btn-primary { animation: pulse-glow 3s ease-in-out infinite; }
 
     /* ================================================================
        REDUCED MOTION
@@ -1482,8 +1455,8 @@
         opacity: 1;
         transform: none;
       }
-      .orb, .float-shape { animation: none !important; }
       #scene-container { display: none; }
+      .orb, .float-shape { display: none !important; }
     }
 
     /* ================================================================
@@ -1532,12 +1505,11 @@
       .constellation-anchor,
       .stats-grid,
       .btn,
-      .orb,
-      .float-shape,
       .section-icon,
       #main-nav,
       #back-to-top,
       #theme-toggle,
+      #style-toggle,
       .footer-social,
       footer { display: none !important; }
 
@@ -1635,19 +1607,6 @@
       <li><a href="#education">Education</a></li>
       <li><a href="#contact">Contact</a></li>
       <li><a href="SRA-Resume-072926.pdf" class="nav-resume" download>Resume</a></li>
-      <li class="nav-style-dropdown">
-        <button id="style-toggle" class="nav-style-toggle" aria-label="Select color style" title="Select style" aria-haspopup="true" aria-expanded="false">
-          <svg class="style-icon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="4" fill="currentColor" stroke="none"/><path d="M12 2v4M12 18v4M2 12h4M18 12h4"/>
-          </svg>
-          <span class="style-label">CD</span>
-        </button>
-        <ul class="style-menu" role="menu">
-          <li role="menuitem" data-style="oxblood-editorial"><span class="style-swatch" style="background: #c2410c"></span> Terracotta</li>
-          <li role="menuitem" data-style="solar-graphite"><span class="style-swatch" style="background: #64748b"></span> Graphite Steel</li>
-          <li role="menuitem" data-style="industrial-ochre"><span class="style-swatch" style="background: #d97706"></span> Industrial Ochre</li>
-        </ul>
-      </li>
       <li><button id="theme-toggle" class="nav-theme-toggle" aria-label="Toggle dark/light mode" title="Toggle theme">
         <svg class="sun-icon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <circle cx="12" cy="12" r="5"/>
@@ -1697,23 +1656,20 @@
 
     <!-- ========== HERO ========== -->
     <section id="hero" aria-label="Introduction">
-      <!-- Decorative floating geometric shapes -->
       <span class="float-shape circle f1" aria-hidden="true" style="width:18px;height:18px;top:15%;left:8%;border-color:var(--gold);"></span>
       <span class="float-shape diamond f2" aria-hidden="true" style="width:14px;height:14px;top:22%;right:12%;border-color:var(--gold-dark);"></span>
       <span class="float-shape circle f3" aria-hidden="true" style="width:10px;height:10px;top:70%;left:18%;border-color:var(--gold-dark);"></span>
       <span class="float-shape line f4" aria-hidden="true" style="width:40px;top:35%;right:20%;background:var(--gold-dark);"></span>
       <span class="float-shape triangle f5" aria-hidden="true" style="top:60%;right:25%;border-bottom-color:var(--gold);"></span>
       <span class="float-shape diamond f6" aria-hidden="true" style="width:10px;height:10px;top:82%;left:30%;border-color:var(--gold-dark);"></span>
-      <!-- Decorative orbs -->
       <div class="orb orb-gold" aria-hidden="true" style="width:320px;height:320px;top:-5%;right:-8%;"></div>
       <div class="orb orb-gold-light" aria-hidden="true" style="width:260px;height:260px;bottom:10%;left:-6%;"></div>
       <div class="orb orb-gold-dark" aria-hidden="true" style="width:200px;height:200px;top:40%;right:20%;"></div>
-
       <span class="hero-label">NETWORK & TELECOM INFRASTRUCTURE</span>
       <h1 class="hero-name">Syed Rahid Ahmed</h1>
       <p class="hero-title">Sr. Switch Technician | Telecom Operations &amp; RAN/Transport Specialist</p>
       <p class="hero-tagline">
-        15+ years of switch operations, facility management, and RAN/transport network engineering across T-Mobile and Sprint — 5G NR/LTE, Cisco, Nokia NetAct, and Ericsson ENM.
+        15+ years of switch operations, facility management, and RAN/transport network engineering across T-Mobile and Sprint, working with 5G NR/LTE, Cisco, Nokia NetAct, and Ericsson ENM.
       </p>
       <nav class="hero-cta" aria-label="Primary actions">
         <a href="#contact" class="btn btn-primary">Get in Touch</a>
@@ -1744,8 +1700,7 @@
     </section>
 
     <!-- ========== ABOUT ========== -->
-    <section id="about" aria-label="About me" style="position:relative;">
-      <div class="orb orb-gold-light" aria-hidden="true" style="width:220px;height:220px;top:10%;right:-5%;"></div>
+    <section id="about" aria-label="About me">
       <span class="section-label reveal">ABOUT</span>
       <h2 class="section-title reveal">Building the Networks<br>That Connect Everything</h2>
       <div class="about-grid">
@@ -1783,8 +1738,7 @@
     </section>
 
     <!-- ========== EXPERIENCE ========== -->
-    <section id="experience" aria-label="Professional experience" style="position:relative;">
-      <div class="orb orb-gold" aria-hidden="true" style="width:200px;height:200px;top:5%;left:-4%;"></div>
+    <section id="experience" aria-label="Professional experience">
       <span class="section-label reveal">EXPERIENCE</span>
       <h2 class="section-title reveal">Career Timeline</h2>
       <div class="timeline">
@@ -1793,7 +1747,7 @@
           <h3 class="timeline-role">Sr. Switch Technician / Engineer</h3>
           <div class="timeline-company">NextGen Telecommunication (Client: T-Mobile)</div>
           <div class="timeline-loc">Hammond, LA · On-Site</div>
-          <p class="timeline-summary">Led regional switch operations across 500+ cell sites — Hurricane Helene DR, NSD/DAS/COW deployments, and team-wide process automation.</p>
+          <p class="timeline-summary">Led regional switch operations across 500+ cell sites, including Hurricane Helene DR, NSD/DAS/COW deployments, and team-wide process automation.</p>
           <ul class="timeline-metrics">
             <li><strong>500+</strong> cell sites integrated</li>
             <li><strong>40%</strong> faster circuit turn-up</li>
@@ -1807,7 +1761,7 @@
           <h3 class="timeline-role">Sr. Switch Technician / Engineer</h3>
           <div class="timeline-company">WAVSYS Telecommunication (Client: T-Mobile)</div>
           <div class="timeline-loc">Miami, FL · Remote</div>
-          <p class="timeline-summary">Remote BSS/RAN/switch ops across 1,000+ sites — MOP standardization and ITIL-compliant change windows at scale.</p>
+          <p class="timeline-summary">Remote BSS/RAN/switch ops across 1,000+ sites: MOP standardization and ITIL-compliant change windows at scale.</p>
           <ul class="timeline-metrics">
             <li><strong>1,000+</strong> cell sites managed</li>
             <li><strong>99.5%</strong> operational uptime</li>
@@ -1821,7 +1775,7 @@
           <h3 class="timeline-role">Sr. Switch Technician / Engineer</h3>
           <div class="timeline-company">Kineticom Telecommunication (Client: T-Mobile)</div>
           <div class="timeline-loc">Austin, TX · Hybrid</div>
-          <p class="timeline-summary">Multi-layer transport & RAN fault isolation during OSS consolidation — zero-disruption site rehoming and SharePoint centralization.</p>
+          <p class="timeline-summary">Multi-layer transport & RAN fault isolation during OSS consolidation, delivering zero-disruption site rehoming and SharePoint centralization.</p>
           <ul class="timeline-metrics">
             <li><strong>150+</strong> sites rehomed, zero downtime</li>
             <li><strong>500+</strong> configs centralized</li>
@@ -1835,7 +1789,7 @@
           <h3 class="timeline-role">Sr. Switch Technician / Engineer</h3>
           <div class="timeline-company">Apricot Consulting LLC (Client: T-Mobile)</div>
           <div class="timeline-loc">Austin, TX · On-Site</div>
-          <p class="timeline-summary">BSC/RNC optimization and E911 reconciliation for new RAN activations — regional team training and process discipline.</p>
+          <p class="timeline-summary">BSC/RNC optimization and E911 reconciliation for new RAN activations, driving regional team training and process discipline.</p>
           <ul class="timeline-metrics">
             <li><strong>300+</strong> new RAN activations</li>
             <li><strong>150+</strong> E911 discrepancies corrected</li>
@@ -1849,7 +1803,7 @@
           <h3 class="timeline-role">Switch Engineer</h3>
           <div class="timeline-company">Apricot Consulting LLC (Client: Sprint)</div>
           <div class="timeline-loc">Spokane, WA · On-Site</div>
-          <p class="timeline-summary">Cell-site backhaul and aggregation for Sprint's LTE rollout — router/switch configuration and pre-cutover data fill.</p>
+          <p class="timeline-summary">Cell-site backhaul and aggregation for Sprint's LTE rollout: router/switch configuration and pre-cutover data fill.</p>
           <ul class="timeline-metrics">
             <li><strong>200+</strong> LTE site turn-ups</li>
             <li><strong>100%</strong> L2/L3 protocol verification</li>
@@ -1884,8 +1838,7 @@
     </section>
 
     <!-- ========== SKILLS ========== -->
-    <section id="skills" aria-label="Technical skills" style="position:relative;">
-      <div class="orb orb-gold-dark" aria-hidden="true" style="width:220px;height:220px;top:8%;right:-5%;"></div>
+    <section id="skills" aria-label="Technical skills">
       <span class="section-label reveal">SKILLS</span>
       <h2 class="section-title reveal">Core Competencies</h2>
 
@@ -1953,8 +1906,7 @@
     </section>
 
     <!-- ========== EDUCATION & CERTS ========== -->
-    <section id="education" aria-label="Education and certifications" style="position:relative;">
-      <div class="orb orb-ink" aria-hidden="true" style="width:200px;height:200px;top:5%;left:-4%;"></div>
+    <section id="education" aria-label="Education and certifications">
       <span class="section-label reveal">EDUCATION & CERTIFICATIONS</span>
       <h2 class="section-title reveal">Foundation</h2>
       <div class="edu-cert-grid">
@@ -1975,19 +1927,19 @@
               <span class="cert-badge" style="background:#1B365D;" aria-hidden="true">
                 <span class="badge-text">CCNA</span>
               </span>
-              <span class="cert-text"><strong>Cisco Certified Network Associate</strong> — Routing, switching &amp; network fundamentals</span>
+              <span class="cert-text"><strong>Cisco Certified Network Associate</strong>, routing, switching &amp; network fundamentals</span>
             </li>
             <li>
               <span class="cert-badge" style="background:#0078D4;" aria-hidden="true">
                 <span class="badge-text">MCP</span>
               </span>
-              <span class="cert-text"><strong>Microsoft Certified Professional</strong> — Windows server &amp; enterprise administration</span>
+              <span class="cert-text"><strong>Microsoft Certified Professional</strong>, Windows server &amp; enterprise administration</span>
             </li>
             <li>
               <span class="cert-badge" style="background:#C8102E;" aria-hidden="true">
                 <span class="badge-text">A+</span>
               </span>
-              <span class="cert-text"><strong>CompTIA A+</strong> — IT fundamentals, hardware &amp; OS troubleshooting</span>
+              <span class="cert-text"><strong>CompTIA A+</strong>, IT fundamentals, hardware &amp; OS troubleshooting</span>
             </li>
           </ul>
         </div>
@@ -1995,8 +1947,7 @@
     </section>
 
     <!-- ========== CONTACT ========== -->
-    <section id="contact" aria-label="Contact form" style="position:relative;">
-      <div class="orb orb-gold-light" aria-hidden="true" style="width:200px;height:200px;top:5%;right:-5%;"></div>
+    <section id="contact" aria-label="Contact form">
       <span class="section-label reveal">CONTACT</span>
       <h2 class="section-title reveal">Get in Touch</h2>
       <form novalidate name="contact" method="POST" action="/thank-you.html" data-netlify="true" netlify-honeypot="bot-field">

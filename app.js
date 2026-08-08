@@ -66,10 +66,61 @@
         renderer.setClearColor(hexToInt(cssVar('--bg', '#f7f5f0')));
       }
       updateClearColor();
-      // Re-sync on theme/style change
-      const themeObserver = new MutationObserver(() => updateClearColor());
-      themeObserver.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme', 'data-style'] });
+      // Re-sync on theme change
+      const themeObserver = new MutationObserver(() => {
+        updateClearColor();
+        updateBrandColors();
+      });
+      themeObserver.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+
+      // ---- Dark mode tone support ----
+      // In dark mode, dim the map so it reads as ambient topology (not a bright signal map)
+      function updateBrandColors() {
+        const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+        // Re-resolve brand colors live so style toggles flow into the map
+        const cur = {
+          primary: hexToInt(cssVar('--gold', '#c2410c')),
+          primaryLight: hexToInt(cssVar('--gold-light', '#e06a3a')),
+          secondary: hexToInt(cssVar('--teal', '#0e7490')),
+        };
+        const primaryC = new THREE.Color(cur.primary);
+        const secondaryC = new THREE.Color(cur.secondary);
+        const hubC = new THREE.Color(cur.primaryLight);
+
+        if (isDark) {
+          // Dark mode: dim opacities, desaturate colors
+          if (surfaceMesh) surfaceMesh.material.opacity = 0.02;
+          if (mapGroup.children[1] && mapGroup.children[1].material) {
+            mapGroup.children[1].material.opacity = 0.1;
+          }
+          if (pathSegments) pathSegments.material.opacity = 0.2;
+          // Dim packet color
+          if (packetMat) packetMat.uniforms.uColor.value = new THREE.Color(BRAND.primary).multiplyScalar(0.7);
+          // Dim node pulses (handled in animateNodes via isDark flag)
+        } else {
+          // Light mode: full vibrancy
+          if (surfaceMesh) surfaceMesh.material.opacity = 0.05;
+          if (mapGroup.children[1] && mapGroup.children[1].material) {
+            mapGroup.children[1].material.opacity = 0.22;
+          }
+          if (pathSegments) pathSegments.material.opacity = 0.45;
+          if (packetMat) packetMat.uniforms.uColor.value = new THREE.Color(BRAND.primary);
+        }
+        // Skill ring: re-derive per-node color from CAT_COLORS so dark mode re-tones
+        if (typeof SKILLS !== 'undefined') {
+          SKILLS.forEach(function(s) {
+            const base = CAT_COLORS[s.cat];
+            s.color = isDark
+              ? '#' + new THREE.Color(base).multiplyScalar(0.75).getHexString()
+              : base;
+          });
+        }
+      }
+
       container.appendChild(renderer.domElement);
+
+      // Call initial after surfaceMesh, pathSegments, packetMat are defined
+      updateBrandColors();
 
       // ---------------------------------------------------------------
       // GOOGLE-MAPS-STYLE STATE OUTLINES + LIGHTEST LAND SURFACE
@@ -104,7 +155,7 @@
         side: THREE.FrontSide,
         depthWrite: false,
       });
-      const surfaceMesh = new THREE.Mesh(surfaceGeo, surfaceMat);
+      var surfaceMesh = new THREE.Mesh(surfaceGeo, surfaceMat);
       surfaceMesh.rotation.x = -Math.PI / 2; // face the camera (plane normal = +Z by default)
       mapGroup.add(surfaceMesh);
 
@@ -313,7 +364,7 @@
         depthWrite: false,
       });
       // Compute line distances for dashed lines
-      const pathSegments = new THREE.LineSegments(pathGeo, pathMat);
+      var pathSegments = new THREE.LineSegments(pathGeo, pathMat);
       mapGroup.add(pathSegments);
       pathSegments.computeLineDistances();
 
@@ -352,7 +403,7 @@
       }
       const nodeTex = makeGlowTexture();
 
-      const packetMat = new THREE.ShaderMaterial({
+      var packetMat = new THREE.ShaderMaterial({
         uniforms: {
           uTexture: { value: nodeTex },
           uColor: { value: new THREE.Color(BRAND.primary) },
@@ -406,25 +457,25 @@
       // Hub (current role) holds a higher baseline + slow outer ring; the five
       // prior stops breathe. Keeps a visual hierarchy: present > past.
       // Size arrays live on each group's Points geometry (hub/career/decorative).
+      let isDark = document.documentElement.getAttribute('data-theme') === 'dark';
       function animateNodes(time) {
+        // Re-check on each frame in case theme changed mid-animation
+        isDark = document.documentElement.getAttribute('data-theme') === 'dark';
         Object.keys(cityNodeData).forEach((key, i) => {
           const nd = cityNodeData[key];
           const amp = nd.isHub ? 0.08 : 0.30;
           const pulse = Math.sin(time * 0.8 + i * 0.7) * amp + (nd.isHub ? 0.92 : 0.70);
+          // Dark mode: dampen pulse to subtle breathing
+          const finalPulse = isDark ? (nd.isHub ? 0.98 : 0.85) : pulse;
           const pts = nd.group === 'hub' ? hubPoints : (nd.group === 'career' ? careerPoints : decoPoints);
-          pts.geometry.attributes.size.array[nd.idxInGroup] = nd.baseSize * pulse;
+          pts.geometry.attributes.size.array[nd.idxInGroup] = nd.baseSize * finalPulse;
           pts.geometry.attributes.size.needsUpdate = true;
         });
       }
 
-      // ---- Mouse parallax (scoped to the map group only; hover devices only) ----
-      let mouseX = 0, mouseY = 0, targetMouseX = 0, targetMouseY = 0;
-      if (window.matchMedia('(hover: hover)').matches) {
-        document.addEventListener('mousemove', (e) => {
-          targetMouseX = (e.clientX / window.innerWidth - 0.5) * 2;
-          targetMouseY = (e.clientY / window.innerHeight - 0.5) * 2;
-        });
-      }
+      // ---- Mouse parallax disabled — caused unwanted orange tint on page hover ----
+      // (map group stays static; scroll parallax via GSAP still applies)
+      let mouseX = 0, mouseY = 0;
 
       // ---- Resize ----
       window.addEventListener('resize', () => {
@@ -467,13 +518,6 @@
 
         animateNodes(time);
         animatePackets(time);
-
-        // Smooth mouse parallax — map group only, never the whole scene
-        mouseX += (targetMouseX - mouseX) * 0.05;
-        mouseY += (targetMouseY - mouseY) * 0.05;
-        mapGroup.rotation.y = mouseX * 0.06;
-        mapGroup.rotation.x = mouseY * 0.04;
-        mapGroup.updateMatrixWorld();
 
         renderer.render(scene, camera);
       }
@@ -549,7 +593,7 @@
 
       // ---- Skill Ring layout ----
       const CATS = [...new Set(SKILLS.map(s => s.cat))];
-      // Category color map (Solar Graphite v3.0)
+      // Category color map (Terracotta/teal palette)
       const CAT_COLORS = {
         'Switch & Facility Ops':   '#c2410c',
         '5G/4G RAN & Core':        '#0e7490',
