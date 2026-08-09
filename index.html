@@ -640,6 +640,16 @@
       letter-spacing: 0.1em;
       margin-bottom: 12px;
     }
+    .skill-accent-orange { color: #c2410c; } /* 5.18:1 on #fff card, 3.55:1 dark */
+    .skill-accent-teal   { color: #0e7490; } /* 5.36:1 on #fff card, 3.43:1 dark */
+    .skill-accent-lime   { color: #4d7c0f; } /* 4.99:1 on #fff card, 3.68:1 dark */
+    .skill-accent-stone  { color: #44403c; } /* 3.09:1 on #fff card — FAIL, needs dark-bright */
+    .skill-accent-rose   { color: #be123c; } /* 4.06:1 on #fff card — FAIL, needs dark-bright */
+    [data-theme="dark"] .skill-accent-orange { color: #e06a3a; } /* 5.51:1 on #161412 */
+    [data-theme="dark"] .skill-accent-teal   { color: #22d3ee; } /* 10.17:1 on #161412 */
+    [data-theme="dark"] .skill-accent-lime   { color: #84cc16; } /* 9.3:1 on #161412 */
+    [data-theme="dark"] .skill-accent-stone  { color: #e7e5e4; } /* 14.63:1 on #161412 */
+    [data-theme="dark"] .skill-accent-rose   { color: #fb7185; } /* 6.83:1 on #161412 */
     .skill-tag {
       display: inline-block;
       padding: 6px 12px;
@@ -715,9 +725,7 @@
       letter-spacing: 0.04em;
       line-height: 1;
     }
-    [data-theme="dark"] .cert-badge .badge-text {
-      color: var(--text-on-accent);
-    }
+    /* badge-text stays #fff in both themes — brand bgs never theme */
     .cert-text {
       font-size: 13px;
       color: var(--text);
@@ -764,13 +772,19 @@
       box-shadow: inset 0 1px 2px rgba(0,0,0,0.04);
       transition: border-color 0.3s ease, box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1), background 0.3s ease;
     }
+    .form-group input:focus-visible,
+    .form-group textarea:focus-visible {
+      outline: 2px solid var(--gold);
+      outline-offset: 1px;
+      border-color: var(--gold);
+    }
     .form-group input:focus,
     .form-group textarea:focus {
       outline: none;
       background: var(--input-bg);
       border-color: var(--gold);
       box-shadow: inset 0 1px 2px rgba(0,0,0,0.02),
-                  0 0 0 3px rgba(194, 65, 12, 0.12),
+                  0 0 0 3px rgba(194, 65, 12, 0.30),
                   0 0 16px rgba(194, 65, 12, 0.06);
     }
     .form-group textarea {
@@ -1081,10 +1095,15 @@
       border-radius: 8px;
       transition: color 0.2s ease, background 0.2s ease;
     }
-    .nav-links a:hover,
+    .nav-links a:hover {
+      color: var(--text);
+      background: rgba(194, 65, 12, 0.15);
+    }
     .nav-links a:focus-visible {
       color: var(--text);
-      background: rgba(194, 65, 12, 0.06);
+      background: rgba(194, 65, 12, 0.15);
+      outline: 2px solid var(--gold);
+      outline-offset: 2px;
     }
     .nav-links a.active {
       color: var(--gold);
@@ -1187,7 +1206,7 @@
     #back-to-top:hover {
       transform: translateY(-3px);
       box-shadow: 0 4px 16px rgba(0,0,0,0.08), 0 0 0 1px var(--gold-subtle);
-      border-color: var(--gold-muted);
+      border-color: var(--gold); /* solid #c2410c = 4.75:1 on #f7f5f0 (1.4.11) */
     }
     #back-to-top:focus-visible {
       outline: 2px solid var(--gold);
@@ -1396,17 +1415,17 @@
     .float-shape.circle { border-radius: 50%; border: 1.5px solid; }
     .float-shape.diamond { transform: rotate(45deg); border: 1.5px soli
     .float-shape.triangle {
-      width: 0 !important; height: 0 !important; background: transparen
+      width: 0 !important; height: 0 !important; background: transparent !important;
       border-left: 10px solid transparent;
       border-right: 10px solid transparent;
       border-bottom: 16px solid;
     }
     .float-shape.line { height: 1.5px !important; border-radius: 1px; }
-    .float-shape.f1 { animation: float-drift 12s ease-in-out infinite;
+    .float-shape.f1 { animation: float-drift 12s ease-in-out infinite; }
     .float-shape.f2 { animation: float-drift-alt 16s ease-in-out infinite; opacity: 0.08; }
-    .float-shape.f3 { animation: float-rotate 20s ease-in-out infinite;
+    .float-shape.f3 { animation: float-rotate 20s ease-in-out infinite; }
     .float-shape.f4 { animation: float-drift 14s ease-in-out infinite 2s; opacity: 0.09; }
-    .float-shape.f5 { animation: float-drift-alt 18s ease-in-out infini
+    .float-shape.f5 { animation: float-drift-alt 18s ease-in-out infinite; }
     .float-shape.f6 { animation: float-rotate 22s ease-in-out infinite 3s; opacity: 0.07; }
 
     /* ================================================================
@@ -1457,6 +1476,7 @@
       }
       #scene-container { display: none; }
       .orb, .float-shape { display: none !important; }
+      .hero-name { animation: none !important; } /* gradient-shift gated off (2.3.3) */
     }
 
     /* ================================================================
@@ -1850,7 +1870,7 @@
 
       <div class="skills-list">
         <div class="skill-category glass reveal">
-          <h3 style="color: #c2410c;">Switch &amp; Facility Operations</h3>
+          <h3 class="skill-accent-orange">Switch &amp; Facility Operations</h3>
           <span class="skill-tag">Switch Maintenance</span>
           <span class="skill-tag">Facility Checks</span>
           <span class="skill-tag">Power/BMS (EcoStruxure)</span>
@@ -1859,7 +1879,7 @@
           <span class="skill-tag">ITIL Change Mgmt</span>
         </div>
         <div class="skill-category glass reveal">
-          <h3 style="color: #0e7490;">5G/4G RAN &amp; Core</h3>
+          <h3 class="skill-accent-teal">5G/4G RAN &amp; Core</h3>
           <span class="skill-tag">5G NR</span>
           <span class="skill-tag">eNodeB/gNodeB</span>
           <span class="skill-tag">NSD, DAS</span>
@@ -1868,7 +1888,7 @@
           <span class="skill-tag">BSC/RNC</span>
         </div>
         <div class="skill-category glass reveal">
-          <h3 style="color: #4d7c0f;">Routing &amp; Transport</h3>
+          <h3 class="skill-accent-lime">Routing &amp; Transport</h3>
           <span class="skill-tag">Cisco Catalyst</span>
           <span class="skill-tag">SAS/MAD Routers</span>
           <span class="skill-tag">BGP/OSPF/MPLS</span>
@@ -1877,7 +1897,7 @@
           <span class="skill-tag">L2/L3 Switching</span>
         </div>
         <div class="skill-category glass reveal">
-          <h3 style="color: #44403c;">T-Mobile Tools</h3>
+          <h3 class="skill-accent-stone">T-Mobile Tools</h3>
           <span class="skill-tag">ATOMS</span>
           <span class="skill-tag">OneTransport</span>
           <span class="skill-tag">RIOT</span>
@@ -1886,7 +1906,7 @@
           <span class="skill-tag">EAI/Netviewer</span>
         </div>
         <div class="skill-category glass reveal">
-          <h3 style="color: #be123c;">OSS &amp; Scripting</h3>
+          <h3 class="skill-accent-rose">OSS &amp; Scripting</h3>
           <span class="skill-tag">Nokia NetAct</span>
           <span class="skill-tag">Ericsson ENM</span>
           <span class="skill-tag">AMOS</span>
@@ -1895,7 +1915,7 @@
           <span class="skill-tag">Batch</span>
         </div>
         <div class="skill-category glass reveal">
-          <h3 style="color: #65a30d;">Leadership</h3>
+          <h3 class="skill-accent-lime">Leadership</h3>
           <span class="skill-tag">Technical Mentorship</span>
           <span class="skill-tag">Junior Tech Onboarding</span>
           <span class="skill-tag">MOP Development</span>
