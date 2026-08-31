@@ -307,7 +307,10 @@
       padding: 100px 5%;
       max-width: 1100px;
       margin: 0 auto;
+      content-visibility: auto;
+      contain-intrinsic-size: auto 800px;
     }
+    section:first-of-type { content-visibility: visible; }
 
     .section-label {
       font-family: var(--font-mono);
@@ -1975,22 +1978,22 @@
         <p aria-hidden="true" style="position:absolute;left:-9999px;top:-9999px;"><label>Don't fill this out: <input name="bot-field" tabindex="-1" autocomplete="off"></label></p>
         <div class="form-group full-width reveal">
           <label for="contact-name">Name</label>
-          <input type="text" id="contact-name" name="name" required autocomplete="name" aria-describedby="err-name" aria-invalid="false">
+          <input type="text" id="contact-name" name="name" required autocomplete="name" aria-describedby="err-name" aria-invalid="false" maxlength="100">
           <div class="form-error" id="err-name" role="alert">Please enter your name.</div>
         </div>
         <div class="form-group full-width reveal">
           <label for="contact-email">Email</label>
-          <input type="email" id="contact-email" name="email" required autocomplete="email" aria-describedby="err-email" aria-invalid="false">
+          <input type="email" id="contact-email" name="email" required autocomplete="email" aria-describedby="err-email" aria-invalid="false" maxlength="254">
           <div class="form-error" id="err-email" role="alert">Please enter a valid email address.</div>
         </div>
         <div class="form-group full-width reveal">
           <label for="contact-subject">Subject</label>
-          <input type="text" id="contact-subject" name="subject" required aria-describedby="err-subject" aria-invalid="false">
+          <input type="text" id="contact-subject" name="subject" required aria-describedby="err-subject" aria-invalid="false" maxlength="200">
           <div class="form-error" id="err-subject" role="alert">Please enter a subject.</div>
         </div>
         <div class="form-group full-width reveal">
           <label for="contact-message">Message</label>
-          <textarea id="contact-message" name="message" required aria-describedby="err-message" aria-invalid="false"></textarea>
+          <textarea id="contact-message" name="message" required aria-describedby="err-message" aria-invalid="false" maxlength="5000"></textarea>
           <div class="form-error" id="err-message" role="alert">Please enter a message.</div>
         </div>
         <div class="full-width reveal">

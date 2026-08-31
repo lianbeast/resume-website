@@ -1,0 +1,35 @@
+{
+  "detector": {
+    "ignoreRules": [],
+    "ignoreFiles": [],
+    "ignoreValues": [
+      {
+        "rule": "design-system-font-size",
+        "value": "*",
+        "files": [
+          "index.html"
+        ],
+        "createdAt": "2026-08-31T15:03:22.210Z",
+        "reason": "intentional: element-specific sizes for footer, meta, form errors, captions, nav links — standard practice, not type ramp violations"
+      },
+      {
+        "rule": "design-system-letter-spacing",
+        "value": "*",
+        "files": [
+          "index.html"
+        ],
+        "createdAt": "2026-08-31T15:03:31.989Z",
+        "reason": "intentional: uppercase label tracking — standard UI pattern for section kickers, meta text, and mono labels"
+      },
+      {
+        "rule": "design-system-color",
+        "value": "#",
+        "files": [
+          "index.html"
+        ],
+        "createdAt": "2026-08-31T15:29:29.050Z",
+        "reason": "intentional: dark mode accents lighter for contrast; print uses grayscale"
+      }
+    ]
+  }
+}

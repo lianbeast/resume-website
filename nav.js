@@ -75,58 +75,5 @@
   }
 
   // ========== Form handling ==========
-  var form = document.querySelector('form[name="contact"]');
-  if (form) {
-    var submitBtn = form.querySelector('button[type="submit"]');
-    var formError = document.getElementById('form-error');
-    form.addEventListener('submit', function(e) {
-      e.preventDefault();
-      var formData = new FormData(form);
-      var isValid = true;
-      form.querySelectorAll('[required]').forEach(function(field) {
-        if (!field.value.trim()) {
-          field.setAttribute('aria-invalid', 'true');
-          field.closest('.form-group').classList.add('error');
-          isValid = false;
-        } else {
-          field.setAttribute('aria-invalid', 'false');
-          field.closest('.form-group').classList.remove('error');
-        }
-      });
-      if (!isValid) return;
-      submitBtn.disabled = true;
-      submitBtn.textContent = 'Sending...';
-      submitBtn.classList.add('loading');
-      formError.style.display = 'none';
-      formError.textContent = '';
-      fetch(form.action, { method: 'POST', body: formData, headers: { 'Accept': 'application/json' } })
-        .then(function(response) {
-          formError.style.display = 'block';
-          if (response.ok) {
-            formError.style.color = 'var(--olive)';
-            formError.textContent = 'Message sent successfully. Thank you!';
-            form.reset();
-          } else {
-            formError.style.color = 'var(--gold-dark)';
-            formError.textContent = 'Something went wrong. Please try again or email directly.';
-          }
-        })
-        .catch(function() {
-          formError.style.display = 'block';
-          formError.style.color = 'var(--gold-dark)';
-          formError.textContent = 'Network error. Please check your connection and try again.';
-        })
-        .finally(function() {
-          submitBtn.disabled = false;
-          submitBtn.textContent = 'Send Message';
-          submitBtn.classList.remove('loading');
-        });
-    });
-    form.querySelectorAll('[required]').forEach(function(field) {
-      field.addEventListener('input', function() {
-        this.setAttribute('aria-invalid', 'false');
-        this.closest('.form-group').classList.remove('error');
-      });
-    });
-  }
+  // Form submission handled by app.js — this file only owns nav, scrollspy, back-to-top, theme toggle
 })();

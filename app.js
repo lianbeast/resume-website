@@ -525,6 +525,12 @@
       // Mark enhanced so the CSS text fallback collapses to the a11y-only strip
       container.classList.add('is-enhanced');
       animate();
+
+      // Cleanup on page unload/hide
+      window.addEventListener('pagehide', () => {
+        if (threeRAF) cancelAnimationFrame(threeRAF);
+        if (renderer) { renderer.dispose(); sceneContainer.innerHTML = ''; }
+      });
     })();
   }
 
@@ -891,19 +897,27 @@
             const btn = form.querySelector('button[type="submit"]');
             if (btn) { btn.disabled = true; btn.textContent = 'Sending…'; }
             const data = new FormData(form);
+            const controller = new AbortController();
+            const timeoutId = setTimeout(() => controller.abort(), 15000);
             fetch('/', {
               method: 'POST',
               headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-              body: new URLSearchParams(data).toString()
+              body: new URLSearchParams(data).toString(),
+              signal: controller.signal
             })
               .then((res) => {
+                clearTimeout(timeoutId);
                 if (!res.ok) throw new Error('submit-failed');
                 window.location.href = '/thank-you.html';
               })
-              .catch(() => {
+              .catch((err) => {
+                clearTimeout(timeoutId);
                 if (btn) { btn.disabled = false; btn.textContent = 'Send Message'; }
                 errorMsg.style.display = 'block';
-                errorMsg.innerHTML = 'Something went wrong sending the form. Please try again, or reach out on <a href="https://linkedin.com/in/syedrahidahmed" target="_blank" rel="noopener noreferrer">LinkedIn</a>.';
+                errorMsg.textContent = err.name === 'AbortError'
+                  ? 'Request timed out. Please check your connection and try again.'
+                  : 'Something went wrong. Please try again or reach out on LinkedIn.';
+                setTimeout(() => { errorMsg.style.display = 'none'; }, 8000);
               });
           }
         });
