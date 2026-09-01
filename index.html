@@ -144,6 +144,10 @@
       color: var(--text);
       font-family: var(--font-body);
       line-height: 1.6;
+      /* fluid type base — scales 16–18px, respects browser zoom & user prefs */
+      font-size: clamp(16px, 1.5vw + 0.5rem, 18px);
+      /* prevent overflow on narrow screens */
+      overflow-wrap: anywhere;
     }
 
     body {
@@ -1502,6 +1506,38 @@
       }
       .hero-name { letter-spacing: -0.01em; }
       .timeline { padding-left: 24px; }
+
+      /* --- Mobile font & readability fixes --- */
+      /* bump tiny desktop sizes to touch-friendly scale */
+      .section-label { font-size: 11px; }
+      .stat-label { font-size: 13px; }
+      .stat-num { font-size: 30px; }
+      .timeline-date { font-size: 13px; }
+      .timeline-role { font-size: 17px; }
+      .timeline-company { font-size: 13px; }
+      .timeline-loc { font-size: 12px; }
+      .timeline-summary { font-size: 14px; }
+      .skill-tag { font-size: 13px; padding: 8px 14px; margin: 3px; }
+      .cert-list li { font-size: 15px; }
+      .edu-card h3 { font-size: 15px; }
+      .edu-card p { font-size: 13px; }
+      .about-grid p { font-size: 14px; }
+      .contact-item span { font-size: 14px; }
+
+      /* prevent long names/locations wrapping badly */
+      .timeline-role, .timeline-company {
+        overflow-wrap: anywhere;
+      }
+    }
+
+    /* --- Extra-small phones (< 480px) --- */
+    @media (max-width: 480px) {
+      section { padding: 48px 4%; }
+      .stats-grid { grid-template-columns: 1fr; }
+      .stat-num { font-size: 28px; }
+      .timeline { padding-left: 20px; }
+      .skill-tag { font-size: 14px; padding: 10px 16px; }
+      .cert-list li { font-size: 16px; }
     }
 
     /* ================================================================
