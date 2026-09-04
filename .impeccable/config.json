@@ -29,6 +29,54 @@
         ],
         "createdAt": "2026-08-31T15:29:29.050Z",
         "reason": "intentional: dark mode accents lighter for contrast; print uses grayscale"
+      },
+      {
+        "rule": "design-system-color",
+        "value": "#555",
+        "createdAt": "2026-09-01T01:58:26.464Z",
+        "reason": "pre-existing dark-mode muted text, not from this session"
+      },
+      {
+        "rule": "design-system-color",
+        "value": "#1b365d",
+        "createdAt": "2026-09-01T01:58:26.499Z",
+        "reason": "pre-existing contact card brand color, not from this session"
+      },
+      {
+        "rule": "design-system-color",
+        "value": "#0078d4",
+        "createdAt": "2026-09-01T01:58:26.532Z",
+        "reason": "pre-existing contact card brand color, not from this session"
+      },
+      {
+        "rule": "design-system-color",
+        "value": "#22d3ee",
+        "createdAt": "2026-09-04T04:50:00.539Z",
+        "reason": "pre-existing demo colors; user previously requested 'all' ignored per HANDOFF.md"
+      },
+      {
+        "rule": "design-system-color",
+        "value": "#84cc16",
+        "createdAt": "2026-09-04T04:50:00.571Z",
+        "reason": "pre-existing demo colors; user previously requested 'all' ignored per HANDOFF.md"
+      },
+      {
+        "rule": "design-system-color",
+        "value": "#fb7185",
+        "createdAt": "2026-09-04T04:50:00.605Z",
+        "reason": "pre-existing demo colors; user previously requested 'all' ignored per HANDOFF.md"
+      },
+      {
+        "rule": "design-system-color",
+        "value": "#c8102e",
+        "createdAt": "2026-09-04T04:50:00.635Z",
+        "reason": "pre-existing brand red (Rutgers); user previously requested 'all' ignored per HANDOFF.md"
+      },
+      {
+        "rule": "design-system-radius",
+        "value": "4px",
+        "createdAt": "2026-09-04T04:50:00.668Z",
+        "reason": "pre-existing small radius; user previously requested 'all' ignored per HANDOFF.md"
       }
     ]
   }

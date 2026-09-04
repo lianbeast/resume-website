@@ -1,1 +1,14 @@
-{}
+{
+  "name": "career-site",
+  "version": "1.0.0",
+  "description": "Syed Rahid Ahmed | Sr. Switch Technician — Telecom Operations & RAN/Transport",
+  "scripts": {
+    "dev": "http-server -p 8080 -c-1",
+    "lhci": "lhci autorun --config=./lighthouseci.config.js",
+    "test:lhci": "./scripts/run-lhci.sh"
+  },
+  "devDependencies": {
+    "@lhci/cli": "^0.13.0",
+    "http-server": "^14.1.1"
+  }
+}

@@ -8,11 +8,14 @@
       (function() {
         'use strict';
 
-        if (typeof THREE === 'undefined') return;
+        if (typeof THREE === 'undefined') { bail(); return; }
         const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-        if (prefersReducedMotion) return;
+        if (prefersReducedMotion) { bail(); return; }
 
         const container = document.getElementById('scene-container');
+        // Bail path: keep the readable #career-locations fallback visible (is-bailed
+        // flips it from clipped to static) — mirrors the no-js rendering exactly.
+        const bail = () => container && container.classList.add('is-bailed');
 
       // ---- Brand colors sourced from CSS tokens ----
       // Reads the live palette so dark mode + style toggles flow into the map
@@ -56,7 +59,14 @@
       camera.position.set(0, 0, isMobile ? 66 : 50);
       camera.lookAt(0, 0, 0);
 
-      const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+      let renderer;
+      try {
+        renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+      } catch (e) {
+        // No WebGL — bail to the readable locations fallback instead of dying mid-IIFE
+        bail();
+        return;
+      }
       renderer.setSize(window.innerWidth, window.innerHeight);
       renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
       // Solid page-background clear color (not transparent) — keeps the faint
@@ -477,13 +487,17 @@
       // (map group stays static; scroll parallax via GSAP still applies)
       let mouseX = 0, mouseY = 0;
 
-      // ---- Resize ----
+      // ---- Resize (debounced — mobile URL-bar show/hide fires bursts of events) ----
+      let mapResizeTimeout;
       window.addEventListener('resize', () => {
-        const mobile = window.innerWidth < 768;
-        camera.position.z = mobile ? 66 : 50;
-        camera.aspect = window.innerWidth / window.innerHeight;
-        camera.updateProjectionMatrix();
-        renderer.setSize(window.innerWidth, window.innerHeight);
+        clearTimeout(mapResizeTimeout);
+        mapResizeTimeout = setTimeout(() => {
+          const mobile = window.innerWidth < 768;
+          camera.position.z = mobile ? 66 : 50;
+          camera.aspect = window.innerWidth / window.innerHeight;
+          camera.updateProjectionMatrix();
+          renderer.setSize(window.innerWidth, window.innerHeight);
+        }, 150);
       });
 
       // ---- Render loop (IO-gated — pauses when #scene-container is off-screen) ----
@@ -982,7 +996,10 @@
 
       // Respect reduced motion
       const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      if (prefersReducedMotion) {
+      // Mobile: GSAP eval costs a 400ms main-thread task (worst FID contributor).
+      // Reveals already render visible in CSS; skip scroll-triggered animation there.
+      const isMobileViewport = window.matchMedia('(max-width: 768px)').matches;
+      if (prefersReducedMotion || isMobileViewport) {
         document.querySelectorAll('.reveal, .hero-label, .hero-name, .hero-title, .hero-tagline, .hero-cta, .stat-card, .timeline-item, .skill-category, .section-label').forEach(el => {
           el.style.opacity = '1';
           el.style.transform = 'none';

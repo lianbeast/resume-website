@@ -13,6 +13,6 @@
   // Async font stylesheet (non-blocking, no inline handlers — CSP forbids them)
   var fonts = document.createElement('link');
   fonts.rel = 'stylesheet';
-  fonts.href = 'https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap';
+  fonts.href = 'https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=optional';
   document.head.appendChild(fonts);
 })();

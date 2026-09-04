@@ -40,3 +40,4 @@ npm-debug.log*
 # Local artifacts
 index.html.artifact.json
 map-render-check.png
+.lighthouseci/
