@@ -117,14 +117,17 @@
           if (packetMat) packetMat.uniforms.uColor.value = new THREE.Color(BRAND.primary);
         }
         // Skill ring: re-derive per-node color from CAT_COLORS so dark mode re-tones
-        if (typeof SKILLS !== 'undefined') {
+        // ponytail: try/catch, not typeof — typeof THROWS on a TDZ const (SKILLS is
+        // declared below this call site), so typeof-guard crashed the whole script.
+        // Init-time pass skips ring tones; initRingNodes() re-derives them anyway.
+        try {
           SKILLS.forEach(function(s) {
             const base = CAT_COLORS[s.cat];
             s.color = isDark
               ? '#' + new THREE.Color(base).multiplyScalar(0.75).getHexString()
               : base;
           });
-        }
+        } catch (e) { /* SKILLS not yet declared — skip */ }
       }
 
       container.appendChild(renderer.domElement);
