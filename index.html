@@ -325,7 +325,7 @@
 
     .section-label {
       font-family: var(--font-mono);
-      font-size: 11px;
+      font-size: 12px;
       text-transform: uppercase;
       letter-spacing: 0.15em;
       color: var(--gold);
@@ -734,7 +734,7 @@
     }
     .cert-badge .badge-text {
       font-family: var(--font-mono);
-      font-size: 10px;
+      font-size: 12px;
       font-weight: 700;
       color: #fff;
       letter-spacing: 0.04em;
@@ -806,7 +806,7 @@
       resize: vertical;
     }
     .form-error {
-      font-size: 11px;
+      font-size: 12px;
       color: var(--gold-dark);
       margin-top: 4px;
       display: none;
@@ -846,6 +846,9 @@
       gap: 6px;
       text-decoration: none;
       font-size: 13px;
+      /* 44px minimum touch target */
+      padding: 12px 12px;
+      margin: -12px -6px;
     }
     .footer-social a:hover {
       color: var(--gold);
@@ -854,6 +857,11 @@
     .footer-social svg {
       width: 20px;
       height: 20px;
+    }
+    .footer-resume {
+      /* 44px minimum touch target */
+      padding: 12px 14px;
+      margin: -12px -6px -12px -10px;
     }
     .footer-resume svg {
       width: 16px;
@@ -1089,6 +1097,9 @@
       text-decoration: none;
       letter-spacing: -0.02em;
       transition: color 0.3s ease;
+      /* expand touch target without shifting visual position */
+      padding: 10px 12px;
+      margin-left: -12px;
     }
     .nav-logo:hover { color: var(--text); }
     .nav-links {
@@ -1101,6 +1112,9 @@
       flex-wrap: nowrap;
     }
     .nav-links a {
+      /* block: vertical padding joins layout, so hover/tap highlights
+         stay inside each item instead of bleeding onto neighbors */
+      display: block;
       padding: 8px 14px;
       font-size: 14px;
       font-weight: 500;
@@ -1515,7 +1529,7 @@
 
       /* --- Mobile font & readability fixes --- */
       /* bump tiny desktop sizes to touch-friendly scale */
-      .section-label { font-size: 11px; }
+      .section-label { font-size: 12px; }
       .stat-label { font-size: 13px; }
       .stat-num { font-size: 30px; }
       .timeline-date { font-size: 13px; }
