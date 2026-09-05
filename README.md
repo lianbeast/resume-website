@@ -2,6 +2,8 @@
 
 Static personal website hosted directly from this repository.
 
+**Live:** <https://rahid.persipico.com>
+
 ## Demo
 
 <img src="assets/demo/demo.gif" alt="Demo" width="800" />
