@@ -77,6 +77,15 @@
         "value": "4px",
         "createdAt": "2026-09-04T04:50:00.668Z",
         "reason": "pre-existing small radius; user previously requested 'all' ignored per HANDOFF.md"
+      },
+      {
+        "rule": "design-system-radius",
+        "value": "999px",
+        "files": [
+          "index.html"
+        ],
+        "createdAt": "2026-09-29T22:52:26.161Z",
+        "reason": "intentional: pill/capsule search input and category filter buttons — standard UI pattern, not a radius-scale violation"
       }
     ]
   }

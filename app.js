@@ -560,14 +560,12 @@
 
 
       // ================================================================
-      // Skill tooltip vars (used by skill ring hover)
+      // SKILL 3D WHEEL (Three.js) — interactive skill constellation
+      // ================================================================
       const tooltip = document.getElementById('skill-tooltip');
-      const tooltipName = tooltip.querySelector('.tooltip-name');
-      const tooltipCat = tooltip.querySelector('.category');
-
-      // Skill canvas + context for the interactive ring
-      const skillCanvas = document.getElementById('skill-canvas');
-      const skillCtx = skillCanvas.getContext('2d');
+      const tooltipName = tooltip ? tooltip.querySelector('.tooltip-name') : null;
+      const tooltipCategory = tooltip ? tooltip.querySelector('.category') : null;
+      const tooltipLevel = tooltip ? tooltip.querySelector('.level') : null;
 
       // Skills data — mirrors the HTML skill categories for the interactive ring
       const SKILLS = [
@@ -614,7 +612,7 @@
         { name: 'E911 / CBN Audits', cat: 'Leadership', color: '#65a30d', desc: 'Leadership' },
       ];
 
-      // ---- Skill Ring layout ----
+      // ---- Skill Wheel layout ----
       const CATS = [...new Set(SKILLS.map(s => s.cat))];
       // Category color map (Terracotta/teal palette)
       const CAT_COLORS = {
@@ -625,248 +623,242 @@
         'OSS & Scripting':         '#be123c',
         'Leadership':              '#65a30d',
       };
-      let ringNodes = [];
-      let crossLinks = [];
-      let hoveredRing = null;
-      let ringOpacity = 0;
-      let ringActive = false;
-      // Logical canvas size (CSS px) + DPR so drawing stays crisp on retina.
-      let skillW = 0, skillH = 0, skillDPR = Math.min(window.devicePixelRatio || 1, 2);
-      // Skill ring rotation respects prefers-reduced-motion (static when set).
-      const ringReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-      // Cross-category keyword links
-      const LINK_KEYWORDS = ['nokia', 'cisco', 'microsoft', 'sctp', 'ip'];
-      function findCrossLinks() {
-        const links = [];
-        for (let i = 0; i < ringNodes.length; i++) {
-          for (let j = i + 1; j < ringNodes.length; j++) {
-            if (ringNodes[i].cat === ringNodes[j].cat) continue;
-            const a = ringNodes[i].name.toLowerCase(), b = ringNodes[j].name.toLowerCase();
-            const shared = LINK_KEYWORDS.some(k => a.includes(k) && b.includes(k));
-            if (shared) links.push([i, j]);
-          }
-        }
-        return links;
+      // ---- 3D wheel state ----
+      const wheelReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const wheelCanvas = document.getElementById('skill-wheel');
+      let wheelActive = false;
+      let wheelRAF = null;
+      let wheelScene = null, wheelCamera = null, wheelRenderer = null, wheelGroup = null;
+      let wheelNodeMeshes = [];
+      let hoveredWheelMesh = null;
+      const wheelPointer = { x: -2, y: -2, cx: 0, cy: 0 };
+      const wheelRaycaster = new THREE.Raycaster();
+      let activeCat = 'all';
+      let searchQuery = '';
+
+      // Canvas-texture sprite label (sprites always face the camera, so
+      // category names stay readable as the wheel rotates).
+      function buildWheelLabel(text, color, w, h, fontPx) {
+        const c = document.createElement('canvas');
+        c.width = w; c.height = h;
+        const g = c.getContext('2d');
+        g.font = '600 ' + fontPx + 'px "Outfit", sans-serif';
+        g.textAlign = 'center';
+        g.textBaseline = 'middle';
+        g.fillStyle = color;
+        g.fillText(text, w / 2, h / 2);
+        const tex = new THREE.CanvasTexture(c);
+        tex.minFilter = THREE.LinearFilter;
+        const mat = new THREE.SpriteMaterial({ map: tex, transparent: true, depthTest: false, depthWrite: false });
+        const sp = new THREE.Sprite(mat);
+        sp.scale.set(w / 80, h / 80, 1);
+        return sp;
       }
 
-      function initRingNodes(w, h) {
-        const cx = w / 2, cy = h / 2;
-        const outerR = Math.min(w, h) * 0.44;
-        const gap = 0.04; // gap between arcs in radians
-        const totalArc = Math.PI * 2 - gap * CATS.length;
-        let angle = -Math.PI / 2; // start top
+      function initWheel() {
+        if (!wheelCanvas || typeof THREE === 'undefined') return;
 
-        ringNodes = [];
+        wheelScene = new THREE.Scene();
+        wheelCamera = new THREE.PerspectiveCamera(55, 1, 0.1, 60);
+        wheelCamera.position.set(0, 2.0, 7.4);
+        wheelCamera.lookAt(0, 0, 0);
+
+        wheelRenderer = new THREE.WebGLRenderer({
+          canvas: wheelCanvas, antialias: true, alpha: true, powerPreference: 'low-power'
+        });
+        wheelRenderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+        wheelRenderer.setClearColor(0x000000, 0);
+
+        wheelGroup = new THREE.Group();
+        wheelGroup.rotation.x = -0.5; // carousel tilt
+        wheelScene.add(wheelGroup);
+
+        // Category arcs (flat rings in the wheel plane)
+        const gap = 0.09;
+        const totalArc = Math.PI * 2 - gap * CATS.length;
+        let arcAngle = 0;
+        CATS.forEach(cat => {
+          const arcLen = totalArc / CATS.length;
+          const arcGeo = new THREE.RingGeometry(3.0, 3.07, 48, 1, arcAngle, arcLen);
+          const arcMat = new THREE.MeshBasicMaterial({
+            color: new THREE.Color(CAT_COLORS[cat]), transparent: true, opacity: 0.5, side: THREE.DoubleSide
+          });
+          const arc = new THREE.Mesh(arcGeo, arcMat);
+          arc.rotation.x = -Math.PI / 2;
+          wheelGroup.add(arc);
+          arcAngle += arcLen + gap;
+        });
+
+        // Skill nodes on the wheel
+        const sphereGeo = new THREE.SphereGeometry(0.085, 12, 12);
+        arcAngle = 0;
         CATS.forEach(cat => {
           const skills = SKILLS.filter(s => s.cat === cat);
           const arcLen = totalArc / CATS.length;
           skills.forEach((s, si) => {
-            const a = angle + (si + 0.5) / skills.length * arcLen;
-            const r = outerR * (0.72 + 0.12 * (si % 2)); // stagger radius
-            ringNodes.push({
-              ...s,
-              cx, cy, outerR,
-              angle: a,
-              baseAngle: a,
-              radius: r,
-              r: 5,
+            const a = arcAngle + (si + 0.5) / skills.length * arcLen;
+            const tier = si % 2;
+            const r = 2.55 * (1 + tier * 0.07);
+            const mat = new THREE.MeshBasicMaterial({
+              color: new THREE.Color(s.color), transparent: true, opacity: 0.9
             });
+            const mesh = new THREE.Mesh(sphereGeo, mat);
+            mesh.position.set(Math.cos(a) * r, tier * 0.16 - 0.08, Math.sin(a) * r);
+            mesh.userData = { skill: s, tier: tier, on: true };
+            wheelGroup.add(mesh);
+            wheelNodeMeshes.push(mesh);
           });
-          // Category label position — use CAT_COLORS map
-          const midAngle = angle + totalArc / CATS.length / 2;
-          ringNodes.push({
-            name: cat, cat: cat, color: CAT_COLORS[cat], desc: '',
-            cx, cy, outerR,
-            angle: midAngle, baseAngle: midAngle,
-            radius: outerR + 28,
-            r: 0, isLabel: true,
-          });
-          angle += arcLen + gap;
-        });
 
-        // Precompute cross-category links (constant after init — never recompute per frame)
-        crossLinks = findCrossLinks();
-      }
-
-      function drawSkillRing(time) {
-        if (!ringActive && ringOpacity <= 0) return;
-        const w = skillW, h = skillH;
-        if (ringNodes.length === 0) initRingNodes(w, h);
-
-        skillCtx.clearRect(0, 0, w, h);
-        ringOpacity += (ringActive ? 1 : -1) * 0.03;
-        ringOpacity = Math.max(0, Math.min(1, ringOpacity));
-        const op = ringOpacity;
-        const cx = w / 2, cy = h / 2;
-
-        // Slow rotation (static when the user prefers reduced motion)
-        const rot = ringReducedMotion ? 0 : time * 0.06;
-
-        // Compute current positions
-        const curPos = ringNodes.map(n => {
-          const a = n.baseAngle + rot;
-          return {
-            x: cx + Math.cos(a) * n.radius,
-            y: cy + Math.sin(a) * n.radius,
-            a,
-          };
-        });
-
-        // Draw arc tracks per category
-        const gap = 0.04;
-        const totalArc = Math.PI * 2 - gap * CATS.length;
-        let arcAngle = -Math.PI / 2;
-        CATS.forEach(cat => {
-          const arcLen = totalArc / CATS.length;
-          const startA = arcAngle + rot - Math.PI / 2;
-          const endA = arcAngle + arcLen + rot - Math.PI / 2;
-          const catSkills = SKILLS.filter(s => s.cat === cat);
-          const catColor = catSkills[0]?.color || '#c2410c';
-
-          skillCtx.beginPath();
-          skillCtx.arc(cx, cy, ringNodes.find(n => n.cat === cat && !n.isLabel)?.outerR || ringNodes[0]?.outerR || 100, startA, endA);
-          skillCtx.strokeStyle = catColor + Math.round(op * 30).toString(16).padStart(2, '0');
-          skillCtx.lineWidth = 1;
-          skillCtx.stroke();
+          // Category label at arc midpoint
+          const mid = arcAngle + arcLen / 2;
+          const label = buildWheelLabel(cat, CAT_COLORS[cat], 256, 56, 20);
+          label.position.set(Math.cos(mid) * 3.55, 0.12, Math.sin(mid) * 3.55);
+          wheelGroup.add(label);
           arcAngle += arcLen + gap;
         });
 
-        // Cross-category links (precomputed)
-        crossLinks.forEach(([i, j]) => {
-          const pi = curPos[i], pj = curPos[j];
-          if (!pi || !pj) return;
-          skillCtx.beginPath();
-          skillCtx.moveTo(pi.x, pi.y);
-          skillCtx.lineTo(pj.x, pj.y);
-          skillCtx.strokeStyle = 'rgba(194,65,12,' + (op * 0.25) + ')';
-          skillCtx.lineWidth = 1;
-          skillCtx.setLineDash([4, 4]);
-          skillCtx.stroke();
-          skillCtx.setLineDash([]);
-        });
+        // Center label (static — not part of the rotating wheel)
+        const center = buildWheelLabel('TECHNICAL SKILLS', '#6b6964', 320, 64, 24);
+        center.position.set(0, 0.25, 0);
+        wheelScene.add(center);
+        const hint = buildWheelLabel('hover to explore', '#9a968e', 256, 40, 15);
+        hint.position.set(0, -0.18, 0);
+        wheelScene.add(hint);
 
-        // Draw skill nodes
-        ringNodes.forEach((n, i) => {
-          if (n.isLabel) {
-            // Category label
-            const p = curPos[i];
-            skillCtx.fillStyle = n.color + Math.round(op * 200).toString(16).padStart(2, '0');
-            skillCtx.font = '600 10px "Outfit", sans-serif';
-            skillCtx.textAlign = 'center';
-            skillCtx.textBaseline = 'middle';
-            // Rotate label text to be readable
-            const ta = n.baseAngle + rot;
-            const flip = Math.abs(ta % (Math.PI * 2)) > Math.PI;
-            skillCtx.save();
-            skillCtx.translate(p.x, p.y);
-            skillCtx.rotate(ta + (flip ? Math.PI : 0));
-            skillCtx.fillText(n.name, 0, 0);
-            skillCtx.restore();
-            return;
-          }
-
-          const isHovered = hoveredRing === i;
-          const p = curPos[i];
-          const r = isHovered ? n.r + 3 : n.r;
-          const glow = isHovered ? 0.7 : 0.3;
-
-          // Glow
-          const grad = skillCtx.createRadialGradient(p.x, p.y, 0, p.x, p.y, r * 3);
-          grad.addColorStop(0, n.color + Math.round(op * glow * 255).toString(16).padStart(2, '0'));
-          grad.addColorStop(1, n.color + '00');
-          skillCtx.fillStyle = grad;
-          skillCtx.beginPath();
-          skillCtx.arc(p.x, p.y, r * 3, 0, Math.PI * 2);
-          skillCtx.fill();
-
-          // Core
-          skillCtx.fillStyle = n.color + Math.round(op * 220).toString(16).padStart(2, '0');
-          skillCtx.beginPath();
-          skillCtx.arc(p.x, p.y, r, 0, Math.PI * 2);
-          skillCtx.fill();
-
-          // Name label on hover
-          if (isHovered) {
-            skillCtx.fillStyle = n.color + Math.round(op * 255).toString(16).padStart(2, '0');
-            skillCtx.font = '500 11px "Outfit", sans-serif';
-            skillCtx.textAlign = 'center';
-            skillCtx.fillText(n.name, p.x, p.y - r - 10);
-          }
-        });
-
-        // Center label
-        skillCtx.fillStyle = 'rgba(6,182,212,' + (op * 0.5) + ')';
-        skillCtx.font = '600 11px "Outfit", sans-serif';
-        skillCtx.textAlign = 'center';
-        skillCtx.textBaseline = 'middle';
-        skillCtx.fillText('TECHNICAL SKILLS', cx, cy - 6);
-        skillCtx.font = '400 9px "Outfit", sans-serif';
-        skillCtx.fillText('hover to explore', cx, cy + 8);
+        sizeWheel();
+        if (wheelReducedMotion) wheelRenderer.render(wheelScene, wheelCamera);
       }
 
-      // ---- Canvas-local hover for skill ring ----
-      skillCanvas.addEventListener('mousemove', (e) => {
-        const rect = skillCanvas.getBoundingClientRect();
-        const mx = e.clientX - rect.left;
-        const my = e.clientY - rect.top;
-        let found = -1;
-        for (let i = 0; i < ringNodes.length; i++) {
-          if (ringNodes[i].isLabel) continue;
-          const n = ringNodes[i];
-          const a = n.baseAngle + (ringReducedMotion ? 0 : performance.now() * 0.001 * 0.06);
-          const nx = n.cx + Math.cos(a) * n.radius;
-          const ny = n.cy + Math.sin(a) * n.radius;
-          if (Math.hypot(mx - nx, my - ny) < n.r * 3 + 8) {
-            found = i;
-            break;
-          }
-        }
-        hoveredRing = found >= 0 ? found : null;
-        if (hoveredRing !== null) {
-          const n = ringNodes[hoveredRing];
-          tooltipName.textContent = n.name;
-          tooltipCat.textContent = n.desc || n.cat;
-          tooltip.style.left = (e.clientX + 14) + 'px';
-          tooltip.style.top = (e.clientY - 10) + 'px';
+      function applyWheelFilter() {
+        const q = searchQuery.trim().toLowerCase();
+        let visible = 0;
+        wheelNodeMeshes.forEach(m => {
+          const catOk = activeCat === 'all' || m.userData.skill.cat === activeCat;
+          const nameOk = !q || m.userData.skill.name.toLowerCase().includes(q);
+          m.userData.on = catOk && nameOk;
+          if (m.userData.on) visible++;
+        });
+        const countEl = document.getElementById('skills-count');
+        if (countEl) countEl.textContent = (!q && activeCat === 'all')
+          ? SKILLS.length + ' skills'
+          : visible + ' of ' + SKILLS.length + ' skills';
+        filterTagGrid(q);
+      }
+
+      function filterTagGrid(q) {
+        document.querySelectorAll('.skill-category').forEach(block => {
+          const h = (block.querySelector('h3') || {}).textContent || '';
+          const catOk = activeCat === 'all' || h === activeCat || h.includes(activeCat);
+          let any = false;
+          block.querySelectorAll('.skill-tag').forEach(tag => {
+            const on = catOk && (!q || tag.textContent.toLowerCase().includes(q));
+            tag.style.display = on ? '' : 'none';
+            if (on) any = true;
+          });
+          block.style.display = any ? '' : 'none';
+        });
+      }
+
+      function sizeWheel() {
+        if (!wheelCanvas || !wheelRenderer) return;
+        const rect = wheelCanvas.getBoundingClientRect();
+        const w = Math.max(rect.width, 1), h = Math.max(rect.height, 1);
+        wheelRenderer.setSize(w, h, false);
+        wheelCamera.aspect = w / h;
+        wheelCamera.updateProjectionMatrix();
+      }
+
+      // 3D wheel render loop — auto-rotates, raycasts for hover, dims
+      // non-matching nodes, skips frames while hidden or reduced-motion.
+      function wheelLoop(time) {
+        if (!wheelActive) { wheelRAF = null; return; }
+        if (!wheelReducedMotion) wheelGroup.rotation.y = time * 0.00012;
+        wheelNodeMeshes.forEach(m => {
+          const on = m.userData.on;
+          const hovered = m === hoveredWheelMesh;
+          const target = on ? (hovered ? 1.0 : 0.9) : 0.08;
+          m.material.opacity += (target - m.material.opacity) * 0.2;
+          const targetScale = hovered ? 2.0 : 1.0;
+          const s = m.scale.x + (targetScale - m.scale.x) * 0.2;
+          m.scale.setScalar(s);
+        });
+        wheelRenderer.render(wheelScene, wheelCamera);
+        wheelRAF = requestAnimationFrame(wheelLoop);
+      }
+
+      // ---- Pointer hover for 3D wheel (raycast against node spheres) ----
+      function updateWheelHover(clientX, clientY) {
+        const rect = wheelCanvas.getBoundingClientRect();
+        wheelPointer.cx = ((clientX - rect.left) / rect.width) * 2 - 1;
+        wheelPointer.cy = -((clientY - rect.top) / rect.height) * 2 + 1;
+        wheelRaycaster.setFromCamera(wheelPointer, wheelCamera);
+        const hits = wheelRaycaster.intersectObjects(wheelNodeMeshes);
+        const hit = hits.find(h => h.object.userData.on) || null;
+        hoveredWheelMesh = hit ? hit.object : null;
+        if (hoveredWheelMesh) {
+          const s = hoveredWheelMesh.userData.skill;
+          if (tooltipName) tooltipName.textContent = s.name;
+          if (tooltipCategory) tooltipCategory.textContent = s.cat;
+          if (tooltipLevel) tooltipLevel.textContent = s.desc || '';
+          tooltip.style.left = (clientX - rect.left + 14) + 'px';
+          tooltip.style.top = (clientY - rect.top - 10) + 'px';
           tooltip.classList.add('visible');
           tooltip.setAttribute('aria-hidden', 'false');
+          wheelCanvas.style.cursor = 'pointer';
         } else {
           tooltip.classList.remove('visible');
           tooltip.setAttribute('aria-hidden', 'true');
+          wheelCanvas.style.cursor = 'default';
         }
-      });
+      }
 
-      skillCanvas.addEventListener('mouseleave', () => {
-        hoveredRing = null;
+      wheelCanvas.addEventListener('pointermove', (e) => {
+        if (!wheelActive) return;
+        updateWheelHover(e.clientX, e.clientY);
+      });
+      wheelCanvas.addEventListener('pointerleave', () => {
+        hoveredWheelMesh = null;
         tooltip.classList.remove('visible');
         tooltip.setAttribute('aria-hidden', 'true');
       });
 
-      // ================================================================
-      // INTERSECTION OBSERVER
-      // ================================================================
+      // ---- Search + filter controls drive both the 3D wheel and the tag grid ----
+      const skillSearchInput = document.getElementById('skill-search');
+      if (skillSearchInput) {
+        skillSearchInput.addEventListener('input', () => {
+          searchQuery = skillSearchInput.value;
+          applyWheelFilter();
+        });
+      }
+      document.querySelectorAll('.skill-filter-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          document.querySelectorAll('.skill-filter-btn').forEach(b => {
+            b.classList.toggle('active', b === btn);
+            b.setAttribute('aria-pressed', b === btn ? 'true' : 'false');
+          });
+          activeCat = btn.dataset.cat;
+          applyWheelFilter();
+        });
+      });
 
-      // Constellation activation — gates ringActive AND the rAF loop
+      // ================================================================
+      // INTERSECTION OBSERVER — activates the 3D wheel when it nears the viewport
+      // ================================================================
       const constellationAnchor = document.querySelector('.constellation-anchor');
-      let ringRAF = null;
-      if (constellationAnchor) {
+      if (constellationAnchor && wheelCanvas) {
         const constObs = new IntersectionObserver((entries) => {
           entries.forEach(e => {
-            ringActive = e.isIntersecting;
-            if (ringActive && !ringRAF) ringRAF = requestAnimationFrame(skillRingLoop);
+            if (e.isIntersecting) {
+              wheelActive = true;
+              initWheel();
+              if (!wheelRAF) wheelRAF = requestAnimationFrame(wheelLoop);
+            } else {
+              wheelActive = false;
+            }
           });
         }, { threshold: 0.3 });
         constObs.observe(constellationAnchor);
-      }
-
-      function skillRingLoop() {
-        if (!ringActive && ringOpacity <= 0) { ringRAF = null; return; }
-        ringRAF = requestAnimationFrame(skillRingLoop);
-        if (!pageVisible) { prevTime = performance.now(); return; }
-        const now = performance.now();
-        prevTime = now;
-        drawSkillRing(now * 0.001);
       }
 
       // ================================================================
@@ -881,32 +873,49 @@
 
           const nameField = document.getElementById('contact-name');
           const emailField = document.getElementById('contact-email');
+          const phoneField = document.getElementById('contact-phone');
           const subjectField = document.getElementById('contact-subject');
           const messageField = document.getElementById('contact-message');
 
+          // Per-field error elements (each form-group has a .form-error div)
+          const errName    = document.getElementById('err-name');
+          const errEmail   = document.getElementById('err-email');
+          const errPhone   = document.getElementById('err-phone');
+          const errSubject = document.getElementById('err-subject');
+          const errMessage = document.getElementById('err-message');
+
           // Reset errors
           form.querySelectorAll('.form-group').forEach(g => g.classList.remove('error'));
-          [nameField, emailField, subjectField, messageField].forEach(f => f.setAttribute('aria-invalid', 'false'));
+          [nameField, emailField, phoneField, subjectField, messageField].forEach(f => f.setAttribute('aria-invalid', 'false'));
+          [errName, errEmail, errPhone, errSubject, errMessage].forEach(d => { if (d) { d.style.display = 'none'; d.textContent = ''; } });
+
+          // Helper: mark a field invalid and show its inline message
+          function fieldError(field, el, msg) {
+            field.closest('.form-group').classList.add('error');
+            field.setAttribute('aria-invalid', 'true');
+            if (el) { el.textContent = msg; el.style.display = 'block'; }
+          }
 
           if (!nameField.value.trim()) {
-            nameField.closest('.form-group').classList.add('error');
-            nameField.setAttribute('aria-invalid', 'true');
+            fieldError(nameField, errName, 'Please enter your name.');
             valid = false;
           }
           const emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
           if (!emailRe.test(emailField.value.trim())) {
-            emailField.closest('.form-group').classList.add('error');
-            emailField.setAttribute('aria-invalid', 'true');
+            fieldError(emailField, errEmail, 'Please enter a valid email address.');
+            valid = false;
+          }
+          // Phone is optional; only validate if the user typed something.
+          if (phoneField.value.trim() !== '' && !/^[+]?[\d\s().-]{6,20}$/.test(phoneField.value.trim())) {
+            fieldError(phoneField, errPhone, 'Please enter a valid phone number.');
             valid = false;
           }
           if (!subjectField.value.trim()) {
-            subjectField.closest('.form-group').classList.add('error');
-            subjectField.setAttribute('aria-invalid', 'true');
+            fieldError(subjectField, errSubject, 'Please enter a subject.');
             valid = false;
           }
           if (!messageField.value.trim()) {
-            messageField.closest('.form-group').classList.add('error');
-            messageField.setAttribute('aria-invalid', 'true');
+            fieldError(messageField, errMessage, 'Please enter your message.');
             valid = false;
           }
 
@@ -916,15 +925,18 @@
             const data = new FormData(form);
             const controller = new AbortController();
             const timeoutId = setTimeout(() => controller.abort(), 15000);
-            fetch('/', {
+            fetch('contact.php', {
               method: 'POST',
               headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
               body: new URLSearchParams(data).toString(),
               signal: controller.signal
             })
-              .then((res) => {
+              .then(async (res) => {
                 clearTimeout(timeoutId);
-                if (!res.ok) throw new Error('submit-failed');
+                if (!res.ok) {
+                  const body = await res.json().catch(() => ({}));
+                  throw new Error(body.error || 'submit-failed');
+                }
                 window.location.href = '/thank-you.html';
               })
               .catch((err) => {
@@ -946,45 +958,30 @@
             if (group) {
               group.classList.remove('error');
               this.setAttribute('aria-invalid', 'false');
+              var err = group.querySelector('.form-error');
+              if (err) { err.style.display = 'none'; err.textContent = ''; }
             }
           });
         });
       }
 
       // ================================================================
-      // RESIZE (debounced for skill canvas)
-      // The Three.js map owns its own camera/renderer resize in its IIFE;
-      // this handler only re-sizes the 2D skill-canvas rings.
+      // RESIZE — re-fit the 3D wheel's renderer/camera on viewport change
       // ================================================================
-      function sizeSkillCanvas() {
-        const rect = skillCanvas.parentElement.getBoundingClientRect();
-        skillDPR = Math.min(window.devicePixelRatio || 1, 2);
-        skillW = rect.width;
-        skillH = rect.height;
-        skillCanvas.width = Math.round(skillW * skillDPR);
-        skillCanvas.height = Math.round(skillH * skillDPR);
-        skillCtx.setTransform(skillDPR, 0, 0, skillDPR, 0, 0);
-        ringNodes = [];
-        initRingNodes(skillW, skillH);
+      function sizeWheel() {
+        if (!wheelCanvas || !wheelRenderer) return;
+        const rect = wheelCanvas.getBoundingClientRect();
+        const w = Math.max(rect.width, 1), h = Math.max(rect.height, 1);
+        wheelRenderer.setSize(w, h, false);
+        wheelCamera.aspect = w / h;
+        wheelCamera.updateProjectionMatrix();
       }
-
-      let resizeTimeout;
+      let wheelResizeTimeout;
       window.addEventListener('resize', () => {
-        // Debounce skill canvas resize — avoids reinit on every pixel during drag/rotate
-        clearTimeout(resizeTimeout);
-        resizeTimeout = setTimeout(sizeSkillCanvas, 150);
+        clearTimeout(wheelResizeTimeout);
+        wheelResizeTimeout = setTimeout(sizeWheel, 150);
       });
-
-      // Initial skill canvas size
-      setTimeout(sizeSkillCanvas, 100);
-      // ================================================================
-      // SKILL RING RENDER LOOP (IO-gated — starts when skills section nears viewport)
-      // ================================================================
-      let prevTime = performance.now();
-      var pageVisible = true;
-      document.addEventListener('visibilitychange', function() {
-        pageVisible = !document.hidden;
-      });
+      window.addEventListener('orientationchange', () => setTimeout(sizeWheel, 300));
 
 
     // ================================================================
