@@ -8,14 +8,13 @@
       (function() {
         'use strict';
 
+        const container = document.getElementById('scene-container');
+        // Initialize the fallback before any early return.
+        const bail = () => container && container.classList.add('is-bailed');
+        if (!container) return;
         if (typeof THREE === 'undefined') { bail(); return; }
         const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
         if (prefersReducedMotion) { bail(); return; }
-
-        const container = document.getElementById('scene-container');
-        // Bail path: keep the readable #career-locations fallback visible (is-bailed
-        // flips it from clipped to static) — mirrors the no-js rendering exactly.
-        const bail = () => container && container.classList.add('is-bailed');
 
       // ---- Brand colors sourced from CSS tokens ----
       // Reads the live palette so dark mode + style toggles flow into the map
@@ -633,7 +632,20 @@
       let wheelNodeMeshes = [];
       let hoveredWheelMesh = null;
       const wheelPointer = { x: -2, y: -2, cx: 0, cy: 0 };
-      const wheelRaycaster = new THREE.Raycaster();
+      const wheelRaycaster = typeof THREE !== 'undefined' ? new THREE.Raycaster() : null;
+      let wheelUnavailable = !wheelRaycaster;
+      function showWheelFallback() {
+        wheelUnavailable = true;
+        if (!wheelCanvas) return;
+        const wrap = wheelCanvas.parentElement;
+        if (wrap.querySelector('.wheel-fallback')) return;
+        const message = document.createElement('p');
+        message.className = 'wheel-fallback';
+        message.textContent = 'Interactive visualization unavailable. All technical skills remain listed below; search and category filters still work.';
+        message.style.cssText = 'position:absolute;inset:0;display:grid;place-content:center;padding:32px;color:var(--text);text-align:center;';
+        wrap.appendChild(message);
+      }
+      if (wheelUnavailable) showWheelFallback();
       let activeCat = 'all';
       let searchQuery = '';
 
@@ -657,16 +669,22 @@
       }
 
       function initWheel() {
-        if (!wheelCanvas || typeof THREE === 'undefined') return;
+        if (!wheelCanvas || wheelUnavailable) return;
+        if (wheelRenderer) { sizeWheel(); return; }
 
         wheelScene = new THREE.Scene();
         wheelCamera = new THREE.PerspectiveCamera(55, 1, 0.1, 60);
         wheelCamera.position.set(0, 2.0, 7.4);
         wheelCamera.lookAt(0, 0, 0);
 
-        wheelRenderer = new THREE.WebGLRenderer({
-          canvas: wheelCanvas, antialias: true, alpha: true, powerPreference: 'low-power'
-        });
+        try {
+          wheelRenderer = new THREE.WebGLRenderer({
+            canvas: wheelCanvas, antialias: true, alpha: true, powerPreference: 'low-power'
+          });
+        } catch (error) {
+          showWheelFallback();
+          return;
+        }
         wheelRenderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
         wheelRenderer.setClearColor(0x000000, 0);
 
@@ -732,12 +750,14 @@
 
       function applyWheelFilter() {
         const q = searchQuery.trim().toLowerCase();
-        let visible = 0;
+        const visible = SKILLS.filter(s =>
+          (activeCat === 'all' || s.cat === activeCat) &&
+          (!q || s.name.toLowerCase().includes(q))
+        ).length;
         wheelNodeMeshes.forEach(m => {
           const catOk = activeCat === 'all' || m.userData.skill.cat === activeCat;
           const nameOk = !q || m.userData.skill.name.toLowerCase().includes(q);
           m.userData.on = catOk && nameOk;
-          if (m.userData.on) visible++;
         });
         const countEl = document.getElementById('skills-count');
         if (countEl) countEl.textContent = (!q && activeCat === 'all')
@@ -749,7 +769,8 @@
       function filterTagGrid(q) {
         document.querySelectorAll('.skill-category').forEach(block => {
           const h = (block.querySelector('h3') || {}).textContent || '';
-          const catOk = activeCat === 'all' || h === activeCat || h.includes(activeCat);
+          const category = h === 'Switch & Facility Operations' ? 'Switch & Facility Ops' : h;
+          const catOk = activeCat === 'all' || category === activeCat;
           let any = false;
           block.querySelectorAll('.skill-tag').forEach(tag => {
             const on = catOk && (!q || tag.textContent.toLowerCase().includes(q));
@@ -772,7 +793,7 @@
       // 3D wheel render loop — auto-rotates, raycasts for hover, dims
       // non-matching nodes, skips frames while hidden or reduced-motion.
       function wheelLoop(time) {
-        if (!wheelActive) { wheelRAF = null; return; }
+        if (!wheelActive || !wheelRenderer) { wheelRAF = null; return; }
         if (!wheelReducedMotion) wheelGroup.rotation.y = time * 0.00012;
         wheelNodeMeshes.forEach(m => {
           const on = m.userData.on;
@@ -789,6 +810,7 @@
 
       // ---- Pointer hover for 3D wheel (raycast against node spheres) ----
       function updateWheelHover(clientX, clientY) {
+        if (!wheelRaycaster || !wheelCamera) return;
         const rect = wheelCanvas.getBoundingClientRect();
         wheelPointer.cx = ((clientX - rect.left) / rect.width) * 2 - 1;
         wheelPointer.cy = -((clientY - rect.top) / rect.height) * 2 + 1;
@@ -852,7 +874,8 @@
             if (e.isIntersecting) {
               wheelActive = true;
               initWheel();
-              if (!wheelRAF) wheelRAF = requestAnimationFrame(wheelLoop);
+              applyWheelFilter();
+              if (wheelRenderer && !wheelRAF) wheelRAF = requestAnimationFrame(wheelLoop);
             } else {
               wheelActive = false;
             }
@@ -860,6 +883,8 @@
         }, { threshold: 0.3 });
         constObs.observe(constellationAnchor);
       }
+
+      applyWheelFilter();
 
       // ================================================================
       // CONTACT FORM VALIDATION
@@ -941,7 +966,7 @@
                   throw new Error(body.error || body.errors?.[0]?.message || 'submit-failed');
                 }
                 // Formspree returns { ok: true } on success with _format=json
-                window.location.href = '/thank-you.html';
+                window.location.href = new URL('thank-you.html', window.location.href).href;
               })
               .catch((err) => {
                 clearTimeout(timeoutId);
