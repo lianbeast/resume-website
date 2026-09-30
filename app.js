@@ -203,20 +203,18 @@
       // Single source of truth: the HTML list is the authoritative data.
       const careerList = document.querySelectorAll('#career-locations .career-locations__list li');
       const CAREER_PATH = Array.from(careerList).map(li => {
-        const city = li.querySelector('.cl-city')?.textContent?.split(',')[0]?.trim() || '';
+        const rawCity = li.querySelector('.cl-city')?.textContent?.trim() || '';
+        // Match against CITIES keys directly (handles multi-word keys like 'DC, MD, VA')
+        let city = rawCity;
+        for (const key of Object.keys(CITIES)) {
+          if (rawCity.startsWith(key)) {
+            city = key;
+            break;
+          }
+        }
         const era = li.querySelector('.cl-era')?.textContent?.trim() || '';
         const role = li.querySelector('.cl-role')?.textContent?.trim() || '';
-        // Map display city name to CITIES key
-        const cityKeyMap = {
-          'Bethesda': 'Bethesda',
-          'Martinsburg': 'Martinsburg',
-          'Spokane': 'Spokane',
-          'Austin': 'Austin',
-          'Miami': 'Miami',
-          'Hammond': 'Hammond',
-          'DC, MD, VA': 'DC, MD, VA'
-        };
-        return { city: cityKeyMap[city] || city, role, era };
+        return { city, role, era };
       });
 
       // Additional pin locations (not in career path timeline, but shown as pins)
