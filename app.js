@@ -196,6 +196,7 @@
         Atlanta:     { lon: -84.39, lat: 33.75, label: 'Atlanta, GA' },
         Montgomery:  { lon: -86.30, lat: 32.37, label: 'Montgomery, AL' },
         Mobile:      { lon: -88.04, lat: 30.70, label: 'Mobile, AL' },
+        'DC, MD, VA': { lon: -77.04, lat: 38.90, label: 'Washington, DC' },
       };
 
       // Career path (chronological) — parsed from the a11y fallback list (#career-locations)
@@ -212,7 +213,8 @@
           'Spokane': 'Spokane',
           'Austin': 'Austin',
           'Miami': 'Miami',
-          'Hammond': 'Hammond'
+          'Hammond': 'Hammond',
+          'DC, MD, VA': 'DC, MD, VA'
         };
         return { city: cityKeyMap[city] || city, role, era };
       });
