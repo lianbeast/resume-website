@@ -93,8 +93,8 @@
         "files": [
           "thank-you.html"
         ],
-        "reason": "intentional: nav-logo size on secondary page — 22px is the closest step to the 24px headline scale; not a type-ramp violation",
-        "createdAt": "2026-09-30T02:05:11.202Z"
+        "createdAt": "2026-09-30T02:05:11.202Z",
+        "reason": "intentional: nav-logo size on secondary page — 22px is the closest step to the 24px headline scale; not a type-ramp violation"
       },
       {
         "rule": "design-system-font-size",
@@ -102,8 +102,8 @@
         "files": [
           "thank-you.html"
         ],
-        "reason": "intentional: nav link size on secondary page — 13px is between the 12px label and 15px body steps",
-        "createdAt": "2026-09-30T02:05:11.202Z"
+        "createdAt": "2026-09-30T02:05:11.202Z",
+        "reason": "intentional: nav link size on secondary page — 13px is between the 12px label and 15px body steps"
       },
       {
         "rule": "design-system-font-size",
@@ -111,8 +111,8 @@
         "files": [
           "thank-you.html"
         ],
-        "reason": "intentional: button and lead text on secondary page — 14px is the closest step to the 15px body scale",
-        "createdAt": "2026-09-30T02:05:11.202Z"
+        "createdAt": "2026-09-30T02:05:11.202Z",
+        "reason": "intentional: button and lead text on secondary page — 14px is the closest step to the 15px body scale"
       },
       {
         "rule": "design-system-font-size",
@@ -120,8 +120,17 @@
         "files": [
           "thank-you.html"
         ],
-        "reason": "intentional: footer meta on secondary page — 12px is the documented label/mono step",
-        "createdAt": "2026-09-30T02:05:11.202Z"
+        "createdAt": "2026-09-30T02:05:11.202Z",
+        "reason": "intentional: footer meta on secondary page — 12px is the documented label/mono step"
+      },
+      {
+        "rule": "cream-palette",
+        "value": "*",
+        "files": [
+          "index.html"
+        ],
+        "createdAt": "2026-09-30T03:46:13.404Z",
+        "reason": "intentional: Carbon Ivory palette per DESIGN.md 'warm-neutral substrate' — not reflexive AI beige"
       }
     ]
   }
