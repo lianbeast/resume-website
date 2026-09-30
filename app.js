@@ -1153,8 +1153,7 @@
       const heroTl = gsap.timeline({ delay: 0.3 });
 
       heroTl
-        .from('.hero-label', { opacity: 0, y: 30, duration: 0.7, ease: 'power3.out' })
-        .from('.hero-name', { opacity: 0, y: 30, duration: 0.7, ease: 'power3.out' }, '-=0.4')
+        .from('.hero-name', { opacity: 0, y: 30, duration: 0.7, ease: 'power3.out' })
         .from('.hero-title', { opacity: 0, y: 20, duration: 0.6, ease: 'power3.out' }, '-=0.4')
         .from('.hero-tagline', { opacity: 0, y: 20, duration: 0.6, ease: 'power3.out' }, '-=0.3')
         .from('.hero-cta', { opacity: 0, y: 20, duration: 0.6, ease: 'power3.out' }, '-=0.3');

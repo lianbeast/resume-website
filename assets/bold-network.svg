@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="640" viewBox="0 0 1600 640" fill="none">
+  <defs>
+    <linearGradient id="field" x1="0" y1="0" x2="1600" y2="640" gradientUnits="userSpaceOnUse"><stop stop-color="#171412"/><stop offset="1" stop-color="#29201b"/></linearGradient>
+    <radialGradient id="signal"><stop stop-color="#ef9668" stop-opacity=".28"/><stop offset="1" stop-color="#c2410c" stop-opacity="0"/></radialGradient>
+    <pattern id="grid" width="64" height="64" patternUnits="userSpaceOnUse"><path d="M64 0H0V64" stroke="#f7f5f0" stroke-opacity=".055"/></pattern>
+  </defs>
+  <path fill="url(#field)" d="M0 0h1600v640H0z"/><path fill="url(#grid)" d="M0 0h1600v640H0z"/>
+  <ellipse cx="800" cy="320" rx="540" ry="340" fill="url(#signal)"/>
+  <g stroke="#ef9668" stroke-opacity=".35">
+    <ellipse cx="800" cy="320" rx="510" ry="200"/><ellipse cx="800" cy="320" rx="360" ry="270" transform="rotate(-24 800 320)"/><ellipse cx="800" cy="320" rx="360" ry="270" transform="rotate(24 800 320)"/>
+    <path d="M170 390 360 200 575 440 800 320 1030 160 1260 400 1430 220M360 200 800 320 1260 400M575 440 1030 160M170 390 800 320 1430 220"/>
+  </g>
+  <g stroke="#f7f5f0" stroke-opacity=".13"><path d="M0 320h1600M800 0v640M300 0l1000 640M300 640 1300 0"/><circle cx="800" cy="320" r="112"/><circle cx="800" cy="320" r="128"/></g>
+  <g fill="#e06a3a"><circle cx="170" cy="390" r="6"/><circle cx="360" cy="200" r="9"/><circle cx="575" cy="440" r="6"/><circle cx="1030" cy="160" r="9"/><circle cx="1260" cy="400" r="7"/><circle cx="1430" cy="220" r="5"/></g>
+  <circle cx="800" cy="320" r="28" fill="#c2410c"/><circle cx="800" cy="320" r="9" fill="#f7f5f0"/>
+  <g stroke="#e06a3a" stroke-opacity=".65"><circle cx="360" cy="200" r="24"/><circle cx="1030" cy="160" r="24"/><circle cx="1260" cy="400" r="20"/></g>
+</svg>
