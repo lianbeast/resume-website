@@ -73,7 +73,7 @@
       // surface tint uniform instead of compositing over varying page content,
       // which caused per-triangle shading seams on concave shapes.
       function updateClearColor() {
-        renderer.setClearColor(hexToInt(cssVar('--bg', '#f7f5f0')));
+        renderer.setClearColor(hexToInt(cssVar('--bg', '#f7f5f0')), 1);
       }
       updateClearColor();
       // Re-sync on theme change
