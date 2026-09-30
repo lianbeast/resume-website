@@ -60,11 +60,23 @@ const server = http.createServer((req, res) => {
           await page.click('[data-cat="all"]');
           await page.type('#skill-search', 'Cisco');
           assert.equal(await page.$eval('#skills-count', el => el.textContent), '1 of 35 skills');
+          assert.equal(new URL(page.url()).searchParams.get('skillSearch'), 'Cisco');
           await page.evaluate(() => {
             const input = document.querySelector('#skill-search'); input.value = ''; input.dispatchEvent(new Event('input'));
             document.querySelector('#contact form').dispatchEvent(new Event('submit', { bubbles: true, cancelable: true }));
           });
           assert.equal(await page.$eval('#contact-name', el => el.getAttribute('aria-invalid')), 'true');
+          assert.equal(await page.evaluate(() => document.activeElement.id), 'contact-name');
+          assert.equal(new URL(page.url()).searchParams.has('skillSearch'), false);
+          await page.evaluate(() => { const input = document.querySelector('#skill-search'); input.value = ''; input.dispatchEvent(new Event('input')); });
+          if (width <= 768) {
+            assert.equal(await page.$eval('.nav-links', el => el.inert), true);
+            await page.click('#nav-toggle');
+            assert.equal(await page.$eval('main', el => el.inert), true);
+            await page.keyboard.press('Escape');
+            assert.equal(await page.$eval('main', el => el.inert), false);
+            assert.equal(await page.$eval('.nav-links', el => el.inert), true);
+          }
           // Preserve every main-content word from the backed-up original.
           const original = fs.readFileSync(path.join(root, 'backups/restore-2026-09-30/index.html'), 'utf8');
           // Validation legitimately changes error text; compare after reload instead.
@@ -73,7 +85,7 @@ const server = http.createServer((req, res) => {
             const doc = new DOMParser().parseFromString(html, 'text/html');
             const normalize = node => {
               const clone = node.cloneNode(true);
-              clone.querySelectorAll('#skills-count, .wheel-fallback').forEach(el => el.remove());
+              clone.querySelectorAll('#skills-count, .wheel-fallback, .sr-only, #visualizations-pause, #skills-empty, #form-status').forEach(el => el.remove());
               clone.querySelectorAll('.stat-num').forEach(el => { el.textContent = el.dataset.target + '+'; });
               return clone.textContent.replace(/\s+/g, ' ').trim();
             };
@@ -117,6 +129,39 @@ const server = http.createServer((req, res) => {
         await page.close();
       }
     }
+    const guidelines = await browser.newPage();
+    await guidelines.goto(`${base}/index.html?skillCategory=Routing%20%26%20Transport&skillSearch=Cisco`, { waitUntil: 'networkidle0' });
+    assert.equal(await guidelines.$eval('#skill-search', el => el.value), 'Cisco');
+    assert.equal(await guidelines.$eval('#skills-count', el => el.textContent), '1 of 35 skills');
+    assert.equal(await guidelines.$eval('[data-cat="Routing & Transport"]', el => el.getAttribute('aria-pressed')), 'true');
+    await guidelines.evaluate(() => {
+      const search = document.querySelector('#skill-search'); search.value = 'no-matching-skill'; search.dispatchEvent(new Event('input'));
+    });
+    assert.equal(await guidelines.$eval('#skills-empty', el => el.hidden), false);
+    await guidelines.emulateMediaFeatures([{ name: 'prefers-reduced-motion', value: 'reduce' }]);
+    await guidelines.evaluate(() => document.querySelector('#skill-wheel').scrollIntoView({ block: 'center', behavior: 'instant' }));
+    await new Promise(resolve => setTimeout(resolve, 300));
+    assert.equal(await guidelines.evaluate(() => wheelRAF), null, 'Reduced motion stops continuous wheel frames');
+    await guidelines.setRequestInterception(true);
+    guidelines.on('request', req => {
+      if (req.url().startsWith('https://formspree.io/')) req.respond({ status: 500, contentType: 'application/json', headers: { 'Access-Control-Allow-Origin': '*' }, body: '{"error":"sensitive-server-detail"}' });
+      else req.continue();
+    });
+    await guidelines.evaluate(() => {
+      for (const [id, value] of Object.entries({ 'contact-name': 'Local test', 'contact-email': 'test@example.com', 'contact-subject': 'Mock error', 'contact-message': 'Never sent.' })) document.getElementById(id).value = value;
+      document.querySelector('#contact form').dispatchEvent(new Event('submit', { bubbles: true, cancelable: true }));
+    });
+    await guidelines.waitForFunction(() => document.querySelector('#form-error').style.display === 'block');
+    assert.match(await guidelines.$eval('#form-error', el => el.textContent), /try again or reach out on LinkedIn/);
+    assert.equal(await guidelines.$eval('#contact-message', el => el.value), 'Never sent.');
+    assert.equal(await guidelines.$eval('#contact form', el => el.getAttribute('aria-busy')), 'false');
+    assert.equal(await guidelines.$eval('button[type="submit"]', el => el.disabled), false);
+    const warning = await guidelines.evaluate(() => {
+      const event = new Event('beforeunload', { cancelable: true }); window.dispatchEvent(event); return event.defaultPrevented;
+    });
+    assert.equal(warning, true, 'Unsent messages trigger a navigation warning');
+    console.log('PASS URL filter restoration, empty results, static reduced-motion rendering, actionable mocked errors, and unsent-message warning');
+    await guidelines.close();
     const assets = await browser.newPage();
     await assets.goto(`${base}/resume-preview.html`, { waitUntil: 'networkidle0' });
     assert.ok(await assets.evaluate(async () => {

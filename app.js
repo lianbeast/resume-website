@@ -1,3 +1,21 @@
+    // Shared visualization controls; motion preferences are applied at runtime.
+    const motionPreference = window.matchMedia('(prefers-reduced-motion: reduce)');
+    let visualizationsPaused = motionPreference.matches;
+    const motionButton = document.getElementById('visualizations-pause');
+    function updateMotionButton() {
+      if (!motionButton) return;
+      motionButton.setAttribute('aria-pressed', String(visualizationsPaused));
+      motionButton.textContent = visualizationsPaused ? 'Resume Visualizations' : 'Pause Visualizations';
+    }
+    function setVisualizationMotion(paused) {
+      visualizationsPaused = paused;
+      updateMotionButton();
+      document.dispatchEvent(new Event('visualization-motion-change'));
+    }
+    if (motionButton) motionButton.addEventListener('click', () => setVisualizationMotion(!visualizationsPaused));
+    motionPreference.addEventListener('change', () => setVisualizationMotion(motionPreference.matches));
+    updateMotionButton();
+
     // ================================================================
     // THREE.JS US MAP SCENE — career location network
     // ================================================================
@@ -499,6 +517,7 @@
           camera.aspect = window.innerWidth / window.innerHeight;
           camera.updateProjectionMatrix();
           renderer.setSize(window.innerWidth, window.innerHeight);
+          if (visualizationsPaused) renderer.render(scene, camera);
         }, 150);
       });
 
@@ -508,6 +527,11 @@
       let threeRAF = null;
       document.addEventListener('visibilitychange', () => {
         pageVisible = !document.hidden;
+        if (pageVisible && !threeRAF) threeRAF = requestAnimationFrame(animate);
+      });
+      document.addEventListener('visualization-motion-change', () => {
+        if (threeRAF) cancelAnimationFrame(threeRAF);
+        threeRAF = requestAnimationFrame(animate);
       });
 
       // IntersectionObserver to start/stop the Three.js render loop
@@ -524,18 +548,19 @@
 
       let prevTime = performance.now();
       function animate() {
-        if (!mapVisible) { threeRAF = null; return; }
-        threeRAF = requestAnimationFrame(animate);
-        if (!pageVisible) { prevTime = performance.now(); return; }
+        threeRAF = null;
+        if (!mapVisible || !pageVisible) { prevTime = performance.now(); return; }
         const now = performance.now();
         const dt = (now - prevTime) / 1000;
         prevTime = now;
         const time = now * 0.001;
 
-        animateNodes(time);
-        animatePackets(time);
-
+        if (!visualizationsPaused) {
+          animateNodes(time);
+          animatePackets(time);
+        }
         renderer.render(scene, camera);
+        if (!visualizationsPaused) threeRAF = requestAnimationFrame(animate);
       }
 
       // Mark enhanced so the CSS text fallback collapses to the a11y-only strip
@@ -646,8 +671,17 @@
         wrap.appendChild(message);
       }
       if (wheelUnavailable) showWheelFallback();
-      let activeCat = 'all';
-      let searchQuery = '';
+      const initialFilters = new URL(window.location.href).searchParams;
+      let activeCat = CATS.includes(initialFilters.get('skillCategory')) ? initialFilters.get('skillCategory') : 'all';
+      let searchQuery = initialFilters.get('skillSearch') || '';
+      function syncFilterUrl() {
+        const url = new URL(window.location.href);
+        if (activeCat === 'all') url.searchParams.delete('skillCategory');
+        else url.searchParams.set('skillCategory', activeCat);
+        if (searchQuery) url.searchParams.set('skillSearch', searchQuery);
+        else url.searchParams.delete('skillSearch');
+        window.history.replaceState(window.history.state, '', url);
+      }
 
       // Canvas-texture sprite label (sprites always face the camera, so
       // category names stay readable as the wheel rotates).
@@ -764,6 +798,13 @@
           ? SKILLS.length + ' skills'
           : visible + ' of ' + SKILLS.length + ' skills';
         filterTagGrid(q);
+        const empty = document.getElementById('skills-empty');
+        if (empty) empty.hidden = visible > 0;
+        if (wheelRenderer && visualizationsPaused) {
+          if (wheelRAF) cancelAnimationFrame(wheelRAF);
+          wheelRAF = null;
+          wheelLoop(performance.now());
+        }
       }
 
       function filterTagGrid(q) {
@@ -794,18 +835,20 @@
       // non-matching nodes, skips frames while hidden or reduced-motion.
       function wheelLoop(time) {
         if (!wheelActive || !wheelRenderer) { wheelRAF = null; return; }
-        if (!wheelReducedMotion) wheelGroup.rotation.y = time * 0.00012;
+        wheelRAF = null;
+        const staticFrame = visualizationsPaused || document.hidden;
+        if (!staticFrame) wheelGroup.rotation.y = time * 0.00012;
         wheelNodeMeshes.forEach(m => {
           const on = m.userData.on;
           const hovered = m === hoveredWheelMesh;
           const target = on ? (hovered ? 1.0 : 0.9) : 0.08;
-          m.material.opacity += (target - m.material.opacity) * 0.2;
+          m.material.opacity += (target - m.material.opacity) * (staticFrame ? 1 : 0.2);
           const targetScale = hovered ? 2.0 : 1.0;
-          const s = m.scale.x + (targetScale - m.scale.x) * 0.2;
+          const s = m.scale.x + (targetScale - m.scale.x) * (staticFrame ? 1 : 0.2);
           m.scale.setScalar(s);
         });
         wheelRenderer.render(wheelScene, wheelCamera);
-        wheelRAF = requestAnimationFrame(wheelLoop);
+        if (!staticFrame) wheelRAF = requestAnimationFrame(wheelLoop);
       }
 
       // ---- Pointer hover for 3D wheel (raycast against node spheres) ----
@@ -823,8 +866,8 @@
           if (tooltipName) tooltipName.textContent = s.name;
           if (tooltipCategory) tooltipCategory.textContent = s.cat;
           if (tooltipLevel) tooltipLevel.textContent = s.desc || '';
-          tooltip.style.left = (clientX - rect.left + 14) + 'px';
-          tooltip.style.top = (clientY - rect.top - 10) + 'px';
+          tooltip.style.left = Math.max(8, Math.min(clientX + 14, window.innerWidth - 280)) + 'px';
+          tooltip.style.top = Math.max(8, clientY - 10) + 'px';
           tooltip.classList.add('visible');
           tooltip.setAttribute('aria-hidden', 'false');
           wheelCanvas.style.cursor = 'pointer';
@@ -835,31 +878,47 @@
         }
       }
 
+      document.addEventListener('visualization-motion-change', () => {
+        if (wheelRAF) cancelAnimationFrame(wheelRAF);
+        wheelRAF = null;
+        if (wheelActive && wheelRenderer) wheelLoop(performance.now());
+      });
+      document.addEventListener('visibilitychange', () => {
+        if (document.hidden && wheelRAF) { cancelAnimationFrame(wheelRAF); wheelRAF = null; }
+        else if (wheelActive && wheelRenderer && !wheelRAF) wheelLoop(performance.now());
+      });
       wheelCanvas.addEventListener('pointermove', (e) => {
         if (!wheelActive) return;
         updateWheelHover(e.clientX, e.clientY);
+        if (visualizationsPaused && wheelRenderer) wheelLoop(performance.now());
       });
       wheelCanvas.addEventListener('pointerleave', () => {
         hoveredWheelMesh = null;
         tooltip.classList.remove('visible');
         tooltip.setAttribute('aria-hidden', 'true');
+        if (visualizationsPaused && wheelRenderer) wheelLoop(performance.now());
       });
 
       // ---- Search + filter controls drive both the 3D wheel and the tag grid ----
       const skillSearchInput = document.getElementById('skill-search');
       if (skillSearchInput) {
+        skillSearchInput.value = searchQuery;
         skillSearchInput.addEventListener('input', () => {
           searchQuery = skillSearchInput.value;
+          syncFilterUrl();
           applyWheelFilter();
         });
       }
       document.querySelectorAll('.skill-filter-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.cat === activeCat);
+        btn.setAttribute('aria-pressed', String(btn.dataset.cat === activeCat));
         btn.addEventListener('click', () => {
           document.querySelectorAll('.skill-filter-btn').forEach(b => {
             b.classList.toggle('active', b === btn);
             b.setAttribute('aria-pressed', b === btn ? 'true' : 'false');
           });
           activeCat = btn.dataset.cat;
+          syncFilterUrl();
           applyWheelFilter();
         });
       });
@@ -875,7 +934,7 @@
               wheelActive = true;
               initWheel();
               applyWheelFilter();
-              if (wheelRenderer && !wheelRAF) wheelRAF = requestAnimationFrame(wheelLoop);
+              if (wheelRenderer && !wheelRAF && !visualizationsPaused) wheelRAF = requestAnimationFrame(wheelLoop);
             } else {
               wheelActive = false;
             }
@@ -884,6 +943,17 @@
         constObs.observe(constellationAnchor);
       }
 
+      window.addEventListener('popstate', () => {
+        const params = new URL(window.location.href).searchParams;
+        activeCat = CATS.includes(params.get('skillCategory')) ? params.get('skillCategory') : 'all';
+        searchQuery = params.get('skillSearch') || '';
+        if (skillSearchInput) skillSearchInput.value = searchQuery;
+        document.querySelectorAll('.skill-filter-btn').forEach(btn => {
+          btn.classList.toggle('active', btn.dataset.cat === activeCat);
+          btn.setAttribute('aria-pressed', String(btn.dataset.cat === activeCat));
+        });
+        applyWheelFilter();
+      });
       applyWheelFilter();
 
       // ================================================================
@@ -892,8 +962,24 @@
       const form = document.querySelector('#contact form');
       const errorMsg = document.getElementById('form-error');
       if (form) {
+        const formStatus = document.getElementById('form-status');
+        let submitting = false, submitted = false;
+        const hasUnsentMessage = () => !submitted && [...form.querySelectorAll('.form-group input, textarea')].some(field => field.value.trim());
+        window.addEventListener('beforeunload', event => {
+          if (hasUnsentMessage()) { event.preventDefault(); event.returnValue = ''; }
+        });
+        document.addEventListener('click', event => {
+          const link = event.target.closest('a[href]');
+          if (!link || link.hasAttribute('download') || link.target === '_blank' || event.ctrlKey || event.metaKey || event.shiftKey || event.altKey || event.button !== 0) return;
+          const target = new URL(link.href, window.location.href);
+          if (target.origin === location.origin && target.pathname === location.pathname && target.search === location.search) return;
+          if (hasUnsentMessage() && !window.confirm('You have an unsent message. Leave this page without sending it?')) event.preventDefault();
+        });
         form.addEventListener('submit', (e) => {
           e.preventDefault();
+          if (submitting) return;
+          errorMsg.style.display = 'none';
+          if (formStatus) formStatus.textContent = '';
           let valid = true;
 
           const nameField = document.getElementById('contact-name');
@@ -944,9 +1030,18 @@
             valid = false;
           }
 
+          if (!valid) {
+            const firstInvalid = form.querySelector('[aria-invalid="true"]');
+            if (firstInvalid) firstInvalid.focus();
+            if (formStatus) formStatus.textContent = 'Please correct the highlighted fields before sending your message.';
+            return;
+          }
           if (valid) {
+            submitting = true;
+            form.setAttribute('aria-busy', 'true');
+            if (formStatus) formStatus.textContent = 'Sending your message…';
             const btn = form.querySelector('button[type="submit"]');
-            if (btn) { btn.disabled = true; btn.textContent = 'Sending…'; }
+            if (btn) { btn.disabled = true; btn.textContent = 'Sending…'; btn.classList.add('loading'); }
             const data = new FormData(form);
             // Formspree: add _format=json for JSON response, _next for redirect target
             data.append('_format', 'json');
@@ -966,16 +1061,19 @@
                   throw new Error(body.error || body.errors?.[0]?.message || 'submit-failed');
                 }
                 // Formspree returns { ok: true } on success with _format=json
+                submitted = true;
                 window.location.href = new URL('thank-you.html', window.location.href).href;
               })
               .catch((err) => {
                 clearTimeout(timeoutId);
-                if (btn) { btn.disabled = false; btn.textContent = 'Send Message'; }
+                submitting = false;
+                form.setAttribute('aria-busy', 'false');
+                if (formStatus) formStatus.textContent = '';
+                if (btn) { btn.disabled = false; btn.textContent = 'Send Message'; btn.classList.remove('loading'); }
                 errorMsg.style.display = 'block';
                 errorMsg.textContent = err.name === 'AbortError'
                   ? 'Request timed out. Please check your connection and try again.'
-                  : (err.message || 'Something went wrong. Please try again or reach out on LinkedIn.');
-                setTimeout(() => { errorMsg.style.display = 'none'; }, 8000);
+                  : 'Your message could not be sent. Your entries are preserved. Please try again or reach out on LinkedIn.';
               });
           }
         });
@@ -1008,7 +1106,10 @@
       let wheelResizeTimeout;
       window.addEventListener('resize', () => {
         clearTimeout(wheelResizeTimeout);
-        wheelResizeTimeout = setTimeout(sizeWheel, 150);
+        wheelResizeTimeout = setTimeout(() => {
+          sizeWheel();
+          if (visualizationsPaused && wheelRenderer) wheelLoop(performance.now());
+        }, 150);
       });
       window.addEventListener('orientationchange', () => setTimeout(sizeWheel, 300));
 
