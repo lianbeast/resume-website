@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>3D Skill Wheel — Syed Rahid Ahmed</title>
+  <meta name="description" content="Standalone interactive 3D wheel of Syed Rahid Ahmed's technical skills, grouped by category.">
+  <meta name="robots" content="noindex, follow">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%23c2410c'/><text x='50' y='68' font-size='60' font-family='system-ui' font-weight='700' fill='%23ffffff' text-anchor='middle'>SR</text></svg>">
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=optional">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #f7f5f0;
+      --bg-card: #ffffff;
+      --text: #1c1917;
+      --text-dim: #6e635c;
+      --gold: #c2410c;
+      --gold-dark: #a4380a;
+      --border: rgba(28, 25, 23, 0.12);
+      --font-body: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+    }
+    [data-theme="dark"] {
+      --bg: #161412;
+      --bg-card: #1e1c1a;
+      --text: #f0ede8;
+      --text-dim: #9a938d;
+      --gold: #e06a3a;
+      --gold-dark: #c2410c;
+      --border: rgba(224, 106, 58, 0.16);
+    }
+    html { color-scheme: light; background: var(--bg); color: var(--text); font-family: var(--font-body); line-height: 1.6; font-size: 16px; }
+    html[data-theme="dark"] { color-scheme: dark; }
+    body { min-height: 100vh; display: flex; flex-direction: column; padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left); }
+    #main-nav { display: flex; align-items: center; justify-content: space-between; padding: 14px 24px; border-bottom: 1px solid var(--border); }
+    .nav-links { display: flex; flex-wrap: wrap; gap: 4px; list-style: none; }
+    .nav-links a, .nav-links button { padding: 10px 14px; font: 500 14px var(--font-body); color: var(--text-dim); text-decoration: none; background: none; border: none; border-radius: 8px; cursor: pointer; }
+    .nav-links a:hover, .nav-links button:hover { color: var(--text); background: rgba(194, 65, 12, 0.1); }
+    .nav-links a:focus-visible, .nav-links button:focus-visible, #wheel-search:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; }
+    main { flex: 1; width: 100%; max-width: 1180px; margin: 0 auto; padding: 40px 24px 72px; overflow-x: clip; }
+    .wheel-intro { max-width: 62ch; margin-bottom: 24px; }
+    h1 { font-size: clamp(1.9rem, 4.5vw, 3rem); font-weight: 700; letter-spacing: -0.03em; margin-bottom: 10px; }
+    .wheel-controls { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin: 20px 0 14px; }
+    #wheel-search { flex: 1 1 220px; min-height: 44px; padding: 10px 16px; font: inherit; color: var(--text); background: var(--bg-card); border: 1px solid var(--border); border-radius: 999px; }
+    #wheel-pause { min-height: 44px; padding: 10px 16px; font: inherit; font-size: 14px; color: var(--text); background: var(--bg-card); border: 1px solid var(--border); border-radius: 999px; cursor: pointer; }
+    #wheel-pause:hover, #wheel-pause[aria-pressed="true"] { border-color: var(--gold); color: var(--gold); }
+    #wheel-status { font: 12px var(--font-mono); color: var(--text-dim); }
+    .wheel-stage { position: relative; height: min(64vh, 560px); background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; overflow: hidden; }
+    #wheel-canvas { width: 100%; height: 100%; display: block; touch-action: pan-y; }
+    #wheel-canvas[aria-hidden="true"] + .wheel-fallback { position: absolute; inset: 0; display: grid; place-content: center; padding: 32px; text-align: center; }
+    #wheel-tooltip { position: fixed; z-index: 10; max-width: min(272px, calc(100vw - 16px)); padding: 8px 14px; font-size: 13px; background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; box-shadow: 0 4px 16px rgba(0,0,0,0.08); pointer-events: none; opacity: 0; transition: opacity 0.15s ease; }
+    #wheel-tooltip.visible { opacity: 1; }
+    #wheel-tooltip .category { display: block; font: 10px var(--font-mono); color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.08em; margin-top: 2px; }
+    #wheel-results { list-style: none; margin-top: 20px; border-top: 1px solid var(--border); }
+    #wheel-results li { padding: 12px 4px; border-bottom: 1px solid var(--border); display: flex; flex-wrap: wrap; gap: 8px 14px; align-items: baseline; }
+    #wheel-results .name { font-weight: 600; }
+    #wheel-results .cat { font: 11px var(--font-mono); color: var(--gold); }
+    footer { padding: 28px 24px; text-align: center; font-size: 12px; color: var(--text-dim); }
+    footer a { color: inherit; }
+    @media (prefers-reduced-motion: reduce) { * { animation: none !important; transition-duration: 0.01ms !important; } }
+    @media print { #main-nav, .wheel-controls, #wheel-tooltip { display: none !important; } .wheel-stage { height: auto; border: 0; } #wheel-canvas { display: none; } }
+  </style>
+</head>
+<body>
+  <nav id="main-nav" aria-label="Main navigation">
+    <ul class="nav-links">
+      <li><a href="index.html">Resume home</a></li>
+      <li><a href="immersive-preview.html">Immersive 3D journey</a></li>
+      <li><a href="bold-resume-preview.html">Bold editorial preview</a></li>
+      <li><a href="SRA-Resume.pdf" download>Resume PDF</a></li>
+    </ul>
+    <button type="button" id="wheel-theme" aria-label="Toggle dark/light mode" title="Toggle theme">Theme</button>
+  </nav>
+
+  <main id="main-content">
+    <header class="wheel-intro">
+      <h1>3D Skill Wheel</h1>
+      <p>A standalone exploration of the technical skills from the resume, grouped by category. The skills below mirror the homepage exactly; hover or touch the wheel, or use the search and list.</p>
+    </header>
+
+    <div class="wheel-controls">
+      <input type="search" id="wheel-search" placeholder="Search skills…" aria-label="Search skills" autocomplete="off">
+      <button type="button" id="wheel-pause" aria-pressed="false">Pause Rotation</button>
+      <span id="wheel-status" role="status" aria-live="polite"></span>
+    </div>
+
+    <div class="wheel-stage">
+      <canvas id="wheel-canvas" aria-hidden="true"></canvas>
+      <p class="wheel-fallback sr-only" hidden>Interactive wheel unavailable. The complete skill list below is always available.</p>
+    </div>
+    <div id="wheel-tooltip" role="presentation" aria-hidden="true"></div>
+    <p id="wheel-empty" role="status" hidden>No matching skills. Clear the search to view all 35.</p>
+    <ul id="wheel-results"></ul>
+  </main>
+
+  <footer>
+    <p>Part of <a href="index.html">Syed Rahid Ahmed's career site</a>. © 2026 Syed Rahid Ahmed.</p>
+  </footer>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"
+          integrity="sha384-CI3ELBVUz9XQO+97x6nwMDPosPR5XvsxW2ua7N1Xeygeh1IxtgqtCkGfQY9WWdHu"
+          crossorigin="anonymous"></script>
+  <script>
+    (function () {
+      'use strict';
+      var SKILLS = [
+        { name: 'Switch Maintenance', cat: 'Switch & Facility Ops', color: '#c2410c' },
+        { name: 'Facility Checks', cat: 'Switch & Facility Ops', color: '#c2410c' },
+        { name: 'Power/BMS (EcoStruxure)', cat: 'Switch & Facility Ops', color: '#c2410c' },
+        { name: 'Disaster Recovery', cat: 'Switch & Facility Ops', color: '#c2410c' },
+        { name: 'Alarm Management', cat: 'Switch & Facility Ops', color: '#c2410c' },
+        { name: 'ITIL Change Mgmt', cat: 'Switch & Facility Ops', color: '#c2410c' },
+        { name: '5G NR', cat: '5G/4G RAN & Core', color: '#0e7490' },
+        { name: 'eNodeB/gNodeB', cat: '5G/4G RAN & Core', color: '#0e7490' },
+        { name: 'NSD, DAS', cat: '5G/4G RAN & Core', color: '#0e7490' },
+        { name: 'Emergency COWs', cat: '5G/4G RAN & Core', color: '#0e7490' },
+        { name: 'Call Servers', cat: '5G/4G RAN & Core', color: '#0e7490' },
+        { name: 'BSC/RNC', cat: '5G/4G RAN & Core', color: '#0e7490' },
+        { name: 'Cisco Catalyst', cat: 'Routing & Transport', color: '#4d7c0f' },
+        { name: 'SAS/MAD Routers', cat: 'Routing & Transport', color: '#4d7c0f' },
+        { name: 'BGP/OSPF/MPLS', cat: 'Routing & Transport', color: '#4d7c0f' },
+        { name: 'Fiber/Microwave', cat: 'Routing & Transport', color: '#4d7c0f' },
+        { name: '1G/10G/100G', cat: 'Routing & Transport', color: '#4d7c0f' },
+        { name: 'L2/L3 Switching', cat: 'Routing & Transport', color: '#4d7c0f' },
+        { name: 'ATOMS', cat: 'T-Mobile Tools', color: '#44403c' },
+        { name: 'OneTransport', cat: 'T-Mobile Tools', color: '#44403c' },
+        { name: 'RIOT', cat: 'T-Mobile Tools', color: '#44403c' },
+        { name: 'OneConsole', cat: 'T-Mobile Tools', color: '#44403c' },
+        { name: 'CBN Tools', cat: 'T-Mobile Tools', color: '#44403c' },
+        { name: 'EAI/Netviewer', cat: 'T-Mobile Tools', color: '#44403c' },
+        { name: 'Nokia NetAct', cat: 'OSS & Scripting', color: '#be123c' },
+        { name: 'Ericsson ENM', cat: 'OSS & Scripting', color: '#be123c' },
+        { name: 'AMOS', cat: 'OSS & Scripting', color: '#be123c' },
+        { name: 'Shell/Bash', cat: 'OSS & Scripting', color: '#be123c' },
+        { name: 'JavaScript', cat: 'OSS & Scripting', color: '#be123c' },
+        { name: 'Batch', cat: 'OSS & Scripting', color: '#be123c' },
+        { name: 'Technical Mentorship', cat: 'Leadership', color: '#65a30d' },
+        { name: 'Junior Tech Onboarding', cat: 'Leadership', color: '#65a30d' },
+        { name: 'MOP Development', cat: 'Leadership', color: '#65a30d' },
+        { name: 'War-Room Command', cat: 'Leadership', color: '#65a30d' },
+        { name: 'E911 / CBN Audits', cat: 'Leadership', color: '#65a30d' }
+      ];
+      var canvas = document.getElementById('wheel-canvas');
+      var tooltip = document.getElementById('wheel-tooltip');
+      var statusEl = document.getElementById('wheel-status');
+      var resultsEl = document.getElementById('wheel-results');
+      var emptyEl = document.getElementById('wheel-empty');
+      var searchEl = document.getElementById('wheel-search');
+      var pauseEl = document.getElementById('wheel-pause');
+      var reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
+      var paused = reduced.matches;
+      var raf = 0, renderer, scene, camera, group, meshes = [], elapsed = 0, last = 0;
+      var raycaster = null, pointer = { x: -2, y: -2 };
+
+      function status(text) { statusEl.textContent = text; }
+      function fallback(reason) {
+        canvas.hidden = true;
+        var note = document.querySelector('.wheel-fallback');
+        if (note) { note.hidden = false; note.textContent = reason + ' The complete skill list below is always available.'; }
+        status('List mode');
+        pauseEl.disabled = true;
+        renderList('');
+      }
+      if (typeof THREE === 'undefined') { fallback('3D library did not load'); return; }
+
+      try {
+        renderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: true, alpha: true });
+      } catch (error) { fallback('WebGL is unavailable'); return; }
+      raycaster = new THREE.Raycaster();
+      scene = new THREE.Scene();
+      camera = new THREE.PerspectiveCamera(55, 1, 0.1, 60);
+      camera.position.set(0, 2.2, 7.6);
+      camera.lookAt(0, 0, 0);
+      renderer.setClearColor(0x000000, 0);
+      group = new THREE.Group();
+      group.rotation.x = -0.5;
+      scene.add(group);
+
+      function label(text, color, wide, high, size) {
+        var c = document.createElement('canvas'); c.width = wide; c.height = high;
+        var g = c.getContext('2d');
+        g.font = '600 ' + size + 'px "Outfit", sans-serif';
+        g.textAlign = 'center'; g.textBaseline = 'middle';
+        g.fillStyle = color; g.fillText(text, wide / 2, high / 2);
+        var tex = new THREE.CanvasTexture(c); tex.minFilter = THREE.LinearFilter;
+        var sprite = new THREE.Sprite(new THREE.SpriteMaterial({ map: tex, transparent: true, depthTest: false }));
+        sprite.scale.set(wide / 80, high / 80, 1);
+        return sprite;
+      }
+
+      var CATS = [];
+      SKILLS.forEach(function (s) { if (CATS.indexOf(s.cat) < 0) CATS.push(s.cat); });
+      var gap = 0.09;
+      var totalArc = Math.PI * 2 - gap * CATS.length;
+      var angle = 0;
+      CATS.forEach(function (cat) {
+        var arcLen = totalArc / CATS.length;
+        var arc = new THREE.Mesh(
+          new THREE.RingGeometry(3.0, 3.07, 48, 1, angle, arcLen),
+          new THREE.MeshBasicMaterial({ color: new THREE.Color(SKILLS.find(function (s) { return s.cat === cat; }).color), transparent: true, opacity: 0.5, side: THREE.DoubleSide })
+        );
+        arc.rotation.x = -Math.PI / 2;
+        group.add(arc);
+        var items = SKILLS.filter(function (s) { return s.cat === cat; });
+        items.forEach(function (s, i) {
+          var a = angle + (i + 0.5) / items.length * arcLen;
+          var tier = i % 2;
+          var r = 2.55 * (1 + tier * 0.07);
+          var mesh = new THREE.Mesh(
+            new THREE.SphereGeometry(0.085, 12, 12),
+            new THREE.MeshBasicMaterial({ color: new THREE.Color(s.color), transparent: true, opacity: 0.9 })
+          );
+          mesh.position.set(Math.cos(a) * r, tier * 0.16 - 0.08, Math.sin(a) * r);
+          mesh.userData = { skill: s, on: true };
+          group.add(mesh); meshes.push(mesh);
+        });
+        var mid = angle + arcLen / 2;
+        var lab = label(cat, SKILLS.find(function (s) { return s.cat === cat; }).color, 256, 56, 20);
+        lab.position.set(Math.cos(mid) * 3.55, 0.12, Math.sin(mid) * 3.55);
+        group.add(lab);
+        angle += arcLen + gap;
+      });
+      var center = label('TECHNICAL SKILLS', '#6b6964', 320, 64, 24);
+      center.position.set(0, 0.25, 0); scene.add(center);
+      var hint = label('hover or touch a node', '#9a968e', 256, 40, 15);
+      hint.position.set(0, -0.18, 0); scene.add(hint);
+
+      function resize() {
+        var rect = canvas.getBoundingClientRect();
+        var w = Math.max(rect.width, 1), h = Math.max(rect.height, 1);
+        renderer.setSize(w, h, false);
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+        camera.aspect = w / h; camera.updateProjectionMatrix();
+        if (paused) draw(performance.now());
+      }
+      function draw(time) {
+        raf = 0;
+        var dt = Math.min((time - last) / 1000, 0.05); last = time;
+        if (!paused && !document.hidden) elapsed += dt;
+        group.rotation.y = elapsed * 0.12;
+        renderer.render(scene, camera);
+        if (!paused && !document.hidden) raf = requestAnimationFrame(draw);
+      }
+      function invalidate() { if (!raf && !paused) raf = requestAnimationFrame(draw); }
+      function setPaused(value) {
+        paused = value;
+        pauseEl.setAttribute('aria-pressed', String(value));
+        pauseEl.textContent = value ? 'Resume Rotation' : 'Pause Rotation';
+        if (paused) { if (raf) cancelAnimationFrame(raf); draw(performance.now()); }
+        else { last = performance.now(); invalidate(); }
+      }
+      function applyFilter() {
+        var q = searchEl.value.trim().toLowerCase();
+        var visible = 0;
+        meshes.forEach(function (m) {
+          m.userData.on = (!q || m.userData.skill.name.toLowerCase().includes(q));
+          if (m.userData.on) visible++;
+        });
+        status((!q) ? SKILLS.length + ' skills' : visible + ' of ' + SKILLS.length + ' skills');
+        emptyEl.hidden = visible > 0;
+        renderList(q);
+        if (renderer) draw(performance.now());
+      }
+      function renderList(q) {
+        resultsEl.replaceChildren.apply(resultsEl, SKILLS.filter(function (s) { return !q || s.name.toLowerCase().includes(q); }).map(function (s) {
+          var li = document.createElement('li');
+          var name = document.createElement('span'); name.className = 'name'; name.textContent = s.name;
+          var cat = document.createElement('span'); cat.className = 'cat'; cat.textContent = s.cat;
+          li.append(name, cat); return li;
+        }));
+      }
+      function updateHover(clientX, clientY) {
+        if (!raycaster) return;
+        var rect = canvas.getBoundingClientRect();
+        pointer.x = ((clientX - rect.left) / rect.width) * 2 - 1;
+        pointer.y = -((clientY - rect.top) / rect.height) * 2 + 1;
+        raycaster.setFromCamera(pointer, camera);
+        var hit = raycaster.intersectObjects(meshes).find(function (h) { return h.object.userData.on; });
+        if (hit) {
+          tooltip.innerHTML = '';
+          var name = document.createElement('strong'); name.textContent = hit.object.userData.skill.name;
+          var cat = document.createElement('span'); cat.className = 'category'; cat.textContent = hit.object.userData.skill.cat;
+          tooltip.append(name, cat);
+          tooltip.style.left = Math.max(8, Math.min(clientX + 14, window.innerWidth - 280)) + 'px';
+          tooltip.style.top = Math.max(8, clientY - 10) + 'px';
+          tooltip.classList.add('visible');
+          canvas.style.cursor = 'pointer';
+        } else { tooltip.classList.remove('visible'); canvas.style.cursor = 'default'; }
+      }
+      canvas.addEventListener('pointermove', function (e) { updateHover(e.clientX, e.clientY); if (paused) draw(performance.now()); });
+      canvas.addEventListener('pointerleave', function () { tooltip.classList.remove('visible'); if (paused) draw(performance.now()); });
+      searchEl.addEventListener('input', applyFilter);
+      pauseEl.addEventListener('click', function () { setPaused(!paused); });
+      document.getElementById('wheel-theme').addEventListener('click', function () {
+        var root = document.documentElement;
+        var dark = root.getAttribute('data-theme') === 'dark';
+        if (dark) root.removeAttribute('data-theme'); else root.setAttribute('data-theme', 'dark');
+      });
+      window.addEventListener('resize', function () { resize(); });
+      document.addEventListener('visibilitychange', function () {
+        if (document.hidden && raf) { cancelAnimationFrame(raf); raf = 0; }
+        else if (!paused) { last = performance.now(); invalidate(); }
+        else draw(performance.now());
+      });
+      reduced.addEventListener && reduced.addEventListener('change', function () { setPaused(reduced.matches); });
+      window.addEventListener('pagehide', function () {
+        if (raf) cancelAnimationFrame(raf); raf = 0;
+        scene.traverse(function (o) { if (o.geometry) o.geometry.dispose(); if (o.material) { if (o.material.map) o.material.map.dispose(); o.material.dispose(); } });
+        renderer.dispose();
+      });
+      document.documentElement.dataset.wheelReady = 'true';
+      resize(); applyFilter(); setPaused(paused);
+      window.dataset = window.dataset || {};
+    })();
+  </script>
+  <style>.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }</style>
+</body>
+</html>

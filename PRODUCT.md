@@ -30,14 +30,14 @@ The only personal career site where the visual argument *is* the professional ar
 
 ## Capabilities and Constraints
 
-- **Single self-contained file**: `index.html` + inline CSS + `app.js` + `nav.js` + `theme.js` + `states.js` + `contact.php`. No build step, no bundler, no framework.
-- **Deploy**: Netlify static hosting; `netlify.toml` configures headers, CSP, and resume caching.
-- **Form backend**: `contact.php` (PHP mail + rate limit + honeypot) replaces Netlify Forms.
+- **Single self-contained file**: `index.html` + inline CSS + `app.js` + `nav.js` + `theme.js` + `states.js`. No build step, no bundler, no framework.
+- **Deploy**: GitHub Pages publishes the `main` branch; `netlify.toml` keeps the headers/CSP configuration from the earlier Netlify hosting.
+- **Form backend**: Formspree (`https://formspree.io/f/mdekbpja`) with client-side validation in `app.js` and a honeypot field.
 - **Motion**: Three.js + GSAP, fully gated by `prefers-reduced-motion` (falls back to static scene, not blank).
 - **Themes**: Light (Carbon Ivory) + Dark (Graphite) via `data-theme` attribute, persisted in localStorage.
 - **Typography**: Outfit (display/body) + JetBrains Mono (labels, tags, technical tokens). No third typeface.
 - **Palette**: Burnt Terracotta primary (#c2410c), Deep Teal secondary (#0e7490), Olive tertiary (#4d7c0f). Two true themes flip the substrate.
-- **Assets**: Demo video (GIF/MP4/WebM), OG image, design tokens (CSS + JSON), resume PDF.
+- **Assets**: Demo video (GIF/MP4), OG image, design tokens (CSS + JSON), resume PDF, standalone skill wheel (`wheel-v2.html`).
 - **Evidence that must not be fabricated**: Specific protocols (SS7/SIGTRAN), employer names (T-Mobile, Sprint, AtoZIT), certs (CCNA, CompTIA A+, Network+), dates, locations, skill taxonomy.
 
 ## Brand Commitments
@@ -53,7 +53,7 @@ The only personal career site where the visual argument *is* the professional ar
 |---|---|---|
 | Demo GIF | `assets/demo/demo.gif` | 800px wide, embedded in README |
 | Demo MP4 | `assets/demo/demo.mp4` | Full-quality walkthrough |
-| Demo WebM | `assets/demo/demo.webm` | Alternate codec |
+| Preview pages | `immersive-preview.html`, `bold-resume-preview.html`, `resume-preview.html` | Separately published design treatments; `noindex` |
 | OG image | `assets/og-image.png` | Social preview |
 | Design tokens (CSS) | `assets/design-tokens.css` | `:root` + dark theme |
 | Design tokens (JSON) | `assets/design-tokens.json` | Machine-readable |
