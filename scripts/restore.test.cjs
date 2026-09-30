@@ -80,6 +80,37 @@ const server = http.createServer((req, res) => {
             return normalize(doc.querySelector('main')) === normalize(document.querySelector('main'));
           }, original);
           assert.ok(preserved, `${file}: original main content preserved`);
+          if (width === 1440) {
+            await page.emulateMediaFeatures([{ name: 'prefers-reduced-motion', value: 'reduce' }]);
+            for (const theme of ['light', 'dark']) {
+              await page.evaluate(theme => {
+                document.documentElement.setAttribute('data-theme', theme);
+                document.querySelector('#hero').scrollIntoView({ behavior: 'instant' });
+              }, theme);
+              for (const variant of ['primary', 'secondary']) {
+                await page.hover(`.hero-cta .btn-${variant}`);
+                await new Promise(resolve => setTimeout(resolve, 100));
+                const colors = await page.$eval(`.hero-cta .btn-${variant}`, (el, variant) => {
+                  const css = getComputedStyle(el);
+                  const probe = document.createElement('span');
+                  probe.style.color = variant === 'primary' ? 'var(--gold-dark)' : 'var(--gold)';
+                  document.body.appendChild(probe);
+                  const accent = getComputedStyle(probe).color;
+                  probe.remove();
+                  return { background: css.backgroundColor, text: css.color, border: css.borderTopColor, accent };
+                }, variant);
+                if (variant === 'primary') {
+                  assert.equal(colors.background, colors.accent, `${file} ${theme}: primary hover accent`);
+                  assert.equal(colors.text, 'rgb(255, 255, 255)', `${file} ${theme}: primary hover text`);
+                } else {
+                  assert.equal(colors.text, colors.accent, `${file} ${theme}: secondary hover text`);
+                  assert.equal(colors.border, colors.accent, `${file} ${theme}: secondary hover border`);
+                  assert.notEqual(colors.background, 'rgb(8, 145, 178)', 'Secondary must not turn teal');
+                }
+              }
+            }
+            assert.equal(await page.$eval('meta[name="robots"]', el => el.content), file === 'index.html' ? 'index, follow' : 'noindex, follow');
+          }
           assert.deepEqual(errors, [], `${file}: errors after interactions`);
         }
         console.log(`PASS ${file} ${width}px; network failures: ${JSON.stringify(failed)}`);

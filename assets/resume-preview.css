@@ -1,4 +1,4 @@
-/* Opt-in design layer for resume-preview.html only. */
+/* Shared resume design for the homepage and separate previews. */
 :root {
   --resume-rule: rgba(28, 25, 23, 0.16);
 }
@@ -98,6 +98,19 @@ section + section { border-top: 1px solid var(--resume-rule); }
 .btn { border-radius: 6px; box-shadow: none; }
 .btn-primary { background: var(--gold); color: var(--text-on-accent); }
 .btn-secondary { border-color: var(--resume-rule); }
+/* Theme-aware states: secondary stays outlined, never switches to teal. */
+.btn.btn-primary:is(:hover, :focus-visible, :active) {
+  background: var(--gold-dark);
+  color: #ffffff;
+  box-shadow: none;
+}
+.btn.btn-secondary:is(:hover, :focus-visible, :active) {
+  background: rgba(194, 65, 12, 0.08);
+  background: color-mix(in srgb, var(--gold) 10%, var(--bg));
+  border-color: var(--gold);
+  color: var(--gold);
+  box-shadow: none;
+}
 footer { max-width: 1120px; margin: 0 auto; padding: 32px 48px; }
 @media (max-width: 900px) {
   section { padding: 44px 28px; }
