@@ -86,6 +86,42 @@
         ],
         "createdAt": "2026-09-29T22:52:26.161Z",
         "reason": "intentional: pill/capsule search input and category filter buttons — standard UI pattern, not a radius-scale violation"
+      },
+      {
+        "rule": "design-system-font-size",
+        "value": "22px",
+        "files": [
+          "thank-you.html"
+        ],
+        "reason": "intentional: nav-logo size on secondary page — 22px is the closest step to the 24px headline scale; not a type-ramp violation",
+        "createdAt": "2026-09-30T02:05:11.202Z"
+      },
+      {
+        "rule": "design-system-font-size",
+        "value": "13px",
+        "files": [
+          "thank-you.html"
+        ],
+        "reason": "intentional: nav link size on secondary page — 13px is between the 12px label and 15px body steps",
+        "createdAt": "2026-09-30T02:05:11.202Z"
+      },
+      {
+        "rule": "design-system-font-size",
+        "value": "14px",
+        "files": [
+          "thank-you.html"
+        ],
+        "reason": "intentional: button and lead text on secondary page — 14px is the closest step to the 15px body scale",
+        "createdAt": "2026-09-30T02:05:11.202Z"
+      },
+      {
+        "rule": "design-system-font-size",
+        "value": "12px",
+        "files": [
+          "thank-you.html"
+        ],
+        "reason": "intentional: footer meta on secondary page — 12px is the documented label/mono step",
+        "createdAt": "2026-09-30T02:05:11.202Z"
       }
     ]
   }
