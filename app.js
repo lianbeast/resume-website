@@ -923,20 +923,24 @@
             const btn = form.querySelector('button[type="submit"]');
             if (btn) { btn.disabled = true; btn.textContent = 'Sending…'; }
             const data = new FormData(form);
+            // Formspree: add _format=json for JSON response, _next for redirect target
+            data.append('_format', 'json');
             const controller = new AbortController();
             const timeoutId = setTimeout(() => controller.abort(), 15000);
-            fetch('contact.php', {
+            // The form action is already set to Formspree endpoint in HTML
+            fetch(form.action, {
               method: 'POST',
-              headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-              body: new URLSearchParams(data).toString(),
+              headers: { 'Accept': 'application/json' },
+              body: data,
               signal: controller.signal
             })
               .then(async (res) => {
                 clearTimeout(timeoutId);
+                const body = await res.json().catch(() => ({}));
                 if (!res.ok) {
-                  const body = await res.json().catch(() => ({}));
-                  throw new Error(body.error || 'submit-failed');
+                  throw new Error(body.error || body.errors?.[0]?.message || 'submit-failed');
                 }
+                // Formspree returns { ok: true } on success with _format=json
                 window.location.href = '/thank-you.html';
               })
               .catch((err) => {
@@ -945,7 +949,7 @@
                 errorMsg.style.display = 'block';
                 errorMsg.textContent = err.name === 'AbortError'
                   ? 'Request timed out. Please check your connection and try again.'
-                  : 'Something went wrong. Please try again or reach out on LinkedIn.';
+                  : (err.message || 'Something went wrong. Please try again or reach out on LinkedIn.');
                 setTimeout(() => { errorMsg.style.display = 'none'; }, 8000);
               });
           }

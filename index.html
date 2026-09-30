@@ -2130,9 +2130,9 @@
     <section id="contact" aria-label="Contact form">
       <span class="section-label reveal">CONTACT</span>
       <h2 class="section-title reveal">Get in Touch</h2>
-      <form novalidate name="contact" method="POST" action="contact.php">
-        <input type="hidden" name="form-name" value="contact">
-        <p aria-hidden="true" style="position:absolute;left:-9999px;top:-9999px;"><label>Don't fill this out: <input name="bot-field" tabindex="-1" autocomplete="off"></label></p>
+      <form novalidate name="contact" method="POST" action="https://formspree.io/f/YOUR_FORMSPREE_ID">
+        <input type="hidden" name="_next" value="/thank-you.html">
+        <p aria-hidden="true" style="position:absolute;left:-9999px;top:-9999px;"><label>Don't fill this out: <input name="_gotcha" tabindex="-1" autocomplete="off"></label></p>
         <div class="form-group full-width reveal">
           <label for="contact-name">Name</label>
           <input type="text" id="contact-name" name="name" required autocomplete="name" aria-describedby="err-name" aria-invalid="false" maxlength="100">
