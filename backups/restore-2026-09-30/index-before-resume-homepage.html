@@ -3,11 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <title>Immersive 3D Career Journey — Syed Rahid Ahmed</title>
+  <title>Syed Rahid Ahmed | Sr. Switch Technician — Telecom Operations & RAN/Transport</title>
   <meta name="description" content="CCNA-certified Senior Switch &amp; Telecom Specialist with 15+ years in switch operations, facility management, and RAN/transport network engineering across T-Mobile and Sprint.">
   <meta name="keywords" content="Sr. Switch Technician, Telecom Operations, RAN Transport, 5G NR, eNodeB, gNodeB, Nokia NetAct, Ericsson ENM, ATOMS, OneTransport, CCNA, MCP, CompTIA A+, Syed Rahid Ahmed">
   <meta name="author" content="Syed Rahid Ahmed">
-  <!-- Preview indexing is disabled below. -->
+  <meta name="robots" content="index, follow">
   <meta property="og:title" content="Syed Rahid Ahmed | Sr. Switch Technician — Telecom Operations & RAN/Transport">
   <meta property="og:description" content="15+ years switch operations, facility management, and RAN/transport engineering across T-Mobile and Sprint.">
   <meta property="og:type" content="website">
@@ -16,7 +16,6 @@
   <meta name="theme-color" content="#f7f5f0" media="(prefers-color-scheme: light)">
   <meta name="theme-color" content="#161412" media="(prefers-color-scheme: dark)">
   <link rel="canonical" href="https://rahid.persipico.com">
-  <meta name="robots" content="noindex, follow">
 
   <!-- Twitter / X card -->
   <meta name="twitter:card" content="summary_large_image">
@@ -53,7 +52,6 @@
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%23c2410c'/><text x='50' y='68' font-size='60' font-family='system-ui' font-weight='700' fill='%23ffffff' text-anchor='middle'>SR</text></svg>">
 
   <!-- Preconnect for fonts -->
-  <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
@@ -96,6 +94,7 @@
   --teal-dark: #0b5a7c;
   --teal-light: #22d3ee;
   --olive: #4d7c0f;
+  /* Compatibility aliases for existing hover rules. */
   --color-primary: var(--gold);
   --color-primary-hover: var(--gold-dark);
   --color-secondary-hover: var(--teal-dark);
@@ -124,22 +123,22 @@
     }
 
     /* Style overrides — toggle via #style-toggle button */
+    
+    
+    
+    
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
 
     html { transition: background 0.3s ease, color 0.3s ease; }
 
@@ -1010,7 +1009,7 @@
       opacity: 0;
       visibility: hidden;
       transform: translateY(-8px);
-      transition: opacity 0.2s ease, visibility 0.2s ease, transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
       z-index: 10000;
       display: flex;
       flex-direction: column;
@@ -1711,9 +1710,6 @@
     @page { margin: 1.5cm; }
     }
   </style>
-  <!-- Separate resume preview: original content and interactions are preserved. -->
-  <link rel="stylesheet" href="assets/resume-preview.css">
-  <link rel="stylesheet" href="assets/immersive-preview.css">
   <!-- theme.js applies saved theme before paint (prevents flash) + async-loads fonts -->
   <script src="theme.js"></script>
 </head>
@@ -1724,7 +1720,7 @@
 
   <!-- Main navigation -->
   <nav id="main-nav" aria-label="Main navigation">
-    <a href="index.html" class="nav-logo">SR</a>
+    <a href="#" class="nav-logo">SR</a>
     <button id="nav-toggle" aria-label="Toggle menu" aria-expanded="false">
       <span></span><span></span><span></span>
     </button>
@@ -1734,9 +1730,6 @@
       <li><a href="#skills">Skills</a></li>
       <li><a href="#education">Education</a></li>
       <li><a href="#contact">Contact</a></li>
-      <li><a href="index.html">Home</a></li>
-      <li><a href="bold-resume-preview.html">Bold Preview</a></li>
-      <li><a href="wheel-v2.html">Skill Wheel</a></li>
       <li><a href="SRA-Resume.pdf" class="nav-resume" download>Resume</a></li>
       <li><button id="theme-toggle" class="nav-theme-toggle" aria-label="Toggle dark/light mode" title="Toggle theme">
         <svg class="sun-icon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -1752,33 +1745,13 @@
 
   <!-- Back-to-top button -->
   <button id="back-to-top" aria-label="Scroll to top" title="Back to top">
-    <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
       <path d="M18 15l-6-6-6 6"/>
     </svg>
   </button>
 
   <!-- Three.js canvas container — career location network map -->
-  <!-- This preview uses its own scene; the original map and page remain untouched. -->
-  <div id="immersive-world" aria-hidden="true"></div>
-  <div class="world-vignette" aria-hidden="true"></div>
-  <aside class="journey-hud" aria-label="3D journey controls">
-    <div class="journey-status"><span class="signal-dot" aria-hidden="true"></span><span id="world-status" role="status">Loading 3D network…</span></div>
-    <p class="journey-location" id="journey-location">Career network</p>
-    <p class="journey-instruction" id="journey-instruction">Scroll to travel through the network.</p>
-    <div class="journey-actions">
-      <button id="world-explore" type="button" aria-pressed="false" disabled>Explore 3D</button>
-      <button id="world-pause" type="button" aria-pressed="false" disabled>Pause motion</button>
-    </div>
-    <div class="orbit-controls" hidden>
-      <button id="world-prev" type="button" aria-label="Previous career hub">← Hub</button>
-      <button id="world-turn" type="button" aria-label="Rotate 3D view">Rotate</button>
-      <button id="world-next" type="button" aria-label="Next career hub">Hub →</button>
-    </div>
-    <a href="index.html" class="reading-link">Homepage ↗</a>
-    <a href="bold-resume-preview.html" class="reading-link">Bold editorial preview ↗</a>
-    <a href="wheel-v2.html" class="reading-link">Standalone skill wheel ↗</a>
-  </aside>
-  <div class="journey-progress" aria-hidden="true"><span id="journey-progress-bar"></span></div>
+  <div id="scene-container" aria-hidden="true"></div>
 
   <!-- Career locations: accessible text alternative to the Three.js map.
        Visible until JS enhances the canvas (then hidden visually, kept for SR).
@@ -1818,13 +1791,11 @@
       <div class="orb orb-gold" aria-hidden="true" style="width:320px;height:320px;top:-5%;right:-8%;"></div>
       <div class="orb orb-gold-light" aria-hidden="true" style="width:260px;height:260px;bottom:10%;left:-6%;"></div>
       <div class="orb orb-gold-dark" aria-hidden="true" style="width:200px;height:200px;top:40%;right:20%;"></div>
-      <p class="immersive-kicker">A career in connection · Interactive 3D preview</p>
-      <h1 class="hero-name">Syed Rahid Ahmed</h1>
+            <h1 class="hero-name">Syed Rahid Ahmed</h1>
       <p class="hero-title">Sr. Switch Technician | Telecom Operations &amp; RAN/Transport Specialist</p>
       <p class="hero-tagline">
         15+ years of switch operations, facility management, and RAN/transport network engineering across T-Mobile and Sprint, working with 5G NR/LTE, Cisco, Nokia NetAct, and Ericsson ENM.
       </p>
-      <p class="immersive-scroll-hint">Scroll to follow the signal <span aria-hidden="true">↓</span></p>
       <nav class="hero-cta" aria-label="Primary actions">
         <a href="#contact" class="btn btn-primary">Get in Touch</a>
         <a href="#experience" class="btn btn-secondary">View Experience</a>
@@ -2018,14 +1989,12 @@
 
       <div class="constellation-anchor">
         <div class="skills-canvas-wrap glass reveal">
-          <canvas id="skill-wheel" aria-hidden="true"></canvas>
-          <p class="sr-only">The visualization repeats the technical skills listed below. Use the labeled search and category buttons to explore all skills.</p>
+          <canvas id="skill-wheel" aria-label="Interactive 3D wheel of technical skills grouped by category"></canvas>
         </div>
       </div>
 
       <div class="skill-controls glass reveal">
-        <button type="button" id="visualizations-pause" aria-pressed="false">Pause Visualizations</button>
-        <input type="search" name="skillSearch" autocomplete="off" id="skill-search" class="skill-search" placeholder="Search skills…" aria-label="Search skills">
+        <input type="search" id="skill-search" class="skill-search" placeholder="Search skills…" aria-label="Search skills">
         <div class="skill-filter-row" id="skill-filter-row">
           <button class="skill-filter-btn" data-cat="all" aria-pressed="true">All</button>
           <button class="skill-filter-btn" data-cat="Switch &amp; Facility Ops" aria-pressed="false">Switch &amp; Facility Ops</button>
@@ -2038,7 +2007,6 @@
         <span id="skills-count" class="skills-count" aria-live="polite"></span>
       </div>
 
-      <p id="skills-empty" role="status" hidden>No matching skills. Clear the search or choose All to view every skill.</p>
       <div class="skills-list">
         <div class="skill-category glass reveal">
           <h3 class="skill-accent-orange">Switch &amp; Facility Operations</h3>
@@ -2147,35 +2115,34 @@
         <div class="form-group full-width reveal">
           <label for="contact-name">Name</label>
           <input type="text" id="contact-name" name="name" required autocomplete="name" aria-describedby="err-name" aria-invalid="false" maxlength="100">
-          <div class="form-error" id="err-name" role="status" aria-live="polite">Please enter your name.</div>
+          <div class="form-error" id="err-name" role="alert">Please enter your name.</div>
         </div>
         <div class="form-group full-width reveal">
           <label for="contact-email">Email</label>
-          <input type="email" id="contact-email" name="email" required autocomplete="email" spellcheck="false" inputmode="email" aria-describedby="err-email" aria-invalid="false" maxlength="254">
-          <div class="form-error" id="err-email" role="status" aria-live="polite">Please enter a valid email address.</div>
+          <input type="email" id="contact-email" name="email" required autocomplete="email" aria-describedby="err-email" aria-invalid="false" maxlength="254">
+          <div class="form-error" id="err-email" role="alert">Please enter a valid email address.</div>
         </div>
         <div class="form-group full-width reveal">
           <label for="contact-phone">Phone <span aria-hidden="true">(optional)</span></label>
-          <input type="tel" id="contact-phone" name="phone" autocomplete="tel" inputmode="tel" aria-describedby="err-phone" aria-invalid="false" maxlength="20" placeholder="e.g. +1 555 123 4567…">
-          <div class="form-error" id="err-phone" role="status" aria-live="polite">Please enter a valid phone number.</div>
+          <input type="tel" id="contact-phone" name="phone" autocomplete="tel" aria-describedby="err-phone" aria-invalid="false" maxlength="20" placeholder="e.g. +1 555 123 4567">
+          <div class="form-error" id="err-phone" role="alert">Please enter a valid phone number.</div>
         </div>
         <div class="form-group full-width reveal">
           <label for="contact-subject">Subject</label>
-          <input type="text" id="contact-subject" name="subject" required autocomplete="off" autocapitalize="sentences" aria-describedby="err-subject" aria-invalid="false" maxlength="200">
-          <div class="form-error" id="err-subject" role="status" aria-live="polite">Please enter a subject.</div>
+          <input type="text" id="contact-subject" name="subject" required autocapitalize="sentences" aria-describedby="err-subject" aria-invalid="false" maxlength="200">
+          <div class="form-error" id="err-subject" role="alert">Please enter a subject.</div>
         </div>
         <div class="form-group full-width reveal">
           <label for="contact-message">Message</label>
-          <textarea id="contact-message" name="message" required autocomplete="off" autocapitalize="sentences" aria-describedby="err-message" aria-invalid="false" maxlength="5000"></textarea>
-          <div class="form-error" id="err-message" role="status" aria-live="polite">Please enter a message.</div>
+          <textarea id="contact-message" name="message" required autocapitalize="sentences" aria-describedby="err-message" aria-invalid="false" maxlength="5000"></textarea>
+          <div class="form-error" id="err-message" role="alert">Please enter a message.</div>
         </div>
         <div class="full-width reveal">
           <!-- ponytail: client-side only, add Formspree/Netlify endpoint when deploying -->
           <button type="submit" class="btn btn-primary">Send Message</button>
         </div>
       </form>
-      <p id="form-status" role="status" aria-live="polite"></p>
-      <div id="form-error" style="display: none; margin-top: 20px; color: var(--gold-dark); font-size: 14px;" role="status" aria-live="polite"></div>
+      <div id="form-error" style="display: none; margin-top: 20px; color: var(--gold-dark); font-size: 14px;" role="alert" aria-live="assertive"></div>
     </section>
   </main>
 
@@ -2183,10 +2150,10 @@
   <footer>
     <div class="footer-social">
       <a href="https://linkedin.com/in/syedrahidahmed" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn profile">
-        <svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
       </a>
       <a href="SRA-Resume.pdf" download class="footer-resume" aria-label="Download resume">
-        <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
         Resume
       </a>
     </div>
@@ -2199,40 +2166,19 @@
   <!-- GSAP: desktop-only loader. GSAP eval is a ~400ms main-thread task — worst
        FID contributor on mobile. app.js guards on typeof gsap, so mobile just
        skips scroll animations (reveals render visible, stat counters set inline). -->
-  <!-- The new scene owns camera motion; existing resume interactions remain shared. -->
-  <script defer src="assets/immersive-preview.js"></script>
+  <script>
+    if (!window.matchMedia('(max-width: 768px)').matches &&
+        !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      document.write('<script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" integrity="sha384-g4NTh/Iv5PPU4xPyhEWqPcwtNXOvdaDI8LLnyYfyNZOjKJeYQyjzQ9X5275eBjpt" crossorigin="anonymous"><\/script>' +
+        '<script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" integrity="sha384-Z3REaz79l2IaAZqJsSABtTbhjgOUYyV3p90XNnAPCSHg3EMTz1fouunq9WZRtj3d" crossorigin="anonymous"><\/script>');
+    }
+  </script>
   <script defer src="app.js"></script>
 
   <!-- ================================================================
        NAV / BACK-TO-TOP / THEME HANDLERS
        ================================================================ -->
   <script src="nav.js"></script>
-
-  <!-- ================================================================
-       LIQUIDGLASS WEBGL GLASS EFFECTS
-       ================================================================ -->
-  <script>
-    if (!window.matchMedia('(max-width: 768px)').matches &&
-        !window.matchMedia('(prefers-reduced-motion: reduce)').matches &&
-        typeof WebGLRenderingContext !== 'undefined') {
-      (function() {
-        var s = document.createElement('script');
-        s.src = 'assets/liquidglass.js';
-        s.onload = function() {
-          if (typeof LiquidGlass !== 'undefined') {
-            document.addEventListener('DOMContentLoaded', function() {
-              var root = document.getElementById('main-content');
-              var glassEls = root ? Array.from(root.querySelectorAll('.glass')) : [];
-              if (root && glassEls.length > 0) {
-                LiquidGlass.init({ root: root, glassElements: glassEls });
-              }
-            });
-          }
-        };
-        document.head.appendChild(s);
-      })();
-    }
-  </script>
 
   <!-- No-JS fallback -->
   <noscript>

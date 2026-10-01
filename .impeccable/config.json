@@ -131,6 +131,30 @@
         ],
         "createdAt": "2026-09-30T03:46:13.404Z",
         "reason": "intentional: Carbon Ivory palette per DESIGN.md 'warm-neutral substrate' — not reflexive AI beige"
+      },
+      {
+        "rule": "design-system-radius",
+        "value": "24px",
+        "createdAt": "2026-10-01T21:40:14.910Z",
+        "reason": "Intentional: custom glass panel size for hero/feature cards, user confirmed with larger refraction effect"
+      },
+      {
+        "rule": "design-system-font-size",
+        "value": "14px",
+        "createdAt": "2026-10-01T21:42:36.037Z",
+        "reason": "Pre-existing typographic detail in resume design, intentional for career site"
+      },
+      {
+        "rule": "design-system-font-size",
+        "value": "12px",
+        "createdAt": "2026-10-01T21:42:36.063Z",
+        "reason": "Pre-existing label size in resume design, intentional for technical typography"
+      },
+      {
+        "rule": "design-system-font-size",
+        "value": "10px",
+        "createdAt": "2026-10-01T21:42:36.091Z",
+        "reason": "Pre-existing micro-label size in resume design, intentional for mono text"
       }
     ]
   }

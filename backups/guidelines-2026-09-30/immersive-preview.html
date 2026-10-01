@@ -53,7 +53,6 @@
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%23c2410c'/><text x='50' y='68' font-size='60' font-family='system-ui' font-weight='700' fill='%23ffffff' text-anchor='middle'>SR</text></svg>">
 
   <!-- Preconnect for fonts -->
-  <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
@@ -1010,7 +1009,7 @@
       opacity: 0;
       visibility: hidden;
       transform: translateY(-8px);
-      transition: opacity 0.2s ease, visibility 0.2s ease, transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
       z-index: 10000;
       display: flex;
       flex-direction: column;
@@ -1724,7 +1723,7 @@
 
   <!-- Main navigation -->
   <nav id="main-nav" aria-label="Main navigation">
-    <a href="index.html" class="nav-logo">SR</a>
+    <a href="#" class="nav-logo">SR</a>
     <button id="nav-toggle" aria-label="Toggle menu" aria-expanded="false">
       <span></span><span></span><span></span>
     </button>
@@ -1734,9 +1733,6 @@
       <li><a href="#skills">Skills</a></li>
       <li><a href="#education">Education</a></li>
       <li><a href="#contact">Contact</a></li>
-      <li><a href="index.html">Home</a></li>
-      <li><a href="bold-resume-preview.html">Bold Preview</a></li>
-      <li><a href="wheel-v2.html">Skill Wheel</a></li>
       <li><a href="SRA-Resume.pdf" class="nav-resume" download>Resume</a></li>
       <li><button id="theme-toggle" class="nav-theme-toggle" aria-label="Toggle dark/light mode" title="Toggle theme">
         <svg class="sun-icon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -1752,7 +1748,7 @@
 
   <!-- Back-to-top button -->
   <button id="back-to-top" aria-label="Scroll to top" title="Back to top">
-    <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
       <path d="M18 15l-6-6-6 6"/>
     </svg>
   </button>
@@ -1774,9 +1770,7 @@
       <button id="world-turn" type="button" aria-label="Rotate 3D view">Rotate</button>
       <button id="world-next" type="button" aria-label="Next career hub">Hub →</button>
     </div>
-    <a href="index.html" class="reading-link">Homepage ↗</a>
-    <a href="bold-resume-preview.html" class="reading-link">Bold editorial preview ↗</a>
-    <a href="wheel-v2.html" class="reading-link">Standalone skill wheel ↗</a>
+    <a href="resume-preview.html" class="reading-link">Open the resume-style preview ↗</a>
   </aside>
   <div class="journey-progress" aria-hidden="true"><span id="journey-progress-bar"></span></div>
 
@@ -2018,14 +2012,12 @@
 
       <div class="constellation-anchor">
         <div class="skills-canvas-wrap glass reveal">
-          <canvas id="skill-wheel" aria-hidden="true"></canvas>
-          <p class="sr-only">The visualization repeats the technical skills listed below. Use the labeled search and category buttons to explore all skills.</p>
+          <canvas id="skill-wheel" aria-label="Interactive 3D wheel of technical skills grouped by category"></canvas>
         </div>
       </div>
 
       <div class="skill-controls glass reveal">
-        <button type="button" id="visualizations-pause" aria-pressed="false">Pause Visualizations</button>
-        <input type="search" name="skillSearch" autocomplete="off" id="skill-search" class="skill-search" placeholder="Search skills…" aria-label="Search skills">
+        <input type="search" id="skill-search" class="skill-search" placeholder="Search skills…" aria-label="Search skills">
         <div class="skill-filter-row" id="skill-filter-row">
           <button class="skill-filter-btn" data-cat="all" aria-pressed="true">All</button>
           <button class="skill-filter-btn" data-cat="Switch &amp; Facility Ops" aria-pressed="false">Switch &amp; Facility Ops</button>
@@ -2038,7 +2030,6 @@
         <span id="skills-count" class="skills-count" aria-live="polite"></span>
       </div>
 
-      <p id="skills-empty" role="status" hidden>No matching skills. Clear the search or choose All to view every skill.</p>
       <div class="skills-list">
         <div class="skill-category glass reveal">
           <h3 class="skill-accent-orange">Switch &amp; Facility Operations</h3>
@@ -2147,35 +2138,34 @@
         <div class="form-group full-width reveal">
           <label for="contact-name">Name</label>
           <input type="text" id="contact-name" name="name" required autocomplete="name" aria-describedby="err-name" aria-invalid="false" maxlength="100">
-          <div class="form-error" id="err-name" role="status" aria-live="polite">Please enter your name.</div>
+          <div class="form-error" id="err-name" role="alert">Please enter your name.</div>
         </div>
         <div class="form-group full-width reveal">
           <label for="contact-email">Email</label>
-          <input type="email" id="contact-email" name="email" required autocomplete="email" spellcheck="false" inputmode="email" aria-describedby="err-email" aria-invalid="false" maxlength="254">
-          <div class="form-error" id="err-email" role="status" aria-live="polite">Please enter a valid email address.</div>
+          <input type="email" id="contact-email" name="email" required autocomplete="email" aria-describedby="err-email" aria-invalid="false" maxlength="254">
+          <div class="form-error" id="err-email" role="alert">Please enter a valid email address.</div>
         </div>
         <div class="form-group full-width reveal">
           <label for="contact-phone">Phone <span aria-hidden="true">(optional)</span></label>
-          <input type="tel" id="contact-phone" name="phone" autocomplete="tel" inputmode="tel" aria-describedby="err-phone" aria-invalid="false" maxlength="20" placeholder="e.g. +1 555 123 4567…">
-          <div class="form-error" id="err-phone" role="status" aria-live="polite">Please enter a valid phone number.</div>
+          <input type="tel" id="contact-phone" name="phone" autocomplete="tel" aria-describedby="err-phone" aria-invalid="false" maxlength="20" placeholder="e.g. +1 555 123 4567">
+          <div class="form-error" id="err-phone" role="alert">Please enter a valid phone number.</div>
         </div>
         <div class="form-group full-width reveal">
           <label for="contact-subject">Subject</label>
-          <input type="text" id="contact-subject" name="subject" required autocomplete="off" autocapitalize="sentences" aria-describedby="err-subject" aria-invalid="false" maxlength="200">
-          <div class="form-error" id="err-subject" role="status" aria-live="polite">Please enter a subject.</div>
+          <input type="text" id="contact-subject" name="subject" required autocapitalize="sentences" aria-describedby="err-subject" aria-invalid="false" maxlength="200">
+          <div class="form-error" id="err-subject" role="alert">Please enter a subject.</div>
         </div>
         <div class="form-group full-width reveal">
           <label for="contact-message">Message</label>
-          <textarea id="contact-message" name="message" required autocomplete="off" autocapitalize="sentences" aria-describedby="err-message" aria-invalid="false" maxlength="5000"></textarea>
-          <div class="form-error" id="err-message" role="status" aria-live="polite">Please enter a message.</div>
+          <textarea id="contact-message" name="message" required autocapitalize="sentences" aria-describedby="err-message" aria-invalid="false" maxlength="5000"></textarea>
+          <div class="form-error" id="err-message" role="alert">Please enter a message.</div>
         </div>
         <div class="full-width reveal">
           <!-- ponytail: client-side only, add Formspree/Netlify endpoint when deploying -->
           <button type="submit" class="btn btn-primary">Send Message</button>
         </div>
       </form>
-      <p id="form-status" role="status" aria-live="polite"></p>
-      <div id="form-error" style="display: none; margin-top: 20px; color: var(--gold-dark); font-size: 14px;" role="status" aria-live="polite"></div>
+      <div id="form-error" style="display: none; margin-top: 20px; color: var(--gold-dark); font-size: 14px;" role="alert" aria-live="assertive"></div>
     </section>
   </main>
 
@@ -2183,10 +2173,10 @@
   <footer>
     <div class="footer-social">
       <a href="https://linkedin.com/in/syedrahidahmed" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn profile">
-        <svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
       </a>
       <a href="SRA-Resume.pdf" download class="footer-resume" aria-label="Download resume">
-        <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
         Resume
       </a>
     </div>
@@ -2207,32 +2197,6 @@
        NAV / BACK-TO-TOP / THEME HANDLERS
        ================================================================ -->
   <script src="nav.js"></script>
-
-  <!-- ================================================================
-       LIQUIDGLASS WEBGL GLASS EFFECTS
-       ================================================================ -->
-  <script>
-    if (!window.matchMedia('(max-width: 768px)').matches &&
-        !window.matchMedia('(prefers-reduced-motion: reduce)').matches &&
-        typeof WebGLRenderingContext !== 'undefined') {
-      (function() {
-        var s = document.createElement('script');
-        s.src = 'assets/liquidglass.js';
-        s.onload = function() {
-          if (typeof LiquidGlass !== 'undefined') {
-            document.addEventListener('DOMContentLoaded', function() {
-              var root = document.getElementById('main-content');
-              var glassEls = root ? Array.from(root.querySelectorAll('.glass')) : [];
-              if (root && glassEls.length > 0) {
-                LiquidGlass.init({ root: root, glassElements: glassEls });
-              }
-            });
-          }
-        };
-        document.head.appendChild(s);
-      })();
-    }
-  </script>
 
   <!-- No-JS fallback -->
   <noscript>

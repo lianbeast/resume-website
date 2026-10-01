@@ -1,0 +1,29 @@
+[build]
+  command   = "echo 'Static site — no build step.'"
+
+[build.environment]
+  NETLIFY_NEXT_PLUGIN_SKIP = "true"
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "DENY"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Permissions-Policy = "camera=(), microphone=(), geolocation=()"
+    Content-Security-Policy = "default-src 'self'; script-src 'self' https://cdnjs.cloudflare.com 'sha256-zavwxUTQclYRu4IIRlSYs35lWMayyU94lWtp7I6f2t0='; style-src 'self' https://fonts.googleapis.com 'unsafe-inline'; font-src https://fonts.gstatic.com; img-src 'self' data:; frame-ancestors 'none'; form-action 'self'"
+
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/SRA-Resume.pdf"
+  [headers.values]
+    Cache-Control = "public, max-age=86400"
+
+# Netlify Forms email notification — configure in UI:
+# Site Settings > Forms > Form notifications > Add notification > Email
+# Send to: your@email.com
+# Trigger: on successful form submission

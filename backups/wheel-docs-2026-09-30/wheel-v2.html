@@ -1,0 +1,165 @@
+
+<!DOCTYPE html>
+<html lang="en" data-od-deck-protocol="1">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device0, initial-scale=1" />
+  <title>3D Wheel Skills Visualization</title>
+  <style>
+    /* ===========================================================
+       Design system tokens
+       =========================================================== */
+    :root {
+      --bg: #f7f5f0;
+      --fg: #1c1917;
+      --accent: #c2410c;
+      --shell: #08090d;
+      --muted: #6b6964;
+      --font-display: 'Iowan Old Style', 'Charter', 'Georgia', serif;
+      --font-body: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+    }
+    .glow { --accent: #c2410c;
+      --glow: rgba(255, 109, 183);
+ 2, 6, 5 0.40
+    /* =========================================================== */
+  .glow-inner-shadow: {
+    2
+</style>
+
+ <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=optional" />
+</head>
+ <body>
+  <div class="od-window" role="presentation">
+    <div class="od-stage" aria-hidden="true">
+      <!-- SVGs for 3D wheel visualization -->
+      <svg viewBox="0 0 200 200" aria-hidden="true" width="100%" height="100%">
+        <circle cx="50" cy="50" r="40" fill="#c2410c" />
+        <circle cx="50" cy="50" r="30" fill="rgba(14,180,183) 0" stroke="#ffffff" stroke-width="2"/>
+        <circle cx="50" cy="50" r="20" fill="none"/>
+        <circle cx="50" cy="50" r="8" fill="none"/>
+        <circle cx="50" cy="50" r="12" fill="none"/>
+        <circle cx="50" cy="50" r="7" fill="none"/>
+        <circle cx="50" cy="50" r="2" fill="none"/>
+        <circle cx="50" cy="50" r="8" fill="none"/>
+        <circle cx="50" cy="50" r="8" fill="none"/>
+        <circle cx="50" cy="50" r="8" fill="none"/>
+        <circle cx="50" cy="50" r="8" fill="none"/>
+        <circle cx="50" cy="50" r="8" fill="none"/>
+      </circle>
+      <circle cx="50 cy=50 r=10 fill="#c2410c" / stroke-opacity="0.5" stroke-width="2""/>
+</svg>
+
+
+
+
+
+  <script>
+    (function () {
+      var stage = document.getElementById('deck-stage');
+ var slides = Array.prototype.slice.call(document.querySelectorAll('.slide));
+ var prev = document.gete
+    var next = document. get cur = document.getgetElementById('deck-prev');
+ var total = document. getetDocument.getgetElementByd
+    var STORE = 'deck:idx:' + location.pathname || '/';
+
+ idx = 0;
+
+  // Function fit() {
+ // ---- scale-to-fit ---------------------------------------------------
+      function fit() {
+ var sw = window.innerWidth; var sh = window.innerHeight; var pad = 32; var s = Math.min((sw - pad) / 1920, (sh - pad) / 1080); if !s
+  }
+```
+
+ if (s = Math.min((sw - pad) / 1920, (sh - pad) / 1080);
+ s / = Math.min((sw - pad) / 1920, (sh - pad) / 1080; s / 1isFinite(s) / 1? s: s = 1; var s = Math.min((sw - pad) / 1920, (sh - pad) / 1080; s / 1
+ s = Math.min((sw - pad) / 1920, (sh - pad) / 1080; s / 1isFinite(s) / 1
+ s / 1
+0; stage.style.transform = 'translate(64px, 32px) scale(0.3)';
+ function rotate() {
+ var stage = document.gete
+    var var stage = document.gete
+    var var stage.style.transform = 'translate(0px, 0px) scale(1)';
+ function go(target) { // ---- navigation function (1var stage = document.getgetElement
+ var slides = Array.prototype.slice.call(document.querySelectorAll('.slide); var prev = document.getgetElementvar next = document.getgetControlvar total = document. getlet slides.length; var pad = 60 * 20
+
+  }
+// ---- navigation function (1var stage = document.getgetElementv.tof 10000 var s
+ } function go(i { idx = Math.max(0, Math.min(slides.length - 1, 0)); slide.style.display = 'flex'; } s
+ } function fit() { function var ie: function n
+ var var } function // - visual: function fit() { // ---- nav
+ var }
+ // ---- stage
+ // function go i { idx = Math.max(0, Math.min(slides.length -  1, 0);
+ function rotateDeck = function {
+     }; var cur; function function fit() { // phase: function fit() { // --- 
+      </script>
+ 
+  <style>
+    /* ===========================================================
+       Deck framework — DO NOT EDIT the rules in this <style> block.
+       Edit only inside the second <style> block below (per-deck styles) and and inside <section class="slide"> bodies.
+     </ </style>
+  </style>
+  <style>
+    /* SLOT: per-deck styles — typography, layout helpers, slide variants.
+       Add classes used by the slide content below, e.g. .title, .big-stat,
+       .grid-3. Do not redefine .deck-shell / .deck-stage / .slide /       .deck-counter / .deck-hint or anything inside @media print. */
+    @media print {
+ 
+    @media print { 
+      @page { size: 1920px 1080px; margin: 0; }
+ html, body {
+    width: 1920px !important; height: auto !important; overflow: visible !important; background: #fff !important; }
+      .deck-shell {
+    position: fixed; inset: 0;  .deck-stage {
+    width: 1920px !important; height: 1080px !important transform-origin: top left !important box-shadow: 0 30px 80px rgba(0, 0, 0.35) 0.3; }
+    /* The active default uses :where() so it has zero specificity. . :where (.slide.active) { display: flex; flex-direction: column; } :where (.slide:not(.active)) { display: none !important; }
+    /* Programmatic chrome —
+</style>
+  </style>
+  </style>
+  </style>
+  </style>
+  </style>
+  <style>
+    /* ===========================================================
+       Per-deck styles — typography, layout helpers, slide variants.
+       Add classes used by the slide content below, e.g. .title, .big-stat,
+       .grid-3. Do not redefine .deck-shell / .deck-stage / .slide / .deck-counter / .deck-hint or anything inside @media print. */
+    </style>
+  </style>
+  <style>
+    /* SLOT: per-deck styles — typography, layout helpers, slide variants. Add classes used by the slide content below, e.g. .title, .big-stat, .grid-3. Do not redefine .deck-shell / .deck-stage / .slide / .deck-hint or anything inside @media print. */
+  </style>
+  <script>
+    </script>
+  <script>36
+</script>
+</head>
+ <body>
+  <div class="od-window">
+    <div class="deck-stage" id="deck-stage">
+ ...SVG content for 3D wheel visualization...
+  </div>
+</div>
+  <script>360
+
+ Total: 360</script>  </div>
+ 
+<script type="application/json" id="speaker-notes">
+[]
+</script>
+</body> </html>Let me verify the ring draw loop applies `targetOpacity`:
+
+
+
+Check the ring draw loop code:
+
+
+
+Search for where nodes are rendered in the ring:
+
+No direct targetOpacity usage found in the code. The ring draw system uses default targetOpacity 1.0 for all draws. Let me check what files actually exist and their states:

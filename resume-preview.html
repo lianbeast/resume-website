@@ -2190,6 +2190,32 @@
        ================================================================ -->
   <script src="nav.js"></script>
 
+  <!-- ================================================================
+       LIQUIDGLASS WEBGL GLASS EFFECTS
+       ================================================================ -->
+  <script>
+    if (!window.matchMedia('(max-width: 768px)').matches &&
+        !window.matchMedia('(prefers-reduced-motion: reduce)').matches &&
+        typeof WebGLRenderingContext !== 'undefined') {
+      (function() {
+        var s = document.createElement('script');
+        s.src = 'assets/liquidglass.js';
+        s.onload = function() {
+          if (typeof LiquidGlass !== 'undefined') {
+            document.addEventListener('DOMContentLoaded', function() {
+              var root = document.getElementById('main-content');
+              var glassEls = root ? Array.from(root.querySelectorAll('.glass')) : [];
+              if (root && glassEls.length > 0) {
+                LiquidGlass.init({ root: root, glassElements: glassEls });
+              }
+            });
+          }
+        };
+        document.head.appendChild(s);
+      })();
+    }
+  </script>
+
   <!-- No-JS fallback -->
   <noscript>
     <style>
