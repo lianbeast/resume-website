@@ -2197,11 +2197,17 @@
        JAVASCRIPT — Three.js scene + interactions
        ================================================================ -->
   <!-- GSAP: desktop-only loader. GSAP eval is a ~400ms main-thread task — worst
-       FID contributor on mobile. app.js guards on typeof gsap, so mobile just
-       skips scroll animations (reveals render visible, stat counters set inline). -->
+       FID contributor on mobile. animations.js guards on typeof gsap. -->
   <!-- The new scene owns camera motion; existing resume interactions remain shared. -->
   <script defer src="assets/immersive-preview.js"></script>
-  <script defer src="app.js"></script>
+
+  <!-- Core modules (load order matters for dependencies) -->
+  <script defer src="app/motion.js"></script>
+  <script defer src="app/threejs/map.js"></script>
+  <script defer src="app/threejs/pins.js"></script>
+  <script defer src="app/skill-wheel.js"></script>
+  <script defer src="app/form.js"></script>
+  <script defer src="app/animations.js"></script>
 
   <!-- ================================================================
        NAV / BACK-TO-TOP / THEME HANDLERS

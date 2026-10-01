@@ -2185,11 +2185,10 @@
   </footer>
 
   <!-- ================================================================
-       JAVASCRIPT — Three.js scene + interactions
+       JAVASCRIPT — Modular application components
        ================================================================ -->
   <!-- GSAP: desktop-only loader. GSAP eval is a ~400ms main-thread task — worst
-       FID contributor on mobile. app.js guards on typeof gsap, so mobile just
-       skips scroll animations (reveals render visible, stat counters set inline). -->
+       FID contributor on mobile. animations.js guards on typeof gsap. -->
   <script>
     if (!window.matchMedia('(max-width: 768px)').matches &&
         !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
@@ -2197,7 +2196,14 @@
         '<script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" integrity="sha384-Z3REaz79l2IaAZqJsSABtTbhjgOUYyV3p90XNnAPCSHg3EMTz1fouunq9WZRtj3d" crossorigin="anonymous"><\/script>');
     }
   </script>
-  <script defer src="app.js"></script>
+
+  <!-- Core modules (load order matters for dependencies) -->
+  <script defer src="app/motion.js"></script>
+  <script defer src="app/threejs/map.js"></script>
+  <script defer src="app/threejs/pins.js"></script>
+  <script defer src="app/skill-wheel.js"></script>
+  <script defer src="app/form.js"></script>
+  <script defer src="app/animations.js"></script>
 
   <!-- ================================================================
        NAV / BACK-TO-TOP / THEME HANDLERS
