@@ -73,6 +73,5 @@ Contact-form tests intercept Formspree requests locally; no real messages are se
 
 ## Deployment
 
-GitHub Pages publishes the `main` branch automatically. `netlify.toml` retains
-the CSP/headers configuration for the previous Netlify hosting; the contact form
-uses Formspree (`https://formspree.io/f/mdekbpja`) and works on both hosts.
+GitHub Pages publishes the `main` branch automatically. The contact form uses
+Formspree (`https://formspree.io/f/mdekbpja`).

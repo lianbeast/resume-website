@@ -31,7 +31,7 @@ The only personal career site where the visual argument *is* the professional ar
 ## Capabilities and Constraints
 
 - **Single self-contained file**: `index.html` + inline CSS + `app.js` + `nav.js` + `theme.js` + `states.js`. No build step, no bundler, no framework.
-- **Deploy**: GitHub Pages publishes the `main` branch; `netlify.toml` keeps the headers/CSP configuration from the earlier Netlify hosting.
+- **Deploy**: GitHub Pages publishes the `main` branch automatically.
 - **Form backend**: Formspree (`https://formspree.io/f/mdekbpja`) with client-side validation in `app.js` and a honeypot field.
 - **Motion**: Three.js + GSAP, fully gated by `prefers-reduced-motion` (falls back to static scene, not blank).
 - **Themes**: Light (Carbon Ivory) + Dark (Graphite) via `data-theme` attribute, persisted in localStorage.
