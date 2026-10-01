@@ -6,8 +6,8 @@ const puppeteer = require('puppeteer-core');
 const { Launcher } = require('chrome-launcher');
 
 const root = path.resolve(__dirname, '..');
-const config = fs.readFileSync(path.join(root, 'netlify.toml'), 'utf8');
-const csp = config.match(/Content-Security-Policy = "([^"]+)"/)[1];
+const config = JSON.parse(fs.readFileSync(path.join(root, 'config.json'), 'utf8'));
+const csp = config['Content-Security-Policy'];
 const mime = { '.html': 'text/html', '.js': 'text/javascript', '.css': 'text/css', '.png': 'image/png', '.pdf': 'application/pdf' };
 const server = http.createServer((req, res) => {
   const pathname = decodeURIComponent(new URL(req.url, 'http://localhost').pathname);
