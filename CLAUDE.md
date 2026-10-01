@@ -58,6 +58,12 @@ node scripts/bold-resume.test.cjs # bold-resume-preview.html
 ---
 
 ## Key Files & Directories
+
+### Custom Agents
+
+- **ThreeJS-Animator**: Handles Three.js and GSAP animations, ensuring motion respects `prefers-reduced-motion`.
+- **Formspree-Validator**: Validates Formspree form integrations, including client-side validation and CSP compliance.
+- **Lighthouse-Optimizer**: Runs Lighthouse CI tests and suggests fixes for performance/accessibility issues.
 ```
 ├── index.html                 # Main entry point (inline CSS + scripts)
 ├── immersive-preview.html     # 3D career journey
