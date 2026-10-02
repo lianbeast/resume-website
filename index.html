@@ -118,19 +118,6 @@
   <!-- Three.js canvas container — career location network map -->
   <div id="scene-container" aria-hidden="true"></div>
 
-  <!-- Early bail for Three.js map — add is-bailed class immediately to prevent CLS
-       from career-locations fallback showing then hiding. Runs before DOMContentLoaded. -->
-  <script>
-    (function() {
-      const container = document.getElementById('scene-container');
-      const bail = () => container && container.classList.add('is-bailed');
-      if (!container) return;
-      if (typeof THREE === 'undefined') { bail(); return; }
-      const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      if (prefersReducedMotion) { bail(); return; }
-    })();
-  </script>
-
   <!-- Career locations: accessible text alternative to the Three.js map.
        Visible until JS enhances the canvas (then hidden visually, kept for SR).
        No-JS / no-Three / reduced-motion users still get the career path as text. -->
