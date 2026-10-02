@@ -41,6 +41,14 @@
   --color-secondary-hover: var(--teal-dark);
   --font-body: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif;
   --font-mono: 'JetBrains Mono', monospace;
+  /* Z-index scale — semantic layers */
+  --z-bg: 0;
+  --z-content: 2;
+  --z-tooltip: 100;
+  --z-backtotop: 1000;
+  --z-nav: 2000;
+  --z-skip: 3000;
+  --z-drawer: 3000;
 }
 
 [data-theme="dark"] {
@@ -96,7 +104,7 @@ body {
   padding: 12px 24px;
   border-radius: 8px;
   font-weight: 600;
-  z-index: 10000;
+  z-index: var(--z-skip);
   transition: top 0.3s;
 }
 .skip-link:focus { top: 16px; }
@@ -107,7 +115,7 @@ body {
 #main-nav {
   position: fixed;
   top: 0; left: 0; right: 0;
-  z-index: 9999;
+  z-index: var(--z-nav);
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -218,7 +226,7 @@ body.menu-open { overflow: hidden; }
 #back-to-top {
   position: fixed;
   bottom: 24px; right: 24px;
-  z-index: 9998;
+  z-index: var(--z-backtotop);
   width: 44px; height: 44px;
   border-radius: 12px;
   border: 1px solid var(--border-glass);
@@ -710,7 +718,7 @@ section:first-of-type { content-visibility: visible; }
   visibility: hidden;
   transform: translateY(-8px);
   transition: opacity 0.2s ease, visibility 0.2s ease, transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
-  z-index: 10000;
+  z-index: var(--z-drawer);
   display: flex;
   flex-direction: column;
   gap: 2px;
@@ -756,14 +764,14 @@ section:first-of-type { content-visibility: visible; }
   width: 100%;
   height: 100vh;
   height: 100dvh;
-  z-index: 0;
+  z-index: var(--z-bg);
   pointer-events: none;
 }
 
 /* Skill tooltip for hover */
 #skill-tooltip {
   position: fixed;
-  z-index: 100;
+  z-index: var(--z-tooltip);
   background: var(--bg-glass);
   border: 1px solid var(--border-glass);
   backdrop-filter: blur(12px);
@@ -871,7 +879,7 @@ section:first-of-type { content-visibility: visible; }
 /* ================================================================
    CONTENT WRAPPER
    ================================================================ */
-.content { position: relative; z-index: 2; }
+.content { position: relative; z-index: var(--z-content); }
 
 /* ================================================================
    FOOTER
@@ -883,7 +891,7 @@ footer {
   color: var(--text-dim);
   border-top: none;
   position: relative;
-  z-index: 2;
+  z-index: var(--z-content);
 }
 .footer-social {
   display: flex;

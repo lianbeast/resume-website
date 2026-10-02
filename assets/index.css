@@ -402,7 +402,6 @@ form::before {
   .timeline { padding-left: 24px; }
 
   /* Mobile font & readability fixes */
-  .section-label { font-size: 12px; }
   .stat-label { font-size: 13px; }
   .stat-num { font-size: 30px; }
   .timeline-date { font-size: 13px; }
