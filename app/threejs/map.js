@@ -94,6 +94,10 @@
 
       container.appendChild(renderer.domElement);
 
+      // Successfully initialized — mark as enhanced so fallback hides immediately
+      // (prevents CLS gap between is-bailed removal and is-enhanced addition)
+      container.classList.add('is-enhanced');
+
       // Store references for other modules
       ThreeJSMap.scene = scene;
       ThreeJSMap.mapGroup = mapGroup;

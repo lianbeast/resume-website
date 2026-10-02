@@ -11,59 +11,11 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=optional">
-  <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    :root {
-      --bg: #f7f5f0;
-      --bg-card: #ffffff;
-      --text: #1c1917;
-      --text-dim: #6e635c;
-      --gold: #c2410c;
-      --gold-dark: #a4380a;
-      --border: rgba(28, 25, 23, 0.12);
-      --font-body: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif;
-      --font-mono: 'JetBrains Mono', monospace;
-    }
-    [data-theme="dark"] {
-      --bg: #161412;
-      --bg-card: #1e1c1a;
-      --text: #f0ede8;
-      --text-dim: #9a938d;
-      --gold: #e06a3a;
-      --gold-dark: #c2410c;
-      --border: rgba(224, 106, 58, 0.16);
-    }
-    html { color-scheme: light; background: var(--bg); color: var(--text); font-family: var(--font-body); line-height: 1.6; font-size: 16px; }
-    html[data-theme="dark"] { color-scheme: dark; }
-    body { min-height: 100vh; display: flex; flex-direction: column; padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left); }
-    #main-nav { display: flex; align-items: center; justify-content: space-between; padding: 14px 24px; border-bottom: 1px solid var(--border); }
-    .nav-links { display: flex; flex-wrap: wrap; gap: 4px; list-style: none; }
-    .nav-links a, .nav-links button { padding: 10px 14px; font: 500 14px var(--font-body); color: var(--text-dim); text-decoration: none; background: none; border: none; border-radius: 8px; cursor: pointer; }
-    .nav-links a:hover, .nav-links button:hover { color: var(--text); background: rgba(194, 65, 12, 0.1); }
-    .nav-links a:focus-visible, .nav-links button:focus-visible, #wheel-search:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; }
-    main { flex: 1; width: 100%; max-width: 1180px; margin: 0 auto; padding: 40px 24px 72px; overflow-x: clip; }
-    .wheel-intro { max-width: 62ch; margin-bottom: 24px; }
-    h1 { font-size: clamp(1.9rem, 4.5vw, 3rem); font-weight: 700; letter-spacing: -0.03em; margin-bottom: 10px; }
-    .wheel-controls { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin: 20px 0 14px; }
-    #wheel-search { flex: 1 1 220px; min-height: 44px; padding: 10px 16px; font: inherit; color: var(--text); background: var(--bg-card); border: 1px solid var(--border); border-radius: 999px; }
-    #wheel-pause { min-height: 44px; padding: 10px 16px; font: inherit; font-size: 14px; color: var(--text); background: var(--bg-card); border: 1px solid var(--border); border-radius: 999px; cursor: pointer; }
-    #wheel-pause:hover, #wheel-pause[aria-pressed="true"] { border-color: var(--gold); color: var(--gold); }
-    #wheel-status { font: 12px var(--font-mono); color: var(--text-dim); }
-    .wheel-stage { position: relative; height: min(64vh, 560px); background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; overflow: hidden; }
-    #wheel-canvas { width: 100%; height: 100%; display: block; touch-action: pan-y; }
-    #wheel-canvas[aria-hidden="true"] + .wheel-fallback { position: absolute; inset: 0; display: grid; place-content: center; padding: 32px; text-align: center; }
-    #wheel-tooltip { position: fixed; z-index: 10; max-width: min(272px, calc(100vw - 16px)); padding: 8px 14px; font-size: 13px; background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; box-shadow: 0 4px 16px rgba(0,0,0,0.08); pointer-events: none; opacity: 0; transition: opacity 0.15s ease; }
-    #wheel-tooltip.visible { opacity: 1; }
-    #wheel-tooltip .category { display: block; font: 10px var(--font-mono); color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.08em; margin-top: 2px; }
-    #wheel-results { list-style: none; margin-top: 20px; border-top: 1px solid var(--border); }
-    #wheel-results li { padding: 12px 4px; border-bottom: 1px solid var(--border); display: flex; flex-wrap: wrap; gap: 8px 14px; align-items: baseline; }
-    #wheel-results .name { font-weight: 600; }
-    #wheel-results .cat { font: 11px var(--font-mono); color: var(--gold); }
-    footer { padding: 28px 24px; text-align: center; font-size: 12px; color: var(--text-dim); }
-    footer a { color: inherit; }
-    @media (prefers-reduced-motion: reduce) { * { animation: none !important; transition-duration: 0.01ms !important; } }
-    @media print { #main-nav, .wheel-controls, #wheel-tooltip { display: none !important; } .wheel-stage { height: auto; border: 0; } #wheel-canvas { display: none; } }
-  </style>
+
+  <!-- Shared styles — design tokens, reset, base, nav, footer, components, utilities -->
+  <link rel="stylesheet" href="assets/shared.css">
+  <!-- Page-specific wheel styles -->
+  <link rel="stylesheet" href="assets/wheel.css">
 </head>
 <body>
   <nav id="main-nav" aria-label="Main navigation">
@@ -317,6 +269,5 @@
       window.dataset = window.dataset || {};
     })();
   </script>
-  <style>.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }</style>
 </body>
 </html>

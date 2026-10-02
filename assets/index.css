@@ -1,0 +1,409 @@
+/* ================================================================
+   INDEX.HTML — Page-specific styles
+   Extracted from inline <style> block in index.html
+   ================================================================ */
+
+/* ================================================================
+   HERO
+   ================================================================ */
+#hero {
+  min-height: 100vh;
+  min-height: 100dvh; /* svh-equivalent stability: hero never reflows on URL-bar show/hide */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+.hero-name {
+  font-size: clamp(36px, 7vw, 72px);
+  font-weight: 700;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  color: var(--text);
+  margin-bottom: 8px;
+}
+
+.hero-title {
+  font-size: clamp(18px, 2.5vw, 24px);
+  font-weight: 400;
+  color: var(--text-dim);
+  margin-bottom: 28px;
+}
+
+.hero-tagline {
+  max-width: 640px;
+  font-size: 15px;
+  color: var(--text-dim);
+  line-height: 1.7;
+}
+.hero-cta {
+  margin-top: 36px;
+  display: flex;
+  gap: 12px;
+}
+
+/* ================================================================
+   STATS
+   ================================================================ */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+}
+.stat-card {
+  position: relative;
+  overflow: hidden;
+  padding: 24px;
+  text-align: center;
+}
+.stat-num {
+  font-size: 36px;
+  font-weight: 700;
+  color: var(--gold);
+  line-height: 1;
+}
+.stat-label {
+  font-size: 12px;
+  color: var(--text-dim);
+  margin-top: 6px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+/* ================================================================
+   ABOUT
+   ================================================================ */
+.about-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+}
+.about-text {
+  padding: 32px;
+  font-size: 15px;
+  color: var(--text-dim);
+  line-height: 1.8;
+}
+.about-highlights {
+  padding: 32px;
+}
+.highlight-item {
+  padding: 12px 0;
+  border-bottom: 1px solid var(--border-glass);
+  display: flex;
+  justify-content: space-between;
+}
+.highlight-item:last-child { border: none; }
+.highlight-key {
+  font-size: 14px;
+  color: var(--text-dim);
+}
+.highlight-val {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+/* ================================================================
+   EXPERIENCE TIMELINE
+   ================================================================ */
+.timeline {
+  position: relative;
+  padding-left: 32px;
+}
+.timeline::before {
+  content: '';
+  position: absolute;
+  left: 6px;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: var(--border-glass);
+}
+.timeline-item {
+  position: relative;
+  margin-bottom: 40px;
+  padding: 24px;
+}
+.timeline-item::before {
+  content: '';
+  position: absolute;
+  left: -32px;
+  top: 28px;
+  width: 14px;
+  height: 14px;
+  background: var(--gold);
+  border-radius: 50%;
+  border: 3px solid var(--bg);
+}
+.timeline-date {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--gold);
+  margin-bottom: 6px;
+}
+.timeline-role {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+.timeline-company {
+  font-size: 14px;
+  color: var(--text-dim);
+  margin-bottom: 8px;
+}
+.timeline-loc {
+  font-size: 12px;
+  color: var(--text-dim);
+  margin-bottom: 10px;
+}
+.timeline-summary {
+  font-size: 13px;
+  color: var(--text-dim);
+  line-height: 1.6;
+  margin-bottom: 8px;
+}
+.timeline-metrics {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: 12px;
+}
+.timeline-metrics li {
+  color: var(--text);
+  white-space: nowrap;
+}
+.timeline-metrics strong {
+  color: var(--gold);
+  font-weight: 600;
+}
+
+/* ================================================================
+   SKILLS CONSTELLATION
+   ================================================================ */
+.constellation-anchor {
+  position: relative;
+}
+.skills-canvas-wrap {
+  width: 100%;
+  height: 400px;
+  position: relative;
+}
+#skill-canvas,
+#skill-wheel {
+  width: 100%;
+  height: 100%;
+  border-radius: 16px;
+  background: var(--bg-card);
+  border: 1px solid var(--border-glass);
+}
+.skill-controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px 14px;
+  margin: 20px 0 8px;
+}
+.skill-search {
+  flex: 1 1 240px;
+  min-width: 180px;
+  padding: 9px 14px;
+  font: inherit;
+  font-size: 14px;
+  color: var(--text);
+  background: rgba(255,255,255,0.55);
+  border: 1px solid var(--border-glass);
+  border-radius: 999px;
+  outline: none;
+  transition: border-color 0.2s, background 0.2s;
+}
+.skill-search:focus {
+  border-color: var(--gold);
+  background: rgba(255,255,255,0.8);
+}
+.skill-filter-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.skill-filter-btn {
+  font: inherit;
+  font-size: 12px;
+  font-weight: 500;
+  padding: 5px 12px;
+  color: var(--text-dim);
+  background: rgba(255,255,255,0.4);
+  border: 1px solid var(--border-glass);
+  border-radius: 999px;
+  cursor: pointer;
+  transition: color 0.2s, background 0.2s, border-color 0.2s;
+}
+.skill-filter-btn:hover { color: var(--text); }
+.skill-filter-btn[aria-pressed="true"] {
+  color: #fff;
+  background: var(--gold);
+  border-color: var(--gold);
+}
+.skills-count {
+  font-size: 12px;
+  color: var(--text-dim);
+  white-space: nowrap;
+}
+.skills-list {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-top: 24px;
+}
+.skill-category {
+  padding: 20px;
+}
+.skill-category h3 {
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: 12px;
+}
+
+/* ================================================================
+   CONTACT FORM (page-specific overrides)
+   ================================================================ */
+#contact form {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  max-width: 600px;
+}
+#contact .full-width { grid-column: 1 / -1; }
+
+/* ================================================================
+   ENHANCED HOVER ANIMATIONS (index-specific)
+   ================================================================ */
+
+/* Stat card hover */
+.stat-card:hover {
+  transform: translateY(-4px) scale(1.01);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12),
+               0 16px 48px rgba(0,0,0,0.06),
+               inset 0 1px 0 rgba(255,255,255,0.06);
+}
+
+/* Timeline enhancements */
+.timeline::before {
+  background: linear-gradient(to bottom, var(--gold), var(--gold-dark), var(--border-glass));
+  opacity: 0.5;
+}
+.timeline-item {
+  transition: box-shadow 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+              border-color 0.3s ease;
+}
+.timeline-item:hover {
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12),
+              0 12px 40px rgba(0,0,0,0.06);
+  transform: translateX(6px) translateY(-2px);
+  border-color: rgba(194, 65, 12, 0.35);
+}
+
+/* Contact form enhancements */
+form {
+  position: relative;
+}
+form::before {
+  content: '';
+  position: absolute;
+  top: -1px;
+  left: 0;
+  right: 0;
+  height: 3px;
+  border-radius: 2px;
+  background: linear-gradient(90deg, var(--gold), var(--gold-dark), var(--gold-light));
+}
+.form-group input:focus,
+.form-group textarea:focus {
+  animation: border-glow 2s ease-in-out infinite;
+}
+
+/* ================================================================
+   DECORATIVE ORBS & FLOATING SHAPES (index-specific)
+   ================================================================ */
+#hero { position: relative; overflow: hidden; }
+.orb {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 0;
+  filter: blur(80px);
+}
+
+.float-shape {
+  position: absolute;
+  pointer-events: none;
+  z-index: 0;
+}
+.float-shape.circle { border-radius: 50%; border: 1.5px solid; }
+.float-shape.diamond { transform: rotate(45deg); border: 1.5px solid; }
+.float-shape.triangle {
+  width: 0 !important; height: 0 !important; background: transparent !important;
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  border-bottom: 16px solid;
+}
+.float-shape.line { height: 1.5px !important; border-radius: 1px; }
+.float-shape.f1 { animation: float-drift 12s ease-in-out infinite; }
+.float-shape.f2 { animation: float-drift-alt 16s ease-in-out infinite; opacity: 0.08; }
+.float-shape.f3 { animation: float-rotate 20s ease-in-out infinite; }
+.float-shape.f4 { animation: float-drift 14s ease-in-out infinite 2s; opacity: 0.09; }
+.float-shape.f5 { animation: float-drift-alt 18s ease-in-out infinite; }
+.float-shape.f6 { animation: float-rotate 22s ease-in-out infinite 3s; opacity: 0.07; }
+
+/* ================================================================
+   SHIMMER ON HERO CTA BUTTON
+   ================================================================ */
+.hero-cta .btn-primary { animation: pulse-glow 3s ease-in-out infinite; }
+
+/* ================================================================
+   RESPONSIVE (page-specific breakpoints)
+   ================================================================ */
+@media (max-width: 768px) {
+  .stats-grid { grid-template-columns: 1fr; }
+  .about-grid,
+  .edu-cert-grid,
+  .skills-list,
+  #contact form {
+    grid-template-columns: 1fr;
+  }
+  .hero-name { letter-spacing: -0.01em; }
+  .timeline { padding-left: 24px; }
+
+  /* Mobile font & readability fixes */
+  .section-label { font-size: 12px; }
+  .stat-label { font-size: 13px; }
+  .stat-num { font-size: 30px; }
+  .timeline-date { font-size: 13px; }
+  .timeline-role { font-size: 17px; }
+  .timeline-company { font-size: 13px; }
+  .timeline-loc { font-size: 12px; }
+  .timeline-summary { font-size: 14px; }
+  .skill-tag { font-size: 13px; padding: 8px 14px; margin: 3px; }
+  .cert-list li { font-size: 15px; }
+  .edu-card h3 { font-size: 15px; }
+  .edu-card p { font-size: 13px; }
+  .about-grid p { font-size: 14px; }
+  .contact-item span { font-size: 14px; }
+
+  .timeline-role, .timeline-company {
+    overflow-wrap: anywhere;
+  }
+}
+
+@media (max-width: 480px) {
+  .stat-num { font-size: 28px; }
+  .timeline { padding-left: 20px; }
+  .skill-tag { font-size: 14px; padding: 10px 16px; }
+  .cert-list li { font-size: 16px; }
+}

@@ -325,8 +325,8 @@
     // Initial theme sync
     window.ThreeJSMap.updateBrandColors();
 
-    // Mark enhanced
-    window.ThreeJSMap.getContainer().classList.add('is-enhanced');
+    // Note: is-enhanced is added in map.js init() to prevent CLS gap
+    // window.ThreeJSMap.getContainer().classList.add('is-enhanced');
 
     // Expose for animation module
     window.ThreeJSPins = {

@@ -1,153 +1,104 @@
-# Career Site — AGENTS.md
+# Agent & Repository Guide — Career Site
 
-## Project Description
-Static personal career/portfolio site for **Syed Rahid Ahmed**, Sr. Switch Technician (Telecom Operations & RAN/Transport Specialist). Hosted on GitHub Pages at `https://lianbeast.github.io/resume-website/` with custom domain `rahid.persipico.com`. No build step, no framework — pure HTML, inline CSS, vanilla JS. Deploy = push `main`.
+## Project Overview
+Static personal career/portfolio site for **Syed Rahid Ahmed**, Senior Switch Technician & Telecom Specialist (Switch Operations, 5G/4G RAN & Transport Engineering). Hosted on **GitHub Pages** at `https://lianbeast.github.io/resume-website/` (canonical: `https://rahid.persipico.com`).
 
-**Purpose**: Convert recruiter attention into hiring conversation. The visual argument *is* the professional argument — topology visualizations prove network thinking. Carrier-grade composure, not flash.
-
----
-
-## Tech Stack
-- **Runtime**: Static files served via `http-server` (dev) / GitHub Pages (prod)
-- **3D/Animation**: Three.js (r128 via CDN) + GSAP/ScrollTrigger (desktop-only, gated `matchMedia`)
-- **Forms**: Formspree (`https://formspree.io/f/mdekbpja`) with honeypot + client validation
-- **Fonts**: Outfit (display/body) + JetBrains Mono (technical) injected async via `theme.js`
-- **Testing**: Puppeteer + chrome-launcher (scripts in `scripts/`)
-- **CI**: Lighthouse CI (`lhci autorun`) with assertions in `lighthouseci.config.js`
+**Core Purpose**: Conversion-focused personal site designed to convert recruiter/hiring manager attention into high-value interview conversations. Proof over adjectives — visual arguments (Three.js network topology maps, interactive 3D skill wheel) serve as concrete proof of technical domain depth.
 
 ---
 
-## Commands
+## Commands & Workflows
 
+### Development
 ```bash
-# Development server (port 8080)
+# Start local static server (port 8080 / 8081)
+npx http-server -p 8081 -c-1
+# or via npm
 npm run dev
+```
 
-# Lighthouse CI (3 runs, assertions in lighthouseci.config.js)
+### Testing & Verification
+```bash
+# Full Lighthouse CI audit (runs 3 passes, enforces assertions)
 npm run lhci
-# or directly
-./scripts/run-lhci.sh
 
-# Individual page tests (headless Chrome, intercepts Formspree)
-node scripts/restore.test.cjs    # index.html, resume-preview.html, thank-you.html
-node scripts/immersive.test.cjs  # immersive-preview.html
-node scripts/bold-resume.test.cjs # bold-resume-preview.html
+# Page-specific Puppeteer browser test suites (headless Chrome)
+node scripts/restore.test.cjs     # Tests index.html, resume-preview.html, thank-you.html
+node scripts/immersive.test.cjs   # Tests immersive-preview.html
+node scripts/bold-resume.test.cjs # Tests bold-resume-preview.html
 ```
 
 ---
 
 ## Architecture Overview
 
-### Page Inventory
-| File | Purpose |
+1. **No-Build / Vanilla Stack**:
+   - Zero bundlers or frameworks — raw HTML, external modularized CSS, and plain ES/vanilla JavaScript.
+   - Deploying requires only pushing directly to `main` branch (GitHub Pages).
+
+2. **Modular CSS Structure**:
+   - `assets/shared.css`: Global reset, CSS tokens (`:root` / `[data-theme="dark"]`), typography, components (`.glass`, `.btn`, `.card`), navigation, and print rules.
+   - `assets/index.css`: Page-specific styles for `index.html` (Hero orbs, floating shapes, timeline hover accents).
+   - `assets/resume-preview.css`: Styles for resume preview variant.
+   - `assets/bold-resume-preview.css`: Styles for bold editorial layout.
+   - `assets/immersive-preview.css`: HUD, journey timeline, and controls for the 3D career journey.
+   - `assets/wheel.css`: Standalone skill wheel styling for `wheel-v2.html`.
+
+3. **Modular JS Architecture (`app/`)**:
+   - `app/motion.js`: Motion gating wrapper using `matchMedia('(prefers-reduced-motion: reduce)')`.
+   - `app/threejs/map.js`: Three.js scene, camera, and US map projection setup.
+   - `app/threejs/pins.js`: US state outlines, city nodes, packet trails, and network connections.
+   - `app/skill-wheel.js`: Interactive 3D skill constellation wheel with search, filter, and touch handlers.
+   - `app/form.js`: Formspree form validation, honeypot handling, and status messaging.
+   - `app/animations.js`: GSAP & ScrollTrigger scroll-driven reveals (gated off on mobile / reduced-motion).
+   - `app/glass.js`: LiquidGlass WebGL refraction initialization wrapper.
+   - `app/init.js`: Core entry point orchestrating module initialization.
+   - `theme.js`: Instant theme toggle (`data-theme`), local storage persistence, and non-blocking font injection.
+   - `nav.js`: Mobile drawer navigation, aria-expanded state, and keyboard focus trap.
+
+---
+
+## Key File Locations
+
+| Path | Purpose |
 |------|---------|
-| `index.html` | Main homepage — approved resume-style layout |
-| `immersive-preview.html` | Immersive 3D career journey (Three.js map + skill ring) |
-| `bold-resume-preview.html` | Bold editorial resume treatment |
-| `resume-preview.html` | Earlier resume-style preview (reference) |
-| `wheel-v2.html` | Standalone 3D skill wheel (search, pause, list fallback) |
-| `thank-you.html` | Contact form confirmation |
-
-### Core Architecture
-- **Single self-contained artifact**: `index.html` inlines CSS + loads `app.js`, `nav.js`, `theme.js`, `states.js` — no bundler
-- **Theme system**: Light (Carbon Ivory) + Dark (Graphite) via `data-theme` attribute, persisted in `localStorage`; `theme.js` injects fonts async
-- **CSP**: Single source in `config.json`, served via test server inferred by GitHub Pages headers
-- **Motion**: Three.js + GSAP fully gated by `prefers-reduced-motion` — falls back to static scene, never blank
-- **Mobile-first**: `100dvh` units, safe-area insets, `viewport-fit=cover`, debounced resize (150ms), 44px touch targets
-- **Print-safe**: Hierarchy legibility preserved when printed PDF
+| `index.html` | Primary homepage (resume layout + 3D background map + skill wheel) |
+| `immersive-preview.html` | Interactive 3D career journey (HUD + scroll-driven 3D camera path) |
+| `bold-resume-preview.html` | Editorial bold typography resume variant |
+| `resume-preview.html` | Standard resume preview variant |
+| `wheel-v2.html` | Standalone interactive 3D skill wheel |
+| `thank-you.html` | Contact form submission confirmation |
+| `config.json` | Content-Security-Policy (CSP) headers (single source of truth) |
+| `lighthouseci.config.js` | Performance (≥0.9), Accessibility (≥0.9), and CLS (≤0.1) assertions |
+| `DESIGN.md` | Authoritative design specification and design system token contract |
+| `PRODUCT.md` | Product requirements, brand positioning, and evidence boundaries |
 
 ---
 
-## Key Files & Directories
+## Custom Agents & Specialized Roles
 
-```
-├── index.html                    # Main entry point (inline CSS + scripts)
-├── immersive-preview.html        # 3D career journey
-├── bold-resume-preview.html      # Editorial resume
-├── wheel-v2.html                 # Skill wheel standalone
-├── thank-you.html                # Form confirmation
-├── config.json                   # CSP header (single source truth)
-├── theme.js                      # Theme toggle, font injection, motion gating
-├── app.js                        # Core logic: Three.js map, skill ring, form, counters
-├── nav.js                        # Hamburger drawer, focus management, scrollspy
-├── states.js                     # US state polygons (lon/lat, RDP-simplified)
-├── lighthouseci.config.js        # LHCI assertions (perf ≥0.9, a11y ≥0.9, CLS ≤0.1, FID ≤200ms)
-├── scripts/                      # Puppeteer test scripts
-│   ├── restore.test.cjs
-│   ├── immersive.test.cjs
-│   ├── bold-resume.test.cjs
-│   └── run-lhci.sh
-├── assets/
-│   ├── design-tokens.css         # :root + dark theme CSS custom properties
-│   ├── design-tokens.json        # Machine-readable tokens
-│   ├── og-image.png              # Social preview
-│   └── demo/                     # Demo GIF/MP4
-├── DESIGN.md                     # Design spec (Impeccable output)
-├── PRODUCT.md                    # Product spec (users, positioning, constraints, brand)
-├── HANDOFF.md                    # Mobile optimization summary + Lighthouse results
-├── COLOR_DIRECTIONS.md           # Four palette directions (Direction 1 = committed)
-├── SRA-Resume.pdf                # Resume PDF (alias SRA-Resume-072926.pdf)
-└── robots.txt                    # Allow all, sitemap reference
-```
+The repository defines custom agent profiles in `.claude/agents/`:
+
+1. **ThreeJS-Animator** (`.claude/agents/threejs-animator.md`):
+   - Specialized in Three.js r128 and GSAP/ScrollTrigger scene graph performance.
+   - Ensures all animation frames are properly canceled, WebGL contexts disposed, and motion strictly respects `prefers-reduced-motion`.
+
+2. **Formspree-Validator** (`.claude/agents/formspree-validator.md`):
+   - Specializes in form security, client-side validation, accessibility (`aria-invalid`, `aria-describedby`), and CSP compliance with `connect-src` / `form-action` for Formspree.
+
+3. **Lighthouse-Optimizer** (`.claude/agents/lighthouse-optimizer.md`):
+   - Focuses on Core Web Vitals (LCP, CLS, FID/INP), layout shift elimination, CSS font-display strategies, and zero-CLS progressive enhancement.
 
 ---
 
-## Design System (Committed: Direction 1 — Solar Graphite Evolution)
+## Coding Conventions & Guardrails
 
-| Role | Hex | Usage |
-|------|-----|-------|
-| Primary | `#c2410c` | CTAs, hub nodes, timeline dots, focus rings |
-| Secondary | `#0e7490` | OSS tags, packet trails |
-| Tertiary | `#4d7c0f` | RAN/Cellular category, success |
-| Light bg | `#f7f5f0` | Carbon Ivory |
-| Dark bg | `#161412` | Graphite |
-
-**Typography**: Outfit 300–700 (display/body) + JetBrains Mono 400/500 (labels, tokens). No third typeface.
-
-**Key Rules**:
-- Terracotta is the single primary accent (≤10% surface); rarity is its strength
-- Hover/active shadows tinted with terracotta (`rgba(194,65,12,a)`), never neutral black
-- Glass cards flat at rest; ambient shadow appears as response to state
-- JetBrains Mono reserved strictly for technical tokens: protocol names, section kickers, tag labels, date stamps
-
----
-
-## Coding Conventions
-
-### Commits
-Conventional-ish: `feat:`, `fix:`, `chore:`, `polish:` — see git log
-
-### CSP
-Single source in `config.json`; never hardcode in HTML
-
-### Evidence Integrity
-Never fabricate employers, certifications, protocols, dates, or skill taxonomy (PRODUCT.md §41)
-
-### Motion
-Always respect `prefers-reduced-motion`; content never gated on animation
-
-### Accessibility
-WCAG AA target: ≥4.5:1 body, ≥3:1 large text; keyboard-reachable; no hue-alone encoding
-
-### No Framework Patterns
-No React/Vue/Svelte idioms; vanilla DOM, event delegation, CSS custom properties
-
----
-
-## Notable Constraints
-
-1. **Topology material** visual system (hub nodes, signal trails, cross-connections) IS the argument
-2. **Carrier-grade composure** — restraint over performance; motion enhances, never shouts
-3. **Proof over adjectives** — specificity (years, employers, certs, protocols) carries the page
-4. **One self-contained artifact** — portable, forwardable, no build step to break in transit
-5. **Single accent discipline** — terracotta ≤10% surface; rarity is its strength
-
----
-
-## Deployment
-
-- **Platform**: GitHub Pages (publishes `main` branch automatically)
-- **Domain**: `rahid.persipico.com` (CNAME)
-- **Contact Form**: Formspree (`https://formspree.io/f/mdekbpja`)
-- **Live URL**: https://lianbeast.github.io/resume-website/ | https://rahid.persipico.com
-- **LinkedIn**: https://linkedin.com/in/syedrahidahmed
+- **Zero Inline Styles**: External CSS stylesheets only; maintains clean separation and CSP compliance.
+- **Strict Evidence Boundaries**: Never invent or alter titles, years, employers, certifications, or technical taxonomy (refer to `PRODUCT.md`).
+- **WCAG 2.1 AA Compliance**:
+  - Minimum contrast 4.5:1 for body text, 3:1 for large text.
+  - Interactive elements must be keyboard accessible with visible focus rings (`:focus-visible`).
+  - Screen reader fallbacks (`#career-locations`) must remain synchronized with canvas visualizations.
+- **Performance Budget**:
+  - Keep CLS ≤ 0.1 by ensuring DOM fallbacks avoid layout shifting when Three.js initializes (`.is-enhanced` class handling).
+  - Heavy libraries (GSAP, Three.js) must be deferred or conditionally loaded.
