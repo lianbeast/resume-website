@@ -37,9 +37,17 @@
         return;
       }
 
-      var glassEls = root ? Array.from(root.querySelectorAll('.glass')) : [];
+      // LiquidGlass requires glass elements to be direct children of root.
+      // Our .glass elements are nested in sections/grids, so filter to only
+      // those that are direct children. The CSS .glass class (shared.css)
+      // already provides excellent glassmorphism via backdrop-filter for all others.
+      var allGlassEls = root ? Array.from(root.querySelectorAll('.glass')) : [];
+      var glassEls = allGlassEls.filter(function(el) {
+        return el.parentElement === root;
+      });
+
       if (glassEls.length === 0) {
-        console.warn('Glass: no glass elements found');
+        // No direct-child glass elements - LiquidGlass not needed, CSS handles it
         return;
       }
 
