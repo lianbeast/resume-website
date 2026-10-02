@@ -215,6 +215,12 @@
         "value": "16px solid",
         "createdAt": "2026-10-02T06:31:07.040Z",
         "reason": "Decorative triangle has a thick bottom border for aesthetic; not a rounded card border"
+      },
+      {
+        "rule": "border-accent-on-rounded",
+        "value": "triangle border",
+        "createdAt": "2026-10-02T17:50:28.386Z",
+        "reason": "CSS triangle technique: width:0 height:0 background:transparent with border-bottom creates triangle shape; not a rounded card with border"
       }
     ]
   }
