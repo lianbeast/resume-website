@@ -1,3 +1,5 @@
+/* Hallmark · macrostructure: Stat-Led · design-system: DESIGN.md · theme: Solar Graphite Evolution */
+
 /* ================================================================
    RESET & BASE
    ================================================================ */
@@ -751,7 +753,7 @@ section:first-of-type { content-visibility: visible; }
 #scene-container {
   position: fixed;
   top: 0; left: 0;
-  width: 100vw;
+  width: 100%;
   height: 100vh;
   height: 100dvh;
   z-index: 0;

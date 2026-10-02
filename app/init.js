@@ -1,36 +1,58 @@
 /**
- * App Initialization Module
- * Wires together all application modules in the correct dependency order
+ * Career Site — Early Initialization
+ * Handles desktop-only GSAP loading and Three.js bail logic.
+ * Runs before DOMContentLoaded to prevent CLS from bail states.
  */
 
 (function() {
   'use strict';
 
-  // Module initialization order matters due to dependencies:
-  // 1. motion.js - sets up visualization-motion-change event (no deps)
-  // 2. threejs/map.js - sets up Three.js scene, exposes window.camera (needs motion)
-  // 3. threejs/pins.js - builds pins on top of map scene (needs map)
-  // 4. skill-wheel.js - separate Three.js canvas (needs motion)
-  // 5. form.js - contact form validation (no deps)
-  // 6. animations.js - GSAP scroll animations (needs window.camera from map)
+  // Early Three.js bail for resume-preview (runs before map.js loads)
+  // The bail class is added to #scene-container so CSS shows the
+  // career-locations fallback immediately, avoiding CLS.
+  function bailThreeJS() {
+    const container = document.getElementById('scene-container');
+    if (!container) return;
+    if (typeof THREE === 'undefined') {
+      container.classList.add('is-bailed');
+      return;
+    }
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (prefersReducedMotion) {
+      container.classList.add('is-bailed');
+    }
+  }
 
-  // The modules self-initialize on DOMContentLoaded via their own listeners
-  // This file ensures load order by being loaded first
+  // Desktop-only GSAP + ScrollTrigger loader
+  // GSAP eval is ~400ms main-thread task; gate to desktop + non-reduced-motion.
+  function loadGSAP() {
+    const isDesktop = !window.matchMedia('(max-width: 768px)').matches;
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  console.log('Career Site: Modules loading...');
+    if (isDesktop && !prefersReducedMotion) {
+      const gsapScript = document.createElement('script');
+      gsapScript.defer = true;
+      gsapScript.src = 'https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js';
+      gsapScript.integrity = 'sha384-g4NTh/Iv5PPU4xPyhEWqPcwtNXOvdaDI8LLnyYfyNZOjKJeYQyjzQ9X5275eBjpt';
+      gsapScript.crossOrigin = 'anonymous';
+      document.head.appendChild(gsapScript);
 
-  // Track initialization for debugging
-  const initStatus = {
-    motion: false,
-    map: false,
-    pins: false,
-    skillWheel: false,
-    form: false,
-    animations: false,
-  };
+      const stScript = document.createElement('script');
+      stScript.defer = true;
+      stScript.src = 'https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js';
+      stScript.integrity = 'sha384-Z3REaz79l2IaAZqJsSABtTbhjgOUYyV3p90XNnAPCSHg3EMTz1fouunq9WZRtj3d';
+      stScript.crossOrigin = 'anonymous';
+      document.head.appendChild(stScript);
+    }
+  }
 
-  // Listen for module ready events (if modules emit them)
-  document.addEventListener('DOMContentLoaded', () => {
-    console.log('Career Site: DOM ready, modules initializing...');
-  });
+  // Run immediately if DOM is still loading (before map.js fires)
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', bailThreeJS);
+  } else {
+    bailThreeJS();
+  }
+
+  // GSAP load can run anytime before animations.js needs it
+  loadGSAP();
 })();

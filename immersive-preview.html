@@ -217,15 +217,14 @@
 
     <!-- ========== ABOUT ========== -->
     <section id="about" aria-label="About me">
-      <span class="section-label reveal">ABOUT</span>
       <h2 class="section-title reveal">Building the Networks<br>That Connect Everything</h2>
       <div class="about-grid">
         <div class="about-text glass reveal">
           <p>
-            CCNA&hyphen;certified Senior Switch &amp; Telecom Specialist with over 15 years of hands&hyphen;on experience in switch operations, facility management, and RAN/transport network engineering across T&hyphen;Mobile and Sprint footprints.
+            CCNA‑certified Senior Switch &amp; Telecom Specialist with over 15 years of hands‑on experience in switch operations, facility management, and RAN/transport network engineering across T‑Mobile and Sprint footprints.
           </p>
           <p style="margin-top: 16px;">
-            Proven domain expert in 5G NR/LTE architecture (eNodeB/gNodeB), Cisco routing/switching, Nokia NetAct, and Ericsson ENM. Skilled in disaster recovery activations&mdash;including Hurricane Helene restoration&mdash;special deployments (NSD, DAS, emergency COWs), and leading War&hyphen;Room outage response with ITIL&hyphen;compliant change management. Demonstrated leader in formally mentoring junior technicians in technical theory and operational discipline.
+            Proven domain expert in 5G NR/LTE architecture (eNodeB/gNodeB), Cisco routing/switching, Nokia NetAct, and Ericsson ENM. Skilled in disaster recovery activations&mdash;including Hurricane Helene restoration&mdash;special deployments (NSD, DAS, emergency COWs), and leading War‑Room outage response with ITIL‑compliant change management. Demonstrated leader in formally mentoring junior technicians in technical theory and operational discipline.
           </p>
         </div>
         <div class="about-highlights glass reveal">
@@ -255,7 +254,6 @@
 
     <!-- ========== EXPERIENCE ========== -->
     <section id="experience" aria-label="Professional experience">
-      <span class="section-label reveal">EXPERIENCE</span>
       <h2 class="section-title reveal">Career Timeline</h2>
       <div class="timeline">
         <article class="timeline-item glass reveal">
@@ -375,7 +373,6 @@
 
     <!-- ========== SKILLS ========== -->
     <section id="skills" aria-label="Technical skills">
-      <span class="section-label reveal">SKILLS</span>
       <h2 class="section-title reveal">Core Competencies</h2>
 
       <div class="constellation-anchor">
@@ -460,7 +457,6 @@
 
     <!-- ========== EDUCATION & CERTS ========== -->
     <section id="education" aria-label="Education and certifications">
-      <span class="section-label reveal">EDUCATION & CERTIFICATIONS</span>
       <h2 class="section-title reveal">Foundation</h2>
       <div class="edu-cert-grid">
         <div class="edu-card glass reveal">
@@ -477,19 +473,19 @@
           <h3 style="font-size: 14px; margin-bottom: 12px; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.08em;">Certifications</h3>
           <ul class="cert-list">
             <li>
-              <span class="cert-badge" style="background:#1B365D;" aria-hidden="true">
+              <span class="cert-badge" style="background: var(--color-primary);" aria-hidden="true">
                 <span class="badge-text">CCNA</span>
               </span>
               <span class="cert-text"><strong>Cisco Certified Network Associate</strong>, routing, switching &amp; network fundamentals</span>
             </li>
             <li>
-              <span class="cert-badge" style="background:#0078D4;" aria-hidden="true">
+              <span class="cert-badge" style="background: var(--color-secondary);" aria-hidden="true">
                 <span class="badge-text">MCP</span>
               </span>
               <span class="cert-text"><strong>Microsoft Certified Professional</strong>, Windows server &amp; enterprise administration</span>
             </li>
             <li>
-              <span class="cert-badge" style="background:#C8102E;" aria-hidden="true">
+              <span class="cert-badge" style="background: var(--color-tertiary);" aria-hidden="true">
                 <span class="badge-text">A+</span>
               </span>
               <span class="cert-text"><strong>CompTIA A+</strong>, IT fundamentals, hardware &amp; OS troubleshooting</span>
@@ -501,7 +497,6 @@
 
     <!-- ========== CONTACT ========== -->
     <section id="contact" aria-label="Contact form">
-      <span class="section-label reveal">CONTACT</span>
       <h2 class="section-title reveal">Get in Touch</h2>
       <form novalidate name="contact" method="POST" action="https://formspree.io/f/mdekbpja">
         <input type="hidden" name="_next" value="/thank-you.html">
@@ -558,10 +553,8 @@
   <!-- ================================================================
        JAVASCRIPT — Three.js scene + interactions
        ================================================================ -->
-  <!-- GSAP: desktop-only loader. GSAP eval is a ~400ms main-thread task — worst
-       FID contributor on mobile. animations.js guards on typeof gsap. -->
-  <!-- The new scene owns camera motion; existing resume interactions remain shared. -->
-  <script defer src="assets/immersive-preview.js"></script>
+  <!-- Early init: desktop-only GSAP loading + Three.js bail (prevents CLS) -->
+  <script defer src="app/init.js"></script>
 
   <!-- Core modules (load order matters for dependencies) -->
   <script defer src="app/motion.js"></script>
@@ -570,6 +563,7 @@
   <script defer src="app/skill-wheel.js"></script>
   <script defer src="app/form.js"></script>
   <script defer src="app/animations.js"></script>
+  <script defer src="assets/immersive-preview.js"></script>
 
   <!-- ================================================================
        NAV / BACK-TO-TOP / THEME HANDLERS
