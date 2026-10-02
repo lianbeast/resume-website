@@ -197,6 +197,24 @@
         "value": "1.9rem",
         "createdAt": "2026-10-02T02:22:58.290Z",
         "reason": "Original value from inline CSS being extracted verbatim; wheel header font-size clamp"
+      },
+      {
+        "rule": "design-system-radius",
+        "value": "999px",
+        "createdAt": "2026-10-02T06:27:24.447Z",
+        "reason": "Pill radius (999px) for search input and filter buttons is standard UI pattern for fully-rounded inputs, not in DESIGN.md rounded scale but intentional"
+      },
+      {
+        "rule": "gradient-text",
+        "value": "linear-gradient(90deg, var(--gold) 0%, var(--gold-light) 50%, var(--gold-dark) 100%)",
+        "createdAt": "2026-10-02T06:27:47.321Z",
+        "reason": "DESIGN.md §6 explicitly permits animated gradient on .hero-name with solid fallback in @supports"
+      },
+      {
+        "rule": "border-accent-on-rounded",
+        "value": "16px solid",
+        "createdAt": "2026-10-02T06:31:07.040Z",
+        "reason": "Decorative triangle has a thick bottom border for aesthetic; not a rounded card border"
       }
     ]
   }

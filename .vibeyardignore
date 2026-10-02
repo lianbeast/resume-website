@@ -16,3 +16,6 @@ uv.lock
 *.min.css
 *.bundle.js
 *.generated.*
+
+# Third-party vendor libraries (large, not project code)
+assets/liquidglass.js

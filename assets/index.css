@@ -23,6 +23,23 @@
   letter-spacing: -0.02em;
   color: var(--text);
   margin-bottom: 8px;
+  /* Animated gradient per DESIGN.md — with solid fallback in @supports */
+  background: linear-gradient(90deg, var(--gold) 0%, var(--gold-light) 50%, var(--gold-dark) 100%);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: gradient-shift 6s ease-in-out infinite;
+}
+@supports not (background-clip: text) {
+  .hero-name {
+    background: none;
+    -webkit-text-fill-color: currentColor;
+    animation: none;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero-name { animation: none; }
 }
 
 .hero-title {
@@ -323,9 +340,11 @@ form::before {
   border-radius: 2px;
   background: linear-gradient(90deg, var(--gold), var(--gold-dark), var(--gold-light));
 }
-.form-group input:focus,
-.form-group textarea:focus {
-  animation: border-glow 2s ease-in-out infinite;
+@media (prefers-reduced-motion: no-preference) {
+  .form-group input:focus,
+  .form-group textarea:focus {
+    animation: border-glow 2s ease-in-out infinite;
+  }
 }
 
 /* ================================================================
@@ -364,7 +383,9 @@ form::before {
 /* ================================================================
    SHIMMER ON HERO CTA BUTTON
    ================================================================ */
-.hero-cta .btn-primary { animation: pulse-glow 3s ease-in-out infinite; }
+@media (prefers-reduced-motion: no-preference) {
+  .hero-cta .btn-primary { animation: pulse-glow 3s ease-in-out infinite; }
+}
 
 /* ================================================================
    RESPONSIVE (page-specific breakpoints)
