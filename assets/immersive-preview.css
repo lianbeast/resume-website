@@ -10,8 +10,8 @@
   --gold-light: #ffd2b8;
   --text-on-accent: #080e16;
   --teal: #64d7db;
-  --resume-rule: rgba(164, 197, 219, 0.2);
-  --border-glass: rgba(164, 197, 219, 0.2);
+  --resume-rule: var(--border-glass);
+  --border-glass: rgba(30, 28, 26, 0.2);
   --input-bg: #101e2c;
 }
 [data-theme="dark"] { --bg: #04080e; --bg-card: #0b1521; }
@@ -48,7 +48,7 @@ section + section { border-top: 0; }
 .skills-list { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 #skill-wheel { background: #0b1521; }
 .skill-tag { color: var(--text); }
-.btn-primary { background: var(--gold); color: #080e16; }
+.btn-primary { background: var(--color-primary); color: var(--text-on-accent); }
 .btn-secondary { background: rgba(8,14,22,0.6); color: var(--text); }
 .journey-hud {
   position: fixed; bottom: 28px; right: 28px; z-index: 5; width: 300px;
