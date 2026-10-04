@@ -88,5 +88,17 @@
   reduced.addEventListener('change', () => { paused = reduced.matches; refreshMotion(); });
   desktop.addEventListener('change', refreshMotion);
   refreshMotion();
+
+  // Wait for GSAP to load if not already loaded
+  function waitForGSAP() {
+    if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
+      refreshMotion();
+    } else {
+      // Check again after a short delay
+      setTimeout(waitForGSAP, 100);
+    }
+  }
+  waitForGSAP();
+
   document.documentElement.dataset.boldReady = 'true';
 })();

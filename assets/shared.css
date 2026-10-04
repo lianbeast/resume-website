@@ -1070,7 +1070,7 @@ footer::before {
   font-family: var(--font-mono);
   font-size: 12px;
   font-weight: 700;
-  color: #fff;
+  color: var(--text-on-accent);
   letter-spacing: 0.04em;
   line-height: 1;
 }

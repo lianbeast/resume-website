@@ -59,10 +59,10 @@ The only personal career site where the visual argument *is* the professional ar
 | Design tokens (JSON) | `assets/design-tokens.json` | Machine-readable |
 | Brand guidelines v3.0 | `docs/brand-guidelines.md` | Solar Graphite Evolution |
 | Resume PDF | `SRA-Resume-072926.pdf` | Dated version; `SRA-Resume.pdf` alias |
-| Resume alias | `SRA-Resume.pdf` | Netlify header + nav/footer links |
+| Resume alias | `SRA-Resume.pdf` | Header + nav/footer links |
 | Architecture specs | `docs/superpowers/specs/` | Hosting design + US map design |
 
-Absences that future work must not fabricate: testimonials, client logos, case studies, pricing, licensing, deployment claims beyond "hosted on Netlify".
+Absences that future work must not fabricate: testimonials, client logos, case studies, pricing, licensing, deployment claims beyond "hosted on GitHub Pages".
 
 ## Product Principles
 

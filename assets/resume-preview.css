@@ -69,7 +69,7 @@ section + section { border-top: 1px solid var(--resume-rule); }
 .stat-num { font-size: 1.875rem; }
 .stat-label { font-size: 0.75rem; line-height: 1.5; }
 .about-grid { grid-template-columns: 1.55fr 1fr; gap: 32px; }
-.about-text { padding: 0; border: 0; background: transparent; font-size: 1rem; color: var(--text); line-height: 1.8; }
+.about-text { padding: 32px; border: 0; background: transparent; font-size: 1rem; color: var(--text); line-height: 1.8; }
 .about-highlights { padding: 20px 24px; align-self: start; }
 .highlight-item { gap: 20px; align-items: baseline; }
 .highlight-key { flex: 0 0 100px; font-size: 0.8125rem; }
