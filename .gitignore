@@ -45,3 +45,7 @@ map-render-check.png
 
 # Test-harness Chrome profiles (scripts/*.test.cjs)
 .restore-browser-*/
+
+# Agent tooling caches (never commit)
+.impeccable/hook.cache.json
+.impeccable/live/
