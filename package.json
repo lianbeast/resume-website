@@ -1,7 +1,7 @@
 {
   "name": "career-site",
   "version": "1.0.0",
-  "description": "Syed Rahid Ahmed | Consultant III",
+  "description": "Syed Rahid Ahmed | Senior Technical Consultant",
   "scripts": {
     "dev": "http-server -p 8080 -c-1",
     "test": "node scripts/restore.test.cjs && node scripts/immersive.test.cjs && node scripts/bold-resume.test.cjs",
