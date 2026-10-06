@@ -4,11 +4,18 @@
   "description": "Syed Rahid Ahmed | Sr. Switch Technician — Telecom Operations & RAN/Transport",
   "scripts": {
     "dev": "http-server -p 8080 -c-1",
+    "test": "node scripts/restore.test.cjs && node scripts/immersive.test.cjs && node scripts/bold-resume.test.cjs",
+    "test:restore": "node scripts/restore.test.cjs",
+    "test:immersive": "node scripts/immersive.test.cjs",
+    "test:bold": "node scripts/bold-resume.test.cjs",
+    "map:build": "python scripts/build-us-map-svg.py",
     "lhci": "lhci autorun --config=./lighthouseci.config.js",
     "test:lhci": "./scripts/run-lhci.sh"
   },
   "devDependencies": {
     "@lhci/cli": "^0.13.0",
-    "http-server": "^14.1.1"
+    "chrome-launcher": "^1.2.2",
+    "http-server": "^14.1.1",
+    "puppeteer-core": "^25.12.0"
   }
 }

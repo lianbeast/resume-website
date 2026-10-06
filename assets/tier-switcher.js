@@ -38,8 +38,17 @@
     return 'standard';
   }
 
+  // Pages that belong to a tier without being its landing page — the extra
+  // layouts and tools that ship inside the Standard tier.
+  const SUBVIEWS = {
+    'bold-resume-preview.html': 'standard',
+    'wheel-v2.html': 'standard'
+  };
+
   const currentPage = (location.pathname.split('/').pop() || 'index.html').toLowerCase();
-  const current = TIERS.find(tier => tier.href === currentPage) || TIERS[1];
+  const current = TIERS.find(tier => tier.href === currentPage)
+    || TIERS.find(tier => tier.id === SUBVIEWS[currentPage])
+    || TIERS[1];
   const recommended = recommendedTier();
 
   let saved = null;
@@ -92,10 +101,19 @@
       color:rgba(255,255,255,.5);font-size:15px;cursor:pointer;padding:2px 4px;line-height:1;
     }
     .tier-switch__advice button:hover{color:#fff}
-    @media (max-width:640px){
-      .tier-switch{left:10px;bottom:10px}
+    /* On small screens a fixed overlay will inevitably sit on top of content —
+       it was swallowing taps on the skill-filter buttons — so drop it into the
+       normal flow at the end of the document instead. */
+    @media (max-width:768px){
+      .tier-switch{
+        position:static;left:auto;bottom:auto;
+        margin:28px auto 24px;width:max-content;max-width:calc(100vw - 32px);
+      }
       .tier-switch__label{display:none}
-      .tier-switch__advice{left:10px;bottom:56px;max-width:calc(100vw - 20px)}
+      .tier-switch__advice{
+        position:static;left:auto;bottom:auto;
+        margin:20px auto 0;max-width:calc(100vw - 32px);
+      }
     }
     @media print{.tier-switch,.tier-switch__advice{display:none!important}}
   `;

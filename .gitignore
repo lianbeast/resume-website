@@ -42,3 +42,6 @@ npm-debug.log*
 index.html.artifact.json
 map-render-check.png
 .lighthouseci/
+
+# Test-harness Chrome profiles (scripts/*.test.cjs)
+.restore-browser-*/
