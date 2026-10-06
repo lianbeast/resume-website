@@ -59,7 +59,7 @@
   style.textContent = `
     .tier-switch{
       position:fixed;left:18px;bottom:18px;z-index:9000;
-      display:flex;align-items:center;gap:4px;
+      display:flex;flex-direction:row-reverse;align-items:center;gap:4px;
       padding:4px 6px;border-radius:999px;
       background:rgba(10,14,20,.82);
       border:1px solid rgba(255,255,255,.16);
@@ -68,10 +68,23 @@
       font-size:12px;line-height:1;
       -webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);
     }
-    .tier-switch__label{
-      color:rgba(255,255,255,.5);font-size:10px;letter-spacing:.12em;
-      text-transform:uppercase;padding:0 8px 0 6px;
+    .tier-switch__trigger{
+      display:inline-flex;align-items:center;gap:5px;
+      background:none;border:0;cursor:pointer;
+      color:rgba(255,255,255,.55);font:inherit;font-size:10px;
+      letter-spacing:.12em;text-transform:uppercase;padding:7px 8px 7px 6px;
+      border-radius:999px;
     }
+    .tier-switch__trigger:hover{color:#fff;background:rgba(255,255,255,.1)}
+    .tier-switch__trigger::after{content:"\\25B8";font-size:9px;transition:transform .18s ease}
+    .tier-switch:hover .tier-switch__trigger::after,
+    .tier-switch:focus-within .tier-switch__trigger::after{transform:rotate(90deg)}
+    /* Collapsed to a ~70px trigger by default: a full-width pill in the
+       bottom-left corner kept swallowing clicks on content underneath it. */
+    .tier-switch__links{display:none;align-items:center;gap:4px}
+    .tier-switch:hover .tier-switch__links,
+    .tier-switch:focus-within .tier-switch__links,
+    .tier-switch.is-open .tier-switch__links{display:flex}
     .tier-switch a{
       position:relative;display:inline-flex;align-items:center;gap:5px;
       padding:7px 12px;border-radius:999px;
@@ -125,10 +138,26 @@
   nav.setAttribute('role', 'group');
   nav.setAttribute('aria-label', 'Experience tier');
 
-  const label = document.createElement('span');
-  label.className = 'tier-switch__label';
-  label.textContent = 'View';
-  nav.appendChild(label);
+  // Disclosure pattern: the trigger is a real button with aria-expanded, and the
+  // link list is only laid out once opened (hover/focus also opens it, for
+  // convenience). Keeping it collapsed is what stops the control from covering
+  // page content.
+  const links = document.createElement('div');
+  links.className = 'tier-switch__links';
+  links.id = 'tier-switch-links';
+
+  const trigger = document.createElement('button');
+  trigger.type = 'button';
+  trigger.className = 'tier-switch__trigger';
+  trigger.textContent = 'View';
+  trigger.setAttribute('aria-expanded', 'false');
+  trigger.setAttribute('aria-controls', links.id);
+  trigger.addEventListener('click', () => {
+    const open = nav.classList.toggle('is-open');
+    trigger.setAttribute('aria-expanded', String(open));
+  });
+  nav.appendChild(trigger);
+  nav.appendChild(links);
 
   TIERS.forEach(tier => {
     const link = document.createElement('a');
@@ -150,7 +179,7 @@
     link.addEventListener('click', () => {
       try { localStorage.setItem(STORAGE_KEY, tier.id); } catch (error) { /* ignore */ }
     });
-    nav.appendChild(link);
+    links.appendChild(link);
   });
   document.body.appendChild(nav);
 

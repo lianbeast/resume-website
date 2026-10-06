@@ -2,6 +2,12 @@
  * Skill Wheel Module
  * 3D interactive skill constellation wheel using Three.js
  * Depends on motion.js for visualization-motion-change events
+ *
+ * Presentation notes
+ *   The container is much wider than it is tall (roughly 2.5:1), so a circular
+ *   ring wastes most of the width and forces the category labels off the edges.
+ *   The ring is therefore spread into an ellipse (WHEEL_SPREAD) and the camera
+ *   is fitted from the live canvas aspect rather than a hard-coded distance.
  */
 
 (function() {
@@ -31,12 +37,12 @@
     { name: '1G/10G/100G', cat: 'Routing & Transport', color: '#4d7c0f', desc: 'Routing & Transport' },
     { name: 'L2/L3 Switching', cat: 'Routing & Transport', color: '#4d7c0f', desc: 'Routing & Transport' },
     // T-Mobile Tools
-    { name: 'ATOMS', cat: 'T-Mobile Tools', color: '#44403c', desc: 'T-Mobile Tools' },
-    { name: 'OneTransport', cat: 'T-Mobile Tools', color: '#44403c', desc: 'T-Mobile Tools' },
-    { name: 'RIOT', cat: 'T-Mobile Tools', color: '#44403c', desc: 'T-Mobile Tools' },
-    { name: 'OneConsole', cat: 'T-Mobile Tools', color: '#44403c', desc: 'T-Mobile Tools' },
-    { name: 'CBN Tools', cat: 'T-Mobile Tools', color: '#44403c', desc: 'T-Mobile Tools' },
-    { name: 'EAI/Netviewer', cat: 'T-Mobile Tools', color: '#44403c', desc: 'T-Mobile Tools' },
+    { name: 'ATOMS', cat: 'T-Mobile Tools', color: '#a8a29e', desc: 'T-Mobile Tools' },
+    { name: 'OneTransport', cat: 'T-Mobile Tools', color: '#a8a29e', desc: 'T-Mobile Tools' },
+    { name: 'RIOT', cat: 'T-Mobile Tools', color: '#a8a29e', desc: 'T-Mobile Tools' },
+    { name: 'OneConsole', cat: 'T-Mobile Tools', color: '#a8a29e', desc: 'T-Mobile Tools' },
+    { name: 'CBN Tools', cat: 'T-Mobile Tools', color: '#a8a29e', desc: 'T-Mobile Tools' },
+    { name: 'EAI/Netviewer', cat: 'T-Mobile Tools', color: '#a8a29e', desc: 'T-Mobile Tools' },
     // OSS & Scripting
     { name: 'Nokia NetAct', cat: 'OSS & Scripting', color: '#be123c', desc: 'OSS & Scripting' },
     { name: 'Ericsson ENM', cat: 'OSS & Scripting', color: '#be123c', desc: 'OSS & Scripting' },
@@ -60,10 +66,33 @@
     'Switch & Facility Ops':   '#c2410c',
     '5G/4G RAN & Core':        '#0e7490',
     'Routing & Transport':     '#4d7c0f',
-    'T-Mobile Tools':          '#44403c',
+    'T-Mobile Tools':          '#a8a29e',
     'OSS & Scripting':         '#be123c',
     'Leadership':              '#65a30d',
   };
+
+  // ---- Wheel geometry ----
+  // The ring lives in the XY plane (facing the camera) rather than XZ. A ring in
+  // XZ viewed from a low camera is seen almost edge-on — which is why the old
+  // wheel collapsed into a flat band. Leaning the whole group a little gives the
+  // 3D read without destroying the shape.
+  //
+  // A label pill is LABEL_W/80 wide in world units, so its half-width is
+  // LABEL_W/160. LABEL_RADIUS must exceed RING_RADIUS by at least that much or
+  // the pills sit on top of the outer nodes.
+  const WHEEL_LEAN = 0.32;      // group lean, radians
+  const CAMERA_ELEV = 0.10;     // camera elevation, radians
+  const WHEEL_SPREAD = 1.25;    // horizontal stretch so the ring uses the wide canvas
+  const RING_RADIUS = 2.72;     // node ring
+  const ARC_INNER = 2.98;       // category arc band
+  const ARC_OUTER = 3.16;
+  const LABEL_RADIUS = 4.50;    // outside the arc band, clear of the nodes
+  const LABEL_W = 288, LABEL_H = 62;
+  const NODE_RADIUS = 0.135;
+  const CAMERA_FOV = 34;        // long lens: keeps perspective distortion off the ring
+
+  // Fitted extent, recomputed whenever the canvas resizes.
+  let wheelFitRadius = 5.2;
 
   // DOM elements
   const tooltip = document.getElementById('skill-tooltip');
@@ -76,9 +105,12 @@
   const wheelCanvas = document.getElementById('skill-wheel');
   let wheelActive = false;
   let wheelRAF = null;
-  let wheelScene = null, wheelCamera = null, wheelRenderer = null, wheelGroup = null;
+  let wheelScene = null, wheelCamera = null, wheelRenderer = null, wheelGroup = null, wheelSpin = null;
   let wheelNodeMeshes = [];
+  let wheelGlows = [];
+  let wheelArcs = [];
   let hoveredWheelMesh = null;
+  let wheelRevealAt = 0;
   const wheelPointer = { x: -2, y: -2, cx: 0, cy: 0 };
   const wheelRaycaster = typeof THREE !== 'undefined' ? new THREE.Raycaster() : null;
   let wheelUnavailable = !wheelRaycaster;
@@ -111,14 +143,31 @@
     window.history.replaceState(window.history.state, '', url);
   }
 
-  // Canvas-texture sprite label (sprites always face the camera)
-  function buildWheelLabel(text, color, w, h, fontPx) {
+  // Canvas-texture sprite label (sprites always face the camera). A dark pill is
+  // drawn behind the text so category names stay readable over the ring and the
+  // node halos instead of dissolving into them.
+  function buildWheelLabel(text, color, w, h, fontPx, withPill) {
     const c = document.createElement('canvas');
     c.width = w; c.height = h;
     const g = c.getContext('2d');
-    g.font = '600 ' + fontPx + 'px "Outfit", sans-serif';
+    g.font = '600 ' + fontPx + 'px "IBM Plex Sans", sans-serif';
     g.textAlign = 'center';
     g.textBaseline = 'middle';
+
+    if (withPill) {
+      const textW = Math.min(g.measureText(text).width + 40, w);
+      const pad = 7;
+      const pillH = h - pad * 2;
+      g.fillStyle = 'rgba(8,10,14,0.74)';
+      g.beginPath();
+      if (typeof g.roundRect === 'function') {
+        g.roundRect((w - textW) / 2, pad, textW, pillH, pillH / 2);
+      } else {
+        g.rect((w - textW) / 2, pad, textW, pillH);
+      }
+      g.fill();
+    }
+
     g.fillStyle = color;
     g.fillText(text, w / 2, h / 2);
     const tex = new THREE.CanvasTexture(c);
@@ -129,14 +178,63 @@
     return sp;
   }
 
+  // Soft radial halo, used as a cheap bloom substitute behind each node.
+  function buildGlowTexture() {
+    const c = document.createElement('canvas');
+    c.width = c.height = 128;
+    const g = c.getContext('2d');
+    const grad = g.createRadialGradient(64, 64, 0, 64, 64, 64);
+    grad.addColorStop(0, 'rgba(255,255,255,0.95)');
+    grad.addColorStop(0.32, 'rgba(255,255,255,0.34)');
+    grad.addColorStop(1, 'rgba(255,255,255,0)');
+    g.fillStyle = grad;
+    g.fillRect(0, 0, 128, 128);
+    const tex = new THREE.CanvasTexture(c);
+    tex.minFilter = THREE.LinearFilter;
+    return tex;
+  }
+
+  // Position on the spread ring. `depth` pushes a node toward or away from the
+  // camera so the alternating tiers read as layers rather than a flat line.
+  function wheelPoint(angle, radius, depth) {
+    return new THREE.Vector3(
+      Math.cos(angle) * radius * WHEEL_SPREAD,
+      Math.sin(angle) * radius,
+      depth
+    );
+  }
+
+  // Fit the camera from the live canvas aspect so the whole ring — including the
+  // category labels hanging off the sides — is always in frame. The old code
+  // hard-coded a camera distance that only framed correctly at one canvas size.
+  function fitWheelCamera() {
+    if (!wheelCamera || !wheelCanvas) return;
+    const rect = wheelCanvas.getBoundingClientRect();
+    const aspect = Math.max(rect.width, 1) / Math.max(rect.height, 1);
+    const vFov = wheelCamera.fov * Math.PI / 180;
+    // Vertical extent is compressed by both the group lean and the camera's own
+    // elevation, so both are folded into the fit.
+    const halfW = LABEL_RADIUS * WHEEL_SPREAD + LABEL_W / 160;
+    const halfH = LABEL_RADIUS * Math.cos(WHEEL_LEAN + CAMERA_ELEV) + LABEL_H / 160;
+    // The lean tips the bottom of the ring toward the camera, so the nearest
+    // label sits `nearZ` closer and projects larger than its world size. Solving
+    // for that (rather than padding the result) is what keeps the bottom label
+    // from spilling out of the canvas.
+    const nearZ = LABEL_RADIUS * Math.sin(WHEEL_LEAN);
+    const distV = halfH / Math.tan(vFov / 2) + nearZ;
+    const distH = halfW / (Math.tan(vFov / 2) * aspect);
+    const dist = Math.max(distV, distH) * 1.07;
+    wheelFitRadius = Math.max(halfW, halfH);
+    wheelCamera.position.set(0, dist * Math.sin(CAMERA_ELEV), dist * Math.cos(CAMERA_ELEV));
+    wheelCamera.lookAt(0, 0, 0);
+  }
+
   function initWheel() {
     if (!wheelCanvas || wheelUnavailable) return;
     if (wheelRenderer) { sizeWheel(); return; }
 
     wheelScene = new THREE.Scene();
-    wheelCamera = new THREE.PerspectiveCamera(55, 1, 0.1, 60);
-    wheelCamera.position.set(0, 2.0, 7.4);
-    wheelCamera.lookAt(0, 0, 0);
+    wheelCamera = new THREE.PerspectiveCamera(CAMERA_FOV, 1, 0.1, 120);
 
     try {
       wheelRenderer = new THREE.WebGLRenderer({
@@ -149,28 +247,43 @@
     wheelRenderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
     wheelRenderer.setClearColor(0x000000, 0);
 
+    // wheelGroup carries the lean; wheelSpin carries the in-plane rotation. Kept
+    // as separate nodes so the spin is unambiguously about the ring's own axis.
     wheelGroup = new THREE.Group();
-    wheelGroup.rotation.x = -0.5; // carousel tilt
+    wheelGroup.rotation.x = -WHEEL_LEAN;
     wheelScene.add(wheelGroup);
+    wheelSpin = new THREE.Group();
+    wheelGroup.add(wheelSpin);
 
-    // Category arcs (flat rings in the wheel plane)
-    const gap = 0.09;
+    const gap = 0.10;
     const totalArc = Math.PI * 2 - gap * CATS.length;
+
+    // Category arcs — thicker than before so the grouping actually reads, and
+    // they brighten when their category is the active filter.
+    wheelArcs.length = 0;
     let arcAngle = 0;
     CATS.forEach(cat => {
       const arcLen = totalArc / CATS.length;
-      const arcGeo = new THREE.RingGeometry(3.0, 3.07, 48, 1, arcAngle, arcLen);
+      const arcGeo = new THREE.RingGeometry(ARC_INNER, ARC_OUTER, 64, 1, arcAngle, arcLen);
       const arcMat = new THREE.MeshBasicMaterial({
-        color: new THREE.Color(CAT_COLORS[cat]), transparent: true, opacity: 0.5, side: THREE.DoubleSide
+        color: new THREE.Color(CAT_COLORS[cat]), transparent: true, opacity: 0.3,
+        side: THREE.DoubleSide, depthWrite: false
       });
       const arc = new THREE.Mesh(arcGeo, arcMat);
-      arc.rotation.x = -Math.PI / 2;
-      wheelGroup.add(arc);
+      arc.scale.set(WHEEL_SPREAD, 1, 1);
+      arc.userData = { cat, target: 0.3 };
+      wheelSpin.add(arc);
+      wheelArcs.push(arc);
       arcAngle += arcLen + gap;
     });
 
-    // Skill nodes on the wheel
-    const sphereGeo = new THREE.SphereGeometry(0.085, 12, 12);
+    // Skill nodes, each with a soft halo behind it.
+    const sphereGeo = new THREE.SphereGeometry(NODE_RADIUS, 16, 16);
+    const glowTex = buildGlowTexture();
+    // Clear in place — window.wheelNodeMeshes holds a reference to this array
+    // (the tests read it), so reassigning would orphan it.
+    wheelNodeMeshes.length = 0;
+    wheelGlows.length = 0;
     arcAngle = 0;
     CATS.forEach(cat => {
       const skills = SKILLS.filter(s => s.cat === cat);
@@ -178,31 +291,42 @@
       skills.forEach((s, si) => {
         const a = arcAngle + (si + 0.5) / skills.length * arcLen;
         const tier = si % 2;
-        const r = 2.55 * (1 + tier * 0.07);
-        const mat = new THREE.MeshBasicMaterial({
-          color: new THREE.Color(s.color), transparent: true, opacity: 0.9
-        });
-        const mesh = new THREE.Mesh(sphereGeo, mat);
-        mesh.position.set(Math.cos(a) * r, tier * 0.16 - 0.08, Math.sin(a) * r);
-        mesh.userData = { skill: s, tier: tier, on: true };
-        wheelGroup.add(mesh);
+        const r = RING_RADIUS * (1 + tier * 0.075);
+        const pos = wheelPoint(a, r, tier * 0.22 - 0.11);
+
+        const mesh = new THREE.Mesh(sphereGeo, new THREE.MeshBasicMaterial({
+          color: new THREE.Color(s.color), transparent: true, opacity: 0.95
+        }));
+        mesh.position.copy(pos);
+        mesh.userData = { skill: s, tier: tier, on: true, index: wheelNodeMeshes.length };
+        wheelSpin.add(mesh);
         wheelNodeMeshes.push(mesh);
+
+        const glow = new THREE.Sprite(new THREE.SpriteMaterial({
+          map: glowTex, color: new THREE.Color(s.color), transparent: true,
+          opacity: 0.42, depthWrite: false, blending: THREE.AdditiveBlending
+        }));
+        glow.scale.setScalar(1.05);
+        glow.position.copy(pos);
+        wheelSpin.add(glow);
+        wheelGlows.push({ sprite: glow, node: mesh });
       });
 
-      // Category label at arc midpoint
+      // Category label at the arc midpoint, on a dark pill.
       const mid = arcAngle + arcLen / 2;
-      const label = buildWheelLabel(cat, CAT_COLORS[cat], 256, 56, 20);
-      label.position.set(Math.cos(mid) * 3.55, 0.12, Math.sin(mid) * 3.55);
-      wheelGroup.add(label);
+      const label = buildWheelLabel(cat, CAT_COLORS[cat], LABEL_W, LABEL_H, 22, true);
+      label.position.copy(wheelPoint(mid, LABEL_RADIUS, 0.14));
+      wheelSpin.add(label);
       arcAngle += arcLen + gap;
     });
 
-    // Center label (static — not part of the rotating wheel)
-    const center = buildWheelLabel('TECHNICAL SKILLS', '#6b6964', 320, 64, 24);
-    center.position.set(0, 0.25, 0);
+    // Centre caption lives outside the rotating group so it stays put. Kept
+    // narrow enough to sit inside the ring without touching the inner nodes.
+    const center = buildWheelLabel('TECHNICAL SKILLS', '#8d8880', 320, 56, 22, false);
+    center.position.set(0, 0.46, 0);
     wheelScene.add(center);
-    const hint = buildWheelLabel('hover to explore', '#9a968e', 256, 40, 15);
-    hint.position.set(0, -0.18, 0);
+    const hint = buildWheelLabel('hover a node to inspect', '#6f6b64', 320, 44, 17, false);
+    hint.position.set(0, -0.04, 0);
     wheelScene.add(hint);
 
     sizeWheel();
@@ -219,6 +343,10 @@
       const catOk = activeCat === 'all' || m.userData.skill.cat === activeCat;
       const nameOk = !q || m.userData.skill.name.toLowerCase().includes(q);
       m.userData.on = catOk && nameOk;
+    });
+    // Active category's arc reads as selected; the rest recede.
+    wheelArcs.forEach(arc => {
+      arc.userData.target = (activeCat === 'all' || arc.userData.cat === activeCat) ? 0.3 : 0.07;
     });
     const countEl = document.getElementById('skills-count');
     if (countEl) countEl.textContent = (!q && activeCat === 'all')
@@ -256,10 +384,12 @@
     wheelRenderer.setSize(w, h, false);
     wheelCamera.aspect = w / h;
     wheelCamera.updateProjectionMatrix();
+    fitWheelCamera();
   }
 
-  // 3D wheel render loop — auto-rotates, raycasts for hover, dims
-  // non-matching nodes, skips frames while hidden or reduced-motion.
+  // 3D wheel render loop — staggered reveal, gentle orbit, per-node breathing,
+  // hover bloom, and dimming of non-matching nodes. Skips frames while hidden
+  // or reduced-motion.
   function wheelLoop(time) {
     if (!wheelActive || !wheelRenderer) {
       wheelRAF = null;
@@ -267,17 +397,41 @@
       return;
     }
     const staticFrame = window.VisualizationMotion?.paused || document.hidden;
+
     if (!staticFrame) {
-      wheelGroup.rotation.y = time * 0.00012;
-      wheelNodeMeshes.forEach(m => {
+      if (!wheelRevealAt) wheelRevealAt = time;
+      const reveal = Math.min((time - wheelRevealAt) / 1500, 1);
+
+      wheelSpin.rotation.z = time * 0.00009;
+
+      wheelNodeMeshes.forEach((m, i) => {
         const on = m.userData.on;
         const hovered = m === hoveredWheelMesh;
-        const target = on ? (hovered ? 1.0 : 0.9) : 0.08;
-        m.material.opacity += (target - m.material.opacity) * (staticFrame ? 1 : 0.2);
-        const targetScale = hovered ? 2.0 : 1.0;
-        const s = m.scale.x + (targetScale - m.scale.x) * (staticFrame ? 1 : 0.2);
+        // Stagger the reveal across the ring so it assembles rather than pops.
+        const stagger = Math.min(Math.max((reveal - (i / wheelNodeMeshes.length) * 0.55) / 0.45, 0), 1);
+        const eased = 1 - Math.pow(1 - stagger, 3);
+        const breathe = 1 + Math.sin(time * 0.0013 + i * 0.7) * 0.055;
+
+        const target = on ? (hovered ? 1.0 : 0.92) : 0.06;
+        m.material.opacity += (target - m.material.opacity) * 0.18;
+
+        const targetScale = (hovered ? 2.1 : 1) * eased * breathe;
+        const s = m.scale.x + (targetScale - m.scale.x) * 0.18;
         m.scale.setScalar(s);
       });
+
+      wheelGlows.forEach(({ sprite, node }) => {
+        const hovered = node === hoveredWheelMesh;
+        const target = !node.userData.on ? 0.02 : (hovered ? 0.95 : 0.4);
+        sprite.material.opacity += (target - sprite.material.opacity) * 0.18;
+        const glowScale = (hovered ? 2.2 : 1.05) * Math.max(node.scale.x, 0.2);
+        sprite.scale.setScalar(glowScale);
+      });
+
+      wheelArcs.forEach(arc => {
+        arc.material.opacity += (arc.userData.target - arc.material.opacity) * 0.12;
+      });
+
       wheelRenderer.render(wheelScene, wheelCamera);
       wheelRAF = requestAnimationFrame(wheelLoop);
       window.wheelRAF = wheelRAF;
@@ -301,7 +455,11 @@
       const s = hoveredWheelMesh.userData.skill;
       if (tooltipName) tooltipName.textContent = s.name;
       if (tooltipCategory) tooltipCategory.textContent = s.cat;
-      if (tooltipLevel) tooltipLevel.textContent = s.desc || '';
+      // Was repeating the category text verbatim; group size is actually useful.
+      if (tooltipLevel) {
+        const inGroup = SKILLS.filter(x => x.cat === s.cat).length;
+        tooltipLevel.textContent = inGroup + ' skills in this group';
+      }
       if (tooltip) {
         tooltip.style.left = Math.max(8, Math.min(clientX + 14, window.innerWidth - 280)) + 'px';
         tooltip.style.top = Math.max(8, clientY - 10) + 'px';
@@ -377,9 +535,12 @@
     const constObs = new IntersectionObserver((entries) => {
       entries.forEach(e => {
         if (e.isIntersecting) {
+          const firstActivation = !wheelActive;
           wheelActive = true;
           initWheel();
           applyWheelFilter();
+          // Replay the assembly animation each time the section is re-entered.
+          if (firstActivation) wheelRevealAt = 0;
           if (wheelRenderer && !wheelRAF && !window.VisualizationMotion?.paused) wheelRAF = requestAnimationFrame(wheelLoop);
         } else {
           wheelActive = false;

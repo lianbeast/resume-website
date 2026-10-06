@@ -39,8 +39,8 @@
   --color-primary: var(--gold);
   --color-primary-hover: var(--gold-dark);
   --color-secondary-hover: var(--teal-dark);
-  --font-body: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif;
-  --font-mono: 'JetBrains Mono', monospace;
+  --font-body: 'IBM Plex Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-mono: 'IBM Plex Mono', monospace;
   /* Z-index scale — semantic layers */
   --z-bg: 0;
   --z-content: 2;

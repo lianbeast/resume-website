@@ -10,7 +10,7 @@
   <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=optional">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=optional">
 
   <!-- Shared styles — design tokens, reset, base, nav, footer, components, utilities -->
   <link rel="stylesheet" href="assets/shared.css">
@@ -135,7 +135,7 @@
       function label(text, color, wide, high, size) {
         var c = document.createElement('canvas'); c.width = wide; c.height = high;
         var g = c.getContext('2d');
-        g.font = '600 ' + size + 'px "Outfit", sans-serif';
+        g.font = '600 ' + size + 'px "IBM Plex Sans", sans-serif';
         g.textAlign = 'center'; g.textBaseline = 'middle';
         g.fillStyle = color; g.fillText(text, wide / 2, high / 2);
         var tex = new THREE.CanvasTexture(c); tex.minFilter = THREE.LinearFilter;

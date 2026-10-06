@@ -15,8 +15,8 @@
     }
   },
   "typography": {
-    "body": { "font": "Outfit", "fallback": "-apple-system, BlinkMacSystemFont, sans-serif" },
-    "mono": { "font": "JetBrains Mono", "fallback": "monospace" }
+    "body": { "font": "IBM Plex Sans", "fallback": "-apple-system, BlinkMacSystemFont, sans-serif" },
+    "mono": { "font": "IBM Plex Mono", "fallback": "monospace" }
   },
   "spacing": { "section": "100px 5%", "card": "20-32px", "gridGap": "16-24px", "maxWidth": "1100px" },
   "radius": { "button": "10px", "card": "16px", "input": "10px", "tag": "6px" },

@@ -8,8 +8,8 @@
   --gold: #c2410c;
   --gold-dark: #a4380a;
   --border: rgba(28, 25, 23, 0.12);
-  --font-body: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif;
-  --font-mono: 'JetBrains Mono', monospace;
+  --font-body: 'IBM Plex Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-mono: 'IBM Plex Mono', monospace;
   /* Z-index scale — semantic layers */
   --z-bg: 0;
   --z-content: 2;
