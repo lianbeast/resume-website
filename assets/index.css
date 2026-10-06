@@ -350,7 +350,7 @@ form::before {
 /* ================================================================
    DECORATIVE ORBS & FLOATING SHAPES (index-specific)
    ================================================================ */
-#hero { position: relative; --pin: 0; --fade: 0; }
+#hero { position: relative; }
 
 /* Clipping layer for the orbs and floating shapes. Kept separate from #hero so
    #hero can stay overflow:visible — overflow:hidden on an ancestor disables
@@ -363,44 +363,7 @@ form::before {
   z-index: 0;
 }
 
-/* ---- Hero title: shrinks and docks under the nav while the hero scrolls ----
-   --pin (0 → 1) is written by app/hero-pin.js and drives both the shrink and
-   the glass chip that fades in once the title has docked. Sticky is opt-in via
-   .is-pinned so no-JS and reduced-motion visitors keep plain static layout. */
-.hero-head {
-  position: relative;
-  z-index: 3;
-  width: fit-content;
-  max-width: 100%;
-  transform-origin: left top;
-  padding: 8px 0;
-}
-.hero-head.is-pinned {
-  position: sticky;
-  top: calc(60px + 14px); /* nav height + breathing room */
-  will-change: transform;
-}
-.hero-head::before {
-  content: "";
-  position: absolute;
-  inset: -4px -18px;
-  border-radius: 14px;
-  background: var(--bg-glass);
-  border: 1px solid var(--border-glass);
-  -webkit-backdrop-filter: blur(14px);
-  backdrop-filter: blur(14px);
-  box-shadow: 0 10px 34px rgba(0, 0, 0, 0.3);
-  opacity: var(--pin);
-  pointer-events: none;
-  z-index: -1;
-}
-
-/* The tagline and buttons recede as the title docks, so the two never collide.
-   --fade runs ahead of --pin (see app/hero-pin.js) to clear the space early. */
-.hero-tail {
-  opacity: calc(1 - var(--fade));
-  transform: translateY(calc(var(--fade) * -16px));
-}
+/* .hero-head / .hero-tail styling is shared - see assets/shared.css */
 
 .orb {
   position: absolute;

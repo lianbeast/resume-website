@@ -111,3 +111,7 @@ body.world-exploring .journey-hud { z-index: 8; }
   section { padding: 16px 0; }
   #hero { min-height: 0; padding: 0; }
 }
+
+/* Eyebrow, not content: fade it out with the tail rather than letting it
+   shrink to an unreadable size inside the docked title. */
+.hero-head .immersive-kicker { opacity: calc(1 - var(--fade)); }

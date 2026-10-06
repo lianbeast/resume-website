@@ -1360,3 +1360,63 @@ footer::before {
   .reveal { opacity: 1 !important; transform: none !important; }
   @page { margin: 1.5cm; }
 }
+
+/* ================================================================
+   HERO TITLE PIN — scroll-driven shrink + dock
+   Behaviour lives in app/hero-pin.js, which writes --pin / --fade onto #hero.
+   Sticky is opt-in via .is-pinned, which the script adds only when motion is
+   allowed, so no-JS and reduced-motion visitors keep plain static layout.
+   ================================================================ */
+#hero { --pin: 0; --fade: 0; }
+
+.hero-head {
+  position: relative;
+  z-index: 3;
+  width: fit-content;
+  max-width: 100%;
+  transform-origin: var(--pin-origin, left top);
+  padding: 8px 0;
+}
+.hero-head.is-pinned {
+  position: sticky;
+  top: calc(60px + 14px); /* nav height + breathing room */
+  will-change: transform;
+}
+/* Glass pane that fades in behind the title once it has docked. */
+.hero-head::before {
+  content: "";
+  position: absolute;
+  inset: -4px -18px;
+  border-radius: 14px;
+  background: var(--bg-glass);
+  border: 1px solid var(--border-glass);
+  -webkit-backdrop-filter: blur(14px);
+  backdrop-filter: blur(14px);
+  box-shadow: 0 10px 34px rgba(0, 0, 0, 0.3);
+  opacity: var(--pin);
+  pointer-events: none;
+  z-index: -1;
+}
+
+/* Tagline + buttons recede as the title docks so the two never collide.
+   --fade runs ahead of --pin (see app/hero-pin.js). */
+.hero-tail {
+  opacity: calc(1 - var(--fade));
+  transform: translateY(calc(var(--fade) * -16px));
+}
+/* Fully faded means invisible — drop it from the tab order too, so keyboard
+   users never land on a button they cannot see. The hero CTAs are duplicated
+   in the nav and footer, so nothing becomes unreachable. */
+.hero-tail.is-hidden { visibility: hidden; }
+
+/* Print / static rendering: never ship a floating, shrunken title on paper. */
+@media print {
+  .hero-head.is-pinned { position: static; transform: none !important; }
+  .hero-head::before { display: none !important; }
+  .hero-tail,
+  .hero-tail.is-hidden {
+    opacity: 1 !important;
+    visibility: visible !important;
+    transform: none !important;
+  }
+}

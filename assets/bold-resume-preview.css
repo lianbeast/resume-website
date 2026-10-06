@@ -107,3 +107,6 @@ footer { padding: 64px 48px; }
   .section-title, #contact .section-title { font-size: 18pt; }
   .timeline-item { padding: 12px; margin-bottom: 16px; }
 }
+
+/* Bold hero is centre-aligned - shrink toward the centre, not the left edge. */
+#hero { --pin-origin: center top; }
