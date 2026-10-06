@@ -147,24 +147,36 @@
 
     <!-- ========== HERO ========== -->
     <section id="hero" aria-label="Introduction">
-      <span class="float-shape circle f1" aria-hidden="true" style="width:18px;height:18px;top:15%;left:8%;border-color:var(--gold);"></span>
-      <span class="float-shape diamond f2" aria-hidden="true" style="width:14px;height:14px;top:22%;right:12%;border-color:var(--gold-dark);"></span>
-      <span class="float-shape circle f3" aria-hidden="true" style="width:10px;height:10px;top:70%;left:18%;border-color:var(--gold-dark);"></span>
-      <span class="float-shape line f4" aria-hidden="true" style="width:40px;top:35%;right:20%;background:var(--gold-dark);"></span>
-      <span class="float-shape triangle f5" aria-hidden="true" style="top:60%;right:25%;border-bottom-color:var(--gold);"></span>
-      <span class="float-shape diamond f6" aria-hidden="true" style="width:10px;height:10px;top:82%;left:30%;border-color:var(--gold-dark);"></span>
-      <div class="orb orb-gold" aria-hidden="true" style="width:320px;height:320px;top:-5%;right:-8%;"></div>
-      <div class="orb orb-gold-light" aria-hidden="true" style="width:260px;height:260px;bottom:10%;left:-6%;"></div>
-      <div class="orb orb-gold-dark" aria-hidden="true" style="width:200px;height:200px;top:40%;right:20%;"></div>
-            <h1 class="hero-name">Syed Rahid Ahmed</h1>
-      <p class="hero-title">Senior Technical Consultant</p>
-      <p class="hero-tagline">
-        15+ years of switch operations, facility management, and RAN/transport network engineering across T-Mobile and Sprint, working with 5G NR/LTE, Cisco, Nokia NetAct, and Ericsson ENM.
-      </p>
-      <nav class="hero-cta" aria-label="Primary actions">
-        <a href="#contact" class="btn btn-primary">Get in Touch</a>
-        <a href="#experience" class="btn btn-secondary">View Experience</a>
-      </nav>
+      <!-- Decoration gets its own clipping layer so #hero itself can drop
+           overflow:hidden — an ancestor with overflow:hidden disables
+           position:sticky for everything inside it. -->
+      <div class="hero-decor" aria-hidden="true">
+        <span class="float-shape circle f1" style="width:18px;height:18px;top:15%;left:8%;border-color:var(--gold);"></span>
+        <span class="float-shape diamond f2" style="width:14px;height:14px;top:22%;right:12%;border-color:var(--gold-dark);"></span>
+        <span class="float-shape circle f3" style="width:10px;height:10px;top:70%;left:18%;border-color:var(--gold-dark);"></span>
+        <span class="float-shape line f4" style="width:40px;top:35%;right:20%;background:var(--gold-dark);"></span>
+        <span class="float-shape triangle f5" style="top:60%;right:25%;border-bottom-color:var(--gold);"></span>
+        <span class="float-shape diamond f6" style="width:10px;height:10px;top:82%;left:30%;border-color:var(--gold-dark);"></span>
+        <div class="orb orb-gold" style="width:320px;height:320px;top:-5%;right:-8%;"></div>
+        <div class="orb orb-gold-light" style="width:260px;height:260px;bottom:10%;left:-6%;"></div>
+        <div class="orb orb-gold-dark" style="width:200px;height:200px;top:40%;right:20%;"></div>
+      </div>
+      <div class="hero-head">
+        <h1 class="hero-name">Syed Rahid Ahmed</h1>
+        <p class="hero-title">Senior Technical Consultant</p>
+      </div>
+      <!-- Wrapper exists purely so the scroll fade can target a parent: GSAP
+           writes inline opacity/transform onto .hero-tagline and .hero-cta for
+           the entrance, and inline styles would beat any CSS rule we wrote. -->
+      <div class="hero-tail">
+        <p class="hero-tagline">
+          15+ years of switch operations, facility management, and RAN/transport network engineering across T-Mobile and Sprint, working with 5G NR/LTE, Cisco, Nokia NetAct, and Ericsson ENM.
+        </p>
+        <nav class="hero-cta" aria-label="Primary actions">
+          <a href="#contact" class="btn btn-primary">Get in Touch</a>
+          <a href="#experience" class="btn btn-secondary">View Experience</a>
+        </nav>
+      </div>
     </section>
 
     <!-- ========== STATS ========== -->
@@ -550,6 +562,7 @@
   <script defer src="app/skill-wheel.js"></script>
   <script defer src="app/form.js"></script>
   <script defer src="app/animations.js"></script>
+  <script defer src="app/hero-pin.js"></script>
 
   <!-- ================================================================
        NAV / BACK-TO-TOP / THEME HANDLERS
