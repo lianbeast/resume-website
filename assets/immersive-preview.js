@@ -99,12 +99,69 @@
   const mapGroup = new THREE.Group();
   scene.add(mapGroup);
 
-  const stateFill = new THREE.MeshStandardMaterial({
-    color: 0x0d1f30, metalness: 0.5, roughness: 0.55,
-    transparent: true, opacity: 0.88, emissive: 0x061019, emissiveIntensity: 0.7
+  function cssVar(name, fallback) {
+    const v = getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+    return v || fallback;
+  }
+
+  function brandColor(hex) {
+    const h = hex.replace('#', '');
+    const full = h.length === 3 ? h.split('').map(c => c + c).join('') : h;
+    return new THREE.Color(parseInt(full, 16));
+  }
+
+  // Land surface shader. A flat fill reads as a sticker; this gives the country a
+  // procedural contour grid plus a travelling scan band on the top face, and
+  // darkens the extruded sides so the whole thing reads as a plinth.
+  const stateFill = new THREE.ShaderMaterial({
+    transparent: true,
+    // fwidth() lives in the derivatives extension on WebGL1.
+    extensions: { derivatives: true },
+    uniforms: {
+      uBase: { value: brandColor(cssVar('--bg', '#0b0f14')).lerp(new THREE.Color(0x0d1f30), 0.85) },
+      uGrid: { value: brandColor(cssVar('--gold', '#c2410c')) },
+      uTime: { value: 0 }
+    },
+    vertexShader: `
+      varying vec3 vNormalW;
+      varying vec3 vPosW;
+      void main() {
+        vNormalW = normalize(mat3(modelMatrix) * normal);
+        vec4 wp = modelMatrix * vec4(position, 1.0);
+        vPosW = wp.xyz;
+        gl_Position = projectionMatrix * viewMatrix * wp;
+      }
+    `,
+    fragmentShader: `
+      uniform vec3 uBase;
+      uniform vec3 uGrid;
+      uniform float uTime;
+      varying vec3 vNormalW;
+      varying vec3 vPosW;
+      void main() {
+        // Extrusion top face points straight up; the sides are the plinth.
+        float top = smoothstep(0.45, 0.85, vNormalW.y);
+        vec2 cell = vPosW.xz * 0.45;
+        vec2 g = abs(fract(cell) - 0.5) / fwidth(cell);
+        float grid = 1.0 - min(min(g.x, g.y), 1.0);
+        float band = 1.0 - smoothstep(0.0, 0.07, abs(fract(vPosW.z * 0.022 - uTime * 0.05) - 0.5));
+        vec3 col = uBase;
+        col += uGrid * grid * 0.18 * top;
+        col += uGrid * band * 0.32 * top;
+        col = mix(col * 0.42, col, top);
+        gl_FragColor = vec4(col, 0.93);
+      }
+    `
   });
   const edgeWarm = new THREE.LineBasicMaterial({ color: 0xc2410c, transparent: true, opacity: 0.78 });
   const edgeCool = new THREE.LineBasicMaterial({ color: 0x0e7490, transparent: true, opacity: 0.62 });
+
+  // Keep the surface on-brand when the theme flips.
+  new MutationObserver(() => {
+    stateFill.uniforms.uBase.value =
+      brandColor(cssVar('--bg', '#0b0f14')).lerp(new THREE.Color(0x0d1f30), 0.85);
+    stateFill.uniforms.uGrid.value = brandColor(cssVar('--gold', '#c2410c'));
+  }).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
 
   function buildUnitedStates() {
     if (typeof US_STATES !== 'object' || !US_STATES) return;
@@ -241,6 +298,7 @@
     );
     label.position.set(0, 6.4, 0);
     group.add(label);
+    group.userData.label = label;
 
     mapGroup.add(group);
     hubs.push(group);
@@ -308,7 +366,7 @@
   const raycaster = new THREE.Raycaster();
   const desiredPosition = new THREE.Vector3(), desiredLook = new THREE.Vector3(), smoothedLook = new THREE.Vector3();
 
-  const OVERVIEW_EYE = new THREE.Vector3(0, 46, 40);
+  const OVERVIEW_EYE = new THREE.Vector3(0, 56, 34);
   const OVERVIEW_LOOK = new THREE.Vector3(0, 0, -2);
 
   function updateProgress() {
@@ -422,7 +480,20 @@
         beam.material.opacity = 0.1 + Math.abs(Math.sin(elapsed * 1.4 + i)) * 0.12;
       });
       sweep.position.z = ((elapsed * 9) % 90) - 45;
+      stateFill.uniforms.uTime.value = elapsed;
     }
+
+    // Labels crowd the north-east at overview and fight the focused city once
+    // we're zoomed in, so: full strength on the focused hub, faint at overview,
+    // hidden otherwise. Runs even when paused so reduced-motion users get the
+    // same legible map.
+    hubs.forEach((hub, i) => {
+      const label = hub.userData.label;
+      if (!label) return;
+      const opacity = i === activeHub ? 1 : (activeHub < 0 ? 0.4 : 0);
+      label.material.opacity = opacity;
+      label.visible = opacity > 0.01;
+    });
 
     packets.forEach(packet => {
       packet.mesh.position.copy(packet.curve.getPoint((elapsed * 0.12 + packet.offset) % 1));
