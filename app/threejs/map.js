@@ -165,4 +165,16 @@
       window.ThreeJSMap = null;
     }
   }
+
+  // Continuous render loop — drives the Three.js map. The modular split lost
+  // this from the monolithic app.js; without it the renderer is created and
+  // meshes are added but nothing is ever drawn to the canvas. Also lets the
+  // GSAP parallax in animations.js (window.camera.position.y) update each frame.
+  (function renderLoop() {
+    const TM = window.ThreeJSMap;
+    if (TM && TM.getRenderer() && TM.getScene() && TM.getCamera()) {
+      TM.getRenderer().render(TM.getScene(), TM.getCamera());
+    }
+    requestAnimationFrame(renderLoop);
+  })();
 })();

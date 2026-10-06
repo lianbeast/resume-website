@@ -36,6 +36,7 @@ npm-debug.log*
 .od-skills/
 .playwright-mcp/
 .ui-design/
+.workbuddy-ai/
 
 # Local artifacts
 index.html.artifact.json
