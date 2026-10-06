@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en" data-tier="lite">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Syed Rahid Ahmed | Sr. Switch Technician — Telecom Operations &amp; RAN/Transport</title>
+<meta name="description" content="CCNA-certified Senior Switch &amp; Telecom Specialist with 15+ years across switch operations, facility management, and RAN/transport engineering. Career path mapped across the United States.">
+<meta name="color-scheme" content="dark light">
+<link rel="canonical" href="https://rahid.persipico.com/">
+<meta property="og:title" content="Syed Rahid Ahmed | Sr. Switch Technician">
+<meta property="og:description" content="15+ years of switch operations, facility management, and RAN/transport network engineering across T-Mobile and Sprint.">
+<meta property="og:type" content="profile">
+<meta property="og:image" content="assets/og-image.png">
+<!--
+  LITE TIER — for low-end PCs, slow links, and constrained devices.
+  Deliberately zero JavaScript: no Three.js, no GSAP, no CDN, no web fonts.
+  One HTML request + one cached SVG. Nothing blocks first paint.
+-->
+<style>
+/* ============================ TOKENS ============================ */
+:root{
+  --bg:#0b0f14; --panel:#121821; --line:#233040;
+  --text:#eef2f7; --dim:#9aa9bb; --accent:#c2410c; --accent-soft:#ff956b; --teal:#0e7490;
+  --radius:10px;
+}
+@media (prefers-color-scheme: light){
+  :root{ --bg:#f7f5f0; --panel:#ffffff; --line:#e2ddd4; --text:#1c1917; --dim:#5d564e; }
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{
+  background:var(--bg); color:var(--text);
+  font-family:system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  font-size:16px; line-height:1.65; -webkit-font-smoothing:antialiased;
+}
+a{color:var(--accent-soft);text-decoration:none}
+a:hover,a:focus-visible{text-decoration:underline}
+:focus-visible{outline:2px solid var(--accent-soft);outline-offset:3px;border-radius:3px}
+.wrap{max-width:1080px;margin:0 auto;padding:0 24px}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+
+/* ============================ NAV ============================ */
+header.top{position:sticky;top:0;z-index:20;background:var(--bg);border-bottom:1px solid var(--line)}
+.top .wrap{display:flex;align-items:center;gap:18px;height:60px;flex-wrap:wrap}
+.brand{font-weight:700;letter-spacing:.04em;color:var(--accent-soft);font-size:18px}
+nav.main{display:flex;gap:16px;flex-wrap:wrap;margin-left:auto;font-size:14px}
+nav.main a{color:var(--dim)}
+nav.main a:hover{color:var(--text)}
+.tiers{display:flex;gap:6px;align-items:center;font-size:12px;border:1px solid var(--line);border-radius:999px;padding:3px 5px}
+.tiers a{padding:3px 10px;border-radius:999px;color:var(--dim)}
+.tiers a[aria-current="true"]{background:var(--accent);color:#fff;text-decoration:none}
+.btn{display:inline-block;padding:11px 20px;border-radius:var(--radius);font-weight:600;font-size:14px;border:1px solid transparent}
+.btn-primary{background:var(--accent);color:#fff}
+.btn-primary:hover{background:var(--accent-soft);color:#1c1917;text-decoration:none}
+.btn-ghost{border-color:var(--line);color:var(--text)}
+
+/* ============================ HERO ============================ */
+.hero{padding:64px 0 40px;border-bottom:1px solid var(--line)}
+.hero h1{font-size:clamp(2.2rem,6vw,3.6rem);line-height:1.06;letter-spacing:-.03em;margin-bottom:10px}
+.hero .role{font-size:clamp(1rem,2.4vw,1.3rem);color:var(--accent-soft);margin-bottom:18px}
+.hero p.lede{max-width:66ch;color:var(--dim)}
+.hero .cta{display:flex;gap:12px;flex-wrap:wrap;margin-top:26px}
+
+/* ============================ MAP ============================ */
+.map-section{padding:36px 0 44px;border-bottom:1px solid var(--line)}
+.map-section h2{font-size:14px;text-transform:uppercase;letter-spacing:.14em;color:var(--dim);margin-bottom:20px}
+.map-wrap{position:relative;width:100%;max-width:900px;margin:0 auto;aspect-ratio:58.87/35.54}
+.map-wrap img{width:100%;height:100%;object-fit:contain;color:#3d566f;display:block}
+.pin{position:absolute;left:var(--x);top:var(--y);transform:translate(-50%,-50%);display:flex;align-items:center;gap:7px}
+.pin i{width:10px;height:10px;border-radius:50%;background:var(--teal);box-shadow:0 0 0 4px rgba(14,116,144,.22);flex:0 0 auto}
+.pin:last-of-type i,.pin.now i{background:var(--accent-soft);box-shadow:0 0 0 4px rgba(194,65,12,.28)}
+.pin b{font-size:11px;font-weight:600;white-space:nowrap;background:var(--panel);border:1px solid var(--line);padding:3px 8px;border-radius:6px;color:var(--text)}
+.pin.left{flex-direction:row-reverse}
+.map-note{margin-top:16px;font-size:13px;color:var(--dim)}
+
+/* ============================ SECTIONS ============================ */
+section.block{padding:52px 0;border-bottom:1px solid var(--line)}
+h2.title{font-size:clamp(1.6rem,3.6vw,2.2rem);letter-spacing:-.02em;margin-bottom:26px}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:18px}
+.stat{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:18px}
+.stat b{display:block;font-size:1.9rem;color:var(--accent-soft);letter-spacing:-.02em}
+.stat span{font-size:12px;text-transform:uppercase;letter-spacing:.1em;color:var(--dim)}
+.about p+p{margin-top:14px}
+.facts{margin-top:22px;display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:10px}
+.fact{display:flex;justify-content:space-between;gap:12px;border-bottom:1px solid var(--line);padding:9px 0;font-size:14px}
+.fact span{color:var(--dim)}
+.fact b{font-weight:600;text-align:right}
+
+/* ============================ TIMELINE ============================ */
+.job{border-left:2px solid var(--line);padding:0 0 30px 22px;position:relative}
+.job:last-child{padding-bottom:0}
+.job::before{content:"";position:absolute;left:-7px;top:6px;width:12px;height:12px;border-radius:50%;background:var(--teal);border:2px solid var(--bg)}
+.job.now::before{background:var(--accent-soft)}
+.job .when{font-size:12px;text-transform:uppercase;letter-spacing:.1em;color:var(--dim)}
+.job h3{font-size:1.1rem;margin:5px 0 2px}
+.job .co{font-weight:600;color:var(--accent-soft);font-size:14px}
+.job .loc{font-size:13px;color:var(--dim);margin-bottom:10px}
+.job p{font-size:14.5px;color:var(--dim)}
+.job ul{list-style:none;display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.job li{font-size:12px;border:1px solid var(--line);border-radius:999px;padding:3px 10px;color:var(--dim)}
+.job li b{color:var(--text)}
+
+/* ============================ SKILLS ============================ */
+.skill-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:18px}
+.skill-card{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:18px}
+.skill-card h3{font-size:14px;margin-bottom:12px;color:var(--accent-soft)}
+.tags{display:flex;flex-wrap:wrap;gap:7px}
+.tags span{font-size:12px;border:1px solid var(--line);border-radius:999px;padding:3px 10px;color:var(--dim)}
+
+/* ============================ EDU / CONTACT ============================ */
+.edu-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:18px}
+.edu{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:18px}
+.edu h3{font-size:1rem;margin-bottom:4px}
+.edu p{font-size:14px;color:var(--dim)}
+.certs{margin-top:18px;display:flex;flex-wrap:wrap;gap:12px}
+.cert{display:flex;align-items:center;gap:10px;border:1px solid var(--line);border-radius:var(--radius);padding:10px 14px;font-size:13.5px}
+.cert em{font-style:normal;font-weight:700;background:var(--accent);color:#fff;border-radius:6px;padding:3px 8px;font-size:12px}
+form{display:grid;gap:14px;max-width:620px}
+label{display:block;font-size:13px;color:var(--dim);margin-bottom:5px}
+input,textarea{width:100%;padding:11px 13px;border-radius:var(--radius);border:1px solid var(--line);background:var(--panel);color:var(--text);font:inherit;font-size:15px}
+textarea{min-height:130px;resize:vertical}
+footer{padding:34px 0;font-size:13px;color:var(--dim);display:flex;gap:16px;flex-wrap:wrap;align-items:center}
+@media (max-width:640px){
+  .pin b{display:none}
+  .top .wrap{height:auto;padding-top:10px;padding-bottom:10px}
+}
+</style>
+</head>
+<body>
+
+<a class="sr-only" href="#main">Skip to main content</a>
+
+<header class="top">
+  <div class="wrap">
+    <span class="brand">SR</span>
+    <nav class="main" aria-label="Sections">
+      <a href="#about">About</a>
+      <a href="#experience">Experience</a>
+      <a href="#skills">Skills</a>
+      <a href="#education">Education</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <div class="tiers" role="group" aria-label="Experience tier">
+      <a href="lite.html" aria-current="true">Lite</a>
+      <a href="index.html">Standard</a>
+      <a href="immersive-preview.html">Immersive</a>
+    </div>
+  </div>
+</header>
+
+<main id="main">
+
+  <section class="hero">
+    <div class="wrap">
+      <h1>Syed Rahid Ahmed</h1>
+      <p class="role">Sr. Switch Technician | Telecom Operations &amp; RAN/Transport Specialist</p>
+      <p class="lede">15+ years of switch operations, facility management, and RAN/transport network engineering across T-Mobile and Sprint, working with 5G NR/LTE, Cisco, Nokia NetAct, and Ericsson ENM.</p>
+      <div class="cta">
+        <a href="#contact" class="btn btn-primary">Get in Touch</a>
+        <a href="SRA-Resume.pdf" class="btn btn-ghost" download>Download Resume (PDF)</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="map-section" aria-labelledby="map-h">
+    <div class="wrap">
+      <h2 id="map-h">Career path across the United States</h2>
+      <div class="map-wrap">
+        <img src="assets/us-map.svg" alt="Outline map of the lower-48 United States" decoding="async">
+        <span class="pin" style="--x:17.83%;--y:9.37%"><i></i><b>Spokane, WA</b></span>
+        <span class="pin" style="--x:48.35%;--y:75.43%"><i></i><b>Austin, TX</b></span>
+        <span class="pin" style="--x:62.74%;--y:74.56%"><i></i><b>Hammond, LA</b></span>
+        <span class="pin" style="--x:84.62%;--y:92.56%"><i></i><b>Miami, FL</b></span>
+        <span class="pin" style="--x:83.26%;--y:40.18%"><i></i><b>Martinsburg, WV</b></span>
+        <span class="pin now" style="--x:85.24%;--y:42.64%"><i></i><b>Washington, DC</b></span>
+      </div>
+      <p class="map-note">2009 → present. Bethesda → Martinsburg → Spokane → Austin → Miami → Hammond → Washington, DC.</p>
+    </div>
+  </section>
+
+  <section class="block" aria-label="Career statistics">
+    <div class="wrap">
+      <div class="stats">
+        <div class="stat"><b>15+</b><span>Years Experience</span></div>
+        <div class="stat"><b>7+</b><span>Client Engagements</span></div>
+        <div class="stat"><b>500+</b><span>Cell Sites Managed</span></div>
+        <div class="stat"><b>3+</b><span>Certifications</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="block about" id="about" aria-label="About">
+    <div class="wrap">
+      <h2 class="title">Building the Networks That Connect Everything</h2>
+      <p>CCNA-certified Senior Switch &amp; Telecom Specialist with over 15 years of hands-on experience in switch operations, facility management, and RAN/transport network engineering across T-Mobile and Sprint footprints.</p>
+      <p>Proven domain expert in 5G NR/LTE architecture (eNodeB/gNodeB), Cisco routing/switching, Nokia NetAct, and Ericsson ENM. Skilled in disaster recovery activations—including Hurricane Helene restoration—special deployments (NSD, DAS, emergency COWs), and leading War-Room outage response with ITIL-compliant change management. Demonstrated leader in formally mentoring junior technicians in technical theory and operational discipline.</p>
+      <div class="facts">
+        <div class="fact"><span>Core Expertise</span><b>Switch &amp; Facility Operations</b></div>
+        <div class="fact"><span>5G/4G Platforms</span><b>eNodeB / gNodeB / NR</b></div>
+        <div class="fact"><span>OSS Platforms</span><b>Nokia NetAct / Ericsson ENM</b></div>
+        <div class="fact"><span>Location</span><b>Clarksburg, MD</b></div>
+        <div class="fact"><span>Education</span><b>BS Computer Science</b></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="experience" aria-label="Professional experience">
+    <div class="wrap">
+      <h2 class="title">Career Timeline</h2>
+
+      <article class="job now">
+        <div class="when">July 2026 – Present</div>
+        <h3>Data Center Technician</h3>
+        <div class="co">AtoZITField Services</div>
+        <div class="loc">DC, MD, VA</div>
+        <p>Installed and racked servers, switches, and storage equipment per deployment plans; performed fiber and copper cabling (termination, labeling, testing); maintained cage hardware inventory; configured HP, IBM, Cisco, Dell and other networking devices; executed secure server decommissioning and asset-tracking; monitored power and environmental systems; assisted with capacity planning and power usage; followed change-management and safety protocols; worked remotely on critical devices; coordinated with network and facilities teams on installations and migrations.</p>
+        <ul>
+          <li><b>Multi-vendor</b> deployments — HP, IBM, Cisco, Dell</li>
+          <li><b>Fiber &amp; copper</b> termination, labeling &amp; testing</li>
+          <li><b>Secure</b> decommissioning &amp; asset tracking</li>
+          <li><b>Power &amp; environment</b> monitoring</li>
+        </ul>
+      </article>
+
+      <article class="job">
+        <div class="when">May 2022 – Mar 2026</div>
+        <h3>Sr. Switch Technician / Engineer</h3>
+        <div class="co">NextGen Telecommunication (Client: T-Mobile)</div>
+        <div class="loc">Hammond, LA · On-Site</div>
+        <p>Led regional switch operations across 500+ cell sites, including Hurricane Helene DR, NSD/DAS/COW deployments, and team-wide process automation.</p>
+        <ul>
+          <li><b>500+</b> cell sites integrated</li>
+          <li><b>40%</b> faster circuit turn-up</li>
+          <li><b>200+</b> E911/CBN discrepancies resolved</li>
+          <li><b>60%</b> reporting overhead cut</li>
+        </ul>
+      </article>
+
+      <article class="job">
+        <div class="when">May 2019 – Mar 2022</div>
+        <h3>Sr. Switch Technician / Engineer</h3>
+        <div class="co">WAVSYS Telecommunication (Client: T-Mobile)</div>
+        <div class="loc">Miami, FL · Remote</div>
+        <p>Remote BSS/RAN/switch ops across 1,000+ sites: MOP standardization and ITIL-compliant change windows at scale.</p>
+        <ul>
+          <li><b>1,000+</b> cell sites managed</li>
+          <li><b>99.5%</b> operational uptime</li>
+          <li><b>35%</b> fewer provisioning errors</li>
+          <li><b>15%</b> YoY regional coverage growth</li>
+        </ul>
+      </article>
+
+      <article class="job">
+        <div class="when">Dec 2016 – Apr 2019</div>
+        <h3>Sr. Switch Technician / Engineer</h3>
+        <div class="co">Kineticom Telecommunication (Client: T-Mobile)</div>
+        <div class="loc">Austin, TX · Hybrid</div>
+        <p>Multi-layer transport &amp; RAN fault isolation during OSS consolidation, delivering zero-disruption site rehoming and SharePoint centralization.</p>
+        <ul>
+          <li><b>150+</b> sites rehomed, zero downtime</li>
+          <li><b>500+</b> configs centralized</li>
+          <li><b>30%</b> faster troubleshooting</li>
+          <li><b>75%</b> manual tracking reduced</li>
+        </ul>
+      </article>
+
+      <article class="job">
+        <div class="when">May 2015 – Dec 2016</div>
+        <h3>Sr. Switch Technician / Engineer</h3>
+        <div class="co">Apricot Consulting LLC (Client: T-Mobile)</div>
+        <div class="loc">Austin, TX · On-Site</div>
+        <p>BSC/RNC optimization and E911 reconciliation for new RAN activations, driving regional team training and process discipline.</p>
+        <ul>
+          <li><b>300+</b> new RAN activations</li>
+          <li><b>150+</b> E911 discrepancies corrected</li>
+          <li><b>25%</b> lower MTTR</li>
+          <li><b>99%</b> first-time-right circuits</li>
+        </ul>
+      </article>
+
+      <article class="job">
+        <div class="when">May 2012 – Mar 2015</div>
+        <h3>Switch Engineer</h3>
+        <div class="co">Apricot Consulting LLC (Client: Sprint)</div>
+        <div class="loc">Spokane, WA · On-Site</div>
+        <p>Cell-site backhaul and aggregation for Sprint's LTE rollout: router/switch configuration and pre-cutover data fill.</p>
+        <ul>
+          <li><b>200+</b> LTE site turn-ups</li>
+          <li><b>100%</b> L2/L3 protocol verification</li>
+          <li><b>Zero</b> cutover rollbacks</li>
+        </ul>
+      </article>
+
+      <article class="job">
+        <div class="when">2011 – 2012</div>
+        <h3>Network Engineer</h3>
+        <div class="co">WVUH Jefferson Memorial Hospital</div>
+        <div class="loc">Martinsburg, WV</div>
+        <p>Enterprise LAN/WAN infrastructure and team supervision for a hospital IT environment.</p>
+        <ul>
+          <li><b>24/7</b> hospital IT uptime</li>
+          <li><b>Multi-site</b> LAN/WAN coverage</li>
+        </ul>
+      </article>
+
+      <article class="job">
+        <div class="when">2009 – 2011</div>
+        <h3>Help Desk Associate</h3>
+        <div class="co">Jorge Scientific Corporation</div>
+        <div class="loc">Bethesda, MD</div>
+        <p>Desktop support, system administration, and identity/email management foundation.</p>
+        <ul>
+          <li><b>Active Directory</b> user mgmt</li>
+          <li><b>Email</b> system administration</li>
+        </ul>
+      </article>
+    </div>
+  </section>
+
+  <section class="block" id="skills" aria-label="Technical skills">
+    <div class="wrap">
+      <h2 class="title">Core Competencies</h2>
+      <div class="skill-grid">
+        <div class="skill-card">
+          <h3>Switch &amp; Facility Operations</h3>
+          <div class="tags"><span>Switch Maintenance</span><span>Facility Checks</span><span>Power/BMS (EcoStruxure)</span><span>Disaster Recovery</span><span>Alarm Management</span><span>ITIL Change Mgmt</span></div>
+        </div>
+        <div class="skill-card">
+          <h3>5G/4G RAN &amp; Core</h3>
+          <div class="tags"><span>5G NR</span><span>eNodeB/gNodeB</span><span>NSD, DAS</span><span>Emergency COWs</span><span>Call Servers</span><span>BSC/RNC</span></div>
+        </div>
+        <div class="skill-card">
+          <h3>Routing &amp; Transport</h3>
+          <div class="tags"><span>Cisco Catalyst</span><span>SAS/MAD Routers</span><span>BGP/OSPF/MPLS</span><span>Fiber/Microwave</span><span>1G/10G/100G</span><span>L2/L3 Switching</span></div>
+        </div>
+        <div class="skill-card">
+          <h3>T-Mobile Tools</h3>
+          <div class="tags"><span>ATOMS</span><span>OneTransport</span><span>RIOT</span><span>OneConsole</span><span>CBN Tools</span><span>EAI/Netviewer</span></div>
+        </div>
+        <div class="skill-card">
+          <h3>OSS &amp; Scripting</h3>
+          <div class="tags"><span>Nokia NetAct</span><span>Ericsson ENM</span><span>AMOS</span><span>Shell/Bash</span><span>JavaScript</span><span>Batch</span></div>
+        </div>
+        <div class="skill-card">
+          <h3>Leadership</h3>
+          <div class="tags"><span>Technical Mentorship</span><span>Junior Tech Onboarding</span><span>MOP Development</span><span>War-Room Command</span><span>E911 / CBN Audits</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="education" aria-label="Education and certifications">
+    <div class="wrap">
+      <h2 class="title">Foundation</h2>
+      <div class="edu-grid">
+        <div class="edu"><h3>BS Computer Science</h3><p>Information Systems Security</p></div>
+        <div class="edu"><h3>AA Computer Science</h3><p>Computer Networking Systems</p></div>
+      </div>
+      <div class="certs">
+        <div class="cert"><em>CCNA</em> Cisco Certified Network Associate — routing, switching &amp; network fundamentals</div>
+        <div class="cert"><em>MCP</em> Microsoft Certified Professional — Windows server &amp; enterprise administration</div>
+        <div class="cert"><em>A+</em> CompTIA A+ — IT fundamentals, hardware &amp; OS troubleshooting</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="contact" aria-label="Contact">
+    <div class="wrap">
+      <h2 class="title">Get in Touch</h2>
+      <form name="contact" method="POST" action="https://formspree.io/f/mdekbpja">
+        <input type="hidden" name="_next" value="/thank-you.html">
+        <p aria-hidden="true" style="position:absolute;left:-9999px;top:-9999px;"><label>Don't fill this out: <input name="_gotcha" tabindex="-1" autocomplete="off"></label></p>
+        <div><label for="c-name">Name</label><input type="text" id="c-name" name="name" required autocomplete="name" maxlength="100"></div>
+        <div><label for="c-email">Email</label><input type="email" id="c-email" name="email" required autocomplete="email" maxlength="254"></div>
+        <div><label for="c-phone">Phone <span style="opacity:.6">(optional)</span></label><input type="tel" id="c-phone" name="phone" autocomplete="tel" maxlength="20"></div>
+        <div><label for="c-subject">Subject</label><input type="text" id="c-subject" name="subject" required maxlength="200"></div>
+        <div><label for="c-message">Message</label><textarea id="c-message" name="message" required maxlength="5000"></textarea></div>
+        <div><button type="submit" class="btn btn-primary">Send Message</button></div>
+      </form>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap" style="display:flex;gap:16px;flex-wrap:wrap;align-items:center;width:100%">
+    <span>© 2026 Syed Rahid Ahmed.</span>
+    <a href="https://linkedin.com/in/syedrahidahmed" target="_blank" rel="noopener noreferrer">LinkedIn ↗</a>
+    <a href="SRA-Resume.pdf" download>Resume PDF</a>
+    <a href="index.html">Standard view</a>
+    <a href="immersive-preview.html">Immersive 3D</a>
+  </div>
+</footer>
+
+</body>
+</html>
