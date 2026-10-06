@@ -272,21 +272,7 @@
   color: var(--text-dim);
   white-space: nowrap;
 }
-.skills-list {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 16px;
-  margin-top: 24px;
-}
-.skill-category {
-  padding: 20px;
-}
-.skill-category h3 {
-  font-size: 12px;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  margin-bottom: 12px;
-}
+/* .skills-list / .skill-category / .skill-category h3 are defined in shared.css */
 
 /* ================================================================
    CONTACT FORM (page-specific overrides)

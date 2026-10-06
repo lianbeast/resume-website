@@ -451,15 +451,25 @@ section:first-of-type { content-visibility: visible; }
   grid-template-columns: repeat(3, 1fr);
   gap: 16px;
   margin-top: 24px;
+  /* Cards size to their own content. Without this, every card in a row
+     stretches to the tallest one and the shorter groups trail dead space. */
+  align-items: start;
 }
 .skill-category {
   padding: 20px;
+  /* Flex-wrap the tags so the gap is explicit. As inline-block they picked
+     up the body line-height, which opened ~50px between tag rows. */
+  display: flex;
+  flex-wrap: wrap;
+  align-content: flex-start;
+  gap: 8px;
 }
 .skill-category h3 {
+  flex: 0 0 100%;
   font-size: 12px;
   text-transform: uppercase;
   letter-spacing: 0.1em;
-  margin-bottom: 12px;
+  margin-bottom: 4px;
 }
 
 /* Education & Certs */
@@ -965,7 +975,7 @@ footer::before {
 .skill-tag {
   display: inline-block;
   padding: 6px 12px;
-  margin: 4px;
+  margin: 0;
   font-size: 12px;
   border-radius: 6px;
   background: rgba(0,0,0,0.04);

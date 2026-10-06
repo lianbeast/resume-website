@@ -71,7 +71,9 @@ const server = http.createServer((req, res) => {
           assert.equal(await page.evaluate(() => wheelNodeMeshes.length), nodeCount, `${file}: wheel re-entry must not duplicate nodes`);
           await page.click('[data-cat="Switch & Facility Ops"]');
           assert.equal(await page.$eval('#skills-count', el => el.textContent), '6 of 35 skills');
-          assert.equal(await page.$eval('.skill-category', el => getComputedStyle(el).display), 'block');
+          // Visible in whatever layout mode - the filter hides non-matching cards with
+          // display:none, so the meaningful check is that it is not hidden.
+          assert.notEqual(await page.$eval('.skill-category', el => getComputedStyle(el).display), 'none');
           await page.click('[data-cat="all"]');
           await page.type('#skill-search', 'Cisco');
           assert.equal(await page.$eval('#skills-count', el => el.textContent), '1 of 35 skills');
