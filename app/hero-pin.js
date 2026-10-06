@@ -114,6 +114,14 @@
   window.addEventListener('resize', onResize, { passive: true });
   reduced.addEventListener('change', () => { measure(); update(); });
 
+  // Webfonts are injected asynchronously by theme.js, and a swap changes both the
+  // title's rendered size and its layout position. Re-measure once they land, or
+  // `travel` and the readable-size floor are computed against fallback metrics.
+  // This also keeps things correct if the brand font is changed later.
+  if (document.fonts && document.fonts.ready) {
+    document.fonts.ready.then(() => { measure(); update(); });
+  }
+
   // The hero is 100vh and its type is fluid, so both the span and the
   // readable-size floor are re-measured after a viewport resize.
   measure();
