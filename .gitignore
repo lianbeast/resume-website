@@ -49,3 +49,7 @@ map-render-check.png
 # Agent tooling caches (never commit)
 .impeccable/hook.cache.json
 .impeccable/live/
+
+# Lighthouse run output
+.lh-*.json
+.lighthouseci/
