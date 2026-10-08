@@ -31,6 +31,10 @@
   const head = hero && hero.querySelector('.hero-head');
   if (!hero || !head) return;
 
+  // The nav logo morphs SR → "Syed Rahid Ahmed" as the hero name docks, so
+  // keep a reference and toggle a class rather than touching inline styles.
+  const logo = document.querySelector('#main-nav .nav-logo');
+
   const tail = hero.querySelector('.hero-tail');
   const titleEl = head.querySelector('.hero-title') || head;
   const reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
@@ -70,6 +74,7 @@
     hero.style.removeProperty('--pin');
     hero.style.removeProperty('--fade');
     if (tail) tail.classList.remove('is-hidden');
+    if (logo) logo.classList.remove('is-docked');
   }
 
   function update() {
@@ -96,6 +101,8 @@
     hero.style.setProperty('--fade', fade.toFixed(3));
     head.style.transform = `scale(${scale.toFixed(4)})`;
     if (tail) tail.classList.toggle('is-hidden', fade >= HIDE_TAIL_AT);
+    // Logo morph: swap SR → full name once the hero name has docked.
+    if (logo) logo.classList.toggle('is-docked', p >= 0.5);
   }
 
   function onScroll() {

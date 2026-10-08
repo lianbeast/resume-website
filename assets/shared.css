@@ -138,6 +138,50 @@ body {
   margin-left: -12px;
 }
 .nav-logo:hover { color: var(--text); }
+
+/* Logo morph: as the hero name docks, the nav logo cross-fades from the
+   "SR" monogram to the full name. Both spans sit on the same baseline so the
+   transition is a width + opacity swap, not a reflow. */
+.nav-logo {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  overflow: hidden;
+  vertical-align: middle;
+  white-space: nowrap;
+}
+.nav-logo-short,
+.nav-logo-full {
+  display: inline-block;
+  transition: opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.nav-logo-short {
+  transform: translateX(0);
+}
+.nav-logo-full {
+  position: absolute;
+  left: 0;
+  transform: translateX(-100%);
+  white-space: nowrap;
+}
+/* When the hero has docked, swap: short slides out, full slides in. */
+.nav-logo.is-docked .nav-logo-short {
+  opacity: 0;
+  transform: translateX(-100%);
+}
+.nav-logo.is-docked .nav-logo-full {
+  opacity: 1;
+  transform: translateX(0);
+}
+/* Keep the full name legible at the docked size — it lands at the nav's
+   22px logo font, so a fixed clamp keeps it readable on every tier. */
+.nav-logo.is-docked .nav-logo-full {
+  font-size: clamp(13px, 1.6vw, 15px);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--text);
+}
 .nav-links {
   list-style: none;
   display: flex;
@@ -1408,6 +1452,14 @@ footer::before {
   opacity: var(--pin);
   pointer-events: none;
   z-index: -1;
+}
+
+/* The hero name fades as it docks — the monogram/full-name swap in the nav
+   takes over, so the big title should dissolve rather than sit beside it.
+   --pin is driven per-frame by app/hero-pin.js, so no CSS transition here:
+   the fade tracks the scroll directly. */
+.hero-name {
+  opacity: calc(1 - var(--pin));
 }
 
 /* Tagline + buttons recede as the title docks so the two never collide.
