@@ -146,7 +146,6 @@ body {
   position: relative;
   display: inline-flex;
   align-items: center;
-  overflow: hidden;
   vertical-align: middle;
   white-space: nowrap;
 }
