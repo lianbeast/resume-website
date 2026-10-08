@@ -368,6 +368,33 @@ section:first-of-type { content-visibility: visible; }
   padding: 24px;
   text-align: center;
 }
+/* Glass treatment for stat cards — they carry .glass in markup but the base
+   rule above is plain, so restate the glass here so the stats read as a row
+   of glass panels rather than flat white boxes. */
+.stat-card.glass {
+  background: var(--bg-glass);
+  border: 1px solid var(--border-glass);
+  backdrop-filter: blur(28px) saturate(140%);
+  -webkit-backdrop-filter: blur(28px) saturate(140%);
+  border-radius: 16px;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.8),
+              inset 0 -1px 0 rgba(0,0,0,0.03),
+              0 4px 16px rgba(0,0,0,0.05),
+              0 8px 32px rgba(0,0,0,0.07),
+              0 1px 0 rgba(255,255,255,0.4) inset;
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+              border-color 0.3s ease,
+              backdrop-filter 0.3s ease;
+}
+.stat-card.glass:hover {
+  border-color: rgba(194, 65, 12, 0.35);
+  transform: translateY(-2px);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.06),
+              0 6px 20px rgba(0,0,0,0.06),
+              0 14px 44px rgba(0,0,0,0.09),
+              0 0 0 1px rgba(194, 65, 12, 0.10);
+}
 .stat-num {
   font-size: 36px;
   font-weight: 700;
