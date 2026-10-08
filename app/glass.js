@@ -51,37 +51,35 @@
         return;
       }
 
-      // Optimized settings for performance
-      // These values are tuned to reduce GPU load while maintaining visual appeal
+      // Tuned settings — richer glass without leaving the performance budget.
+      // Values sit between the library defaults and the previous trimmed set:
+      // enough refraction/edge/fresnel to read as real glass, little enough to
+      // stay smooth on mid-range desktop GPUs.
       var options = {
-        // Reduced refraction for less distortion computation
-        refraction: 0.3,          // default: 0.69
-        // Reduced chromatic aberration for less color fringing computation
-        chromAberration: 0.02,    // default: 0.05
-        // Reduced edge highlight for less edge computation
-        edgeHighlight: 0.02,      // default: 0.05
+        // Gentle refraction — distortion is visible but not warping
+        refraction: 0.45,          // default: 0.69
+        // Subtle chromatic aberration — color fringing at the edges only
+        chromAberration: 0.035,    // default: 0.05
+        // Edge highlight — rim light so panels lift off the page
+        edgeHighlight: 0.04,       // default: 0.05
         // Keep specular at 0 (no specular highlights)
         specular: 0,              // default: 0
-        // Reduced fresnel for less rim lighting computation
-        fresnel: 0.5,             // default: 1
+        // Fresnel rim lighting — stronger than before, still cheap
+        fresnel: 0.7,             // default: 1
         // Keep distortion at 0 (no distortion)
         distortion: 0,            // default: 0
-        // Keep default corner radius
-        // Keep default zRadius (bevel depth)
-        // Reduced opacity for less blending
-        opacity: 0.8,             // default: 1
+        // Slightly opaque — panels read as glass, not fog
+        opacity: 0.85,            // default: 1
         // Keep default saturation
         saturation: 0,            // default: 0
         // Keep default tint strength
         tintStrength: 0,          // default: 0
         // Keep default brightness
         brightness: 0,            // default: 0
-        // Reduced shadow opacity
-        shadowOpacity: 0.2,       // default: 0.3
-        // Reduced shadow spread
-        shadowSpread: 5,          // default: 10
-        // Reduced shadow offset Y
-        shadowOffsetY: 0.5,       // default: 1
+        // Shadow — deeper than before so glass casts a real shadow
+        shadowOpacity: 0.25,      // default: 0.3
+        shadowSpread: 8,          // default: 10
+        shadowOffsetY: 0.8,       // default: 1
         // Keep default floating and button behavior
         // Keep default bevel mode
       };

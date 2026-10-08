@@ -29,12 +29,12 @@
   </nav>
 
   <main id="main-content">
-    <header class="wheel-intro">
+    <header class="wheel-intro glass">
       <h1>3D Skill Wheel</h1>
       <p>A standalone exploration of the technical skills from the resume, grouped by category. The skills below mirror the homepage exactly; hover or touch the wheel, or use the search and list.</p>
     </header>
 
-    <div class="wheel-controls">
+    <div class="wheel-controls glass">
       <input type="search" id="wheel-search" placeholder="Search skills…" aria-label="Search skills" autocomplete="off">
       <button type="button" id="wheel-pause" aria-pressed="false">Pause Rotation</button>
       <span id="wheel-status" role="status" aria-live="polite"></span>
@@ -46,7 +46,7 @@
     </div>
     <div id="wheel-tooltip" role="presentation" aria-hidden="true"></div>
     <p id="wheel-empty" role="status" hidden>No matching skills. Clear the search to view all 35.</p>
-    <ul id="wheel-results"></ul>
+    <ul id="wheel-results" class="glass"></ul>
   </main>
 
   <footer>
@@ -56,6 +56,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"
           integrity="sha384-CI3ELBVUz9XQO+97x6nwMDPosPR5XvsxW2ua7N1Xeygeh1IxtgqtCkGfQY9WWdHu"
           crossorigin="anonymous"></script>
+  <script defer src="app/glass.js"></script>
   <script>
     (function () {
       'use strict';

@@ -33,6 +33,7 @@
 
     :root {
       --bg: #f7f5f0;
+      --bg-glass: rgba(255, 255, 255, 0.55);
       --bg-card: #ffffff;
       --text: #1c1917;
       --text-dim: #6e635c;
@@ -56,6 +57,7 @@
 
     [data-theme="dark"] {
       --bg: #161412;
+      --bg-glass: rgba(22, 20, 18, 0.75);
       --bg-card: #1e1c1a;
       --text: #f0ede8;
       --text-dim: #9a938d;
@@ -110,6 +112,31 @@
     h1 { font-size: clamp(28px, 5vw, 40px); font-weight: 700; line-height: 1.2; margin-bottom: 16px; }
     .lead { font-size: 18px; color: var(--text-dim); margin-bottom: 32px; max-width: 480px; }
 
+    /* Glassmorphism — shared with the main site (see assets/shared.css) */
+    .glass {
+      background: var(--bg-glass);
+      border: 1px solid var(--border-glass);
+      backdrop-filter: blur(28px) saturate(140%);
+      -webkit-backdrop-filter: blur(28px) saturate(140%);
+      border-radius: 16px;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.8),
+                  inset 0 -1px 0 rgba(0,0,0,0.03),
+                  0 4px 16px rgba(0,0,0,0.05),
+                  0 8px 32px rgba(0,0,0,0.07),
+                  0 1px 0 rgba(255,255,255,0.4) inset;
+      transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+                  box-shadow 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+                  border-color 0.3s ease,
+                  backdrop-filter 0.3s ease;
+    }
+    .glass:hover {
+      border-color: rgba(194, 65, 12, 0.35);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.06),
+                  0 4px 16px rgba(0,0,0,0.04),
+                  0 12px 40px rgba(0,0,0,0.08),
+                  0 0 0 1px rgba(194, 65, 12, 0.10);
+    }
+
     .btn {
       display: inline-flex; align-items: center; justify-content: center;
       padding: 14px 28px; border-radius: 10px; font-size: 14px; font-weight: 600;
@@ -157,14 +184,16 @@
   </nav>
 
   <main id="main-content" class="content">
-    <div class="success-icon" aria-hidden="true">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/>
-      </svg>
+    <div class="glass" style="padding:48px 40px; max-width:480px; display:flex; flex-direction:column; align-items:center; gap:20px;">
+      <div class="success-icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/>
+        </svg>
+      </div>
+      <h1>Message Sent</h1>
+      <p class="lead" style="margin:0; max-width:none;">Thanks for reaching out. I'll reply within two business days.</p>
+      <a href="index.html" class="btn btn-primary">Back to Home</a>
     </div>
-    <h1>Message Sent</h1>
-    <p class="lead">Thanks for reaching out. I'll reply within two business days.</p>
-    <a href="index.html" class="btn btn-primary">Back to Home</a>
   </main>
 
   <footer>
