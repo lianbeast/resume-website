@@ -15,19 +15,27 @@
     return;
   }
 
-  // Function to load LiquidGlass as an ES module and initialize it
-  function initLiquidGlass() {
+  // Wait for GSAP to be available — it loads via defer and may not be ready
+  // when this module's DOMContentLoaded fires. Use a single delayed check.
+  function waitForGSAP() {
+    if (typeof gsap !== 'undefined') {
+      doInit();
+    } else {
+      // Give GSAP time to load; if it still isn't available, skip silently
+      setTimeout(() => {
+        if (typeof gsap !== 'undefined') doInit();
+        else console.warn('Glass: GSAP not found — liquid glass effects disabled');
+      }, 500);
+    }
+  }
+
+  function doInit() {
     // Dynamically import LiquidGlass as an ES module
     import('../assets/liquidglass.js').then(module => {
       const LiquidGlass = module.LiquidGlass;
 
       if (typeof LiquidGlass === 'undefined') {
         console.warn('Glass: LiquidGlass not found in imported module');
-        return;
-      }
-
-      if (typeof gsap === 'undefined') {
-        console.warn('Glass: GSAP not found');
         return;
       }
 
@@ -96,8 +104,8 @@
 
   // Initialize when DOM is ready
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initLiquidGlass);
+    document.addEventListener('DOMContentLoaded', () => waitForGSAP());
   } else {
-    initLiquidGlass();
+    waitForGSAP();
   }
 })();

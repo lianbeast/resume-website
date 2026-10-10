@@ -1,4 +1,7 @@
-agents/Formspree-Validator.md
+---
+name: Formspree-Validator
+description: Validate Formspree form integrations, including client-side validation and CSP compliance.
+---
 # Formspree-Validator
 
 **Capabilities**: Validate Formspree form integrations, including client-side validation, CSP compliance, and form submission flows.

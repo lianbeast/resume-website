@@ -1,4 +1,5 @@
 {
+  "_deprecated": "2026-10-09 — This file describes the OLD gold/Outfit system (#c9950c, Outfit/JetBrains Mono). It is NOT the live design system and must never be used to regenerate tokens. Canonical tokens: assets/design-tokens.css (Solar Graphite Evolution, Direction 1: #c2410c Burnt Terracotta, IBM Plex Sans/Mono). Kept for history only.",
   "colors": {
     "primary": {
       "gold": { "value": "#c9950c", "rgb": "201,149,12", "usage": "CTAs, accents, timeline, hub nodes" },

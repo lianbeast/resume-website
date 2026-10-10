@@ -38,7 +38,12 @@
   /* Compatibility aliases for existing hover rules. */
   --color-primary: var(--gold);
   --color-primary-hover: var(--gold-dark);
+  /* Self-contained hex, not var(--teal)/var(--olive): browsers sometimes
+     fail to resolve a var-through-a-var chain declared on :root, which
+     silently left MCP and A+ badges transparent. */
+  --color-secondary: #0e7490;
   --color-secondary-hover: var(--teal-dark);
+  --color-tertiary: #4d7c0f;
   --font-body: 'IBM Plex Sans', -apple-system, BlinkMacSystemFont, sans-serif;
   --font-mono: 'IBM Plex Mono', monospace;
   /* Z-index scale — semantic layers */
@@ -69,6 +74,11 @@
   --teal-dark: #0891b2;
   --teal-light: #67e8f9;
   --olive: #84cc16;
+  --color-primary: var(--gold);
+  --color-primary-hover: var(--gold-dark);
+  --color-secondary: #22d3ee;
+  --color-secondary-hover: var(--teal-dark);
+  --color-tertiary: #84cc16;
 }
 
 html {
@@ -1363,6 +1373,16 @@ footer::before {
   .nav-links a:active {
     transform: scale(0.98);
     opacity: 0.8;
+  }
+}
+
+/* Mobile touch target fixes — ensure 44px minimum */
+@media (pointer: coarse) {
+  .nav-links a,
+  .skill-filter-btn,
+  .style-menu li,
+  .footer-social a {
+    min-height: 44px;
   }
 }
 

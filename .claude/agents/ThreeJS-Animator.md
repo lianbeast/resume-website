@@ -1,4 +1,7 @@
-agents/ThreeJS-Animator.md
+---
+name: ThreeJS-Animator
+description: Handle Three.js and GSAP animations, ensuring motion respects prefers-reduced-motion.
+---
 # ThreeJS-Animator
 
 **Capabilities**: Handle Three.js and GSAP animations, motion compliance, and performance optimization.

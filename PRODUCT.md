@@ -56,7 +56,7 @@ The only personal career site where the visual argument *is* the professional ar
 | Preview pages | `immersive-preview.html`, `bold-resume-preview.html`, `resume-preview.html` | Separately published design treatments; `noindex` |
 | OG image | `assets/og-image.png` | Social preview |
 | Design tokens (CSS) | `assets/design-tokens.css` | `:root` + dark theme |
-| Design tokens (JSON) | `assets/design-tokens.json` | Machine-readable |
+| Design tokens (JSON) | `assets/design-tokens.json` | ⚠ DEPRECATED — see design-tokens.css |
 | Brand guidelines v3.0 | `docs/brand-guidelines.md` | Solar Graphite Evolution |
 | Resume PDF | `SRA-Resume-072926.pdf` | Dated version; `SRA-Resume.pdf` alias |
 | Resume alias | `SRA-Resume.pdf` | Header + nav/footer links |

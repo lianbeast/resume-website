@@ -1,4 +1,7 @@
-agents/Lighthouse-Optimizer.md
+---
+name: Lighthouse-Optimizer
+description: Run Lighthouse CI tests and suggest fixes for performance and accessibility issues.
+---
 # Lighthouse-Optimizer
 
 **Capabilities**: Run Lighthouse CI tests, analyze performance/accessibility issues, and suggest fixes.
