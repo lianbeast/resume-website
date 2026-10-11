@@ -26,6 +26,14 @@ const server = http.createServer((req, res) => {
   assert.ok(resumePdf.length > 1000 && resumePdf.subarray(0, 5).toString() === '%PDF-', 'Resume PDF is present and valid');
   assert.match(csp, /connect-src 'self' https:\/\/formspree.io/);
   assert.match(csp, /form-action 'self' https:\/\/formspree.io/);
+  const metaCsp = config['Content-Security-Policy-Meta'];
+  assert.ok(metaCsp, 'config.json defines Content-Security-Policy-Meta');
+  for (const page of ['index.html', 'immersive-preview.html', 'bold-resume-preview.html', 'wheel-v2.html', 'thank-you.html', 'lite.html']) {
+    const html = fs.readFileSync(path.join(root, page), 'utf8');
+    const meta = html.match(/<meta http-equiv="Content-Security-Policy" content="([^"]+)">/);
+    assert.ok(meta, `${page}: CSP meta tag present`);
+    assert.equal(meta[1], metaCsp, `${page}: CSP meta matches config.json Content-Security-Policy-Meta`);
+  }
   await new Promise(resolve => server.listen(0, '127.0.0.1', resolve));
   const base = `http://127.0.0.1:${server.address().port}`;
   const profile = fs.mkdtempSync(path.join(root, '.restore-browser-'));

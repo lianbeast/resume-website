@@ -1,0 +1,211 @@
+    (function () {
+      'use strict';
+      var SKILLS = [
+        { name: 'Switch Maintenance', cat: 'Switch & Facility Ops', color: '#c2410c' },
+        { name: 'Facility Checks', cat: 'Switch & Facility Ops', color: '#c2410c' },
+        { name: 'Power/BMS (EcoStruxure)', cat: 'Switch & Facility Ops', color: '#c2410c' },
+        { name: 'Disaster Recovery', cat: 'Switch & Facility Ops', color: '#c2410c' },
+        { name: 'Alarm Management', cat: 'Switch & Facility Ops', color: '#c2410c' },
+        { name: 'ITIL Change Mgmt', cat: 'Switch & Facility Ops', color: '#c2410c' },
+        { name: '5G NR', cat: '5G/4G RAN & Core', color: '#0e7490' },
+        { name: 'eNodeB/gNodeB', cat: '5G/4G RAN & Core', color: '#0e7490' },
+        { name: 'NSD, DAS', cat: '5G/4G RAN & Core', color: '#0e7490' },
+        { name: 'Emergency COWs', cat: '5G/4G RAN & Core', color: '#0e7490' },
+        { name: 'Call Servers', cat: '5G/4G RAN & Core', color: '#0e7490' },
+        { name: 'BSC/RNC', cat: '5G/4G RAN & Core', color: '#0e7490' },
+        { name: 'Cisco Catalyst', cat: 'Routing & Transport', color: '#4d7c0f' },
+        { name: 'SAS/MAD Routers', cat: 'Routing & Transport', color: '#4d7c0f' },
+        { name: 'BGP/OSPF/MPLS', cat: 'Routing & Transport', color: '#4d7c0f' },
+        { name: 'Fiber/Microwave', cat: 'Routing & Transport', color: '#4d7c0f' },
+        { name: '1G/10G/100G', cat: 'Routing & Transport', color: '#4d7c0f' },
+        { name: 'L2/L3 Switching', cat: 'Routing & Transport', color: '#4d7c0f' },
+        { name: 'ATOMS', cat: 'T-Mobile Tools', color: '#44403c' },
+        { name: 'OneTransport', cat: 'T-Mobile Tools', color: '#44403c' },
+        { name: 'RIOT', cat: 'T-Mobile Tools', color: '#44403c' },
+        { name: 'OneConsole', cat: 'T-Mobile Tools', color: '#44403c' },
+        { name: 'CBN Tools', cat: 'T-Mobile Tools', color: '#44403c' },
+        { name: 'EAI/Netviewer', cat: 'T-Mobile Tools', color: '#44403c' },
+        { name: 'Nokia NetAct', cat: 'OSS & Scripting', color: '#be123c' },
+        { name: 'Ericsson ENM', cat: 'OSS & Scripting', color: '#be123c' },
+        { name: 'AMOS', cat: 'OSS & Scripting', color: '#be123c' },
+        { name: 'Shell/Bash', cat: 'OSS & Scripting', color: '#be123c' },
+        { name: 'JavaScript', cat: 'OSS & Scripting', color: '#be123c' },
+        { name: 'Batch', cat: 'OSS & Scripting', color: '#be123c' },
+        { name: 'Technical Mentorship', cat: 'Leadership', color: '#65a30d' },
+        { name: 'Junior Tech Onboarding', cat: 'Leadership', color: '#65a30d' },
+        { name: 'MOP Development', cat: 'Leadership', color: '#65a30d' },
+        { name: 'War-Room Command', cat: 'Leadership', color: '#65a30d' },
+        { name: 'E911 / CBN Audits', cat: 'Leadership', color: '#65a30d' }
+      ];
+      var canvas = document.getElementById('wheel-canvas');
+      var tooltip = document.getElementById('wheel-tooltip');
+      var statusEl = document.getElementById('wheel-status');
+      var resultsEl = document.getElementById('wheel-results');
+      var emptyEl = document.getElementById('wheel-empty');
+      var searchEl = document.getElementById('wheel-search');
+      var pauseEl = document.getElementById('wheel-pause');
+      var reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
+      var paused = reduced.matches;
+      var raf = 0, renderer, scene, camera, group, meshes = [], elapsed = 0, last = 0;
+      var raycaster = null, pointer = { x: -2, y: -2 };
+
+      function status(text) { statusEl.textContent = text; }
+      function fallback(reason) {
+        canvas.hidden = true;
+        var note = document.querySelector('.wheel-fallback');
+        if (note) { note.hidden = false; note.textContent = reason + ' The complete skill list below is always available.'; }
+        status('List mode');
+        pauseEl.disabled = true;
+        renderList('');
+      }
+      if (typeof THREE === 'undefined') { fallback('3D library did not load'); return; }
+
+      try {
+        renderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: true, alpha: true });
+      } catch (error) { fallback('WebGL is unavailable'); return; }
+      raycaster = new THREE.Raycaster();
+      scene = new THREE.Scene();
+      camera = new THREE.PerspectiveCamera(55, 1, 0.1, 60);
+      camera.position.set(0, 2.2, 7.6);
+      camera.lookAt(0, 0, 0);
+      renderer.setClearColor(0x000000, 0);
+      group = new THREE.Group();
+      group.rotation.x = -0.5;
+      scene.add(group);
+
+      function label(text, color, wide, high, size) {
+        var c = document.createElement('canvas'); c.width = wide; c.height = high;
+        var g = c.getContext('2d');
+        g.font = '600 ' + size + 'px "IBM Plex Sans", sans-serif';
+        g.textAlign = 'center'; g.textBaseline = 'middle';
+        g.fillStyle = color; g.fillText(text, wide / 2, high / 2);
+        var tex = new THREE.CanvasTexture(c); tex.minFilter = THREE.LinearFilter;
+        var sprite = new THREE.Sprite(new THREE.SpriteMaterial({ map: tex, transparent: true, depthTest: false }));
+        sprite.scale.set(wide / 80, high / 80, 1);
+        return sprite;
+      }
+
+      var CATS = [];
+      SKILLS.forEach(function (s) { if (CATS.indexOf(s.cat) < 0) CATS.push(s.cat); });
+      var gap = 0.09;
+      var totalArc = Math.PI * 2 - gap * CATS.length;
+      var angle = 0;
+      CATS.forEach(function (cat) {
+        var arcLen = totalArc / CATS.length;
+        var arc = new THREE.Mesh(
+          new THREE.RingGeometry(3.0, 3.07, 48, 1, angle, arcLen),
+          new THREE.MeshBasicMaterial({ color: new THREE.Color(SKILLS.find(function (s) { return s.cat === cat; }).color), transparent: true, opacity: 0.5, side: THREE.DoubleSide })
+        );
+        arc.rotation.x = -Math.PI / 2;
+        group.add(arc);
+        var items = SKILLS.filter(function (s) { return s.cat === cat; });
+        items.forEach(function (s, i) {
+          var a = angle + (i + 0.5) / items.length * arcLen;
+          var tier = i % 2;
+          var r = 2.55 * (1 + tier * 0.07);
+          var mesh = new THREE.Mesh(
+            new THREE.SphereGeometry(0.085, 12, 12),
+            new THREE.MeshBasicMaterial({ color: new THREE.Color(s.color), transparent: true, opacity: 0.9 })
+          );
+          mesh.position.set(Math.cos(a) * r, tier * 0.16 - 0.08, Math.sin(a) * r);
+          mesh.userData = { skill: s, on: true };
+          group.add(mesh); meshes.push(mesh);
+        });
+        var mid = angle + arcLen / 2;
+        var lab = label(cat, SKILLS.find(function (s) { return s.cat === cat; }).color, 256, 56, 20);
+        lab.position.set(Math.cos(mid) * 3.55, 0.12, Math.sin(mid) * 3.55);
+        group.add(lab);
+        angle += arcLen + gap;
+      });
+      var center = label('TECHNICAL SKILLS', '#6b6964', 320, 64, 24);
+      center.position.set(0, 0.25, 0); scene.add(center);
+      var hint = label('hover or touch a node', '#9a968e', 256, 40, 15);
+      hint.position.set(0, -0.18, 0); scene.add(hint);
+
+      function resize() {
+        var rect = canvas.getBoundingClientRect();
+        var w = Math.max(rect.width, 1), h = Math.max(rect.height, 1);
+        renderer.setSize(w, h, false);
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+        camera.aspect = w / h; camera.updateProjectionMatrix();
+        if (paused) draw(performance.now());
+      }
+      function draw(time) {
+        raf = 0;
+        var dt = Math.min((time - last) / 1000, 0.05); last = time;
+        if (!paused && !document.hidden) elapsed += dt;
+        group.rotation.y = elapsed * 0.12;
+        renderer.render(scene, camera);
+        if (!paused && !document.hidden) raf = requestAnimationFrame(draw);
+      }
+      function invalidate() { if (!raf && !paused) raf = requestAnimationFrame(draw); }
+      function setPaused(value) {
+        paused = value;
+        pauseEl.setAttribute('aria-pressed', String(value));
+        pauseEl.textContent = value ? 'Resume Rotation' : 'Pause Rotation';
+        if (paused) { if (raf) cancelAnimationFrame(raf); draw(performance.now()); }
+        else { last = performance.now(); invalidate(); }
+      }
+      function applyFilter() {
+        var q = searchEl.value.trim().toLowerCase();
+        var visible = 0;
+        meshes.forEach(function (m) {
+          m.userData.on = (!q || m.userData.skill.name.toLowerCase().includes(q));
+          if (m.userData.on) visible++;
+        });
+        status((!q) ? SKILLS.length + ' skills' : visible + ' of ' + SKILLS.length + ' skills');
+        emptyEl.hidden = visible > 0;
+        renderList(q);
+        if (renderer) draw(performance.now());
+      }
+      function renderList(q) {
+        resultsEl.replaceChildren.apply(resultsEl, SKILLS.filter(function (s) { return !q || s.name.toLowerCase().includes(q); }).map(function (s) {
+          var li = document.createElement('li');
+          var name = document.createElement('span'); name.className = 'name'; name.textContent = s.name;
+          var cat = document.createElement('span'); cat.className = 'cat'; cat.textContent = s.cat;
+          li.append(name, cat); return li;
+        }));
+      }
+      function updateHover(clientX, clientY) {
+        if (!raycaster) return;
+        var rect = canvas.getBoundingClientRect();
+        pointer.x = ((clientX - rect.left) / rect.width) * 2 - 1;
+        pointer.y = -((clientY - rect.top) / rect.height) * 2 + 1;
+        raycaster.setFromCamera(pointer, camera);
+        var hit = raycaster.intersectObjects(meshes).find(function (h) { return h.object.userData.on; });
+        if (hit) {
+          tooltip.innerHTML = '';
+          var name = document.createElement('strong'); name.textContent = hit.object.userData.skill.name;
+          var cat = document.createElement('span'); cat.className = 'category'; cat.textContent = hit.object.userData.skill.cat;
+          tooltip.append(name, cat);
+          tooltip.style.left = Math.max(8, Math.min(clientX + 14, window.innerWidth - 280)) + 'px';
+          tooltip.style.top = Math.max(8, clientY - 10) + 'px';
+          tooltip.classList.add('visible');
+          canvas.style.cursor = 'pointer';
+        } else { tooltip.classList.remove('visible'); canvas.style.cursor = 'default'; }
+      }
+      canvas.addEventListener('pointermove', function (e) { updateHover(e.clientX, e.clientY); if (paused) draw(performance.now()); });
+      canvas.addEventListener('pointerleave', function () { tooltip.classList.remove('visible'); if (paused) draw(performance.now()); });
+      searchEl.addEventListener('input', applyFilter);
+      pauseEl.addEventListener('click', function () { setPaused(!paused); });
+      document.getElementById('wheel-theme').addEventListener('click', function () {
+        var root = document.documentElement;
+        var dark = root.getAttribute('data-theme') === 'dark';
+        if (dark) root.removeAttribute('data-theme'); else root.setAttribute('data-theme', 'dark');
+      });
+      window.addEventListener('resize', function () { resize(); });
+      document.addEventListener('visibilitychange', function () {
+        if (document.hidden && raf) { cancelAnimationFrame(raf); raf = 0; }
+        else if (!paused) { last = performance.now(); invalidate(); }
+        else draw(performance.now());
+      });
+      reduced.addEventListener && reduced.addEventListener('change', function () { setPaused(reduced.matches); });
+      window.addEventListener('pagehide', function () {
+        if (raf) cancelAnimationFrame(raf); raf = 0;
+        scene.traverse(function (o) { if (o.geometry) o.geometry.dispose(); if (o.material) { if (o.material.map) o.material.map.dispose(); o.material.dispose(); } });
+        renderer.dispose();
+      });
+      document.documentElement.dataset.wheelReady = 'true';
+      resize(); applyFilter(); setPaused(paused);
+      window.dataset = window.dataset || {};
+    })();
