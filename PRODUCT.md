@@ -53,7 +53,7 @@ The only personal career site where the visual argument *is* the professional ar
 |---|---|---|
 | Demo GIF | `assets/demo/demo.gif` | 800px wide, embedded in README |
 | Demo MP4 | `assets/demo/demo.mp4` | Full-quality walkthrough |
-| Preview pages | `immersive-preview.html`, `bold-resume-preview.html`, `resume-preview.html` | Separately published design treatments; `noindex` |
+| Preview pages | `immersive-preview.html`, `bold-resume-preview.html` | Separately published design treatments; `noindex` |
 | OG image | `assets/og-image.png` | Social preview |
 | Design tokens (CSS) | `assets/design-tokens.css` | `:root` + dark theme |
 | Design tokens (JSON) | `assets/design-tokens.json` | ⚠ DEPRECATED — see design-tokens.css |

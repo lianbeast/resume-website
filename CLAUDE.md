@@ -10,7 +10,7 @@ Static personal career/portfolio site for **Syed Rahid Ahmed**, Sr. Switch Techn
 ## Architecture Notes
 - **Single self-contained artifact**: `index.html` inlines CSS + loads `app.js`, `nav.js`, `theme.js`, `states.js` — no bundler
 - **Theme system**: Light (Carbon Ivory) + Dark (Graphite) via `data-theme` attribute, persisted in `localStorage`; `theme.js` injects fonts async
-- **CSP**: Defined in `config.json`, served via test server and inferred by GitHub Pages headers
+- **CSP**: Defined in `config.json` — served as an HTTP header by the test server and embedded as a `<meta http-equiv>` tag on every page for production (GitHub Pages cannot set headers); the meta variant omits `frame-ancestors`, which browsers ignore in meta delivery
 - **Motion**: Three.js + GSAP fully gated by `prefers-reduced-motion` — falls back to static scene, never blank
 - **Mobile-first**: `100dvh` units, safe-area insets, `viewport-fit=cover`, debounced resize (150ms), 44px touch targets
 - **Print-safe**: Hierarchy and legibility preserved when printed to PDF
@@ -19,7 +19,7 @@ Static personal career/portfolio site for **Syed Rahid Ahmed**, Sr. Switch Techn
 
 ## Coding Conventions
 - **Commits**: Conventional-ish (`feat:`, `fix:`, `chore:`, `polish:`) — see git log
-- **CSP**: Single source in `config.json`; never hardcode in HTML
+- **CSP**: Single source in `config.json` (header + meta variants); never hardcode policies in HTML
 - **Evidence**: Never fabricate employers, certs, protocols, dates, or skill taxonomy (see PRODUCT.md §41)
 - **Motion**: Always respect `prefers-reduced-motion`; content never gated on animation
 - **Accessibility**: WCAG AA target; ≥4.5:1 body, ≥3:1 large text; keyboard-reachable; no hue-alone encoding

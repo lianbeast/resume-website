@@ -23,9 +23,10 @@ npm run dev
 npm run lhci
 
 # Page-specific Puppeteer browser test suites (headless Chrome)
-node scripts/restore.test.cjs     # Tests index.html, resume-preview.html, thank-you.html
+node scripts/restore.test.cjs     # Tests index.html, lite.html, thank-you.html
 node scripts/immersive.test.cjs   # Tests immersive-preview.html
 node scripts/bold-resume.test.cjs # Tests bold-resume-preview.html
+node scripts/csp-probe.cjs        # Verifies every page runs clean under the CSP
 ```
 
 ---
@@ -65,10 +66,9 @@ node scripts/bold-resume.test.cjs # Tests bold-resume-preview.html
 | `index.html` | Primary homepage (resume layout + 3D background map + skill wheel) |
 | `immersive-preview.html` | Interactive 3D career journey (HUD + scroll-driven 3D camera path) |
 | `bold-resume-preview.html` | Editorial bold typography resume variant |
-| `resume-preview.html` | Standard resume preview variant |
 | `wheel-v2.html` | Standalone interactive 3D skill wheel |
 | `thank-you.html` | Contact form submission confirmation |
-| `config.json` | Content-Security-Policy (CSP) headers (single source of truth) |
+| `config.json` | CSP source of truth — header policy (test server) + meta policy (pages) |
 | `lighthouseci.config.js` | Performance (≥0.9), Accessibility (≥0.9), and CLS (≤0.1) assertions |
 | `DESIGN.md` | Authoritative design specification and design system token contract |
 | `PRODUCT.md` | Product requirements, brand positioning, and evidence boundaries |
