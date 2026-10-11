@@ -55,17 +55,11 @@ const server = http.createServer((req, res) => {
           await page.evaluate(() => document.querySelector('#skill-wheel').scrollIntoView({ block: 'center', behavior: 'instant' }));
           await new Promise(resolve => setTimeout(resolve, 250));
           assert.equal(await page.evaluate(() => wheelNodeMeshes.length), nodeCount, `${file}: wheel re-entry must not duplicate nodes`);
-          await page.evaluate(() => document.querySelector('[data-cat="Switch & Facility Ops"]').scrollIntoView({ block: 'center', behavior: 'instant' }));
-          await page.click('[data-cat="Switch & Facility Ops"]');
-          assert.equal(await page.$eval('#skills-count', el => el.textContent), '6 of 35 skills');
-          // Visible in whatever layout mode - the filter hides non-matching cards with
-          // display:none, so the meaningful check is that it is not hidden.
-          assert.notEqual(await page.$eval('.skill-category', el => getComputedStyle(el).display), 'none');
-          await page.click('[data-cat="all"]');
-          await page.type('#skill-search', 'Cisco');
-          assert.equal(await page.$eval('#skills-count', el => el.textContent), '1 of 35 skills');
+          // The skill control bar (filter buttons, #skills-count, #skill-search) is
+          // homepage-only since 74d710d; filtering is covered by restore.test.cjs.
+          // Here the wheel renders without controls, so just confirm category cards render.
+          assert.ok(await page.$('.skill-category'), `${file}: skill categories render`);
           await page.evaluate(() => {
-            const input = document.querySelector('#skill-search'); input.value = ''; input.dispatchEvent(new Event('input'));
             document.querySelector('#contact form').dispatchEvent(new Event('submit', { bubbles: true, cancelable: true }));
           });
           assert.equal(await page.$eval('#contact-name', el => el.getAttribute('aria-invalid')), 'true');
