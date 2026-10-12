@@ -1,0 +1,53 @@
+# Netlify configuration for Rahids-Resume-Website
+# See: https://docs.netlify.com/configure-builds/file-based-configuration/
+
+[build]
+  publish = "."
+
+# Cache-Control headers for performance
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=604800, immutable"
+
+[[headers]]
+  for = "*.html"
+  [headers.values]
+    Cache-Control = "public, max-age=3600, s-maxage=604800, stale-while-revalidate"
+
+[[headers]]
+  for = "/SRA-Resume.pdf"
+  [headers.values]
+    Cache-Control = "public, max-age=604800, immutable"
+
+[[headers]]
+  for = "/assets/og-image.png"
+  [headers.values]
+    Cache-Control = "public, max-age=604800, immutable"
+
+# Content-Security-Policy headers for security
+[[headers]]
+  for = "/*"
+  [headers.values]
+    Content-Security-Policy = """
+      default-src 'self';
+      script-src 'self' https://cdnjs.cloudflare.com;
+      style-src 'self' https://fonts.googleapis.com https://fonts.gstatic.com 'unsafe-inline';
+      font-src https://fonts.gstatic.com;
+      img-src 'self' data: https://cdnjs.cloudflare.com;
+      connect-src 'self' https://formspree.io;
+      frame-ancestors 'none';
+      base-uri 'self';
+      form-action https://formspree.io;
+    """.strip()
+    X-Content-Type-Options = "nosniff"
+    X-Frame-Options = "DENY"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Permissions-Policy = "camera=(), microphone=(), geolocation=(), interest-cohort=()"
+
+# Force HTTPS
+[[redirects]]
+  from = "http://*"
+  to = "https://:splat"
+  status = 301
+  force = true

@@ -23,9 +23,9 @@
     'DC, MD, VA': { lon: -77.04, lat: 38.90, label: 'Washington, DC' },
   };
 
-  // Extra pins (non-career-path)
+  // Extra pins (non-career-path) — excludes cities already in CITIES
   const EXTRA_PINS = [
-    { city: 'Mobile', label: 'Mobile, AL' },
+    // Add any additional decorative pins here that aren't in CITIES above
   ];
 
   // Private state

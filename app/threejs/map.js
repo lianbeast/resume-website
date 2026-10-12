@@ -170,11 +170,20 @@
   // this from the monolithic app.js; without it the renderer is created and
   // meshes are added but nothing is ever drawn to the canvas. Also lets the
   // GSAP parallax in animations.js (window.camera.position.y) update each frame.
-  (function renderLoop() {
+  // S6: Shared visibility guard — pauses rAF when tab is hidden
+  let isTabVisible = true;
+  document.addEventListener('visibilitychange', () => {
+    isTabVisible = !document.hidden;
+    if (isTabVisible) renderLoop();
+  });
+
+  function renderLoop() {
+    if (!isTabVisible) return;
     const TM = window.ThreeJSMap;
     if (TM && TM.getRenderer() && TM.getScene() && TM.getCamera()) {
       TM.getRenderer().render(TM.getScene(), TM.getCamera());
     }
     requestAnimationFrame(renderLoop);
-  })();
+  }
+  renderLoop();
 })();
