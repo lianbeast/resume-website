@@ -1414,7 +1414,6 @@ html.lenis-active { scroll-behavior: auto !important; }
   .btn,
   .skill-tag,
   .cert-badge,
-  .skill-filter-btn,
   .form-group input,
   .form-group textarea { border: 1px solid ButtonText; }
 
@@ -1504,7 +1503,6 @@ html.lenis-active { scroll-behavior: auto !important; }
 /* Mobile touch target fixes — ensure 44px minimum */
 @media (pointer: coarse) {
   .nav-links a,
-  .skill-filter-btn,
   .style-menu li,
   .footer-social a {
     min-height: 44px;

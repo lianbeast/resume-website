@@ -111,6 +111,14 @@
   let wheelArcs = [];
   let hoveredWheelMesh = null;
   let wheelRevealAt = 0;
+  // Hover-pause. The ambient orbit and breathing freeze while the pointer is
+  // over the wheel so the node under the cursor holds still and its tooltip
+  // stays readable. The render loop deliberately keeps running — hover bloom
+  // and the opacity/scale lerps still need to animate. Only the motion clock
+  // stops, so resuming picks up from the same angle instead of snapping.
+  let wheelHoverPaused = false;
+  let wheelMotionTime = 0;
+  let wheelLastFrame = 0;
   const wheelPointer = { x: -2, y: -2, cx: 0, cy: 0 };
   const wheelRaycaster = typeof THREE !== 'undefined' ? new THREE.Raycaster() : null;
   let wheelUnavailable = !wheelRaycaster;
@@ -402,7 +410,14 @@
       if (!wheelRevealAt) wheelRevealAt = time;
       const reveal = Math.min((time - wheelRevealAt) / 1500, 1);
 
-      wheelSpin.rotation.z = time * 0.00009;
+      // Advance a motion clock instead of using wall-clock time so a hover can
+      // freeze the orbit mid-flight and resume from the same angle. Clamped so
+      // a backgrounded tab or a re-entry does not jump the wheel forward.
+      const delta = wheelLastFrame ? Math.min(time - wheelLastFrame, 64) : 16;
+      wheelLastFrame = time;
+      if (!wheelHoverPaused) wheelMotionTime += delta;
+
+      wheelSpin.rotation.z = wheelMotionTime * 0.00009;
 
       wheelNodeMeshes.forEach((m, i) => {
         const on = m.userData.on;
@@ -410,7 +425,7 @@
         // Stagger the reveal across the ring so it assembles rather than pops.
         const stagger = Math.min(Math.max((reveal - (i / wheelNodeMeshes.length) * 0.55) / 0.45, 0), 1);
         const eased = 1 - Math.pow(1 - stagger, 3);
-        const breathe = 1 + Math.sin(time * 0.0013 + i * 0.7) * 0.055;
+        const breathe = 1 + Math.sin(wheelMotionTime * 0.0013 + i * 0.7) * 0.055;
 
         const target = on ? (hovered ? 1.0 : 0.92) : 0.06;
         m.material.opacity += (target - m.material.opacity) * 0.18;
@@ -493,7 +508,11 @@
     if (window.VisualizationMotion?.paused && wheelRenderer) wheelLoop(performance.now());
   });
 
+  // Hover-pause — the wheel holds still for as long as the pointer is over it.
+  wheelCanvas.addEventListener('pointerenter', () => { wheelHoverPaused = true; });
+
   wheelCanvas.addEventListener('pointerleave', () => {
+    wheelHoverPaused = false;
     hoveredWheelMesh = null;
     if (tooltip) {
       tooltip.classList.remove('visible');
@@ -502,7 +521,12 @@
     if (window.VisualizationMotion?.paused && wheelRenderer) wheelLoop(performance.now());
   });
 
-  // ---- Search + filter controls drive both the 3D wheel and the tag grid ----
+  // ---- Search drives the 3D wheel and the tag grid ----
+  // The category filter buttons were removed from the markup, so the
+  // `.skill-filter-btn` wiring below is inert (querySelectorAll returns an
+  // empty list and forEach no-ops). It is kept on purpose: `activeCat` still
+  // drives arc dimming and the tag grid, and `?skillCategory=` deep links
+  // remain functional, so a shared filtered URL still renders correctly.
   const skillSearchInput = document.getElementById('skill-search');
   if (skillSearchInput) {
     skillSearchInput.value = searchQuery;
@@ -537,6 +561,9 @@
         if (e.isIntersecting) {
           const firstActivation = !wheelActive;
           wheelActive = true;
+          // Re-sync hover state on entry: the pointer may already be sitting
+          // over the canvas, and a stale flag would leave the wheel frozen.
+          wheelHoverPaused = wheelCanvas.matches(':hover');
           initWheel();
           applyWheelFilter();
           // Replay the assembly animation each time the section is re-entered.
@@ -578,4 +605,7 @@
   // Expose wheelNodeMeshes and wheelRAF for testing
   window.wheelNodeMeshes = wheelNodeMeshes;
   window.wheelRAF = wheelRAF;
+  // The orbit angle is the only externally observable signal that separates
+  // "orbiting" from "held still" by hover-pause, so expose it for tests.
+  window.wheelSpinAngle = () => (wheelSpin ? wheelSpin.rotation.z : null);
 })();

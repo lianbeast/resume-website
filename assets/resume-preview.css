@@ -100,9 +100,7 @@ section + section { border-top: 1px solid var(--resume-rule); }
 .skill-controls { padding: 16px; gap: 16px; }
 .skill-search { background: var(--input-bg); min-height: 44px; border-radius: 6px; }
 .skill-search:focus { background: var(--input-bg); }
-.skill-filter-btn { background: var(--bg-card); min-height: 44px; border-radius: 6px; color: var(--text); }
-.skill-filter-btn[aria-pressed="true"] { color: var(--text-on-accent); }
-.skill-search:focus-visible, .skill-filter-btn:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; }
+.skill-search:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; }
 .skills-list { margin-top: 20px; gap: 16px; }
 .skill-category { padding: 20px; }
 .skill-category h3 { font-size: 1rem; color: var(--text); }

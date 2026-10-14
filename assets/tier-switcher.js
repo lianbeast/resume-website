@@ -114,9 +114,9 @@
       color:rgba(255,255,255,.5);font-size:15px;cursor:pointer;padding:2px 4px;line-height:1;
     }
     .tier-switch__advice button:hover{color:#fff}
-    /* On small screens a fixed overlay will inevitably sit on top of content —
-       it was swallowing taps on the skill-filter buttons — so drop it into the
-       normal flow at the end of the document instead. */
+    /* On small screens a fixed overlay will inevitably sit on top of content
+       and swallow taps on whatever is beneath it, so drop it into the normal
+       flow at the end of the document instead. */
     @media (max-width:768px){
       .tier-switch{
         position:static;left:auto;bottom:auto;

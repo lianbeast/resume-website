@@ -118,7 +118,43 @@ const wait = ms => new Promise(r => setTimeout(r, ms));
     console.log(`PASS hero dock engages with Lenis driving scroll (--pin=${dock.pin})`);
     passed++;
 
-    // ---- 5. Dark-mode accent ramp stays terracotta -----------------------
+    // ---- 4. Category filter buttons removed ------------------------------
+    assert.strictEqual(
+      await page.$$eval('.skill-filter-btn', els => els.length), 0,
+      'category filter buttons should be gone from the markup');
+    assert.strictEqual(
+      await page.$eval('#skills-count', el => el.textContent), '35 skills',
+      'count should report the full set when no search is applied');
+    console.log('PASS category filter buttons removed; count reads "35 skills"');
+    passed++;
+
+    // ---- 5. Hover holds the wheel orbit still, leaving resumes -----------
+    await page.evaluate(() => document.querySelector('#skill-wheel').scrollIntoView({ block: 'center', behavior: 'instant' }));
+    await wait(800);
+    const centre = await page.$eval('#skill-wheel', el => {
+      const r = el.getBoundingClientRect();
+      return { x: r.left + r.width / 2, y: r.top + r.height / 2 };
+    });
+    const angle = () => page.evaluate(() => window.wheelSpinAngle());
+    assert.ok(typeof (await angle()) === 'number', 'wheelSpinAngle should be exposed and numeric');
+
+    const runA = await angle(); await wait(500); const runB = await angle();
+    assert.ok(runB !== runA, `wheel should orbit while not hovered (${runA} -> ${runB})`);
+
+    await page.mouse.move(centre.x, centre.y);
+    await wait(150);
+    const holdA = await angle(); await wait(500); const holdB = await angle();
+    assert.strictEqual(holdB, holdA, `wheel should hold still while hovered (drifted ${holdB - holdA})`);
+
+    // Move onto the fixed nav, clear of the canvas.
+    await page.mouse.move(centre.x, 2);
+    await wait(150);
+    const backA = await angle(); await wait(500); const backB = await angle();
+    assert.ok(backB !== backA, 'wheel should resume once the pointer leaves');
+    console.log(`PASS hover holds the orbit still (${holdA.toFixed(5)}) and leaving resumes it`);
+    passed++;
+
+    // ---- 6. Dark-mode accent ramp stays terracotta -----------------------
     const dark = await page.evaluate(() => {
       document.documentElement.setAttribute('data-theme', 'dark');
       const cs = getComputedStyle(document.documentElement);
@@ -132,7 +168,7 @@ const wait = ms => new Promise(r => setTimeout(r, ms));
     console.log(`PASS dark-mode accent ramp is terracotta (--gold-light=${dark.light})`);
     passed++;
 
-    // ---- 6. Decorative orbs actually paint -------------------------------
+    // ---- 7. Decorative orbs actually paint -------------------------------
     const orbs = await page.evaluate(() =>
       ['orb-gold', 'orb-gold-light', 'orb-gold-dark'].map(c => {
         const el = document.querySelector('#hero .' + c);
@@ -170,7 +206,7 @@ const wait = ms => new Promise(r => setTimeout(r, ms));
     console.log('PASS no inline style attributes on index / immersive / bold');
     passed++;
 
-    // ---- 7. Forced-colors path exists ------------------------------------
+    // ---- 8. Forced-colors path exists ------------------------------------
     const css = fs.readFileSync(path.join(root, 'assets/shared.css'), 'utf8');
     assert.ok(/@media\s*\(forced-colors:\s*active\)/.test(css), 'shared.css should carry a forced-colors block');
     assert.ok(/\.hero-name\s*\{[^}]*-webkit-text-fill-color:\s*CanvasText/.test(css), 'gradient hero name should restore a text fill under forced colors');

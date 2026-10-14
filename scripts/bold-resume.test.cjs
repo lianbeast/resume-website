@@ -69,12 +69,10 @@ const server = http.createServer((req, res) => {
           await page.evaluate(() => document.querySelector('#skill-wheel').scrollIntoView({ block: 'center', behavior: 'instant' }));
           await new Promise(resolve => setTimeout(resolve, 250));
           assert.equal(await page.evaluate(() => wheelNodeMeshes.length), nodeCount, `${file}: wheel re-entry must not duplicate nodes`);
-          await page.click('[data-cat="Switch & Facility Ops"]');
-          assert.equal(await page.$eval('#skills-count', el => el.textContent), '6 of 35 skills');
-          // Visible in whatever layout mode - the filter hides non-matching cards with
-          // display:none, so the meaningful check is that it is not hidden.
+          // The category filter buttons were removed; search is now the only
+          // skills filter, and the count reports matches across the full set.
+          assert.equal(await page.$eval('#skills-count', el => el.textContent), '35 skills');
           assert.notEqual(await page.$eval('.skill-category', el => getComputedStyle(el).display), 'none');
-          await page.click('[data-cat="all"]');
           await page.type('#skill-search', 'Cisco');
           assert.equal(await page.$eval('#skills-count', el => el.textContent), '1 of 35 skills');
           assert.equal(new URL(page.url()).searchParams.get('skillSearch'), 'Cisco');
@@ -139,7 +137,15 @@ const server = http.createServer((req, res) => {
     await guidelines.goto(`${base}/bold-resume-preview.html?skillCategory=Routing%20%26%20Transport&skillSearch=Cisco`, { waitUntil: 'networkidle0' });
     assert.equal(await guidelines.$eval('#skill-search', el => el.value), 'Cisco');
     assert.equal(await guidelines.$eval('#skills-count', el => el.textContent), '1 of 35 skills');
-    assert.equal(await guidelines.$eval('[data-cat="Routing & Transport"]', el => el.getAttribute('aria-pressed')), 'true');
+    // The category filter buttons were removed, but ?skillCategory= deep links
+    // still drive the filter, so assert the effect on the grid rather than a
+    // button's aria-pressed state: only the matching category block survives.
+    assert.deepEqual(
+      await guidelines.evaluate(() => Array.from(document.querySelectorAll('.skill-category'))
+        .filter(b => getComputedStyle(b).display !== 'none')
+        .map(b => b.querySelector('h3').textContent.trim())),
+      ['Routing & Transport']
+    );
     await guidelines.evaluate(() => {
       const search = document.querySelector('#skill-search'); search.value = 'no-matching-skill'; search.dispatchEvent(new Event('input'));
     });
