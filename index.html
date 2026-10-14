@@ -152,15 +152,15 @@
            overflow:hidden — an ancestor with overflow:hidden disables
            position:sticky for everything inside it. -->
       <div class="hero-decor" aria-hidden="true">
-        <span class="float-shape circle f1" style="width:18px;height:18px;top:15%;left:8%;border-color:var(--gold);"></span>
-        <span class="float-shape diamond f2" style="width:14px;height:14px;top:22%;right:12%;border-color:var(--gold-dark);"></span>
-        <span class="float-shape circle f3" style="width:10px;height:10px;top:70%;left:18%;border-color:var(--gold-dark);"></span>
-        <span class="float-shape line f4" style="width:40px;top:35%;right:20%;background:var(--gold-dark);"></span>
-        <span class="float-shape triangle f5" style="top:60%;right:25%;border-bottom-color:var(--gold);"></span>
-        <span class="float-shape diamond f6" style="width:10px;height:10px;top:82%;left:30%;border-color:var(--gold-dark);"></span>
-        <div class="orb orb-gold" style="width:320px;height:320px;top:-5%;right:-8%;"></div>
-        <div class="orb orb-gold-light" style="width:260px;height:260px;bottom:10%;left:-6%;"></div>
-        <div class="orb orb-gold-dark" style="width:200px;height:200px;top:40%;right:20%;"></div>
+        <span class="float-shape circle f1"></span>
+        <span class="float-shape diamond f2"></span>
+        <span class="float-shape circle f3"></span>
+        <span class="float-shape line f4"></span>
+        <span class="float-shape triangle f5"></span>
+        <span class="float-shape diamond f6"></span>
+        <div class="orb orb-gold"></div>
+        <div class="orb orb-gold-light"></div>
+        <div class="orb orb-gold-dark"></div>
       </div>
       <div class="hero-head">
         <h1 class="hero-name">Syed Rahid Ahmed</h1>
@@ -211,7 +211,7 @@
           <p>
             CCNA&hyphen;certified Senior Switch &amp; Telecom Specialist with over 15 years of hands&hyphen;on experience in switch operations, facility management, and RAN/transport network engineering across T&hyphen;Mobile and Sprint footprints.
           </p>
-          <p style="margin-top: 16px;">
+          <p>
             Proven domain expert in 5G NR/LTE architecture (eNodeB/gNodeB), Cisco routing/switching, Nokia NetAct, and Ericsson ENM. Skilled in disaster recovery activations&mdash;including Hurricane Helene restoration&mdash;special deployments (NSD, DAS, emergency COWs), and leading War&hyphen;Room outage response with ITIL&hyphen;compliant change management. Demonstrated leader in formally mentoring junior technicians in technical theory and operational discipline.
           </p>
         </div>
@@ -453,30 +453,30 @@
         <div class="edu-card glass reveal">
           <h3>BS Computer Science</h3>
           <p>Information Systems Security</p>
-          <p style="margin-top: 4px; font-size: 12px; color: var(--text-dim);">Higher Education</p>
+          <p class="edu-card-meta">Higher Education</p>
         </div>
         <div class="edu-card glass reveal">
           <h3>AA Computer Science</h3>
           <p>Computer Networking Systems</p>
-          <p style="margin-top: 4px; font-size: 12px; color: var(--text-dim);">Higher Education</p>
+          <p class="edu-card-meta">Higher Education</p>
         </div>
-        <div class="cert-card glass reveal" style="grid-column: 1 / -1;">
+        <div class="cert-card glass reveal">
           <span class="section-label reveal">CERTIFICATIONS</span>
           <ul class="cert-list">
             <li>
-              <span class="cert-badge" style="background: var(--color-primary);" aria-hidden="true">
+              <span class="cert-badge cert-badge--ccna" aria-hidden="true">
                 <span class="badge-text">CCNA</span>
               </span>
               <span class="cert-text"><strong>Cisco Certified Network Associate</strong>, routing, switching &amp; network fundamentals</span>
             </li>
             <li>
-              <span class="cert-badge" style="background: var(--color-secondary);" aria-hidden="true">
+              <span class="cert-badge cert-badge--mcp" aria-hidden="true">
                 <span class="badge-text">MCP</span>
               </span>
               <span class="cert-text"><strong>Microsoft Certified Professional</strong>, Windows server &amp; enterprise administration</span>
             </li>
             <li>
-              <span class="cert-badge" style="background: var(--color-tertiary);" aria-hidden="true">
+              <span class="cert-badge cert-badge--aplus" aria-hidden="true">
                 <span class="badge-text">A+</span>
               </span>
               <span class="cert-text"><strong>CompTIA A+</strong>, IT fundamentals, hardware &amp; OS troubleshooting</span>
@@ -492,7 +492,7 @@
       <h2 class="section-title reveal">Get in Touch</h2>
       <form novalidate name="contact" method="POST" action="https://formspree.io/f/mdekbpja">
         <input type="hidden" name="_next" value="/thank-you.html">
-        <p aria-hidden="true" style="position:absolute;left:-9999px;top:-9999px;"><label>Don't fill this out: <input name="_gotcha" tabindex="-1" autocomplete="off"></label></p>
+        <p class="honeypot" aria-hidden="true"><label>Don't fill this out: <input name="_gotcha" tabindex="-1" autocomplete="off"></label></p>
         <div class="form-group full-width reveal">
           <label for="contact-name">Name</label>
           <input type="text" id="contact-name" name="name" required autocomplete="name" aria-describedby="err-name" aria-invalid="false" maxlength="100">
@@ -524,7 +524,7 @@
         </div>
       </form>
       <p id="form-status" role="status" aria-live="polite"></p>
-      <div id="form-error" style="display: none; margin-top: 20px; color: var(--gold-dark); font-size: 14px;" role="status" aria-live="polite"></div>
+      <div id="form-error" role="status" aria-live="polite"></div>
     </section>
   </main>
 
@@ -578,6 +578,13 @@
 
   <!-- Experience tier switcher (Lite / Standard / Immersive) -->
   <script defer src="assets/tier-switcher.js"></script>
+
+  <!-- Smooth scroll — Lenis, vendored locally (MIT, v1.3.26).
+       Loaded after tier-switcher so data-tier is already resolved, and after
+       GSAP so the shared ticker wiring is available. Bails on reduced-motion,
+       the Lite tier, ≤768px viewports, and missing dependencies. -->
+  <script defer src="assets/vendor/lenis.min.js"></script>
+  <script defer src="app/smooth-scroll.js"></script>
 
   <!-- No-JS fallback -->
   <noscript>

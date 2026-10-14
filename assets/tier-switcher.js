@@ -64,7 +64,7 @@
       background:rgba(10,14,20,.82);
       border:1px solid rgba(255,255,255,.16);
       box-shadow:0 6px 24px rgba(0,0,0,.35);
-      font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+      font-family:var(--font-body,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif);
       font-size:12px;line-height:1;
       -webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);
     }
@@ -105,7 +105,7 @@
       position:fixed;left:18px;bottom:64px;z-index:9000;max-width:290px;
       padding:12px 14px;border-radius:10px;
       background:rgba(10,14,20,.94);border:1px solid rgba(255,255,255,.16);
-      color:rgba(255,255,255,.86);font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+      color:rgba(255,255,255,.86);font-family:var(--font-body,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif);
       font-size:12.5px;line-height:1.5;box-shadow:0 10px 30px rgba(0,0,0,.4);
     }
     .tier-switch__advice a{color:#ff956b;font-weight:600}

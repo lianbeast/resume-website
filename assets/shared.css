@@ -54,6 +54,16 @@
   --z-nav: 2000;
   --z-skip: 3000;
   --z-drawer: 3000;
+  /* Motion tokens. Built-in CSS easings (ease / ease-in-out) are too weak to
+     read as intentional, so UI state changes use strong custom curves. Never
+     ease-in on UI: it starts slow, delaying the exact moment the user watches.
+     Durations stay under 300ms so interactions feel responsive, not laggy. */
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+  --ease-drawer: cubic-bezier(0.32, 0.72, 0, 1);
+  --dur-press: 160ms;
+  --dur-ui: 220ms;
+  --dur-panel: 320ms;
 }
 
 [data-theme="dark"] {
@@ -66,7 +76,11 @@
   --text-dim: #9a938d;
   --text-on-accent: #161412;
   --gold: #e06a3a;
-  --gold-light: #f59e0b;
+  /* Light-terracotta, not amber. This token feeds the hero-name gradient and
+     the Three.js node colour, so an amber value turned the most prominent
+     element on the page gold — breaking the One Accent Rule in dark mode.
+     Kept in the terracotta family, one step lighter than --gold. */
+  --gold-light: #f0906a;
   --gold-dark: #c2410c;
   --gold-muted: rgba(224, 106, 58, 0.6);
   --gold-subtle: rgba(224, 106, 58, 0.4);
@@ -392,10 +406,10 @@ section:first-of-type { content-visibility: visible; }
               0 4px 16px rgba(0,0,0,0.05),
               0 8px 32px rgba(0,0,0,0.07),
               0 1px 0 rgba(255,255,255,0.4) inset;
-  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1),
-              box-shadow 0.3s cubic-bezier(0.16, 1, 0.3, 1),
-              border-color 0.3s ease,
-              backdrop-filter 0.3s ease;
+  transition: transform var(--dur-ui) var(--ease-out),
+              box-shadow var(--dur-ui) var(--ease-out),
+              border-color var(--dur-ui) ease,
+              backdrop-filter var(--dur-ui) ease;
 }
 .stat-card.glass:hover {
   border-color: rgba(194, 65, 12, 0.35);
@@ -640,10 +654,10 @@ section:first-of-type { content-visibility: visible; }
               0 4px 16px rgba(0,0,0,0.05),
               0 8px 32px rgba(0,0,0,0.07),
               0 1px 0 rgba(255,255,255,0.4) inset;
-  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1),
-              box-shadow 0.3s cubic-bezier(0.16, 1, 0.3, 1),
-              border-color 0.3s ease,
-              backdrop-filter 0.3s ease;
+  transition: transform var(--dur-ui) var(--ease-out),
+              box-shadow var(--dur-ui) var(--ease-out),
+              border-color var(--dur-ui) ease,
+              backdrop-filter var(--dur-ui) ease;
 }
 .glass-lg {
   border-radius: 16px;
@@ -1167,6 +1181,52 @@ footer::before {
   line-height: 1;
 }
 
+/* Badge accents. These were inline `style="background: …"` attributes on every
+   page; as classes the pages can run under a CSP without style-src
+   'unsafe-inline'. Self-contained hex in the tokens, not a var chain — see the
+   note on --color-secondary in :root. */
+.cert-badge--ccna { background: var(--color-primary); }
+.cert-badge--mcp { background: var(--color-secondary); }
+.cert-badge--aplus { background: var(--color-tertiary); }
+
+/* ================================================================
+   INLINE-STYLE REPLACEMENTS
+   ================================================================
+   Markup that previously carried style="…" attributes. Kept as semantic
+   selectors rather than utility classes so the CSP can drop
+   style-src 'unsafe-inline' without the pages losing their layout. */
+
+/* Certification card spans the full education grid. */
+.cert-card { grid-column: 1 / -1; }
+
+/* Secondary line inside an education card ("Higher Education").
+   Specificity must beat both `.edu-card p` here and in resume-preview.css. */
+.edu-card .edu-card-meta {
+  margin-top: 4px;
+  font-size: 12px;
+  color: var(--text-dim);
+}
+
+/* Running copy in the About card — breathing room between paragraphs. */
+.about-text > p + p { margin-top: 16px; }
+
+/* Formspree honeypot. Off-canvas rather than display:none so bots that skip
+   hidden fields still fill it in. */
+.honeypot {
+  position: absolute;
+  left: -9999px;
+  top: -9999px;
+}
+
+/* Submit failure message. JS toggles display via the inline style property,
+   which outranks this rule — the default just needs to be hidden. */
+#form-error {
+  display: none;
+  margin-top: 20px;
+  color: var(--gold-dark);
+  font-size: 14px;
+}
+
 /* ================================================================
    EDUCATION & CERTS
    ================================================================ */
@@ -1302,6 +1362,71 @@ footer::before {
 }
 
 /* ================================================================
+   SMOOTH SCROLL — Lenis (assets/vendor/lenis.min.js)
+   ================================================================
+   Lenis animates the real document scroll position, so the native
+   `scroll-behavior: smooth` above has to stand down while it is active or the
+   two fight over every programmatic scroll. Lenis adds .lenis / .lenis-smooth
+   to <html> itself; .lenis-active is set by app/smooth-scroll.js as a
+   library-independent state marker. */
+html.lenis,
+html.lenis body { height: auto; }
+.lenis.lenis-smooth,
+html.lenis-active { scroll-behavior: auto !important; }
+.lenis.lenis-smooth [data-lenis-prevent] { overscroll-behavior: contain; }
+.lenis.lenis-stopped { overflow: hidden; }
+.lenis.lenis-scrolling iframe { pointer-events: none; }
+
+/* ================================================================
+   FORCED COLORS — Windows High Contrast / forced-colors mode
+   ================================================================
+   The glass system separates cards with backdrop-filter, low-alpha borders
+   and shadow. Forced-colors mode drops backdrop-filter and overrides the
+   colours, so those cards lose their boundaries. Worse, .hero-name is
+   gradient-clipped with a transparent text fill, which can leave the
+   person's name invisible against the forced canvas. Restore explicit
+   system-colour edges and a real text fill so nothing disappears. */
+@media (forced-colors: active) {
+  .glass,
+  .stat-card.glass,
+  .timeline-item.glass,
+  .skill-category.glass,
+  .edu-card,
+  .cert-card {
+    background: Canvas;
+    border: 1px solid CanvasText;
+    box-shadow: none;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+  .glass:hover,
+  .timeline-item.glass:hover,
+  .stat-card.glass:hover { border-color: Highlight; }
+
+  /* Gradient-clipped text can render invisible when colours are forced. */
+  .hero-name {
+    background: none;
+    -webkit-text-fill-color: CanvasText;
+    color: CanvasText;
+    animation: none;
+  }
+
+  .btn,
+  .skill-tag,
+  .cert-badge,
+  .skill-filter-btn,
+  .form-group input,
+  .form-group textarea { border: 1px solid ButtonText; }
+
+  /* Blurred decorative orbs become opaque noise once blur/colour is dropped. */
+  .orb,
+  .float-shape { display: none !important; }
+
+  /* A focus ring must never be the thing that disappears. */
+  :focus-visible { outline: 3px solid Highlight; outline-offset: 2px; }
+}
+
+/* ================================================================
    NOSCRIPT / NO-JS FALLBACK
    ================================================================ */
 .no-js .reveal { opacity: 1; transform: none; }
@@ -1385,6 +1510,34 @@ footer::before {
     min-height: 44px;
   }
 }
+
+/* ================================================================
+   HERO DECORATION — orbs & floating shapes
+   ================================================================
+   Geometry for the decorative layers. These were inline style attributes on
+   index, immersive and bold pages; centralising them lets every page drop
+   style-src 'unsafe-inline'.
+   The .orb-gold* fills are documented in DESIGN.md ("Terracotta Light …
+   decorative orb fill") but were never implemented — the orbs carried size
+   and position with no background, so three divs per page rendered nothing.
+   Opacity is governed by resume-preview.css (0.025), so adding the fill keeps
+   the composed look unchanged. */
+.orb-gold { background: var(--gold); }
+.orb-gold-light { background: var(--gold-light); }
+.orb-gold-dark { background: var(--gold-dark); }
+
+/* Scoped to #hero, not .hero-decor: index.html wraps the decoration in a
+   .hero-decor clipping layer, but the immersive and bold pages put the same
+   shapes straight inside #hero. One scope covers all three. */
+#hero .f1 { width: 18px; height: 18px; top: 15%; left: 8%; border-color: var(--gold); }
+#hero .f2 { width: 14px; height: 14px; top: 22%; right: 12%; border-color: var(--gold-dark); }
+#hero .f3 { width: 10px; height: 10px; top: 70%; left: 18%; border-color: var(--gold-dark); }
+#hero .f4 { width: 40px; top: 35%; right: 20%; background: var(--gold-dark); }
+#hero .f5 { top: 60%; right: 25%; border-bottom-color: var(--gold); }
+#hero .f6 { width: 10px; height: 10px; top: 82%; left: 30%; border-color: var(--gold-dark); }
+#hero .orb-gold { width: 320px; height: 320px; top: -5%; right: -8%; }
+#hero .orb-gold-light { width: 260px; height: 260px; bottom: 10%; left: -6%; }
+#hero .orb-gold-dark { width: 200px; height: 200px; top: 40%; right: 20%; }
 
 /* ================================================================
    PRINT STYLESHEET — recruiter-friendly PDF output

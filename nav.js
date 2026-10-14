@@ -74,8 +74,17 @@
     window.addEventListener('scroll', function() {
       backBtn.classList.toggle('visible', window.scrollY > 500);
     }, { passive: true });
-    backBtn.addEventListener('click', function() {
-      window.scrollTo({ top: 0, behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth' });
+    backBtn.addEventListener('click', function(event) {
+      // Keyboard-initiated activation stays instant — see app/smooth-scroll.js.
+      var instant = event.detail === 0 ||
+        window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      // Route through Lenis when it owns the scroll, or the two fight over the
+      // position. It is absent under reduced-motion, Lite tier and mobile.
+      if (window.__lenis && !instant) {
+        window.__lenis.scrollTo(0);
+        return;
+      }
+      window.scrollTo({ top: 0, behavior: instant ? 'instant' : 'smooth' });
     });
   }
 
