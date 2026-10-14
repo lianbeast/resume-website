@@ -8,6 +8,7 @@ const path = require('node:path');
 const http = require('node:http');
 const { execFileSync } = require('node:child_process');
 const puppeteer = require('puppeteer-core');
+const { Launcher } = require('chrome-launcher');
 
 const root = path.resolve(__dirname, '..');
 const config = JSON.parse(fs.readFileSync(path.join(root, 'config.json'), 'utf8'));
@@ -30,6 +31,10 @@ function findChrome() {
   for (const bin of ['google-chrome', 'google-chrome-stable', 'chromium', 'chromium-browser']) {
     try { return execFileSync('which', [bin], { encoding: 'utf8' }).trim(); } catch {}
   }
+  // `which` is Unix-only, so on Windows/macOS fall back to the same discovery
+  // the other suites use (chrome-launcher) instead of throwing.
+  const installed = Launcher.getInstallations();
+  if (installed && installed.length) return installed[0];
   throw new Error('No Chrome installation found; set CHROME_PATH');
 }
 

@@ -27,6 +27,7 @@ node scripts/restore.test.cjs     # Tests index.html, lite.html, thank-you.html
 node scripts/immersive.test.cjs   # Tests immersive-preview.html
 node scripts/bold-resume.test.cjs # Tests bold-resume-preview.html
 node scripts/csp-probe.cjs        # Verifies every page runs clean under the CSP
+node scripts/enhancements.test.cjs # Verifies Lenis gating, anchor parity, palette, forced-colors
 ```
 
 ---
@@ -54,6 +55,9 @@ node scripts/csp-probe.cjs        # Verifies every page runs clean under the CSP
    - `app/animations.js`: GSAP & ScrollTrigger scroll-driven reveals (gated off on mobile / reduced-motion).
    - `app/glass.js`: LiquidGlass WebGL refraction initialization wrapper.
    - `app/init.js`: Core entry point orchestrating module initialization.
+   - `app/smooth-scroll.js`: Lenis smooth scrolling. Bails on reduced-motion, the Lite tier, ≤768px viewports and missing dependencies; shares GSAP's ticker with ScrollTrigger. Exposes `window.__lenis` for `nav.js`.
+   - `assets/vendor/lenis.min.js`: Vendored Lenis 1.3.26 (MIT) — kept local so `script-src 'self'` holds and there is no third-party runtime dependency.
+   - `scripts/strip-inline-styles.py`: One-shot, idempotent migration that moved inline `style=` geometry into `assets/shared.css`. Safe to re-run.
    - `theme.js`: Instant theme toggle (`data-theme`), local storage persistence, and non-blocking font injection.
    - `nav.js`: Mobile drawer navigation, aria-expanded state, and keyboard focus trap.
 

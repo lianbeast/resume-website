@@ -4,10 +4,12 @@
   "description": "Syed Rahid Ahmed | Senior Technical Consultant",
   "scripts": {
     "dev": "http-server -p 8080 -c-1",
-    "test": "node scripts/restore.test.cjs && node scripts/immersive.test.cjs && node scripts/bold-resume.test.cjs",
+    "test": "node scripts/restore.test.cjs && node scripts/immersive.test.cjs && node scripts/bold-resume.test.cjs && node scripts/enhancements.test.cjs",
     "test:restore": "node scripts/restore.test.cjs",
     "test:immersive": "node scripts/immersive.test.cjs",
     "test:bold": "node scripts/bold-resume.test.cjs",
+    "test:enhancements": "node scripts/enhancements.test.cjs",
+    "test:csp": "node scripts/csp-probe.cjs",
     "map:build": "python scripts/build-us-map-svg.py",
     "lhci": "lhci autorun --config=./lighthouseci.config.js",
     "test:lhci": "./scripts/run-lhci.sh"

@@ -20,28 +20,28 @@ colors:
   dark-glass: "rgba(22,20,18,0.75)"
 typography:
   display:
-    fontFamily: "Outfit, -apple-system, BlinkMacSystemFont, sans-serif"
+    fontFamily: "IBM Plex Sans, -apple-system, BlinkMacSystemFont, sans-serif"
     fontSize: "clamp(2.25rem, 7vw, 4.5rem)"
     fontWeight: 700
     lineHeight: 1.05
     letterSpacing: "normal"
   headline:
-    fontFamily: "Outfit, -apple-system, BlinkMacSystemFont, sans-serif"
+    fontFamily: "IBM Plex Sans, -apple-system, BlinkMacSystemFont, sans-serif"
     fontSize: "clamp(1.75rem, 4vw, 2.5rem)"
     fontWeight: 700
     lineHeight: 1.15
   title:
-    fontFamily: "Outfit, -apple-system, BlinkMacSystemFont, sans-serif"
+    fontFamily: "IBM Plex Sans, -apple-system, BlinkMacSystemFont, sans-serif"
     fontSize: "1.125rem"
     fontWeight: 600
     lineHeight: 1.3
   body:
-    fontFamily: "Outfit, -apple-system, BlinkMacSystemFont, sans-serif"
+    fontFamily: "IBM Plex Sans, -apple-system, BlinkMacSystemFont, sans-serif"
     fontSize: "0.9375rem"
     fontWeight: 400
     lineHeight: 1.7
   label:
-    fontFamily: "JetBrains Mono, monospace"
+    fontFamily: "IBM Plex Mono, monospace"
     fontSize: "0.6875rem"
     fontWeight: 500
     lineHeight: 1.4
@@ -90,7 +90,7 @@ components:
 
 This is a single-page personal career site for a Sr. Switch Technician (Telecom Operations & RAN/Transport Specialist), and the design is meant to read like the work: a carrier network marked onto the page — hub nodes, signal trails, cross-connections, ambient rotation. The North Star is **topology as material**: the Three.js background and 2D skill ring are not decoration, they are the argument that this person thinks in networks. Graphite nodes, terracotta signal, ink clarity. The system should feel engineered, grounded, and methodically precise — the composure of carrier-grade uptime, not the flash of a product launch.
 
-Density is medium-restrained: cards exist but are confined to credentials, experience, and skills; the hero and topology run full-bleed. The surface is warm-ivory ink-on-paper in light mode and graphite in dark mode, with a terracotta primary accent doing all the accenting. Glassmorphism is permitted but earned — only on cards that sit over moving topology, never as a default. Typography is a single sans (Outfit) across all voice roles, with JetBrains Mono reserved for the technical vocabulary the consultant actually uses daily: protocol names, section labels, code-flavored tags. Everything composes inside one self-contained HTML file.
+Density is medium-restrained: cards exist but are confined to credentials, experience, and skills; the hero and topology run full-bleed. The surface is warm-ivory ink-on-paper in light mode and graphite in dark mode, with a terracotta primary accent doing all the accenting. Glassmorphism is permitted but earned — only on cards that sit over moving topology, never as a default. Typography is a single sans (IBM Plex Sans) across all voice roles, with IBM Plex Mono reserved for the technical vocabulary the consultant actually uses daily: protocol names, section labels, code-flavored tags. Everything composes inside one self-contained HTML file.
 
 **Key Characteristics:**
 - **Carrier-grade composure** — restraint over performance; motion enhances, never shouts.
@@ -128,6 +128,22 @@ A single-accent warm-neutral system: ink text on an ivory paper field, with terr
 - **Dark Ink** (#f0ede8): dark-mode text.
 - **Dark Glass** rgba(22,20,18,0.75): dark glass substrate.
 
+### Dark theme accent ramp
+Dark mode does not reuse the light values — it lifts the whole accent ramp one
+step so terracotta still separates from graphite. The token names are legacy
+(`--gold*`) and map to terracotta; treat the name as an alias, not a colour.
+
+| Token | Light | Dark | Role |
+|---|---|---|---|
+| `--gold` | `#c2410c` | `#e06a3a` | primary accent |
+| `--gold-light` | `#e06a3a` | `#f0906a` | gradient endpoint, orb fill |
+| `--gold-dark` | `#a4380a` | `#c2410c` | hover / active, gradient anchor |
+
+`--gold-light` must stay in the terracotta family in **both** themes. It feeds
+the `.hero-name` gradient and the Three.js node colour, so an amber value turns
+the single most prominent element on the page gold and breaks the One Accent
+Rule in dark mode.
+
 ### Named Rules
 **The One Accent Rule.** Terracotta is the primary saturated color on any light-mode screen. It accents ≲10% of the surface.
 **The No-Cream Rule.** The ivory field (#f7f5f0) stays at near-zero chroma toward warm gray, not toward yellow-beige.
@@ -135,10 +151,10 @@ A single-accent warm-neutral system: ink text on an ivory paper field, with terr
 
 ## 3. Typography
 
-**Display & Body Font:** Outfit (with `-apple-system, BlinkMacSystemFont, sans-serif`)
-**Label/Mono Font:** JetBrains Mono (with `monospace` fallback)
+**Display & Body Font:** IBM Plex Sans (with `-apple-system, BlinkMacSystemFont, sans-serif`)
+**Label/Mono Font:** IBM Plex Mono (with `monospace` fallback)
 
-**Character:** A single geometric-grotesque sans carries every voice role — display, headline, title, body. Outfit reads as clean, engineered, and slightly industrial. JetBrains Mono is the only second typeface, and it is reserved strictly for the technical vocabulary: protocol names (SS7/SIGTRAN), section kickers, tag labels, and date stamps.
+**Character:** A single sans carries every voice role — display, headline, title, body. IBM Plex Sans was drawn for IBM as a technical corporate face: neutral, engineered, quietly industrial, and free of the fashion that dates a geometric display face. That is the register this site wants. IBM Plex Mono is the only second typeface, and it is reserved strictly for the technical vocabulary: protocol names (SS7/SIGTRAN), section kickers, tag labels, and date stamps.
 
 ### Hierarchy
 - **Display** (700, clamp(36px,7vw,72px), 1.05): hero name only.
@@ -149,7 +165,7 @@ A single-accent warm-neutral system: ink text on an ivory paper field, with terr
 
 ### Named Rules
 **The One Display Rule.** Display weight appears once per page — the hero name. Section titles drop to the headline scale.
-**The Mono Earns Its Place Rule.** JetBrains Mono is for technical tokens and structural labels only. Never set a paragraph or a headline in mono.
+**The Mono Earns Its Place Rule.** IBM Plex Mono is for technical tokens and structural labels only. Never set a paragraph or a headline in mono.
 
 ## 4. Elevation
 
@@ -187,13 +203,50 @@ The system is **hybrid** — flat by default for content surfaces, with two dist
 - **Focus:** terracotta outline (2px `--gold` mapped to #c2410c) + `border-glow` breathing keyframe.
 
 ### Navigation
-- **Style:** glass bar (top), mono labels, terracotta active indicator. Outfit link text.
+- **Style:** glass bar (top), mono labels, terracotta active indicator. IBM Plex Sans link text.
 
 ### Signature: Three.js Topology + Skill Ring
 - **Three.js background** (`#scene-container`): hub nodes (terracotta 0xc2410c, size 3.5–5) + secondary nodes (teal 0x0e7490) + connection lines (averaged, 15% opacity) + data packets (terracotta trail vec4(0.761, 0.255, 0.047, 0.9)). Camera scroll-parallax. Disabled on `prefers-reduced-motion`.
 - **Skill Ring** (2D canvas): skills in concentric category arcs, cross-category links, hover tooltips, ambient rotation. Categories colored via `CAT_COLORS`: terracotta (Routing & Switching), deep teal (OSS), olive (RAN), warm charcoal (Enterprise IT), rose (Scripting), lime (Tools).
 
-## 6. Do's and Don'ts
+## 6. Motion
+
+Motion is the site's proof of composure, so it is governed by tokens rather than
+ad-hoc values. All of them live in `:root` in `assets/shared.css`.
+
+### Tokens
+| Token | Value | Use |
+|---|---|---|
+| `--ease-out` | `cubic-bezier(0.23, 1, 0.32, 1)` | entering / exiting — the default |
+| `--ease-in-out` | `cubic-bezier(0.77, 0, 0.175, 1)` | movement across the screen |
+| `--ease-drawer` | `cubic-bezier(0.32, 0.72, 0, 1)` | drawers, sheets |
+| `--dur-press` | `160ms` | press feedback |
+| `--dur-ui` | `220ms` | hover, focus, border, shadow |
+| `--dur-panel` | `320ms` | panels, drawers |
+
+### Named Rules
+**The Strong-Curve Rule.** Built-in CSS easings (`ease`, `ease-in-out`) are too
+weak to read as intentional. Use the tokens. Never `ease-in` on UI — it starts
+slow, delaying the exact moment the user is watching.
+**The Sub-300ms Rule.** UI transitions stay under 300ms. Only marketing and
+explanatory motion may run longer.
+**The Never-Animate-Keyboard Rule.** Keyboard-initiated actions (skip link,
+back-to-top via Enter) resolve instantly. They repeat constantly, and animation
+makes them feel disconnected. Mouse-initiated equivalents may animate.
+**The Compositor Rule.** Animate `transform` and `opacity` only. Never
+`transition: all`.
+**The Reduced-Motion Rule.** `prefers-reduced-motion` drops movement and
+position changes but keeps opacity and colour transitions, which aid
+comprehension. Reduced motion means fewer and gentler animations, not none.
+
+### Smooth scrolling
+Desktop wheel scrolling runs through Lenis (`assets/vendor/lenis.min.js`, MIT,
+vendored locally so `script-src 'self'` holds). It animates the real document
+scroll position, so `position: sticky` and ScrollTrigger keep working. Lenis
+bails on reduced-motion, the Lite tier, viewports ≤768px, and missing
+dependencies — every bail path leaves the page on correct native scrolling.
+
+## 7. Do's and Don'ts
 
 ### Do:
 - **Do** capture the live terracotta/teal system. The Ivory & Ink gold system has been deprecated; build new screens against the rendering terracotta tokens.
@@ -201,6 +254,8 @@ The system is **hybrid** — flat by default for content surfaces, with two dist
 - **Do** dampen motion fully on `prefers-reduced-motion`: kill Three.js (`#scene-container{display:none}`), neutralize reveals (`opacity:1;transform:none`).
 - **Do** tint hover shadows with terracotta (`rgba(194,65,12,a)`) so state changes feel like brand.
 - **Do** list protocol names and employers with spec-sheet specificity ("SS7/SIGTRAN", "Nokia NetAct") — the evidence a recruiter scans for.
+- **Do** keep decoration geometry and colour in the stylesheet. No `style=` attributes in markup — they duplicate across pages and pin `style-src` to `'unsafe-inline'`.
+- **Do** give anything built on `backdrop-filter` or shadow-only separation a `@media (forced-colors: active)` path, so cards keep an edge in Windows High Contrast.
 
 ### Don't:
 - **Don't** use gold `#c9950c` anymore. The palette has evolved to Burnt Terracotta `#c2410c`.
@@ -211,3 +266,5 @@ The system is **hybrid** — flat by default for content surfaces, with two dist
 - **Don't** set gradient text (`background-clip:text` + gradient) — **except** `.hero-name`, which uses an animated gradient with a solid `color` fallback inside `@supports`.
 - **Don't** apply glassmorphism decoratively.
 - **Don't** use the words synergy, seamless, leverage (as verb), revolutionary, rockstar/ninja, or passionate.
+- **Don't** rely on `backdrop-filter` or `box-shadow` as the *only* thing separating a card from its background — both vanish in forced-colors mode.
+- **Don't** let `--gold-light` drift out of the terracotta family. It feeds the hero-name gradient.
