@@ -4,9 +4,10 @@
      944b938 swapped resume-preview.css -> shared.css here, which removed the
              --resume-rule definition, so every hairline border on the page
              disappeared (an undefined var() invalidates the whole declaration).
-     23f70f7 deleted the entire .bold-* CSS block, so the skills rail, marquee
-             and motion toggle injected by assets/bold-resume-preview.js have
-             been rendering as raw unstyled markup ever since.
+     23f70f7 deleted the entire .bold-* CSS block, so the marquee and motion
+             toggle injected by assets/bold-resume-preview.js have been
+             rendering as raw unstyled markup ever since. (The skills rail that
+             shared that block was removed outright on 2026-10-14.)
 
    Both failed silently - no console error, no test failure. These assertions
    are the missing tripwire.
@@ -72,42 +73,49 @@ const wait = ms => new Promise(r => setTimeout(r, ms));
       skillsList: getComputedStyle(document.querySelector('.skills-list')).borderTopStyle,
       skillCategory: getComputedStyle(document.querySelector('.skill-category')).borderRightStyle,
       eduGrid: getComputedStyle(document.querySelector('.edu-cert-grid')).borderTopStyle,
-      rail: getComputedStyle(document.querySelector('.bold-skills-rail')).borderTopStyle,
+      marquee: getComputedStyle(document.querySelector('.bold-marquee')).borderTopStyle,
     }));
     for (const [what, style] of Object.entries(borders)) {
       assert.strictEqual(style, 'solid', `${what} hairline rule missing (border-style: ${style})`);
     }
-    console.log(`PASS --resume-rule resolves (${rule}) and all 5 hairline rules render`);
+    console.log(`PASS --resume-rule resolves (${rule}) and all ${Object.keys(borders).length} hairline rules render`);
     passed++;
 
     // ---- 2. Injected bold UI must actually be styled ----------------------
     const injected = await page.evaluate(() => {
       const cs = s => { const el = document.querySelector(s); return el ? getComputedStyle(el) : null; };
-      const rail = cs('.bold-skills-rail');
-      const panel = cs('.bold-skill-panel');
       const marquee = cs('.bold-marquee');
       const copy = cs('.bold-marquee-copy');
       const toggle = cs('.bold-motion-toggle');
       return {
-        railDisplay: rail && rail.display,
-        panelBorderRight: panel && panel.borderRightStyle,
         marqueeOverflow: marquee && marquee.overflow,
         copyWhiteSpace: copy && copy.whiteSpace,
         copyAnimation: marquee && getComputedStyle(document.querySelector('.bold-marquee-track')).animationName,
         toggleBorder: toggle && toggle.borderTopStyle,
         toggleMinHeight: toggle && toggle.minHeight,
-        exists: !!(rail && panel && marquee && copy && toggle),
+        exists: !!(marquee && copy && toggle),
       };
     });
-    assert.ok(injected.exists, 'bold-resume-preview.js did not inject the rail/marquee/toggle');
-    assert.strictEqual(injected.railDisplay, 'flex', 'skills rail is unstyled (display should be flex)');
-    assert.strictEqual(injected.panelBorderRight, 'solid', 'skill panels are unstyled (no divider)');
+    assert.ok(injected.exists, 'bold-resume-preview.js did not inject the marquee/toggle');
     assert.strictEqual(injected.marqueeOverflow, 'hidden', 'marquee is unstyled (overflow should be hidden)');
     assert.strictEqual(injected.copyWhiteSpace, 'nowrap', 'marquee copies are unstyled and will wrap inline');
     assert.strictEqual(injected.copyAnimation, 'bold-marquee', 'marquee track is not animating');
     assert.strictEqual(injected.toggleBorder, 'solid', 'motion toggle is unstyled');
     assert.strictEqual(injected.toggleMinHeight, '44px', 'motion toggle lost its 44px touch target');
-    console.log('PASS injected rail / marquee / motion toggle all carry real styles');
+    console.log('PASS injected marquee / motion toggle carry real styles');
+    passed++;
+
+    // ---- 2b. The removed skills rail must stay removed --------------------
+    // It duplicated the .skills-list grid; guard against it creeping back.
+    const railGone = await page.evaluate(() => ({
+      rail: document.querySelectorAll('.bold-skills-rail').length,
+      panels: document.querySelectorAll('.bold-skill-panel').length,
+      gridCategories: document.querySelectorAll('.skills-list .skill-category').length,
+    }));
+    assert.strictEqual(railGone.rail, 0, 'skills rail is back in the markup');
+    assert.strictEqual(railGone.panels, 0, 'skills rail panels are back in the markup');
+    assert.strictEqual(railGone.gridCategories, 6, 'skills grid should still list all six categories');
+    console.log('PASS skills rail stays removed; the grid still carries all six categories');
     passed++;
 
     // ---- 3. Core Competencies: wheel fills its panel, controls are a row ---
@@ -168,16 +176,7 @@ const wait = ms => new Promise(r => setTimeout(r, ms));
     console.log(`PASS highlights panel hugs its ${about.items} rows (${slack}px trailing slack)`);
     passed++;
 
-    // ---- 6. Rail panel titles share a top edge ---------------------------
-    const railTops = await page.evaluate(() =>
-      Array.from(document.querySelectorAll('.bold-skill-panel strong'))
-        .map(el => Math.round(el.getBoundingClientRect().top)));
-    const spread = Math.max(...railTops) - Math.min(...railTops);
-    assert.ok(spread <= 2, `rail titles are not top-aligned (${spread}px spread across ${railTops.length} panels)`);
-    console.log(`PASS all ${railTops.length} rail titles share a top edge (${spread}px spread)`);
-    passed++;
-
-    // ---- 7. Skill tags sit on a consistent grid inside each category -----
+    // ---- 6. Skill tags sit on a consistent grid inside each category -----
     const tagGrid = await page.evaluate(() =>
       Array.from(document.querySelectorAll('.skill-category')).map(cat => {
         const tags = Array.from(cat.querySelectorAll('.skill-tag')).map(t => t.getBoundingClientRect());
@@ -198,7 +197,7 @@ const wait = ms => new Promise(r => setTimeout(r, ms));
     console.log(`PASS pills are uniform across all ${tagGrid.length} categories (single height each)`);
     passed++;
 
-    // ---- 8. No horizontal overflow at the layout breakpoints -------------
+    // ---- 7. No horizontal overflow at the layout breakpoints -------------
     for (const width of [1440, 1050, 600, 390]) {
       await page.setViewport({ width, height: 900 });
       await wait(450);

@@ -44,9 +44,11 @@ const server = http.createServer((req, res) => {
         await page.waitForFunction(() => document.documentElement.dataset.boldReady === 'true');
         const lines = await page.$eval('.hero-name', el => Math.round(el.getBoundingClientRect().height / parseFloat(getComputedStyle(el).lineHeight)));
         assert.ok(lines <= 3, `Hero must not wrap beyond three lines: ${lines}`);
-        assert.equal(await page.$$eval('.bold-skill-panel', els => els.length), 6);
-        await page.evaluate(() => document.querySelector('.bold-skill-panel').click());
-        assert.equal(await page.$eval('.bold-skill-panel', el => el.getAttribute('aria-expanded')), 'true');
+        // The click-to-expand skills rail was removed on 2026-10-14 - it
+        // duplicated the .skills-list grid below it. Guard the removal so it
+        // cannot silently reappear, and confirm the grid still lists all six.
+        assert.equal(await page.$$eval('.bold-skills-rail', els => els.length), 0, 'skills rail should no longer be injected');
+        assert.equal(await page.$$eval('.skills-list .skill-category', els => els.length), 6, 'skills grid should still list all six categories');
         if (width === 1440) {
           await page.waitForFunction(() => Boolean(ScrollTrigger.getById('bold-experience-pin')));
           await page.waitForFunction(() => Boolean(ScrollTrigger.getById('bold-summary-scrub')));

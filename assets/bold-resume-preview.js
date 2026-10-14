@@ -2,33 +2,11 @@
   'use strict';
   const reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
   const desktop = window.matchMedia('(min-width: 1051px)');
-  const skills = [...document.querySelectorAll('.skill-category')];
   const skillSection = document.getElementById('skills');
-  const controls = document.querySelector('.skill-controls');
-  const rail = document.createElement('div');
-  rail.className = 'bold-skills-rail';
-  rail.setAttribute('aria-label', 'Explore technical skill categories');
-  skills.forEach((category, i) => {
-    const button = document.createElement('button');
-    button.type = 'button';
-    button.className = 'bold-skill-panel';
-    button.setAttribute('aria-expanded', 'false');
-    button.setAttribute('aria-controls', `bold-skill-detail-${i}`);
-    const title = document.createElement('strong');
-    title.textContent = category.querySelector('h3').textContent;
-    const detail = document.createElement('span');
-    detail.className = 'bold-panel-detail';
-    detail.id = `bold-skill-detail-${i}`;
-    detail.textContent = [...category.querySelectorAll('.skill-tag')].map(tag => tag.textContent).join(' · ');
-    button.append(title, detail);
-    button.addEventListener('click', () => {
-      const expanded = button.getAttribute('aria-expanded') === 'true';
-      rail.querySelectorAll('button').forEach(other => other.setAttribute('aria-expanded', 'false'));
-      button.setAttribute('aria-expanded', String(!expanded));
-    });
-    rail.appendChild(button);
-  });
-  controls.before(rail);
+  // The click-to-expand skills rail that used to be injected here is gone. It
+  // was a compact index of the six categories, but .skills-list below already
+  // lists every tag, so it duplicated content and sat as six mostly-empty
+  // panels between the wheel and the controls.
   const marquee = document.createElement('div');
   marquee.className = 'bold-marquee';
   marquee.setAttribute('aria-hidden', 'true');
