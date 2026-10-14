@@ -27,6 +27,7 @@ node scripts/restore.test.cjs     # Tests index.html, lite.html, thank-you.html
 node scripts/immersive.test.cjs   # Tests immersive-preview.html
 node scripts/bold-resume.test.cjs # Tests bold-resume-preview.html
 node scripts/csp-probe.cjs        # Verifies every page runs clean under the CSP
+node scripts/bold-alignment.test.cjs # Guards bold-page layout (hairline rules, injected rail, label/title alignment)
 node scripts/enhancements.test.cjs # Verifies Lenis gating, anchor parity, palette, forced-colors
 ```
 

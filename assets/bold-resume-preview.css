@@ -1,5 +1,14 @@
 /* Isolated bold direction. Existing pages and design tokens remain unchanged. */
-html { --bold-width: 1280px; }
+html {
+  --bold-width: 1280px;
+  /* This page loads shared.css + this file only. --resume-rule used to arrive
+     from resume-preview.css, which 944b938 swapped out for shared.css here -
+     that silently killed every hairline rule on the page, because an undefined
+     var() invalidates the whole declaration and the border disappears. The
+     editorial grid depends on these rules, so define the token locally. */
+  --resume-rule: rgba(28, 25, 23, 0.16);
+}
+[data-theme="dark"] { --resume-rule: rgba(240, 237, 232, 0.2); }
 .content { overflow-x: clip; width: 100%; max-width: 100%; }
 #main-nav { top: 16px; left: 3vw; right: 3vw; width: auto; height: 68px; border: 1px solid var(--resume-rule); border-radius: 3px; padding: 0 24px; background: var(--bg); }
 .nav-logo { font-size: 28px; }
@@ -32,17 +41,32 @@ section[aria-label="Career statistics"] { padding-top: 40px; padding-bottom: 56p
 .stat-label { margin-top: 12px; letter-spacing: 0; text-transform: none; font-size: 0.875rem; }
 .section-title { font-size: clamp(2.25rem, 4.8vw, 4.75rem); line-height: 1.08; letter-spacing: -0.055em; margin-bottom: 48px; }
 .section-title::after { display: none; }
+/* The label and the title are both inline-level and flow on one line. With the
+   default baseline alignment the label lines up with the title's LAST line, so
+   a two-line heading left the label stranded beside the second line. Anchor it
+   to the top instead, which is consistent however many lines the title wraps to. */
+.section-label { vertical-align: top; }
 #about > .section-title { max-width: 1040px; }
 .inline-network { display: inline-block; width: clamp(64px, 9vw, 144px); height: clamp(30px, 4vw, 64px); object-fit: cover; border-radius: 100px; vertical-align: middle; margin: 0 8px; }
-.about-grid { grid-template-columns: 1.65fr 1fr; gap: 64px; }
+/* align-items:start so the highlights panel sizes to its own content. Stretched
+   (the default) it matched the tall prose column and trailed ~340px of empty
+   bordered space below the last row. */
+.about-grid { grid-template-columns: 1.65fr 1fr; gap: 64px; align-items: start; }
 .about-text { font-size: clamp(1.125rem, 2vw, 1.5rem); line-height: 1.65; }
 .about-highlights { border-radius: 0; padding: 24px; background: transparent; }
 .highlight-item { padding: 20px 0; }
 .highlight-key { font-size: 0.75rem; }
 .highlight-val { font-size: 0.875rem; }
-#experience { display: grid; grid-template-columns: minmax(0, 0.75fr) minmax(0, 1.7fr); gap: 20px 64px; }
-#experience > .section-title { grid-column: 1; align-self: start; font-size: clamp(2.5rem, 4.2vw, 4.25rem); }
-#experience > .timeline { grid-column: 2; }
+/* label | title | timeline on a single row. The label previously auto-placed
+   into a row of its own, which pushed the title down, left row 1 column 2
+   empty, and stranded the kicker above the heading while every other section
+   sets it inline beside the heading. Explicit rows keep all three on row 1;
+   the margins reproduce the 6px label gap and the 64px column gap without
+   letting the grid add its own spacing between label and title. */
+#experience { display: grid; grid-template-columns: max-content minmax(0, 0.75fr) minmax(0, 1.7fr); gap: 20px 0; }
+#experience > .section-label { grid-column: 1; grid-row: 1; align-self: start; margin: 0 6px 0 0; }
+#experience > .section-title { grid-column: 2; grid-row: 1; align-self: start; margin-right: 64px; font-size: clamp(2.5rem, 4.2vw, 4.25rem); }
+#experience > .timeline { grid-column: 3; grid-row: 1; }
 .timeline { padding-left: 0; }
 .timeline::before, .timeline-item::before { display: none; }
 .timeline-item { padding: 0 0 48px; margin-bottom: 48px; }
@@ -56,6 +80,36 @@ section[aria-label="Career statistics"] { padding-top: 40px; padding-bottom: 56p
 .skill-tag { font-size: 0.8125rem; }
 .skills-canvas-wrap { border-radius: 0; }
 .skill-controls { border-radius: 0; padding: 20px; }
+
+/* ------------------------------------------------------------------
+   Bold skills rail, marquee and motion toggle
+   Injected by assets/bold-resume-preview.js. Every rule below was deleted by
+   23f70f7 ("resolve critical and major Hallmark audit findings") and the page
+   has shipped the raw unstyled markup since: a run of default underlined
+   buttons, two marquee copies rendering inline, and an unlabelled toggle.
+   Restored from a7e1841. Note the marquee is a >5s autoplay loop, so
+   .bold-motion-toggle is this page's WCAG 2.2.2 pause mechanism - it is not
+   decorative and must stay reachable.
+   ------------------------------------------------------------------ */
+.bold-skills-rail { display: flex; min-height: 220px; border: 1px solid var(--resume-rule); margin: 48px 0 24px; }
+/* <button> centres its content vertically by default, so a one-line panel title
+   sat midway down a 220px panel while its two-line neighbours started higher -
+   no shared top edge. Pin the content to the top of the panel instead. */
+.bold-skill-panel { flex: 1 1 0; min-width: 0; display: flex; flex-direction: column; align-items: flex-start; justify-content: flex-start; border: 0; border-right: 1px solid var(--resume-rule); background: transparent; color: var(--text); padding: 24px 18px; text-align: left; font: inherit; cursor: pointer; transition: flex-grow 0.5s ease, background-color 0.3s ease; }
+.bold-skill-panel:last-child { border-right: 0; }
+.bold-skill-panel:hover, .bold-skill-panel:focus-visible, .bold-skill-panel[aria-expanded="true"] { flex-grow: 2.8; background: var(--bg); }
+.bold-skill-panel strong { display: block; font-size: 1rem; line-height: 1.3; }
+.bold-panel-detail { display: none; margin-top: 24px; font-size: 0.8125rem; line-height: 1.7; color: var(--text-dim); }
+.bold-skill-panel[aria-expanded="true"] .bold-panel-detail { display: block; }
+.bold-marquee { overflow: hidden; padding: 24px 0; margin: 32px 0; border-block: 1px solid var(--resume-rule); }
+.bold-marquee-track { display: flex; width: max-content; animation: bold-marquee 38s linear infinite; }
+.bold-marquee-copy { padding-right: 40px; font-size: clamp(1.5rem, 3vw, 2.5rem); white-space: nowrap; font-weight: 500; letter-spacing: -0.035em; color: var(--gold); }
+.bold-marquee.is-paused .bold-marquee-track { animation-play-state: paused; }
+@keyframes bold-marquee { to { transform: translateX(-50%); } }
+.bold-motion-toggle { min-height: 44px; border: 1px solid var(--resume-rule); background: var(--bg-card); color: var(--text); border-radius: 3px; padding: 12px 20px; font: inherit; font-size: 0.8125rem; cursor: pointer; }
+.bold-motion-toggle:hover { border-color: var(--gold); color: var(--gold); }
+.bold-word { display: inline; }
+
 #education .edu-cert-grid { grid-auto-flow: dense; gap: 0; border: 1px solid var(--resume-rule); }
 #education .glass { border: 0; border-radius: 0; background: transparent; padding: 32px; }
 #education .edu-card + .edu-card { border-left: 1px solid var(--resume-rule); }
@@ -74,9 +128,15 @@ footer { padding: 64px 48px; }
 @media (max-width: 1050px) {
   section { padding: 96px 32px; }
   #experience { gap: 32px; grid-template-columns: minmax(0, 1fr); }
-  #experience > .section-title, #experience > .timeline { grid-column: 1; }
+  /* Collapsing to one column must also clear the explicit row placement, or all
+     three items are forced into row 1 and overlap. */
+  #experience > .section-label,
+  #experience > .section-title,
+  #experience > .timeline { grid-column: 1; grid-row: auto; margin-right: 0; }
   .about-grid { grid-template-columns: 1fr; gap: 32px; }
   .skills-list { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .bold-skills-rail { flex-wrap: wrap; }
+  .bold-skill-panel { flex: 1 1 30%; min-height: 140px; border-bottom: 1px solid var(--resume-rule); }
   #contact { padding-inline: 32px; }
 }
 @media (max-width: 600px) {
@@ -91,14 +151,17 @@ footer { padding: 64px 48px; }
   section { padding: 72px 24px; }
   .section-title { font-size: 2.5rem; margin-bottom: 32px; }
   .skills-list { grid-template-columns: 1fr; }
+  .bold-skills-rail { display: grid; grid-template-columns: 1fr; }
+  .bold-skill-panel { border-right: 0; min-height: 80px; }
   .timeline-role { font-size: 1.25rem; }
   #contact { padding-inline: 24px; }
   #contact .section-title { font-size: 3.5rem; }
   #education .glass { padding: 24px; }
   #education .edu-card + .edu-card { border-left: 0; border-top: 1px solid var(--resume-rule); }
 }
+@media (prefers-reduced-motion: reduce) { .bold-marquee-track { animation: none; } }
 @media print {
-  #main-nav, .inline-network { display: none !important; }
+  #main-nav, .bold-skills-rail, .bold-marquee, .bold-motion-toggle, .inline-network { display: none !important; }
   #hero::after { display: none; }
   #hero { min-height: 0; padding: 0; }
   .hero-name { font-size: 28pt; }
