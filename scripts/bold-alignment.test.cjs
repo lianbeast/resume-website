@@ -110,7 +110,36 @@ const wait = ms => new Promise(r => setTimeout(r, ms));
     console.log('PASS injected rail / marquee / motion toggle all carry real styles');
     passed++;
 
-    // ---- 3. Section label shares a top edge with its title ----------------
+    // ---- 3. Core Competencies: wheel fills its panel, controls are a row ---
+    const skills = await page.evaluate(() => {
+      const wrap = document.querySelector('.skills-canvas-wrap');
+      const canvas = document.getElementById('skill-wheel');
+      const controls = document.querySelector('.skill-controls');
+      const search = document.getElementById('skill-search');
+      const pause = document.getElementById('visualizations-pause');
+      const wr = wrap.getBoundingClientRect(), cr = canvas.getBoundingClientRect();
+      return {
+        wrapW: Math.round(wr.width), wrapH: Math.round(wr.height),
+        canvasW: Math.round(cr.width), canvasH: Math.round(cr.height),
+        controlsDisplay: getComputedStyle(controls).display,
+        searchW: Math.round(search.getBoundingClientRect().width),
+        pauseBorder: getComputedStyle(pause).borderTopStyle,
+      };
+    });
+    // A <canvas> with no CSS sizing falls back to its 300x150 intrinsic default.
+    // If it is still that size the sizing rules are missing and the wheel draws
+    // as a postage stamp in the corner of the panel.
+    assert.ok(skills.canvasW > 600 && skills.canvasH > 300,
+      `wheel canvas is ${skills.canvasW}x${skills.canvasH} - sizing rules missing (intrinsic default is 300x150)`);
+    assert.ok(Math.abs(skills.canvasW - skills.wrapW) <= 4 && Math.abs(skills.canvasH - skills.wrapH) <= 4,
+      `canvas ${skills.canvasW}x${skills.canvasH} does not fill its wrap ${skills.wrapW}x${skills.wrapH}`);
+    assert.strictEqual(skills.controlsDisplay, 'flex', '.skill-controls is not a flex row');
+    assert.ok(skills.searchW > 400, `search field is only ${skills.searchW}px - it is not growing to fill the row`);
+    assert.strictEqual(skills.pauseBorder, 'solid', 'the pause button is unstyled');
+    console.log(`PASS Core Competencies: wheel fills its panel (${skills.canvasW}x${skills.canvasH}), controls are a flex row`);
+    passed++;
+
+    // ---- 4. Section label shares a top edge with its title ----------------
     const labels = await page.evaluate(() =>
       Array.from(document.querySelectorAll('section > .section-label')).map(label => {
         const title = label.parentElement.querySelector('.section-title');
@@ -126,7 +155,7 @@ const wait = ms => new Promise(r => setTimeout(r, ms));
     console.log(`PASS all ${labels.length} section labels align to their title top (max delta ${Math.max(...labels.map(l => Math.abs(l.delta)))}px)`);
     passed++;
 
-    // ---- 4. Highlights panel sizes to its content (no trailing dead space) -
+    // ---- 5. Highlights panel sizes to its content (no trailing dead space) -
     const about = await page.evaluate(() => {
       const panel = document.querySelector('.about-highlights');
       const items = panel.querySelectorAll('.highlight-item');
@@ -139,7 +168,7 @@ const wait = ms => new Promise(r => setTimeout(r, ms));
     console.log(`PASS highlights panel hugs its ${about.items} rows (${slack}px trailing slack)`);
     passed++;
 
-    // ---- 5. Rail panel titles share a top edge ---------------------------
+    // ---- 6. Rail panel titles share a top edge ---------------------------
     const railTops = await page.evaluate(() =>
       Array.from(document.querySelectorAll('.bold-skill-panel strong'))
         .map(el => Math.round(el.getBoundingClientRect().top)));
@@ -148,7 +177,7 @@ const wait = ms => new Promise(r => setTimeout(r, ms));
     console.log(`PASS all ${railTops.length} rail titles share a top edge (${spread}px spread)`);
     passed++;
 
-    // ---- 6. Skill tags sit on a consistent grid inside each category -----
+    // ---- 7. Skill tags sit on a consistent grid inside each category -----
     const tagGrid = await page.evaluate(() =>
       Array.from(document.querySelectorAll('.skill-category')).map(cat => {
         const tags = Array.from(cat.querySelectorAll('.skill-tag')).map(t => t.getBoundingClientRect());
@@ -169,7 +198,7 @@ const wait = ms => new Promise(r => setTimeout(r, ms));
     console.log(`PASS pills are uniform across all ${tagGrid.length} categories (single height each)`);
     passed++;
 
-    // ---- 7. No horizontal overflow at the layout breakpoints -------------
+    // ---- 8. No horizontal overflow at the layout breakpoints -------------
     for (const width of [1440, 1050, 600, 390]) {
       await page.setViewport({ width, height: 900 });
       await wait(450);

@@ -577,6 +577,22 @@
     constObs.observe(constellationAnchor);
   }
 
+  // Re-fit the wheel when the viewport changes. The canvas element is sized by
+  // CSS (a clamp on .skills-canvas-wrap), but WebGL keeps whatever resolution it
+  // was initialised with, so without this the constellation is drawn stretched
+  // after a resize or an orientation change. Debounced to match the Three.js map.
+  let wheelResizeTimer = null;
+  window.addEventListener('resize', () => {
+    if (wheelResizeTimer) clearTimeout(wheelResizeTimer);
+    wheelResizeTimer = setTimeout(() => {
+      wheelResizeTimer = null;
+      if (!wheelActive || !wheelRenderer) return;
+      sizeWheel();
+      // Re-render once when the loop is not already running (paused or static).
+      if (!wheelRAF) wheelLoop(performance.now());
+    }, 150);
+  }, { passive: true });
+
   window.addEventListener('popstate', () => {
     const params = new URL(window.location.href).searchParams;
     activeCat = CATS.includes(params.get('skillCategory')) ? params.get('skillCategory') : 'all';
