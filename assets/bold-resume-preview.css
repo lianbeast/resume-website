@@ -368,11 +368,17 @@ section {
 }
 #education .edu-card { border: 0; border-radius: 0; }
 #education .edu-card + .edu-card { border-left: 1px solid var(--resume-rule); }
-#education .cert-card { border: 0; border-top: 1px solid var(--resume-rule); border-radius: 0; }
+#education .cert-card { border: 0; border-radius: 0; position: relative; padding-top: 30px; }
+#education .cert-card::before {
+  content: ""; position: absolute; top: 0; left: 0; right: 0; height: 24px;
+  background: url(topology-divider.svg) left center / auto 24px repeat-x;
+  opacity: 0.6; pointer-events: none;
+}
 #education .glass { background: transparent; box-shadow: none; backdrop-filter: none; }
 #education .edu-card h3 { font-size: 1.15rem; }
-.cert-list li { padding: 14px 0; }
-.cert-badge { margin-right: 4px; }
+.cert-list li { display: flex; align-items: center; gap: 14px; padding: 14px 0; }
+.cert-badge { margin-right: 4px; flex: none; }
+img.cert-badge { width: 52px; height: 52px; object-fit: contain; }
 
 /* ---------------------------------------------------------------------------
    CONTACT — full-bleed inverted band
@@ -382,6 +388,12 @@ section {
   padding: clamp(72px, 9vw, 120px) 5vw;
   background: var(--text);
   color: var(--bg);
+  position: relative;
+}
+#contact::before {
+  content: ""; position: absolute; top: 0; left: 0; right: 0; height: 48px;
+  background: url(topology-divider.svg) center / auto 48px repeat-x;
+  opacity: 0.45; pointer-events: none;
 }
 #contact .section-inner,
 #contact form { max-width: 920px; margin: 0 auto; }

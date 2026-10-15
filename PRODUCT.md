@@ -38,7 +38,7 @@ The only personal career site where the visual argument *is* the professional ar
 - **Typography**: Outfit (display/body) + JetBrains Mono (labels, tags, technical tokens). No third typeface.
 - **Palette**: Burnt Terracotta primary (#c2410c), Deep Teal secondary (#0e7490), Olive tertiary (#4d7c0f). Two true themes flip the substrate.
 - **Assets**: Demo video (GIF/MP4), OG image, design tokens (CSS + JSON), resume PDF, standalone skill wheel (`wheel-v2.html`).
-- **Evidence that must not be fabricated**: Specific protocols (SS7/SIGTRAN), employer names (T-Mobile, Sprint, AtoZIT), certs (CCNA, CompTIA A+, Network+), dates, locations, skill taxonomy.
+- **Evidence that must not be fabricated**: Specific protocols (SS7/SIGTRAN), employer names (T-Mobile, Sprint, AtoZIT), certs (CCNA, MCP, CompTIA A+), dates, locations, skill taxonomy.
 
 ## Brand Commitments
 
