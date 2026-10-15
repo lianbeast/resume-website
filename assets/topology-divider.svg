@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 48" width="1200" height="48" role="presentation" aria-hidden="true">
+  <!-- Topology hairline: terracotta signal nodes linked by thin trails, with teal accents.
+       Transparent background; use as a section rule / divider. On-palette: #c2410c terracotta, #0e7490 teal. -->
+  <g fill="none" stroke="#c2410c" stroke-width="1.2" opacity="0.55">
+    <path d="M0 24 H120"/>
+    <path d="M120 24 L240 24"/>
+    <path d="M240 24 L360 24"/>
+    <path d="M360 24 L480 24"/>
+    <path d="M480 24 L600 24"/>
+    <path d="M600 24 L720 24"/>
+    <path d="M720 24 L840 24"/>
+    <path d="M840 24 L960 24"/>
+    <path d="M960 24 L1080 24"/>
+    <path d="M1080 24 H1200"/>
+  </g>
+  <g stroke="#0e7490" stroke-width="1" opacity="0.5">
+    <path d="M180 24 L300 14"/>
+    <path d="M540 24 L660 34"/>
+    <path d="M900 24 L1020 14"/>
+  </g>
+  <g fill="#c2410c">
+    <circle cx="120" cy="24" r="3.5"/>
+    <circle cx="240" cy="24" r="3.5"/>
+    <circle cx="360" cy="24" r="3.5"/>
+    <circle cx="480" cy="24" r="3.5"/>
+    <circle cx="600" cy="24" r="4.5"/>
+    <circle cx="720" cy="24" r="3.5"/>
+    <circle cx="840" cy="24" r="3.5"/>
+    <circle cx="960" cy="24" r="3.5"/>
+    <circle cx="1080" cy="24" r="3.5"/>
+  </g>
+  <g fill="#0e7490">
+    <circle cx="180" cy="24" r="2.6"/>
+    <circle cx="540" cy="24" r="2.6"/>
+    <circle cx="900" cy="24" r="2.6"/>
+  </g>
+</svg>

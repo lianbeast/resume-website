@@ -61,6 +61,31 @@ section {
     radial-gradient(120% 90% at 88% 8%, rgba(224, 106, 58, 0.14), transparent 55%),
     radial-gradient(90% 80% at 6% 96%, rgba(34, 211, 238, 0.08), transparent 60%);
 }
+/* Concept 1 — faint terracotta constellation backdrop behind the hero. Real element
+   (not ::before) so GSAP can orbit it; low opacity, non-interactive. */
+.hero-constellation {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background: url(hero-constellation.png) center / cover no-repeat;
+  opacity: 0.14;
+  pointer-events: none;
+  will-change: transform;
+}
+
+/* Concept 2 — US career-path map as a faint decorative parallax backdrop on PATH.
+   Real element (not ::before) so GSAP can drive scroll parallax; clip the oversized box. */
+.career-path { position: relative; overflow: hidden; }
+.career-map-bg {
+  position: absolute;
+  inset: -8% 0;
+  z-index: -1;
+  background: url(career-map.png) center / cover no-repeat;
+  opacity: 0.1;
+  pointer-events: none;
+  will-change: transform;
+}
+
 /* Soft terracotta halo behind the name — pure CSS, no JS, static under RM. */
 .hero-glow {
   position: absolute;

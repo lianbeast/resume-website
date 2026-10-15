@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="120" height="120" role="img" aria-label="CCNA Certified">
+  <circle cx="60" cy="60" r="54" fill="none" stroke="#c2410c" stroke-width="3"/>
+  <circle cx="60" cy="60" r="46" fill="none" stroke="#0e7490" stroke-width="1" opacity="0.6"/>
+  <text x="60" y="58" text-anchor="middle" font-family="system-ui, sans-serif" font-size="22" font-weight="700" fill="#c2410c">CCNA</text>
+  <text x="60" y="78" text-anchor="middle" font-family="system-ui, sans-serif" font-size="9" letter-spacing="1.5" fill="#6e635c">CERTIFIED</text>
+</svg>
