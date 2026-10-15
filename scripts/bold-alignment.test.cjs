@@ -69,7 +69,7 @@ const wait = ms => new Promise(r => setTimeout(r, ms));
       getComputedStyle(document.documentElement).getPropertyValue('--resume-rule').trim());
     assert.ok(rule, '--resume-rule is undefined: every var(--resume-rule) border on this page will be dropped');
     const borders = await page.evaluate(() => ({
-      nav: getComputedStyle(document.getElementById('main-nav')).borderTopStyle,
+      nav: getComputedStyle(document.getElementById('main-nav')).borderBottomStyle,
       skillsList: getComputedStyle(document.querySelector('.skills-list')).borderTopStyle,
       skillCategory: getComputedStyle(document.querySelector('.skill-category')).borderRightStyle,
       eduGrid: getComputedStyle(document.querySelector('.edu-cert-grid')).borderTopStyle,
