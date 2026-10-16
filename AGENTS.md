@@ -56,11 +56,11 @@ node scripts/enhancements.test.cjs # Verifies Lenis gating, anchor parity, palet
    - `app/animations.js`: GSAP & ScrollTrigger scroll-driven reveals (gated off on mobile / reduced-motion).
    - `app/glass.js`: LiquidGlass WebGL refraction initialization wrapper.
    - `app/init.js`: Core entry point orchestrating module initialization.
-   - `app/smooth-scroll.js`: Lenis smooth scrolling. Bails on reduced-motion, the Lite tier, ≤768px viewports and missing dependencies; shares GSAP's ticker with ScrollTrigger. Exposes `window.__lenis` for `nav.js`.
+   - `app/smooth-scroll.js`: Lenis smooth scrolling. Bails on reduced-motion, the Lite tier, ≤768px viewports and missing dependencies; shares GSAP's ticker with ScrollTrigger. Exposes `window.__lenis` for `app/nav.js`.
    - `assets/vendor/lenis.min.js`: Vendored Lenis 1.3.26 (MIT) — kept local so `script-src 'self'` holds and there is no third-party runtime dependency.
    - `scripts/strip-inline-styles.py`: One-shot, idempotent migration that moved inline `style=` geometry into `assets/shared.css`. Safe to re-run.
-   - `theme.js`: Instant theme toggle (`data-theme`), local storage persistence, and non-blocking font injection.
-   - `nav.js`: Mobile drawer navigation, aria-expanded state, and keyboard focus trap.
+   - `app/theme.js`: Instant theme toggle (`data-theme`), local storage persistence, and non-blocking font injection.
+   - `app/nav.js`: Mobile drawer navigation, aria-expanded state, and keyboard focus trap.
 
 ---
 
@@ -73,10 +73,10 @@ node scripts/enhancements.test.cjs # Verifies Lenis gating, anchor parity, palet
 | `bold-resume-preview.html` | Editorial bold typography resume variant |
 | `wheel-v2.html` | Standalone interactive 3D skill wheel |
 | `thank-you.html` | Contact form submission confirmation |
-| `config.json` | CSP source of truth — header policy (test server) + meta policy (pages) |
-| `lighthouseci.config.js` | Performance (≥0.9), Accessibility (≥0.9), and CLS (≤0.1) assertions |
-| `DESIGN.md` | Authoritative design specification and design system token contract |
-| `PRODUCT.md` | Product requirements, brand positioning, and evidence boundaries |
+| `config/security.json` | CSP source of truth — header policy (test server) + meta policy (pages) |
+| `config/lighthouseci.config.js` | Performance (≥0.9), Accessibility (≥0.9), and CLS (≤0.1) assertions |
+| `docs/DESIGN.md` | Authoritative design specification and design system token contract |
+| `docs/PRODUCT.md` | Product requirements, brand positioning, and evidence boundaries |
 
 ---
 
@@ -99,7 +99,7 @@ The repository defines custom agent profiles in `.claude/agents/`:
 ## Coding Conventions & Guardrails
 
 - **Zero Inline Styles**: External CSS stylesheets only; maintains clean separation and CSP compliance.
-- **Strict Evidence Boundaries**: Never invent or alter titles, years, employers, certifications, or technical taxonomy (refer to `PRODUCT.md`).
+- **Strict Evidence Boundaries**: Never invent or alter titles, years, employers, certifications, or technical taxonomy (refer to `docs/PRODUCT.md`).
 - **WCAG 2.1 AA Compliance**:
   - Minimum contrast 4.5:1 for body text, 3:1 for large text.
   - Interactive elements must be keyboard accessible with visible focus rings (`:focus-visible`).

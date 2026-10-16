@@ -35,7 +35,7 @@ def project(lon, lat):
 
 
 def load_states():
-    src = (ROOT / "states.js").read_text(encoding="utf-8")
+    src = (ROOT / "app" / "threejs" / "states.js").read_text(encoding="utf-8")
     start = src.index("{")
     end = src.rindex("}")
     return json.loads(src[start:end + 1])

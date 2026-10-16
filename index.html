@@ -66,7 +66,7 @@
           crossorigin="anonymous"></script>
 
   <!-- Lower-48 US state polygons (lon/lat, RDP-simplified). Rendered by Three.js map. -->
-  <script defer src="states.js"></script>
+  <script defer src="app/threejs/states.js"></script>
 
   <!-- Shared styles — design tokens, reset, base, nav, footer, components, utilities -->
   <link rel="stylesheet" href="assets/shared.css">
@@ -75,7 +75,7 @@
   <!-- Page-specific styles for index.html (hero, stats, timeline, skills, contact) -->
   <link rel="stylesheet" href="assets/index.css">
   <!-- theme.js applies saved theme before paint (prevents flash) + async-loads fonts -->
-  <script src="theme.js"></script>
+  <script src="app/theme.js"></script>
 </head>
 
 <body>
@@ -510,7 +510,7 @@
           <div class="form-error" id="err-message" role="status" aria-live="polite">Please enter a message.</div>
         </div>
         <div class="full-width reveal">
-          <!-- ponytail: Formspree endpoint configured in config.json CSP -->
+          <!-- ponytail: Formspree endpoint configured in config/security.json CSP -->
           <button type="submit" class="btn btn-primary">Send Message</button>
         </div>
       </form>
@@ -559,7 +559,7 @@
   <!-- ================================================================
        NAV / BACK-TO-TOP / THEME HANDLERS
        ================================================================ -->
-  <script src="nav.js"></script>
+  <script src="app/nav.js"></script>
 
   <!-- ================================================================
        GLASS EFFECTS MODULE

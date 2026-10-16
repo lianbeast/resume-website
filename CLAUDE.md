@@ -8,9 +8,9 @@ Static personal career/portfolio site for **Syed Rahid Ahmed**, Sr. Switch Techn
 ---
 
 ## Architecture Notes
-- **Single self-contained artifact**: `index.html` inlines CSS + loads `app.js`, `nav.js`, `theme.js`, `states.js` — no bundler
-- **Theme system**: Light (Carbon Ivory) + Dark (Graphite) via `data-theme` attribute, persisted in `localStorage`; `theme.js` injects fonts async
-- **CSP**: Defined in `config.json` — served as an HTTP header by the test server and embedded as a `<meta http-equiv>` tag on every page for production (GitHub Pages cannot set headers); the meta variant omits `frame-ancestors`, which browsers ignore in meta delivery
+- **Single self-contained artifact**: `index.html` inlines CSS + loads `app.js`, `app/nav.js`, `app/theme.js`, `app/threejs/states.js` — no bundler
+- **Theme system**: Light (Carbon Ivory) + Dark (Graphite) via `data-theme` attribute, persisted in `localStorage`; `app/theme.js` injects fonts async
+- **CSP**: Defined in `config/security.json` — served as an HTTP header by the test server and embedded as a `<meta http-equiv>` tag on every page for production (GitHub Pages cannot set headers); the meta variant omits `frame-ancestors`, which browsers ignore in meta delivery
 - **Motion**: Three.js + GSAP fully gated by `prefers-reduced-motion` — falls back to static scene, never blank
 - **Mobile-first**: `100dvh` units, safe-area insets, `viewport-fit=cover`, debounced resize (150ms), 44px touch targets
 - **Print-safe**: Hierarchy and legibility preserved when printed to PDF
@@ -19,15 +19,15 @@ Static personal career/portfolio site for **Syed Rahid Ahmed**, Sr. Switch Techn
 
 ## Coding Conventions
 - **Commits**: Conventional-ish (`feat:`, `fix:`, `chore:`, `polish:`) — see git log
-- **CSP**: Single source in `config.json` (header + meta variants); never hardcode policies in HTML
-- **Evidence**: Never fabricate employers, certs, protocols, dates, or skill taxonomy (see PRODUCT.md §41)
+- **CSP**: Single source in `config/security.json` (header + meta variants); never hardcode policies in HTML
+- **Evidence**: Never fabricate employers, certs, protocols, dates, or skill taxonomy (see docs/PRODUCT.md §41)
 - **Motion**: Always respect `prefers-reduced-motion`; content never gated on animation
 - **Accessibility**: WCAG AA target; ≥4.5:1 body, ≥3:1 large text; keyboard-reachable; no hue-alone encoding
 - **No framework patterns**: No React/Vue/Svelte idioms; vanilla DOM, event delegation, CSS custom properties
 
 ---
 
-## Notable Constraints (from PRODUCT.md)
+## Notable Constraints (from docs/PRODUCT.md)
 1. **Topology as material** — visual system (hub nodes, signal trails, cross-connections) IS the argument
 2. **Carrier-grade composure** — restraint over performance; motion enhances, never shouts
 3. **Proof over adjectives** — specificity (years, employers, certs, protocols) carries the page
@@ -39,7 +39,7 @@ Static personal career/portfolio site for **Syed Rahid Ahmed**, Sr. Switch Techn
 ## Deployment
 - **Platform**: GitHub Pages (publishes `main` branch automatically)
 - **Domain**: `rahid.persipico.com` (CNAME configured)
-- **Contact form**: Formspree endpoint in `config.json` CSP (`connect-src`, `form-action`)
+- **Contact form**: Formspree endpoint in `config/security.json` CSP (`connect-src`, `form-action`)
 - **Systemd service** (optional): Runs on port 2080 — see README.md for setup
 
 ---

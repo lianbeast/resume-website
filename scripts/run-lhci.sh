@@ -22,7 +22,7 @@ sleep 3
 
 # Run Lighthouse CI
 echo "🔍 Running Lighthouse CI..."
-lhci autorun --config=./lighthouseci.config.js
+lhci autorun --config=./config/lighthouseci.config.js
 
 # Cleanup
 echo "🧹 Stopping local server..."

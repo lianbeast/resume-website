@@ -55,3 +55,6 @@ map-render-check.png
 # Lighthouse run output
 .lh-*.json
 .lighthouseci/
+
+# Local backups and browser artifacts
+.local/

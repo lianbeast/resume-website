@@ -21,7 +21,7 @@ const puppeteer = require('puppeteer-core');
 const { Launcher } = require('chrome-launcher');
 
 const root = path.resolve(__dirname, '..');
-const config = JSON.parse(fs.readFileSync(path.join(root, 'config.json'), 'utf8'));
+const config = JSON.parse(fs.readFileSync(path.join(root, 'config/security.json'), 'utf8'));
 const csp = config['Content-Security-Policy'];
 const mime = { '.html': 'text/html', '.js': 'text/javascript', '.css': 'text/css', '.png': 'image/png', '.svg': 'image/svg+xml', '.pdf': 'application/pdf' };
 
@@ -42,7 +42,7 @@ const wait = ms => new Promise(r => setTimeout(r, ms));
 (async () => {
   await new Promise(resolve => server.listen(0, '127.0.0.1', resolve));
   const base = `http://127.0.0.1:${server.address().port}`;
-  const profile = fs.mkdtempSync(path.join(root, '.restore-browser-'));
+  const profile = fs.mkdtempSync(path.join(require('node:os').tmpdir(), 'career-site-browser-'));
   let browser;
   let passed = 0;
 

@@ -12,7 +12,7 @@
     "test:enhancements": "node scripts/enhancements.test.cjs",
     "test:csp": "node scripts/csp-probe.cjs",
     "map:build": "python scripts/build-us-map-svg.py",
-    "lhci": "lhci autorun --config=./lighthouseci.config.js",
+    "lhci": "lhci autorun --config=./config/lighthouseci.config.js",
     "test:lhci": "./scripts/run-lhci.sh"
   },
   "devDependencies": {

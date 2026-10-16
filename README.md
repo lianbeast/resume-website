@@ -61,4 +61,14 @@ rendering, and contact-form submission. Formspree requests are intercepted local
 
 GitHub Pages publishes `main` automatically. The contact form posts to Formspree
 (`https://formspree.io/f/mdekbpja`); the allowed origins live in
-`config.json` under `Content-Security-Policy`.
+`config/security.json` under `Content-Security-Policy`.
+
+## Repository layout
+
+- Root: public HTML entry points, resume PDF, SEO files, package manifests, hosting configuration, and agent guides. Public page URLs remain stable.
+- `app/`: shared browser scripts and Three.js modules.
+- `assets/`: styles, images, and vendored browser libraries.
+- `config/`: security policy and Lighthouse configuration.
+- `docs/`: product/design specifications and historical reports; `docs/reviews/workspace/` holds prior review notes.
+- `scripts/`: development and verification tools. Browser tests create temporary profiles in the operating system temp directory.
+- `.local/`: ignored local backups and previously generated browser profiles.
