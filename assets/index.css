@@ -42,6 +42,42 @@
   .hero-name { animation: none; }
 }
 
+/* ================================================================
+   HERO ENTRANCE ANIMATIONS (CSS fallback for no-JS)
+   ================================================================ */
+@keyframes hero-slide-up {
+  from { opacity: 0; transform: translateY(24px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes hero-fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes hero-scale-in {
+  from { opacity: 0; transform: scale(0.96); }
+  to { opacity: 1; transform: scale(1); }
+}
+.hero-head {
+  animation: hero-slide-up 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+.hero-tail {
+  animation: hero-fade-in 0.6s ease 0.4s both;
+}
+.hero-cta {
+  animation: hero-scale-in 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0.6s both;
+}
+
+/* ================================================================
+   SECTION LABEL UNDERLINE ANIMATION
+   ================================================================ */
+@keyframes underline-grow {
+  from { width: 0; }
+  to { width: var(--underline-w, 60px); }
+}
+.section-label.has-underline::after {
+  animation: underline-grow 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
 .hero-title {
   font-size: clamp(18px, 2.5vw, 24px);
   font-weight: 400;
@@ -62,8 +98,19 @@
 }
 
 /* ================================================================
-   STATS
+   STATS — entrance animation
    ================================================================ */
+@keyframes stat-pop {
+  0% { opacity: 0; transform: translateY(16px) scale(0.98); }
+  100% { opacity: 1; transform: translateY(0) scale(1); }
+}
+.stat-card.revealed {
+  animation: stat-pop 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+.stat-card:nth-child(1).revealed { animation-delay: 0.05s; }
+.stat-card:nth-child(2).revealed { animation-delay: 0.1s; }
+.stat-card:nth-child(3).revealed { animation-delay: 0.15s; }
+.stat-card:nth-child(4).revealed { animation-delay: 0.2s; }
 .stats-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -90,8 +137,24 @@
 }
 
 /* ================================================================
-   ABOUT
+   TIMELINE — entrance animation
    ================================================================ */
+@keyframes timeline-node-draw {
+  from { opacity: 0; transform: translateX(-8px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+.timeline-item.revealed {
+  animation: timeline-node-draw 0.45s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+.timeline-item.revealed:nth-child(1) { animation-delay: 0.05s; }
+.timeline-item.revealed:nth-child(2) { animation-delay: 0.1s; }
+.timeline-item.revealed:nth-child(3) { animation-delay: 0.15s; }
+.timeline-item.revealed:nth-child(4) { animation-delay: 0.2s; }
+.timeline-item.revealed:nth-child(5) { animation-delay: 0.25s; }
+.timeline-item.revealed:nth-child(6) { animation-delay: 0.3s; }
+.timeline-item.revealed:nth-child(7) { animation-delay: 0.35s; }
+.timeline-item.revealed:nth-child(8) { animation-delay: 0.4s; }
+.timeline-item.revealed:nth-child(9) { animation-delay: 0.45s; }
 .about-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;

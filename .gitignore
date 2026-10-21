@@ -58,3 +58,6 @@ map-render-check.png
 
 # Local backups and browser artifacts
 .local/
+
+# Graphify outputs (regeneratable)
+graphify-out/

@@ -55,4 +55,51 @@
 
   // GSAP load can run anytime before animations.js needs it
   loadGSAP();
+
+  // CSS-based reveal animations via IntersectionObserver
+  // These complement GSAP reveals and work for no-JS / reduced-motion users
+  // who get the CSS animation fallbacks defined in assets/index.css
+  function initRevealAnimations() {
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (prefersReducedMotion) return;
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const el = entry.target;
+          // Skip elements that GSAP will handle (they have inline styles from GSAP)
+          if (el.style.opacity === '0' || el.style.transform) return;
+          // Add revealed class to trigger CSS animations
+          if (el.classList.contains('stat-card')) {
+            el.classList.add('revealed');
+          }
+          // Trigger section label underline animation
+          if (el.classList.contains('section-label')) {
+            el.classList.add('has-underline');
+          }
+          observer.unobserve(el);
+        }
+      });
+    }, {
+      threshold: 0.1,
+      rootMargin: '0px 0px -50px 0px'
+    });
+
+    // Observe elements that should animate on scroll.
+    // Only add revealed class to stat-cards (timeline/skills get .reveal
+    // class that GSAP handles); section-label triggers its ::after underline
+    // via .has-underline. This prevents double-animation.
+    document.querySelectorAll('.stat-card').forEach(el => {
+      observer.observe(el);
+    });
+    document.querySelectorAll('.section-label').forEach(el => {
+      observer.observe(el);
+    });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initRevealAnimations);
+  } else {
+    initRevealAnimations();
+  }
 })();

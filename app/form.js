@@ -94,6 +94,12 @@
       const firstInvalid = form.querySelector('[aria-invalid="true"]');
       if (firstInvalid) firstInvalid.focus();
       if (formStatus) formStatus.textContent = 'Please correct the highlighted fields before sending your message.';
+      // Trigger shake animation on error groups
+      form.querySelectorAll('.form-group.error').forEach(g => {
+        g.style.animation = 'none';
+        g.offsetHeight; // force reflow
+        g.style.animation = '';
+      });
       return;
     }
 
@@ -122,6 +128,22 @@
           throw new Error(body.error || body.errors?.[0]?.message || 'submit-failed');
         }
         submitted = true;
+        // Show success state with animation
+        const successEl = document.createElement('div');
+        successEl.className = 'form-success';
+        successEl.innerHTML = `
+          <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+            <polyline points="22 4 12 14.01 9 11.01"/>
+          </svg>
+          <p style="font-size: 16px; font-weight: 600; color: var(--text);">Message sent successfully!</p>
+          <p style="font-size: 14px; color: var(--text-dim);">Thank you for reaching out. I will get back to you within 1–2 business days.</p>
+        `;
+        const formStatusEl = document.getElementById('form-status');
+        if (formStatusEl) {
+          formStatusEl.innerHTML = '';
+          formStatusEl.appendChild(successEl);
+        }
         window.location.href = new URL('thank-you.html', window.location.href).href;
       })
       .catch((err) => {

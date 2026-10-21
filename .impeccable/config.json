@@ -221,6 +221,24 @@
         "value": "triangle border",
         "createdAt": "2026-10-02T17:50:28.386Z",
         "reason": "CSS triangle technique: width:0 height:0 background:transparent with border-bottom creates triangle shape; not a rounded card with border"
+      },
+      {
+        "rule": "gradient-text",
+        "value": "*",
+        "files": [
+          "assets/index.css"
+        ],
+        "createdAt": "2026-10-21T07:53:01.812Z",
+        "reason": "Syed Rahid Ahmed: hero name gradient uses approved terracotta palette (#c2410c→#e06a3a) per DESIGN.md brand-colors; intentional brand signal, not decorative AI default"
+      },
+      {
+        "rule": "border-accent-on-rounded",
+        "value": "*",
+        "files": [
+          "assets/index.css"
+        ],
+        "createdAt": "2026-10-21T07:57:44.249Z",
+        "reason": "Syed Rahid Ahmed: float-shape decorative elements use thin 1.5px borders as part of the topology visual system; not rounded cards with accent borders"
       }
     ]
   }

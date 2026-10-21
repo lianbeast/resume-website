@@ -223,6 +223,20 @@ body {
   border-radius: 8px;
   transition: color 0.2s ease, background 0.2s ease;
 }
+.nav-links a::after {
+  content: '';
+  position: absolute;
+  bottom: 4px;
+  left: 50%;
+  width: 0;
+  height: 2px;
+  background: var(--gold);
+  border-radius: 1px;
+  transform: translateX(-50%);
+  transition: width 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.nav-links a:hover::after,
+.nav-links a.active::after { width: calc(100% - 28px); }
 .nav-links a:hover { color: var(--text); background: rgba(194, 65, 12, 0.15); }
 .nav-links a:focus-visible {
   color: var(--text);
@@ -353,6 +367,9 @@ section:first-of-type { content-visibility: visible; }
   letter-spacing: 0.15em;
   color: var(--gold);
   margin-bottom: 12px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
 }
 
 .section-title {
@@ -362,18 +379,6 @@ section:first-of-type { content-visibility: visible; }
   margin-bottom: 40px;
   position: relative;
   display: inline-block;
-}
-.section-label {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-}
-.section-icon {
-  width: 20px;
-  height: 20px;
-  flex-shrink: 0;
-  color: var(--gold);
-  opacity: 0.7;
 }
 
 /* ================================================================
@@ -613,20 +618,6 @@ section:first-of-type { content-visibility: visible; }
 .cert-text strong {
   color: var(--text);
   font-weight: 600;
-}
-
-/* Section label with icon */
-.section-label {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-}
-.section-icon {
-  width: 20px;
-  height: 20px;
-  flex-shrink: 0;
-  color: var(--gold);
-  opacity: 0.7;
 }
 
 .section-title::after {
@@ -1042,21 +1033,6 @@ footer::before {
   );
 }
 
-/* ================================================================
-   SECTION HEADER ICONS & UNDERLINES
-   ================================================================ */
-.section-label {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-}
-.section-icon {
-  width: 20px;
-  height: 20px;
-  flex-shrink: 0;
-  color: var(--gold);
-  opacity: 0.7;
-}
 .section-label::after {
   content: '';
   display: block;
@@ -1076,11 +1052,13 @@ footer::before {
   border-radius: 6px;
   background: rgba(0,0,0,0.04);
   border: 1px solid var(--border-glass);
-  transition: border-color 0.3s ease, background 0.3s ease;
+  transition: border-color 0.3s ease, background 0.3s ease, transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  transform-origin: center;
 }
 .skill-tag:hover {
   border-color: rgba(194, 65, 12, 0.3);
   background: rgba(194, 65, 12, 0.05);
+  transform: translateY(-1px);
 }
 
 /* Skill accent colors (palette-coded) */
@@ -1153,7 +1131,17 @@ footer::before {
 }
 .form-group.error .form-error { display: block; }
 .form-group.error input,
-.form-group.error textarea { border-color: var(--gold-dark); }
+.form-group.error textarea { border-color: var(--gold-dark); animation: shake-horizontal 0.4s ease; }
+.form-success {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  padding: 32px;
+  text-align: center;
+  animation: success-check 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+.form-success svg { width: 48px; height: 48px; color: var(--gold); }
 
 /* ================================================================
    CERT BADGES
@@ -1227,41 +1215,11 @@ footer::before {
   font-size: 14px;
 }
 
-/* ================================================================
-   EDUCATION & CERTS
-   ================================================================ */
 .edu-cert-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 24px;
 }
-.edu-card, .cert-card { padding: 24px; }
-.edu-card h3 { font-size: 16px; margin-bottom: 4px; }
-.edu-card p { font-size: 13px; color: var(--text-dim); }
-.cert-list { list-style: none; }
-.cert-list li {
-  padding: 10px 0;
-  border-bottom: 1px solid var(--border-glass);
-  font-size: 14px;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-.cert-list li:last-child { border: none; }
-.cert-icon {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: var(--gold);
-  flex-shrink: 0;
-}
-.cert-pursuit .cert-icon { background: var(--gold-dark); }
-.cert-text {
-  font-size: 13px;
-  color: var(--text);
-  line-height: 1.4;
-}
-.cert-text strong { color: var(--text); font-weight: 600; }
 
 /* ================================================================
    ANIMATIONS & KEYFRAMES
@@ -1292,6 +1250,18 @@ footer::before {
 @keyframes border-glow {
   0%, 100% { border-color: rgba(194, 65, 12, 0.15); }
   50%      { border-color: rgba(194, 65, 12, 0.35); }
+}
+@keyframes shake-horizontal {
+  0%, 100% { transform: translateX(0); }
+  20%      { transform: translateX(-4px); }
+  40%      { transform: translateX(4px); }
+  60%      { transform: translateX(-2px); }
+  80%      { transform: translateX(2px); }
+}
+@keyframes success-check {
+  0% { opacity: 0; transform: scale(0.5); }
+  60% { transform: scale(1.1); }
+  100% { opacity: 1; transform: scale(1); }
 }
 
 /* ================================================================
@@ -1435,6 +1405,7 @@ html.lenis-active { scroll-behavior: auto !important; }
 .no-js .stat-card, .no-js .timeline-item, .no-js .skill-category, .no-js .section-label {
   opacity: 1 !important;
   transform: none !important;
+  animation: none !important;
 }
 
 /* ================================================================
