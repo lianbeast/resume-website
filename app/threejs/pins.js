@@ -44,12 +44,7 @@
   let isDark = false;
 
   function initPins() {
-    // Wait for ThreeJSMap to be ready (map.js runs first and sets window.ThreeJSMap)
-    if (!window.ThreeJSMap) {
-      console.warn('ThreeJSMap not initialized yet, will retry on next tick');
-      requestAnimationFrame(initPins);
-      return;
-    }
+    if (!window.ThreeJSMap) return;
 
     mapGroup = window.ThreeJSMap.getMapGroup();
     const project = window.ThreeJSMap.getProject();
@@ -448,10 +443,17 @@
     precomputeSegments();
   }
 
-  // Initialize when DOM ready
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initPins);
-  } else {
+  // Initialize when DOM ready. map.js runs first and dispatches
+  // 'threejs-map-ready' once window.ThreeJSMap is set — listen for it
+  // instead of polling, so initPins runs exactly once with no console noise.
+  if (window.ThreeJSMap) {
     initPins();
+  } else if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => {
+      if (window.ThreeJSMap) initPins();
+      else window.addEventListener('threejs-map-ready', initPins, { once: true });
+    });
+  } else {
+    window.addEventListener('threejs-map-ready', initPins, { once: true });
   }
 })();

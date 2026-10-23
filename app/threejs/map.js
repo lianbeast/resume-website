@@ -190,12 +190,13 @@
   }
 
   // This module loads with `defer`, so the DOM is already parsed when it runs.
-  // Initialize immediately and start the render loop — no DOMContentNeeded.
-  // This ensures window.ThreeJSMap is ready before pins.js (which also defers)
-  // runs its initPins().
+  // Initialize immediately and start the render loop. Notify pins.js via a
+  // CustomEvent so it can run exactly once when ThreeJSMap is ready — no
+  // polling, no race condition, no console spam.
   const initialized = ThreeJSMap.init();
   if (initialized) {
     window.ThreeJSMap = ThreeJSMap;
+    window.dispatchEvent(new CustomEvent('threejs-map-ready'));
   } else {
     window.ThreeJSMap = null;
   }
