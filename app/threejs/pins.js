@@ -182,9 +182,15 @@
     mapGroup.add(careerPoints);
     mapGroup.add(decoPoints);
 
-    // Career path connection lines
+    // Career path connection lines.
+    //
+    // Custom ShaderMaterial (not LineDashedMaterial) so the path can draw
+    // itself segment-by-segment as the user scrolls. Each segment carries a
+    // normalized drawIndex (0→1); the fragment shader fades vertices whose
+    // index sits behind uDrawProgress, so the path assembles in order.
     const pathPositions = [];
     const pathColors = [];
+    const pathDrawIndices = [];
     CAREER_PATH.forEach((stop, i) => {
       if (i === 0) return;
       const prev = CAREER_PATH[i - 1];
@@ -199,24 +205,51 @@
       const col = new THREE.Color().lerpColors(primaryC, secondaryC, t);
       pathColors.push(col.r, col.g, col.b);
       pathColors.push(col.r, col.g, col.b);
+      // Normalized draw index for this segment. i runs 1..N-1, so i-1
+      // normalizes to 0..1 across the N-1 segments.
+      const drawIdx = (i - 1) / (CAREER_PATH.length - 2);
+      pathDrawIndices.push(drawIdx, drawIdx);
     });
 
     const pathGeo = new THREE.BufferGeometry();
     pathGeo.setAttribute('position', new THREE.BufferAttribute(new Float32Array(pathPositions), 3));
     pathGeo.setAttribute('color', new THREE.BufferAttribute(new Float32Array(pathColors), 3));
+    pathGeo.setAttribute('drawIndex', new THREE.BufferAttribute(new Float32Array(pathDrawIndices), 1));
 
-    const pathMat = new THREE.LineDashedMaterial({
-      vertexColors: true,
+    const pathMat = new THREE.ShaderMaterial({
+      uniforms: {
+        uDrawProgress: { value: 0 },
+        uOpacity: { value: 0.45 },
+      },
+      vertexShader: `
+        attribute float drawIndex;
+        attribute vec3 color;
+        varying float vDrawIndex;
+        varying vec3 vColor;
+        void main() {
+          vDrawIndex = drawIndex;
+          vColor = color;
+          vec4 mvPos = modelViewMatrix * vec4(position, 1.0);
+          gl_Position = projectionMatrix * mvPos;
+        }
+      `,
+      fragmentShader: `
+        varying float vDrawIndex;
+        varying vec3 vColor;
+        uniform float uDrawProgress;
+        uniform float uOpacity;
+        void main() {
+          // fade each segment in as the draw front reaches its index
+          float fade = 1.0 - smoothstep(uDrawProgress - 0.06, uDrawProgress, vDrawIndex);
+          gl_FragColor = vec4(vColor, fade * uOpacity);
+        }
+      `,
       transparent: true,
-      opacity: 0.45,
-      dashSize: 1.5,
-      gapSize: 1.0,
       blending: THREE.AdditiveBlending,
       depthWrite: false,
     });
     pathSegments = new THREE.LineSegments(pathGeo, pathMat);
     mapGroup.add(pathSegments);
-    pathSegments.computeLineDistances();
 
     // Tell map module about path segments for theme updates
     window.ThreeJSMap.setPathSegments(pathSegments);
@@ -329,12 +362,25 @@
     // window.ThreeJSMap.getContainer().classList.add('is-enhanced');
 
     // Expose for animation module
+    function animateNodes(time) {
+      isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+      Object.keys(cityNodeData).forEach((key, i) => {
+        const nd = cityNodeData[key];
+        const amp = nd.isHub ? 0.08 : 0.30;
+        const pulse = Math.sin(time * 0.8 + i * 0.7) * amp + (nd.isHub ? 0.92 : 0.70);
+        const finalPulse = isDark ? (nd.isHub ? 0.98 : 0.85) : pulse;
+        const pts = nd.group === 'hub' ? hubPoints : (nd.group === 'career' ? careerPoints : decoPoints);
+        pts.geometry.attributes.size.array[nd.idxInGroup] = nd.baseSize * finalPulse;
+        pts.geometry.attributes.size.needsUpdate = true;
+      });
+    }
     window.ThreeJSPins = {
       cityNodeData,
       hubPoints,
       careerPoints,
       decoPoints,
       pathSegments,
+      pathMat,
       packetGeo,
       packetMat,
       packetData,
@@ -343,46 +389,61 @@
       project,
       animateNodes,
       animatePackets,
+      setDrawProgress,
     };
-  }
 
-  function animateNodes(time) {
-    isDark = document.documentElement.getAttribute('data-theme') === 'dark';
-    Object.keys(cityNodeData).forEach((key, i) => {
-      const nd = cityNodeData[key];
-      const amp = nd.isHub ? 0.08 : 0.30;
-      const pulse = Math.sin(time * 0.8 + i * 0.7) * amp + (nd.isHub ? 0.92 : 0.70);
-      const finalPulse = isDark ? (nd.isHub ? 0.98 : 0.85) : pulse;
-      const pts = nd.group === 'hub' ? hubPoints : (nd.group === 'career' ? careerPoints : decoPoints);
-      pts.geometry.attributes.size.array[nd.idxInGroup] = nd.baseSize * finalPulse;
-      pts.geometry.attributes.size.needsUpdate = true;
-    });
-  }
-
-  function animatePackets(time) {
-    const { CAREER_PATH, CITIES, project, packetGeo, packetData: data } = window.ThreeJSPins;
-    for (let i = 0; i < data.length; i++) {
-      const p = data[i];
-      const segIdx = p.segment;
-      const a = CAREER_PATH[segIdx];
-      const b = CAREER_PATH[segIdx + 1];
-      if (!a || !b) continue;
-      const [ax, ay] = project(CITIES[a.city].lon, CITIES[a.city].lat);
-      const [bx, by] = project(CITIES[b.city].lon, CITIES[b.city].lat);
-
-      p.progress += p.speed * 0.005;
-      if (p.progress >= 1) {
-        p.progress = 0;
-        p.segment = (p.segment + 1) % (CAREER_PATH.length - 1);
-      }
-
-      const t = p.forward ? p.progress : (1 - p.progress);
-      const positions = packetGeo.attributes.position.array;
-      positions[i * 3]     = ax + (bx - ax) * t;
-      positions[i * 3 + 1] = ay + (by - ay) * t;
-      positions[i * 3 + 2] = 0.2;
+    // ---- Scroll-driven path assembly ----
+    // Maps document scroll progress onto a 0→1 draw front. The career path
+    // segments fade in order, and packets only flow along segments that have
+    // already been drawn. This is the overdrive moment: the map tells the story
+    // as you read it, rather than rendering all at once.
+    const _segCache = [];
+    let _drawProgress = 0;
+    function precomputeSegments() {
+      _segCache.length = 0;
+      CAREER_PATH.forEach((stop, i) => {
+        if (i === 0) return;
+        const a = CAREER_PATH[i - 1];
+        const b = CAREER_PATH[i];
+        const [ax, ay] = project(CITIES[a.city].lon, CITIES[a.city].lat);
+        const [bx, by] = project(CITIES[b.city].lon, CITIES[b.city].lat);
+        _segCache.push({ ax, ay, bx, by, drawIdx: (i - 1) / (CAREER_PATH.length - 2) });
+      });
     }
-    packetGeo.attributes.position.needsUpdate = true;
+    function setDrawProgress(p) {
+      _drawProgress = Math.max(0, Math.min(1, p));
+      if (pathMat) pathMat.uniforms.uDrawProgress.value = _drawProgress;
+    }
+    function animatePackets(time) {
+      const positions = packetGeo.attributes.position.array;
+      const draw = _drawProgress;
+      for (let i = 0; i < packetData.length; i++) {
+        const p = packetData[i];
+        const seg = _segCache[p.segment];
+        if (!seg) continue;
+        // Packets only travel along segments that have already been drawn.
+        // Once the draw front passes a segment, packets on it are free to move;
+        // before that, they sit at the segment start so the path assembles
+        // ahead of the flow. This is what makes the map read as a story.
+        if (seg.drawIdx > draw + 0.02) {
+          positions[i * 3]     = seg.ax;
+          positions[i * 3 + 1] = seg.ay;
+          positions[i * 3 + 2] = 0.2;
+          continue;
+        }
+        p.progress += p.speed * 0.005;
+        if (p.progress >= 1) {
+          p.progress = 0;
+          p.segment = (p.segment + 1) % (_segCache.length);
+        }
+        const t = p.forward ? p.progress : (1 - p.progress);
+        positions[i * 3]     = seg.ax + (seg.bx - seg.ax) * t;
+        positions[i * 3 + 1] = seg.ay + (seg.by - seg.ay) * t;
+        positions[i * 3 + 2] = 0.2;
+      }
+      packetGeo.attributes.position.needsUpdate = true;
+    }
+    precomputeSegments();
   }
 
   // Initialize when DOM ready

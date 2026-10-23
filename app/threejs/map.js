@@ -121,14 +121,20 @@
         if (mapGroup.children[1] && mapGroup.children[1].material) {
           mapGroup.children[1].material.opacity = 0.1;
         }
-        if (pathSegments) pathSegments.material.opacity = 0.2;
+        // pathSegments is a ShaderMaterial (draw-driven), so its opacity lives
+        // in the uOpacity uniform rather than a material property.
+        if (pathSegments && pathSegments.material.uniforms.uOpacity) {
+          pathSegments.material.uniforms.uOpacity.value = 0.2;
+        }
         if (packetMat) packetMat.uniforms.uColor.value = new THREE.Color(cur.primary).multiplyScalar(0.7);
       } else {
         if (surfaceMesh) surfaceMesh.material.opacity = 0.05;
         if (mapGroup.children[1] && mapGroup.children[1].material) {
           mapGroup.children[1].material.opacity = 0.22;
         }
-        if (pathSegments) pathSegments.material.opacity = 0.45;
+        if (pathSegments && pathSegments.material.uniforms.uOpacity) {
+          pathSegments.material.uniforms.uOpacity.value = 0.45;
+        }
         if (packetMat) packetMat.uniforms.uColor.value = new THREE.Color(cur.primary);
       }
     },
@@ -181,6 +187,23 @@
     if (!isTabVisible) return;
     const TM = window.ThreeJSMap;
     if (TM && TM.getRenderer() && TM.getScene() && TM.getCamera()) {
+      // Drive the career-path draw front from scroll position. Lenis exposes
+      // .progress (0→1) when active; fall back to normalized scrollY for
+      // native scrolling, mobile, and reduced-motion users.
+      const pins = window.ThreeJSPins;
+      if (pins && typeof pins.setDrawProgress === 'function') {
+        let p;
+        const lenis = window.__lenis;
+        if (lenis && typeof lenis.progress === 'number') {
+          p = lenis.progress;
+        } else {
+          const max = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
+          p = window.scrollY / max;
+        }
+        pins.setDrawProgress(p);
+      }
+      if (pins && typeof pins.animateNodes === 'function') pins.animateNodes(performance.now());
+      if (pins && typeof pins.animatePackets === 'function') pins.animatePackets(performance.now());
       TM.getRenderer().render(TM.getScene(), TM.getCamera());
     }
     requestAnimationFrame(renderLoop);
