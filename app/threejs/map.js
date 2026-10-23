@@ -152,26 +152,6 @@
     getBRAND() { return getBrandColors(); },
   };
 
-  // Self-initialize when DOM is ready
-  let initialized = false;
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', () => {
-      initialized = ThreeJSMap.init();
-      if (initialized) {
-        window.ThreeJSMap = ThreeJSMap;
-      } else {
-        window.ThreeJSMap = null;
-      }
-    });
-  } else {
-    initialized = ThreeJSMap.init();
-    if (initialized) {
-      window.ThreeJSMap = ThreeJSMap;
-    } else {
-      window.ThreeJSMap = null;
-    }
-  }
-
   // Continuous render loop — drives the Three.js map. The modular split lost
   // this from the monolithic app.js; without it the renderer is created and
   // meshes are added but nothing is ever drawn to the canvas. Also lets the
@@ -208,5 +188,33 @@
     }
     requestAnimationFrame(renderLoop);
   }
-  renderLoop();
+
+  // Self-initialize when DOM is ready. The render loop must start AFTER
+  // window.ThreeJSMap is set — this file loads with `defer`, so the
+  // DOMContentLoaded handler runs after this module's top-level code.
+  // Starting renderLoop() before that means window.ThreeJSMap is undefined
+  // and the canvas never draws.
+  let initialized = false;
+  function startRenderLoop() {
+    if (initialized) renderLoop();
+  }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => {
+      initialized = ThreeJSMap.init();
+      if (initialized) {
+        window.ThreeJSMap = ThreeJSMap;
+      } else {
+        window.ThreeJSMap = null;
+      }
+      startRenderLoop();
+    });
+  } else {
+    initialized = ThreeJSMap.init();
+    if (initialized) {
+      window.ThreeJSMap = ThreeJSMap;
+    } else {
+      window.ThreeJSMap = null;
+    }
+    startRenderLoop();
+  }
 })();
