@@ -189,32 +189,15 @@
     requestAnimationFrame(renderLoop);
   }
 
-  // Self-initialize when DOM is ready. The render loop must start AFTER
-  // window.ThreeJSMap is set — this file loads with `defer`, so the
-  // DOMContentLoaded handler runs after this module's top-level code.
-  // Starting renderLoop() before that means window.ThreeJSMap is undefined
-  // and the canvas never draws.
-  let initialized = false;
-  function startRenderLoop() {
-    if (initialized) renderLoop();
-  }
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', () => {
-      initialized = ThreeJSMap.init();
-      if (initialized) {
-        window.ThreeJSMap = ThreeJSMap;
-      } else {
-        window.ThreeJSMap = null;
-      }
-      startRenderLoop();
-    });
+  // This module loads with `defer`, so the DOM is already parsed when it runs.
+  // Initialize immediately and start the render loop — no DOMContentNeeded.
+  // This ensures window.ThreeJSMap is ready before pins.js (which also defers)
+  // runs its initPins().
+  const initialized = ThreeJSMap.init();
+  if (initialized) {
+    window.ThreeJSMap = ThreeJSMap;
   } else {
-    initialized = ThreeJSMap.init();
-    if (initialized) {
-      window.ThreeJSMap = ThreeJSMap;
-    } else {
-      window.ThreeJSMap = null;
-    }
-    startRenderLoop();
+    window.ThreeJSMap = null;
   }
+  if (initialized) renderLoop();
 })();

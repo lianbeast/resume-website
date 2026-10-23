@@ -44,8 +44,10 @@
   let isDark = false;
 
   function initPins() {
+    // Wait for ThreeJSMap to be ready (map.js runs first and sets window.ThreeJSMap)
     if (!window.ThreeJSMap) {
-      console.warn('ThreeJSMap not initialized, skipping pins');
+      console.warn('ThreeJSMap not initialized yet, will retry on next tick');
+      requestAnimationFrame(initPins);
       return;
     }
 
