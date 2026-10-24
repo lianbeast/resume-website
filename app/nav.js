@@ -52,23 +52,6 @@
     });
   }
 
-  // ========== Nav scroll state ==========
-  // The floating pill lifts and compresses as the page scrolls. The class
-  // lives on the nav element so CSS can react without a layout reflow.
-  var navEl = document.getElementById('main-nav');
-  if (navEl) {
-    var navScrolled = false;
-    function updateNavScroll() {
-      var scrolled = window.scrollY > 24;
-      if (scrolled !== navScrolled) {
-        navScrolled = scrolled;
-        navEl.classList.toggle('is-scrolled', scrolled);
-      }
-    }
-    window.addEventListener('scroll', updateNavScroll, { passive: true });
-    updateNavScroll();
-  }
-
   // ========== Scrollspy ==========
   var sections = document.querySelectorAll('section[id]');
   var navAnchors = document.querySelectorAll('.nav-links a:not(.nav-resume)');
