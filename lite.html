@@ -128,6 +128,7 @@ footer{padding:34px 0;font-size:13px;color:var(--dim);display:flex;gap:16px;flex
 }
 </style>
 <link rel="stylesheet" href="assets/lite-nav.css">
+<link rel="stylesheet" href="assets/lite-map.css">
 </head>
 <body>
 
@@ -170,15 +171,15 @@ footer{padding:34px 0;font-size:13px;color:var(--dim);display:flex;gap:16px;flex
     <div class="wrap">
       <h2 id="map-h">Career path across the United States</h2>
       <div class="map-wrap">
-        <img src="assets/us-map.svg" alt="Outline map of the lower-48 United States" decoding="async">
+        <img src="assets/us-map.svg" alt="Map of the lower-48 United States with state boundaries" decoding="async">
         <span class="pin" style="--x:17.83%;--y:9.37%"><i></i><b>Spokane, WA</b></span>
         <span class="pin" style="--x:48.35%;--y:75.43%"><i></i><b>Austin, TX</b></span>
         <span class="pin" style="--x:62.74%;--y:74.56%"><i></i><b>Hammond, LA</b></span>
         <span class="pin" style="--x:84.62%;--y:92.56%"><i></i><b>Miami, FL</b></span>
-        <span class="pin" style="--x:83.26%;--y:40.18%"><i></i><b>Martinsburg, WV</b></span>
-        <span class="pin now" style="--x:85.24%;--y:42.64%"><i></i><b>Washington, DC</b></span>
+        <span class="pin pin-martinsburg" style="--x:83.26%;--y:40.18%"><i></i><b>Martinsburg, WV</b></span>
+        <span class="pin pin-bethesda" style="--x:85.09%;--y:42.19%"><i></i><b>Bethesda, MD</b></span>
+        <span class="pin now pin-dc" style="--x:85.24%;--y:42.64%"><i></i><b>Washington, DC</b></span>
       </div>
-      <p class="map-note">2009 → present. Bethesda → Martinsburg → Spokane → Austin → Miami → Hammond → Washington, DC.</p>
     </div>
   </section>
 

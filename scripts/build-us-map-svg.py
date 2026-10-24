@@ -79,7 +79,8 @@ def main():
         f'width="{width:.2f}" height="{height:.2f}" '
         'preserveAspectRatio="xMidYMid meet" role="img" '
         'aria-label="Map of the lower-48 United States showing the career path">\n'
-        '  <g fill="currentColor" stroke="currentColor" stroke-width="0.06" '
+        '  <style>path{fill:#e2e8f0;stroke:#64748b}@media(prefers-color-scheme:dark){path{fill:#172b3d;stroke:#7393ad}}</style>\n'
+        '  <g stroke-width="0.06" '
         'stroke-linejoin="round">\n'
         + "\n".join(paths) + "\n"
         "  </g>\n"

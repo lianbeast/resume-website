@@ -1,0 +1,40 @@
+/* SVG colors are embedded in the asset: an <img> cannot inherit currentColor. */
+.map-wrap img { color: initial; }
+.map-wrap .pin {
+  transform: translate(-5px, -5px);
+  display: block;
+  width: 10px;
+  height: 10px;
+}
+.map-wrap .pin i { display: block; }
+.map-wrap .pin b {
+  position: absolute;
+  left: 17px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+.map-wrap .pin-martinsburg b {
+  left: auto;
+  right: 18px;
+  top: -18px;
+}
+.map-wrap .pin-bethesda b { top: -28px; }
+.map-wrap .pin-dc b { top: 29px; }
+.map-wrap .pin-bethesda b::before,
+.map-wrap .pin-dc b::before {
+  content: '';
+  position: absolute;
+  left: -13px;
+  width: 12px;
+  height: 22px;
+  border-left: 1px solid var(--dim);
+}
+.map-wrap .pin-bethesda b::before { top: 100%; transform: skewY(-40deg); }
+.map-wrap .pin-dc b::before { bottom: 100%; transform: skewY(40deg); }
+@media (min-width: 641px) and (max-width: 760px) {
+  .map-wrap .pin-bethesda b,
+  .map-wrap .pin-dc b { left: auto; right: 18px; }
+  .map-wrap .pin-bethesda b::before,
+  .map-wrap .pin-dc b::before { display: none; }
+  .map-wrap .pin-martinsburg b { top: -52px; }
+}
