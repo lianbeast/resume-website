@@ -1,0 +1,36 @@
+/* Match the shared floating navigation while keeping Lite free of JavaScript. */
+header.top {
+  position: sticky;
+  top: 20px;
+  max-width: min(1080px, 92vw);
+  margin: 20px auto 0;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--bg);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, .08);
+}
+.top .wrap {
+  height: auto;
+  min-height: 62px;
+  padding: 10px 20px;
+  gap: 12px;
+}
+.top .brand { flex-shrink: 0; padding: 8px 0; }
+nav.main { gap: 12px; }
+.top .tiers { flex-wrap: wrap; }
+.top .nav-resume { padding: 8px 14px; }
+section[id], main[id] { scroll-margin-top: 110px; }
+@media (max-width: 900px) {
+  header.top { top: 8px; border-radius: 24px; }
+  .top .wrap { justify-content: space-between; }
+  nav.main { order: 3; width: 100%; margin-left: 0; justify-content: center; gap: 8px 16px; }
+  section[id], main[id] { scroll-margin-top: 180px; }
+}
+@media (max-width: 420px) {
+  .top .wrap { padding: 10px 12px; gap: 8px; }
+  .tiers a { padding: 3px 6px; }
+  .top .nav-resume { padding: 7px 9px; font-size: 12px; }
+}
+@media print {
+  header.top { position: static; margin: 0; box-shadow: none; }
+}

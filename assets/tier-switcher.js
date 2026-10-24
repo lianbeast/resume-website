@@ -211,7 +211,7 @@
       hasWebGL()
         ? 'This device may struggle with the 3D journey.'
         : 'This device has no WebGL, so the 3D journey cannot run.',
-      'Use the Lite view →', 'lite.html'
+      'Use Lite →', 'lite.html'
     );
   }
 
